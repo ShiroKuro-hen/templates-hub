@@ -1,0 +1,1 @@
+{ "title": "Panel lateral deslizante", "category": "modales", "description": "Drawer con <dialog> nativo que se desliza desde la derecha, con Esc y clic fuera.", "tags": ["drawer", "dialog", "sidebar"] }

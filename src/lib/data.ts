@@ -5,6 +5,14 @@ export const CATEGORIES: Record<string, { label: string; blurb: string; icon: st
   barras: { label: 'Barras', blurb: 'Gráficos de barras y barras de progreso sin librerías.', icon: '▮' },
   grids: { label: 'Grids', blurb: 'Layouts responsivos con CSS Grid.', icon: '⊞' },
   tarjetas: { label: 'Tarjetas', blurb: 'Cards y métricas para dashboards.', icon: '▢' },
+  botones: { label: 'Botones', blurb: 'Variantes, tamaños, estados y grupos de botones.', icon: '◉' },
+  etiquetas: { label: 'Etiquetas', blurb: 'Badges, chips, tags y estados.', icon: '◈' },
+  notificaciones: { label: 'Notificaciones', blurb: 'Toasts, alertas y mensajes en línea.', icon: '◔' },
+  modales: { label: 'Modales y capas', blurb: 'Diálogos, drawers, tooltips y popovers.', icon: '◫' },
+  iconos: { label: 'Iconos', blurb: 'Sets SVG en línea, botones de icono y sprites.', icon: '✦' },
+  formularios: { label: 'Formularios', blurb: 'Inputs, selects, toggles y validación.', icon: '▤' },
+  navegacion: { label: 'Navegación', blurb: 'Navbar, tabs, breadcrumbs, paginación y sidebar.', icon: '☰' },
+  cargando: { label: 'Cargando', blurb: 'Spinners, skeletons y estados vacíos.', icon: '◌' },
 };
 
 // shiki = lenguaje de resaltado, ext = extensión del archivo en content/templates/<slug>/

@@ -1,0 +1,24 @@
+<div class="px-3.5 py-4">
+  <label for="t" class="mb-1.5 block font-bold tracking-tight">Cuéntanos tu experiencia</label>
+  <textarea id="t" maxlength="140" placeholder="Escribe tu reseña…"
+    class="block h-[130px] w-full resize-y rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3 py-2.5 shadow-[4px_4px_0_#17130f] placeholder:text-[#6b6258] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]"></textarea>
+  <div class="mt-3.5 flex items-center gap-2.5 font-mono text-xs">
+    <div class="h-3 flex-1 overflow-hidden rounded-md border-2 border-[#17130f] bg-[#fffdf8]" aria-hidden="true">
+      <div id="bar" class="h-full w-0 bg-[#1f9d55]"></div>
+    </div>
+    <span id="count" class="text-[#6b6258]" aria-hidden="true">0 / 140</span>
+  </div>
+  <p id="live" role="status" class="sr-only"></p>
+</div>
+<script>
+  const t = document.getElementById('t'), bar = document.getElementById('bar'), count = document.getElementById('count'), live = document.getElementById('live');
+  let band = '';
+  t.addEventListener('input', () => {
+    const len = t.value.length, max = t.maxLength, ratio = len / max;
+    bar.style.width = ratio * 100 + '%';
+    bar.className = 'h-full ' + (ratio >= 1 ? 'bg-[#d6293e]' : ratio >= 0.85 ? 'bg-[#e0a800]' : 'bg-[#1f9d55]');
+    count.textContent = `${len} / ${max}`;
+    const b = ratio >= 1 ? 'full' : ratio >= 0.85 ? 'warn' : '';
+    if (b !== band) { band = b; live.textContent = b ? `Quedan ${max - len} caracteres.` : ''; }
+  });
+</script>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alertas</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px; font:14px/1.35 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  .alerts { display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none; }
+  .alert { --c:#3b5bfd; --t:#e6eaff; display:flex; align-items:flex-start; gap:10px; padding:9px 10px; background:var(--t); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
+  .alert.ok { --c:#1f9d55; --t:#dff3e7; } .alert.warn { --c:#e0a800; --t:#fff2bf; } .alert.err { --c:#d6293e; --t:#fbe1e5; }
+  .alert i { flex:none; width:24px; height:24px; display:grid; place-items:center; border:2px solid var(--ink); border-radius:50%; background:var(--c); color:#fff; font:700 13px ui-monospace, monospace; }
+  .alert.warn i { color:var(--ink); }
+  .alert div { flex:1; min-width:0; }
+  .alert b { display:block; letter-spacing:-.02em; }
+  .alert span { color:var(--muted); font-size:13px; }
+  .alert button { flex:none; font:inherit; font-size:18px; line-height:1; width:28px; height:28px; border:2px solid transparent; border-radius:8px; background:none; color:var(--ink); cursor:pointer; }
+  .alert button:hover { border-color:var(--ink); background:var(--surface); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .reset { margin-top:10px; font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  .reset:hover, .reset:active { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<ul class="alerts" id="list">
+  <li class="alert" role="status"><i aria-hidden="true">i</i><div><b>Nueva versión disponible</b><span>La 2.4 llega el viernes con mejoras de velocidad.</span></div><button type="button" aria-label="Descartar aviso: nueva versión">×</button></li>
+  <li class="alert ok" role="status"><i aria-hidden="true">✓</i><div><b>Pago recibido</b><span>Tu suscripción se renovó hasta el 5 de enero.</span></div><button type="button" aria-label="Descartar aviso: pago recibido">×</button></li>
+  <li class="alert warn" role="status"><i aria-hidden="true">!</i><div><b>Tu plan vence en 3 días</b><span>Renueva para no perder el acceso a tus informes.</span></div><button type="button" aria-label="Descartar aviso: plan por vencer">×</button></li>
+  <li class="alert err" role="alert"><i aria-hidden="true">✕</i><div><b>No se pudo enviar el formulario</b><span>Falta el correo electrónico. Complétalo e inténtalo otra vez.</span></div><button type="button" aria-label="Descartar aviso: error de formulario">×</button></li>
+</ul>
+<button type="button" class="reset" id="reset" hidden>Mostrar avisos otra vez</button>
+<script>
+  const list = document.getElementById('list'), reset = document.getElementById('reset');
+  const sync = () => { reset.hidden = !!list.querySelector('.alert:not([hidden])'); };
+  list.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    b.closest('.alert').hidden = true; sync();
+    const nb = list.querySelector('.alert:not([hidden]) button');
+    (reset.hidden ? nb : reset).focus();
+  });
+  reset.addEventListener('click', () => {
+    list.querySelectorAll('.alert').forEach((a) => (a.hidden = false));
+    sync(); list.querySelector('button').focus();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<div class="grid grid-cols-[repeat(auto-fit,minmax(96px,1fr))] gap-4 p-5">
+  <figure class="m-0 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2 pb-3.5 pt-5 text-center shadow-[4px_4px_0_#17130f]">
+    <div class="mb-3 grid h-16 place-items-center">
+      <div role="status" class="h-11 w-11 animate-spin rounded-full border-[6px] border-[#ffd84d] border-t-[#ff5a36] motion-reduce:[animation-duration:3s]"><span class="sr-only">Cargando</span></div>
+    </div>
+    <figcaption class="font-mono text-xs font-semibold text-[#6b6258]">Aro</figcaption>
+  </figure>
+
+  <figure class="m-0 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2 pb-3.5 pt-5 text-center shadow-[4px_4px_0_#17130f]">
+    <div class="mb-3 grid h-16 place-items-center">
+      <div role="status" class="flex h-[30px] items-end gap-2">
+        <i class="h-3 w-3 animate-bounce rounded-full border-2 border-[#17130f] bg-[#ff5a36] motion-reduce:[animation-duration:3s]"></i>
+        <i class="h-3 w-3 animate-bounce rounded-full border-2 border-[#17130f] bg-[#ffd84d] [animation-delay:.15s] motion-reduce:[animation-duration:3s]"></i>
+        <i class="h-3 w-3 animate-bounce rounded-full border-2 border-[#17130f] bg-[#3b5bfd] [animation-delay:.3s] motion-reduce:[animation-duration:3s]"></i>
+        <span class="sr-only">Cargando</span>
+      </div>
+    </div>
+    <figcaption class="font-mono text-xs font-semibold text-[#6b6258]">Puntos</figcaption>
+  </figure>
+
+  <figure class="m-0 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2 pb-3.5 pt-5 text-center shadow-[4px_4px_0_#17130f]">
+    <div class="mb-3 grid h-16 place-items-center">
+      <div role="status" class="flex h-11 items-center gap-1">
+        <i class="h-full w-1.5 rounded-[3px] bg-[#17130f] [animation:stretch_1s_ease-in-out_infinite] motion-reduce:[animation-duration:3s]"></i>
+        <i class="h-full w-1.5 rounded-[3px] bg-[#17130f] [animation:stretch_1s_ease-in-out_.2s_infinite] motion-reduce:[animation-duration:3s]"></i>
+        <i class="h-full w-1.5 rounded-[3px] bg-[#17130f] [animation:stretch_1s_ease-in-out_.4s_infinite] motion-reduce:[animation-duration:3s]"></i>
+        <span class="sr-only">Cargando</span>
+      </div>
+    </div>
+    <figcaption class="font-mono text-xs font-semibold text-[#6b6258]">Barras</figcaption>
+  </figure>
+</div>
+
+<style>
+  /* Tailwind no trae este keyframe: añádelo a tu CSS o a theme.extend.keyframes */
+  @keyframes stretch { 0%, 100% { transform: scaleY(.3); } 50% { transform: scaleY(1); } }
+</style>

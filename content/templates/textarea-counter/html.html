@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Textarea con contador</title>
+<style>
+  :root { --ink:#17130f; --paper:#f6f1e7; --surface:#fffdf8; --muted:#6b6258; --accent:#ff5a36; --ok:#1f9d55; --warn:#e0a800; --err:#d6293e; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px 14px; font:14px/1.4 system-ui, sans-serif; background:var(--paper); color:var(--ink); }
+  label { display:block; margin-bottom:6px; font-weight:700; letter-spacing:-.01em; }
+  textarea { display:block; width:100%; height:130px; padding:10px 12px; resize:vertical; font:inherit; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
+  textarea::placeholder { color:var(--muted); }
+  textarea:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .meta { display:flex; align-items:center; gap:10px; margin-top:14px; font:12px ui-monospace, monospace; }
+  progress { flex:1; height:12px; appearance:none; border:2px solid var(--ink); border-radius:6px; background:var(--surface); overflow:hidden; accent-color:var(--ok); }
+  progress::-webkit-progress-bar { background:var(--surface); }
+  progress::-webkit-progress-value { background:var(--ok); }
+  progress::-moz-progress-bar { background:var(--ok); }
+  .warn progress::-webkit-progress-value { background:var(--warn); } .warn progress::-moz-progress-bar { background:var(--warn); }
+  .full progress::-webkit-progress-value { background:var(--err); } .full progress::-moz-progress-bar { background:var(--err); }
+  #left { min-width:130px; text-align:right; color:var(--muted); }
+  .warn #left { color:var(--ink); font-weight:700; } .full #left { color:var(--err); font-weight:700; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+</style>
+</head>
+<body>
+  <label for="t">Cuéntanos tu experiencia</label>
+  <textarea id="t" maxlength="140" placeholder="Escribe tu reseña…" aria-describedby="count">Gracias por el pedido: llegó un día antes, venía bien empacado y el color es idéntico al de las fotos. ¡Volveré pronto!</textarea>
+  <div class="meta" id="meta">
+    <progress id="bar" max="140" value="0" aria-hidden="true"></progress>
+    <span id="count" aria-hidden="true"><b id="n">0</b> / 140</span>
+    <span id="left" aria-hidden="true"></span>
+  </div>
+  <p class="sr" id="live" role="status"></p>
+<script>
+  const t = document.getElementById('t'), bar = document.getElementById('bar'), n = document.getElementById('n');
+  const left = document.getElementById('left'), meta = document.getElementById('meta'), live = document.getElementById('live');
+  const MAX = t.maxLength; let lastBand = '';
+  function update() {
+    const len = t.value.length, rest = MAX - len;
+    const band = rest <= 0 ? 'full' : len / MAX >= .85 ? 'warn' : '';
+    bar.value = len; n.textContent = len;
+    meta.className = 'meta ' + band;
+    left.textContent = rest <= 0 ? 'Límite alcanzado' : band ? `Te quedan ${rest}` : '';
+    if (band !== lastBand) { live.textContent = band === 'full' ? 'Has alcanzado el límite de caracteres.' : band ? `Quedan ${rest} caracteres.` : ''; lastBand = band; }
+  }
+  t.addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>

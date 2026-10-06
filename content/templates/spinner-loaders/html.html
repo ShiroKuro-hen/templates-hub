@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.5 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(96px, 1fr)); gap:16px; }
+  .card { margin:0; padding:20px 8px 14px; text-align:center; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+  .stage { display:grid; place-items:center; height:64px; margin-bottom:12px; }
+  figcaption { font:600 12px ui-monospace, monospace; color:#6b6258; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+
+  .ring { width:44px; height:44px; border:6px solid #ffd84d; border-top-color:#ff5a36; border-radius:50%; animation:spin .8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  .dots { display:flex; gap:8px; align-items:flex-end; height:30px; }
+  .dots i { width:12px; height:12px; background:#ff5a36; border:2px solid #17130f; border-radius:50%; animation:hop .7s ease-in-out infinite alternate; }
+  .dots i:nth-child(2) { animation-delay:.15s; background:#ffd84d; }
+  .dots i:nth-child(3) { animation-delay:.3s; background:#3b5bfd; }
+  @keyframes hop { to { transform:translateY(-16px); } }
+
+  .bars { display:flex; gap:4px; align-items:center; height:44px; }
+  .bars i { width:6px; height:100%; background:#17130f; border-radius:3px; animation:stretch 1s ease-in-out infinite; }
+  .bars i:nth-child(2) { animation-delay:.1s; } .bars i:nth-child(3) { animation-delay:.2s; }
+  .bars i:nth-child(4) { animation-delay:.3s; } .bars i:nth-child(5) { animation-delay:.4s; }
+  @keyframes stretch { 0%, 100% { transform:scaleY(.3); } 50% { transform:scaleY(1); } }
+
+  /* Con movimiento reducido: mismo indicador, mucho más lento */
+  @media (prefers-reduced-motion:reduce) { .ring, .dots i, .bars i { animation-duration:3s; } }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <figure class="card">
+      <div class="stage"><div class="ring" role="status"><span class="sr">Cargando</span></div></div>
+      <figcaption>Aro</figcaption>
+    </figure>
+    <figure class="card">
+      <div class="stage"><div class="dots" role="status"><i></i><i></i><i></i><span class="sr">Cargando</span></div></div>
+      <figcaption>Puntos</figcaption>
+    </figure>
+    <figure class="card">
+      <div class="stage"><div class="bars" role="status"><i></i><i></i><i></i><i></i><i></i><span class="sr">Cargando</span></div></div>
+      <figcaption>Barras</figcaption>
+    </figure>
+  </div>
+</body>
+</html>

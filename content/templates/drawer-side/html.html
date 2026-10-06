@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel lateral</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  p { margin:0 0 14px; color:var(--muted); }
+  .btn { font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  .btn:hover, .btn:active { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .btn.main { background:var(--hl); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  #summary { margin-top:14px; font:13px ui-monospace, monospace; }
+  dialog { margin:0 0 0 auto; width:min(300px, 100%); height:100%; max-height:100%; padding:0; color:var(--ink); background:var(--surface); border:0; border-left:2px solid var(--ink); border-radius:0; }
+  dialog[open] { display:flex; flex-direction:column; animation:slide .22s ease-out; }
+  dialog::backdrop { background:rgba(23,19,15,.5); }
+  header, footer { display:flex; align-items:center; gap:10px; padding:10px 14px; }
+  header { justify-content:space-between; border-bottom:2px solid var(--ink); }
+  footer { justify-content:flex-end; border-top:2px solid var(--ink); }
+  h2 { margin:0; font-size:17px; letter-spacing:-.02em; }
+  .x { width:32px; height:32px; font-size:20px; line-height:1; color:var(--ink); background:none; border:2px solid var(--ink); border-radius:8px; cursor:pointer; }
+  .x:hover { background:var(--hl); }
+  .body { flex:1; overflow:auto; padding:6px 14px 10px; }
+  fieldset { margin:8px 0 0; padding:0; border:0; }
+  legend { padding:0; font-weight:700; margin-bottom:4px; }
+  label { display:flex; align-items:center; gap:8px; padding:3px 0; cursor:pointer; }
+  input { width:18px; height:18px; margin:0; accent-color:var(--accent); }
+  @keyframes slide { from { transform:translateX(100%); } }
+  @media (prefers-reduced-motion:reduce) { dialog[open] { animation:none; } }
+</style>
+</head>
+<body>
+<h1>Pedidos</h1>
+<p>128 pedidos este mes.</p>
+<button type="button" class="btn" id="open" aria-haspopup="dialog">Filtros</button>
+<div id="summary" role="status"></div>
+
+<dialog id="drawer" aria-labelledby="d-title">
+  <header>
+    <h2 id="d-title">Filtros</h2>
+    <button type="button" class="x" id="x" aria-label="Cerrar filtros">×</button>
+  </header>
+  <form id="f" method="dialog" style="display:contents">
+    <div class="body">
+      <fieldset>
+        <legend>Estado</legend>
+        <label><input type="checkbox" name="estado" value="Pendiente" checked> Pendiente</label>
+        <label><input type="checkbox" name="estado" value="Enviado"> Enviado</label>
+        <label><input type="checkbox" name="estado" value="Entregado"> Entregado</label>
+      </fieldset>
+      <fieldset>
+        <legend>Orden</legend>
+        <label><input type="radio" name="orden" value="recientes" checked> Más recientes</label>
+        <label><input type="radio" name="orden" value="importe"> Mayor importe</label>
+      </fieldset>
+    </div>
+    <footer>
+      <button type="reset" class="btn">Limpiar</button>
+      <button class="btn main" value="apply">Aplicar</button>
+    </footer>
+  </form>
+</dialog>
+<script>
+  const d = document.getElementById('drawer'), opener = document.getElementById('open'), f = document.getElementById('f');
+  opener.addEventListener('click', () => d.showModal());
+  document.getElementById('x').addEventListener('click', () => d.close());
+  d.addEventListener('click', (e) => { if (e.target === d) d.close(); }); // clic en el fondo
+  d.addEventListener('close', () => {
+    opener.focus();
+    if (d.returnValue !== 'apply') return;
+    const estados = new FormData(f).getAll('estado');
+    document.getElementById('summary').textContent =
+      'Filtrando: ' + (estados.length ? estados.join(', ') : 'todos los estados') + '.';
+    d.returnValue = '';
+  });
+</script>
+</body>
+</html>

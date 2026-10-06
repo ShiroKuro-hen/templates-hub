@@ -1,0 +1,40 @@
+<div class="p-3.5">
+  <h2 class="mb-2.5 text-lg font-bold tracking-tight">Crea tu cuenta</h2>
+  <form id="f" novalidate class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-x-3 gap-y-2.5">
+    <div class="flex flex-col gap-0.5">
+      <label for="email" class="text-[13px] font-bold">Correo</label>
+      <input id="email" name="email" type="email" required autocomplete="email" aria-describedby="email-e"
+        class="h-9 w-full rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2.5 focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] aria-invalid:border-[#d6293e] aria-invalid:bg-[#fff3f4]">
+      <p id="email-e" class="min-h-4 text-xs text-[#d6293e]"></p>
+    </div>
+    <div class="flex flex-col gap-0.5">
+      <label for="pw" class="text-[13px] font-bold">Contraseña</label>
+      <input id="pw" name="pw" type="password" required minlength="8" pattern=".*\d.*" autocomplete="new-password" aria-describedby="pw-e"
+        class="h-9 w-full rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2.5 focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] aria-invalid:border-[#d6293e] aria-invalid:bg-[#fff3f4]">
+      <p id="pw-e" class="min-h-4 text-xs text-[#d6293e]"></p>
+    </div>
+    <div class="col-span-full">
+      <button type="submit"
+        class="h-10 rounded-[10px] border-2 border-[#17130f] bg-[#ff5a36] px-[18px] font-bold shadow-[4px_4px_0_#17130f] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+        Crear cuenta
+      </button>
+    </div>
+  </form>
+  <p id="done" role="status" hidden class="mt-2.5 rounded-[10px] border-2 border-[#1f9d55] bg-[#e3f5ea] px-3 py-2 font-bold">¡Cuenta creada!</p>
+</div>
+<script>
+  const f = document.getElementById('f');
+  const M = { valueMissing: 'Este campo es obligatorio.', typeMismatch: 'Escribe un correo válido.', tooShort: 'Usa al menos 8 caracteres.', patternMismatch: 'Incluye al menos un número.' };
+  const show = (el) => {
+    const k = Object.keys(M).find((k) => el.validity[k]);
+    el.setAttribute('aria-invalid', !!k);
+    document.getElementById(el.id + '-e').textContent = k ? M[k] : '';
+  };
+  f.addEventListener('focusout', (e) => e.target.matches('input') && show(e.target));
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    f.querySelectorAll('input').forEach(show);
+    const bad = f.querySelector('[aria-invalid=true]');
+    if (bad) bad.focus(); else document.getElementById('done').hidden = false;
+  });
+</script>

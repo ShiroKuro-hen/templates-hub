@@ -1,0 +1,1 @@
+{ "title": "Pestañas accesibles (tabs)", "category": "navegacion", "description": "Pestañas con role=tablist, flechas izquierda/derecha, Inicio/Fin y paneles enlazados.", "tags": ["tabs", "a11y", "teclado", "aria"] }

@@ -1,0 +1,22 @@
+<article class="relative flex flex-col gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#ffd84d] p-4 text-sm text-[#17130f] shadow-[4px_4px_0_#17130f]">
+  <span class="absolute -top-3 right-3 rounded-full border-2 border-[#17130f] bg-[#ff5a36] px-2.5 font-mono text-[.72rem] font-bold">Recomendado</span>
+  <h2 class="text-lg font-bold tracking-tight">Pro</h2>
+  <p class="text-[2.4rem] font-extrabold leading-none tracking-tight tabular-nums">$12 <small class="font-mono text-xs font-semibold tracking-normal text-[#4d453c]">/mes</small></p>
+  <ul class="grid flex-1 gap-1.5">
+    <li><span aria-hidden="true" class="mr-2 font-extrabold">✓</span>Proyectos ilimitados</li>
+    <li><span aria-hidden="true" class="mr-2 font-extrabold">✓</span>Exportar a PDF y PNG</li>
+    <li><span aria-hidden="true" class="mr-2 font-extrabold">✓</span>Dominio propio</li>
+    <li class="text-[#4d453c] line-through"><span aria-hidden="true" class="mr-2 font-extrabold text-[#d6293e]">✕</span>Soporte dedicado</li>
+  </ul>
+  <button type="button" id="elegir" aria-pressed="false" class="rounded-[10px] border-2 border-[#17130f] bg-[#ff5a36] px-3.5 py-2 font-bold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] aria-pressed:bg-[#17130f] aria-pressed:text-[#fffdf8] focus-visible:outline-[3px] focus-visible:outline-[#17130f] focus-visible:outline-offset-2 motion-safe:transition">Elegir Pro</button>
+  <p id="msg" role="status" class="sr-only"></p>
+</article>
+<script>
+  const b = document.getElementById('elegir');
+  b.addEventListener('click', () => {
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on);
+    b.textContent = on ? 'Plan elegido' : 'Elegir Pro';
+    document.getElementById('msg').textContent = on ? 'Elegiste el plan Pro.' : 'Plan Pro descartado.';
+  });
+</script>

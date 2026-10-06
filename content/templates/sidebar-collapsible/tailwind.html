@@ -1,0 +1,33 @@
+<div class="flex items-start gap-4 p-3 text-sm">
+  <aside id="side" data-collapsed="false"
+    class="group relative w-56 flex-none overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] p-2 shadow-[4px_4px_0_#17130f] transition-[width] duration-200 data-[collapsed=true]:w-16 motion-reduce:transition-none">
+    <div class="flex items-center justify-between gap-2 px-1 pb-2 group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0">
+      <span class="whitespace-nowrap text-lg font-extrabold tracking-tight group-data-[collapsed=true]:sr-only">Tinta&amp;Co</span>
+      <button id="toggle" type="button" aria-expanded="true" aria-controls="menu" aria-label="Contraer menú"
+        class="grid h-[34px] w-[34px] flex-none place-items-center rounded-lg border-2 border-[#17130f] bg-[#ffd84d] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">
+        <svg class="h-[18px] w-[18px] fill-none stroke-current stroke-2 transition-transform group-data-[collapsed=true]:rotate-180" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+      </button>
+    </div>
+    <nav id="menu" aria-label="Lateral">
+      <div>
+        <h2 class="mx-2 my-1 font-mono text-[11px] font-semibold text-[#6b6258] group-data-[collapsed=true]:sr-only">Trabajo</h2>
+        <ul class="m-0 grid list-none gap-0.5 p-0">
+          <li><a href="#" aria-current="page" class="flex h-8 items-center gap-2.5 whitespace-nowrap rounded-lg px-2.5 font-semibold focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 bg-[#17130f] text-[#fffdf8]"><svg class="h-[18px] w-[18px] flex-none fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg><span class="group-data-[collapsed=true]:sr-only">Panel</span></a></li>
+          <li><a href="#" class="flex h-8 items-center gap-2.5 whitespace-nowrap rounded-lg px-2.5 font-semibold focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 hover:bg-[#ffd84d]"><svg class="h-[18px] w-[18px] flex-none fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span class="group-data-[collapsed=true]:sr-only">Proyectos</span></a></li>
+          <li><a href="#" class="flex h-8 items-center gap-2.5 whitespace-nowrap rounded-lg px-2.5 font-semibold focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] group-data-[collapsed=true]:justify-center group-data-[collapsed=true]:px-0 hover:bg-[#ffd84d]"><svg class="h-[18px] w-[18px] flex-none fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4zM8 12l3 3 5-6"/></svg><span class="group-data-[collapsed=true]:sr-only">Tareas</span></a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+  <main class="min-w-0 flex-1 pt-1.5"><h1 class="text-2xl font-bold tracking-tight">Panel</h1><p class="text-[#6b6258]">Resumen de tu espacio de trabajo.</p></main>
+</div>
+
+<script>
+  const side = document.getElementById('side'), toggle = document.getElementById('toggle');
+  toggle.addEventListener('click', () => {
+    const c = side.dataset.collapsed !== 'true';
+    side.dataset.collapsed = c;
+    toggle.setAttribute('aria-expanded', !c);
+    toggle.setAttribute('aria-label', c ? 'Expandir menú' : 'Contraer menú');
+  });
+</script>

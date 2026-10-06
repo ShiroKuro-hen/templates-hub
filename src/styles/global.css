@@ -51,7 +51,7 @@ a.card:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink);
 
 .panel { background: var(--card); border: var(--b); border-radius: var(--r); box-shadow: var(--shadow); margin: 24px 0; overflow: hidden; }
 .panel .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; border-bottom: var(--b); background: var(--hi); color: #17130f; font: 700 .85rem var(--mono); }
-.preview iframe { display: block; width: 100%; height: 340px; border: 0; background: #fff; }
+.preview iframe { display: block; width: 100%; height: 440px; border: 0; background: #fff; }
 .prompt pre { margin: 0; padding: 16px; white-space: pre-wrap; font: .92rem/1.55 var(--mono); }
 
 .tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 8px 0; border-bottom: var(--b); background: var(--bg); }

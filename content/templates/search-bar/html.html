@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buscador</title>
+<style>
+  :root { --ink:#17130f; --paper:#f6f1e7; --surface:#fffdf8; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  html, body { height:100%; }
+  body { display:flex; flex-direction:column; gap:8px; margin:0; padding:14px; font:14px/1.3 system-ui, sans-serif; background:var(--paper); color:var(--ink); }
+  .box { position:relative; flex:none; margin-right:4px; }
+  .box > svg { position:absolute; left:12px; top:50%; width:20px; height:20px; transform:translateY(-50%); fill:none; stroke:var(--ink); stroke-width:2; stroke-linecap:round; pointer-events:none; }
+  input { width:100%; height:44px; padding:0 44px 0 40px; font:inherit; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); appearance:none; }
+  input::-webkit-search-cancel-button { display:none; }
+  input::placeholder { color:var(--muted); }
+  input:focus-visible, .clear:focus-visible, ul:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .clear { position:absolute; right:6px; top:50%; display:grid; place-items:center; width:30px; height:30px; padding:0; transform:translateY(-50%); background:var(--hl); border:2px solid var(--ink); border-radius:8px; cursor:pointer; }
+  .clear svg { width:14px; height:14px; fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; }
+  #n { flex:none; margin:0; font:12px ui-monospace, monospace; color:var(--muted); }
+  ul { flex:1; min-height:0; margin:0; padding:0; overflow:auto; list-style:none; border-top:2px solid var(--ink); }
+  li { display:flex; justify-content:space-between; gap:8px; padding:7px 2px; border-bottom:1px solid #d9d0bd; }
+  li span { color:var(--muted); font-size:13px; }
+  mark { color:inherit; background:var(--hl); border-radius:3px; }
+  .empty { padding:12px 2px; color:var(--muted); }
+</style>
+</head>
+<body>
+  <form class="box" role="search" onsubmit="return false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="q" type="search" placeholder="Busca un país o una capital" aria-label="Buscar países" autocomplete="off">
+    <button type="button" class="clear" id="x" aria-label="Limpiar búsqueda" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </form>
+  <p id="n" role="status"></p>
+  <ul id="list" tabindex="0" aria-label="Resultados"></ul>
+<script>
+  const DATA = [['Argentina','Buenos Aires'],['Bolivia','Sucre'],['Chile','Santiago'],['Colombia','Bogotá'],['Costa Rica','San José'],['Cuba','La Habana'],['Ecuador','Quito'],['El Salvador','San Salvador'],['España','Madrid'],['Guatemala','Ciudad de Guatemala'],['Honduras','Tegucigalpa'],['México','Ciudad de México'],['Panamá','Ciudad de Panamá'],['Paraguay','Asunción'],['Perú','Lima'],['Uruguay','Montevideo']];
+  const q = document.getElementById('q'), x = document.getElementById('x'), list = document.getElementById('list'), n = document.getElementById('n');
+  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  function mark(text, term) {
+    const frag = document.createDocumentFragment(), i = term ? norm(text).indexOf(term) : -1;
+    if (i < 0) { frag.append(text); return frag; }
+    const m = document.createElement('mark'); m.textContent = text.slice(i, i + term.length);
+    frag.append(text.slice(0, i), m, text.slice(i + term.length)); return frag;
+  }
+  function render() {
+    const term = norm(q.value.trim()), rows = DATA.filter(([a, b]) => norm(a + ' ' + b).includes(term));
+    x.hidden = !q.value; list.replaceChildren();
+    rows.forEach(([a, b]) => { const li = document.createElement('li'), s = document.createElement('span'); s.append(mark(b, term)); li.append(mark(a, term), s); list.append(li); });
+    if (!rows.length) { const li = document.createElement('li'); li.className = 'empty'; li.textContent = `Sin resultados para «${q.value.trim()}». Prueba con otra palabra.`; list.append(li); }
+    n.textContent = rows.length === 1 ? '1 resultado' : `${rows.length} resultados`;
+  }
+  q.addEventListener('input', render);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Escape' && q.value) { e.preventDefault(); q.value = ''; render(); } });
+  x.addEventListener('click', () => { q.value = ''; render(); q.focus(); });
+  render();
+</script>
+</body>
+</html>

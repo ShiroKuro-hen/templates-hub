@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  h1 { margin:0 0 10px; font-size:1.2rem; letter-spacing:-.02em; }
+  .wrap { overflow-x:auto; border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; }
+  .wrap:focus-visible, button:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  table { width:100%; min-width:520px; border-collapse:collapse; }
+  caption { position:absolute; left:-9999px; }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #17130f33; white-space:nowrap; }
+  thead th { background:#ffd84d; border-bottom:2px solid #17130f; }
+  tbody tr:last-child > * { border-bottom:0; }
+  .num { font-variant-numeric:tabular-nums; text-align:right; }
+  .badge { display:inline-block; padding:2px 10px; border:2px solid #17130f; border-radius:99px; font:600 .75rem ui-monospace, monospace; }
+  .ok { background:#c9efd8; } .warn { background:#ffe9a3; } .err { background:#f9c9cf; } .info { background:#cfd8ff; }
+  .acts { display:flex; gap:6px; }
+  button { font:600 .8rem system-ui, sans-serif; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; padding:4px 10px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
+  button:hover:not(:disabled), button:active:not(:disabled) { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
+  button:disabled { opacity:.45; box-shadow:none; cursor:not-allowed; }
+  .del { background:#f9c9cf; }
+  #msg { margin:10px 0 0; color:#6b6258; font-size:.8rem; min-height:1.2em; }
+  @media (prefers-reduced-motion:no-preference) { button { transition:transform .1s, box-shadow .1s; } }
+</style>
+</head>
+<body>
+<h1>Pedidos recientes</h1>
+<div class="wrap" role="region" aria-labelledby="cap" tabindex="0">
+  <table id="t">
+    <caption id="cap">Pedidos con su estado y acciones</caption>
+    <thead><tr><th scope="col">Pedido</th><th scope="col">Cliente</th><th scope="col">Estado</th><th scope="col" class="num">Total</th><th scope="col">Acciones</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">#1042</th><td>Ana Pérez</td><td><span class="badge ok">Pagado</span></td><td class="num">$128.00</td><td></td></tr>
+      <tr><th scope="row">#1043</th><td>Luis Gómez</td><td><span class="badge warn">Pendiente</span></td><td class="num">$54.90</td><td></td></tr>
+      <tr><th scope="row">#1044</th><td>Marta Ruiz</td><td><span class="badge err">Fallido</span></td><td class="num">$310.00</td><td></td></tr>
+      <tr><th scope="row">#1045</th><td>Carlos Díaz</td><td><span class="badge info">Enviado</span></td><td class="num">$76.25</td><td></td></tr>
+    </tbody>
+  </table>
+</div>
+<p id="msg" role="status"></p>
+<script>
+  const t = document.getElementById('t'), msg = document.getElementById('msg');
+  const badge = (tr) => tr.querySelector('.badge');
+  function acts(tr) {
+    const id = tr.cells[0].textContent, paid = badge(tr).classList.contains('ok');
+    tr.cells[4].innerHTML = '<div class="acts"><button data-a="pay"' + (paid ? ' disabled' : '') + ' aria-label="Marcar pagado el pedido ' + id + '">Marcar pagado</button>' +
+      '<button class="del" data-a="del" aria-label="Quitar el pedido ' + id + '">Quitar</button></div>';
+  }
+  [...t.tBodies[0].rows].forEach(acts);
+  t.tBodies[0].addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const tr = b.closest('tr'), id = tr.cells[0].textContent;
+    if (b.dataset.a === 'del') { tr.remove(); msg.textContent = 'Pedido ' + id + ' quitado.'; }
+    else { const s = badge(tr); s.className = 'badge ok'; s.textContent = 'Pagado'; acts(tr); msg.textContent = 'Pedido ' + id + ' marcado como pagado.'; tr.querySelector('button').focus(); }
+  });
+</script>
+</body>
+</html>

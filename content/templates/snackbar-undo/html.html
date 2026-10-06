@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snackbar con deshacer</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:16px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 10px; font-size:18px; letter-spacing:-.02em; }
+  ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+  li { display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--surface); border:2px solid var(--ink); border-radius:10px; }
+  li span { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  li small { font:12px ui-monospace, monospace; color:var(--muted); }
+  .del { font:inherit; font-weight:600; padding:4px 10px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:8px; cursor:pointer; }
+  .del:hover { background:var(--hl); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .empty { margin:0; color:var(--muted); }
+  .snack { position:fixed; left:12px; right:12px; bottom:12px; max-width:420px; margin:0 auto; overflow:hidden; display:flex; align-items:center; gap:12px; padding:12px 12px 15px 14px; background:var(--ink); color:var(--bg); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--accent); animation:up .2s ease-out; }
+  .snack[hidden] { display:none; }
+  .snack p { flex:1; margin:0; }
+  .snack button { font:inherit; font-weight:700; padding:5px 10px; color:var(--ink); background:var(--hl); border:2px solid var(--hl); border-radius:8px; cursor:pointer; }
+  .snack button:hover { background:#fff; }
+  .snack button:focus-visible { outline-color:var(--bg); }
+  .snack::after { content:""; position:absolute; left:0; bottom:0; height:5px; width:100%; background:var(--accent); transform-origin:left; animation:drain var(--ms) linear forwards; }
+  @keyframes up { from { transform:translateY(16px); opacity:0; } }
+  @keyframes drain { to { transform:scaleX(0); } }
+  @media (prefers-reduced-motion:reduce) { .snack { animation:none; } .snack::after { animation:none; display:none; } }
+</style>
+</head>
+<body>
+<h1>Archivos del proyecto</h1>
+<ul id="list">
+  <li><span>propuesta-v3.pdf</span><small>2,4 MB</small><button class="del" type="button">Eliminar</button></li>
+  <li><span>logo-final.svg</span><small>18 KB</small><button class="del" type="button">Eliminar</button></li>
+  <li><span>presupuesto-q4.xlsx</span><small>96 KB</small><button class="del" type="button">Eliminar</button></li>
+</ul>
+<p class="empty" id="empty" hidden>No quedan archivos.</p>
+<div class="snack" id="snack" role="status" hidden>
+  <p id="msg"></p>
+  <button type="button" id="undo">Deshacer (<span id="sec">6</span>)</button>
+</div>
+<script>
+  const MS = 6000, list = document.getElementById('list'), snack = document.getElementById('snack');
+  const empty = document.getElementById('empty'), sec = document.getElementById('sec');
+  let pending = null, tick, timer;
+  const sync = () => { empty.hidden = list.children.length > 0; };
+  const finish = () => {
+    clearInterval(tick); clearTimeout(timer);
+    if (snack.contains(document.activeElement)) (list.querySelector('.del') || document.body).focus();
+    snack.hidden = true; pending = null;
+  };
+
+  list.addEventListener('click', (e) => {
+    const b = e.target.closest('.del'); if (!b) return;
+    const li = b.closest('li');
+    if (pending) finish();
+    pending = { li, next: li.nextElementSibling };
+    li.remove(); sync();
+    document.getElementById('msg').textContent = '«' + li.querySelector('span').textContent + '» eliminado';
+    snack.style.setProperty('--ms', MS + 'ms');
+    snack.hidden = true; void snack.offsetWidth; snack.hidden = false; // reinicia barra y animación
+    let s = MS / 1000; sec.textContent = s;
+    tick = setInterval(() => { sec.textContent = --s; }, 1000);
+    timer = setTimeout(finish, MS);
+    document.getElementById('undo').focus();
+  });
+
+  document.getElementById('undo').addEventListener('click', () => {
+    list.insertBefore(pending.li, pending.next);
+    pending.li.querySelector('.del').focus();
+    finish(); sync();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pending) finish(); });
+</script>
+</body>
+</html>

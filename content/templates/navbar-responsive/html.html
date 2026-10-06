@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px; font:14px/1.5 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  a, button { font:inherit; color:inherit; }
+  :focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  .nav { position:relative; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+  .brand { font-weight:800; font-size:1.15rem; letter-spacing:-.02em; text-decoration:none; }
+  .menu { display:flex; align-items:center; gap:14px; }
+  .menu ul { display:flex; gap:4px; margin:0; padding:0; list-style:none; }
+  .menu a:not(.btn) { display:block; padding:6px 10px; border-radius:8px; font-weight:600; text-decoration:none; }
+  .menu a:not([aria-current]):not(.btn):hover { background:#ffd84d; }
+  .menu a[aria-current] { background:#17130f; color:#fffdf8; }
+  .btn { padding:8px 14px; border:2px solid #17130f; border-radius:10px; background:#ff5a36; font-weight:700; text-decoration:none; box-shadow:2px 2px 0 #17130f; }
+  .btn:hover { transform:translate(2px,2px); box-shadow:0 0 0 #17130f; }
+  .burger { display:none; position:relative; width:44px; height:44px; border:2px solid #17130f; border-radius:10px; background:#ffd84d; cursor:pointer; }
+  .burger span, .burger span::before, .burger span::after { position:absolute; left:0; right:0; height:2px; background:#17130f; content:""; transition:transform .2s; }
+  .burger span { top:50%; left:9px; right:9px; margin-top:-1px; }
+  .burger span::before { transform:translateY(-7px); }
+  .burger span::after { transform:translateY(7px); }
+  .burger[aria-expanded="true"] span { background:transparent; }
+  .burger[aria-expanded="true"] span::before { transform:rotate(45deg); }
+  .burger[aria-expanded="true"] span::after { transform:rotate(-45deg); }
+  main { margin-top:22px; padding:0 4px; }
+  h1 { margin:0 0 4px; font-size:1.6rem; letter-spacing:-.02em; }
+  main p { margin:0; max-width:46ch; color:#6b6258; }
+  @media (max-width:560px) {
+    .burger { display:block; }
+    .menu { display:none; position:absolute; top:calc(100% + 8px); left:0; right:0; z-index:2; flex-direction:column; align-items:stretch; padding:10px; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+    .menu.open { display:flex; }
+    .menu ul { flex-direction:column; }
+    .btn { text-align:center; }
+  }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+</style>
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#">Tinta&amp;Co</a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú"><span></span></button>
+    <nav id="menu" class="menu" aria-label="Principal">
+      <ul>
+        <li><a href="#" aria-current="page">Inicio</a></li>
+        <li><a href="#">Productos</a></li>
+        <li><a href="#">Precios</a></li>
+        <li><a href="#">Contacto</a></li>
+      </ul>
+      <a class="btn" href="#">Crear cuenta</a>
+    </nav>
+  </header>
+  <main>
+    <h1 id="title">Inicio</h1>
+    <p>Prueba el menú: en pantallas estrechas se abre con el botón y se cierra con Esc.</p>
+  </main>
+<script>
+  const burger = document.querySelector('.burger'), menu = document.getElementById('menu'), title = document.getElementById('title');
+  const isOpen = () => burger.getAttribute('aria-expanded') === 'true';
+  const set = (o) => {
+    burger.setAttribute('aria-expanded', o);
+    burger.setAttribute('aria-label', o ? 'Cerrar menú' : 'Abrir menú');
+    menu.classList.toggle('open', o);
+  };
+  burger.addEventListener('click', () => set(!isOpen()));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen()) { set(false); burger.focus(); } });
+  menu.addEventListener('click', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    e.preventDefault();
+    if (!a.classList.contains('btn')) {
+      menu.querySelectorAll('a').forEach((x) => x.removeAttribute('aria-current'));
+      a.setAttribute('aria-current', 'page');
+      title.textContent = a.textContent;
+    }
+    set(false);
+  });
+</script>
+</body>
+</html>

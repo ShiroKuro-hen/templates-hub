@@ -1,0 +1,28 @@
+<div class="flex flex-col gap-2 p-3.5">
+  <form role="search" onsubmit="return false" class="relative mr-1">
+    <svg viewBox="0 0 24 24" aria-hidden="true" class="pointer-events-none absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 fill-none stroke-[#17130f] stroke-2 [stroke-linecap:round]"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="q" type="search" placeholder="Busca un país" aria-label="Buscar países" autocomplete="off"
+      class="h-11 w-full appearance-none rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] pr-11 pl-10 shadow-[4px_4px_0_#17130f] placeholder:text-[#6b6258] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] [&::-webkit-search-cancel-button]:hidden">
+    <button type="button" id="x" aria-label="Limpiar búsqueda" hidden
+      class="absolute top-1/2 right-1.5 grid h-[30px] w-[30px] -translate-y-1/2 place-items-center rounded-lg border-2 border-[#17130f] bg-[#ffd84d] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="h-3.5 w-3.5 fill-none stroke-[#17130f] stroke-[3] [stroke-linecap:round]"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </form>
+  <p id="n" role="status" class="font-mono text-xs text-[#6b6258]"></p>
+  <ul id="list" class="max-h-48 divide-y divide-[#d9d0bd] overflow-auto border-t-2 border-[#17130f]"></ul>
+</div>
+<script>
+  const DATA = ['Argentina', 'Bolivia', 'Chile', 'Colombia', 'Ecuador', 'España', 'México', 'Panamá', 'Perú', 'Uruguay'];
+  const q = document.getElementById('q'), x = document.getElementById('x'), list = document.getElementById('list');
+  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  function render() {
+    const rows = DATA.filter((d) => norm(d).includes(norm(q.value.trim())));
+    x.hidden = !q.value;
+    list.innerHTML = rows.map((d) => `<li class="py-1.5">${d}</li>`).join('') || '<li class="py-3 text-[#6b6258]">Sin resultados. Prueba con otra palabra.</li>';
+    document.getElementById('n').textContent = rows.length + (rows.length === 1 ? ' resultado' : ' resultados');
+  }
+  q.addEventListener('input', render);
+  q.addEventListener('keydown', (e) => { if (e.key === 'Escape') { q.value = ''; render(); } });
+  x.addEventListener('click', () => { q.value = ''; render(); q.focus(); });
+  render();
+</script>

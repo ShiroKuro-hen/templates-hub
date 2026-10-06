@@ -1,0 +1,25 @@
+<button type="button" id="open" aria-haspopup="dialog"
+        class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-2 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+  Eliminar proyecto
+</button>
+
+<dialog id="dlg" aria-labelledby="dlg-title" aria-describedby="dlg-text"
+        class="m-auto w-[min(380px,calc(100%-1.5rem))] rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] p-0 text-[#17130f] shadow-[4px_4px_0_#17130f] backdrop:bg-[#17130f]/55">
+  <form method="dialog" class="p-[18px]">
+    <h2 id="dlg-title" class="mb-1.5 text-lg font-bold tracking-tight">¿Eliminar «Rediseño web»?</h2>
+    <p id="dlg-text" class="mb-[18px] text-[#6b6258]">Se borrarán sus 24 archivos. Esta acción no se puede deshacer.</p>
+    <div class="flex justify-end gap-2.5">
+      <button value="cancel" autofocus
+              class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-2 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Cancelar</button>
+      <button value="delete"
+              class="rounded-[10px] border-2 border-[#17130f] bg-[#d6293e] px-3.5 py-2 font-semibold text-white shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Eliminar</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('dlg'), opener = document.getElementById('open');
+  opener.addEventListener('click', () => dlg.showModal());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close('cancel'); });
+  dlg.addEventListener('close', () => opener.focus());
+</script>

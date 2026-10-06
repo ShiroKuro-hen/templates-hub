@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px; }
+  .profile { display:grid; grid-template-columns:auto 1fr; gap:4px 12px; align-items:center; padding:14px; border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; }
+  .avatar { grid-row:span 2; width:56px; height:56px; display:grid; place-items:center; border:2px solid #17130f; border-radius:50%; background:#ffd84d; font:800 1.25rem system-ui, sans-serif; letter-spacing:-.02em; }
+  .avatar.b { background:#cfd8ff; }
+  .profile h2 { margin:0; font-size:1.05rem; letter-spacing:-.02em; align-self:end; }
+  .role { margin:0; align-self:start; font:600 .75rem ui-monospace, monospace; color:#6b6258; }
+  .bio { grid-column:1 / -1; margin:8px 0 4px; }
+  .acts { grid-column:1 / -1; display:flex; gap:8px; }
+  button { font:600 .85rem system-ui, sans-serif; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; padding:6px 14px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
+  button[aria-pressed="true"] { background:#17130f; color:#fffdf8; }
+  button:hover, button:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
+  button:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  @media (prefers-reduced-motion:no-preference) { button { transition:transform .1s, box-shadow .1s; } }
+</style>
+</head>
+<body>
+<div class="cards">
+  <article class="profile" aria-labelledby="n1">
+    <div class="avatar" aria-hidden="true">AP</div>
+    <h2 id="n1">Ana Pérez</h2>
+    <p class="role">Diseñadora de producto</p>
+    <p class="bio">Diseña interfaces claras para equipos pequeños. <span class="count">248</span> seguidores.</p>
+    <div class="acts">
+      <button type="button" class="follow" aria-pressed="false">Seguir</button>
+      <button type="button" aria-label="Enviar mensaje a Ana Pérez">Mensaje</button>
+    </div>
+  </article>
+  <article class="profile" aria-labelledby="n2">
+    <div class="avatar b" aria-hidden="true">LG</div>
+    <h2 id="n2">Luis Gómez</h2>
+    <p class="role">Desarrollador frontend</p>
+    <p class="bio">Escribe CSS a mano y odia los pop-ups. <span class="count">1.032</span> seguidores.</p>
+    <div class="acts">
+      <button type="button" class="follow" aria-pressed="true">Siguiendo</button>
+      <button type="button" aria-label="Enviar mensaje a Luis Gómez">Mensaje</button>
+    </div>
+  </article>
+</div>
+<script>
+  document.querySelectorAll('.follow').forEach((b) => {
+    const n = b.closest('.profile').querySelector('.count');
+    let v = parseInt(n.textContent.replace(/\D/g, ''), 10);
+    if (b.getAttribute('aria-pressed') === 'true') v -= 1; // base sin el seguidor actual
+    const fmt = (x) => x.toLocaleString('de-DE');
+    b.addEventListener('click', () => {
+      const on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', on);
+      b.textContent = on ? 'Siguiendo' : 'Seguir';
+      n.textContent = fmt(v + (on ? 1 : 0));
+    });
+  });
+</script>
+</body>
+</html>

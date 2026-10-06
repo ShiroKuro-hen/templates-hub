@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modal con dialog</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --err:#d6293e; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  p { margin:0 0 14px; color:var(--muted); }
+  .btn { font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  .btn:hover, .btn:active { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .btn.danger { background:var(--err); color:#fff; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  #result { margin-top:16px; font:13px ui-monospace, monospace; color:var(--ink); }
+  dialog { width:min(380px, calc(100% - 24px)); padding:0; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
+  dialog[open] { animation:pop .18s ease-out; }
+  dialog::backdrop { background:rgba(23,19,15,.55); }
+  dialog form { padding:18px; }
+  dialog h2 { margin:0 0 6px; font-size:18px; letter-spacing:-.02em; }
+  dialog p { margin:0 0 18px; }
+  .actions { display:flex; justify-content:flex-end; gap:10px; }
+  @keyframes pop { from { opacity:0; transform:translateY(8px) scale(.97); } }
+  @media (prefers-reduced-motion:reduce) { dialog[open] { animation:none; } }
+</style>
+</head>
+<body>
+<h1>Rediseño web</h1>
+<p>Proyecto con 24 archivos, actualizado hoy.</p>
+<button type="button" class="btn" id="open" aria-haspopup="dialog">Eliminar proyecto</button>
+<div id="result" role="status"></div>
+
+<dialog id="dlg" aria-labelledby="dlg-title" aria-describedby="dlg-text">
+  <form method="dialog">
+    <h2 id="dlg-title">¿Eliminar «Rediseño web»?</h2>
+    <p id="dlg-text">Se borrarán sus 24 archivos. Esta acción no se puede deshacer.</p>
+    <div class="actions">
+      <button class="btn" value="cancel" autofocus>Cancelar</button>
+      <button class="btn danger" value="delete">Eliminar</button>
+    </div>
+  </form>
+</dialog>
+<script>
+  const dlg = document.getElementById('dlg'), opener = document.getElementById('open'), out = document.getElementById('result');
+  opener.addEventListener('click', () => { dlg.returnValue = ''; dlg.showModal(); }); // Esc deja returnValue vacío
+  // Clic en el fondo: el único caso en que el destino es el propio <dialog> (el form lo cubre).
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close('cancel'); });
+  dlg.addEventListener('close', () => {
+    out.textContent = dlg.returnValue === 'delete' ? 'Proyecto eliminado.' : 'Cancelado, no se borró nada.';
+    opener.focus(); // devuelve el foco al botón que lo abrió
+  });
+</script>
+</body>
+</html>

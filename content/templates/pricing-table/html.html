@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .wrap { overflow-x:auto; border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; }
+  .wrap:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  table { width:100%; min-width:440px; border-collapse:collapse; text-align:center; }
+  caption { position:absolute; left:-9999px; }
+  th, td { padding:10px 12px; border-bottom:1px solid #17130f33; }
+  th[scope="row"] { text-align:left; font-weight:500; }
+  thead th { border-bottom:2px solid #17130f; vertical-align:bottom; }
+  thead th:first-child { text-align:left; }
+  .plan { display:block; font-size:1.05rem; font-weight:700; letter-spacing:-.02em; }
+  .price { display:block; font:600 .8rem ui-monospace, monospace; color:#6b6258; }
+  .tag { display:inline-block; margin-bottom:4px; padding:1px 8px; border:2px solid #17130f; border-radius:99px; background:#ff5a36; font:700 .7rem ui-monospace, monospace; color:#17130f; }
+  .hl { background:#ffd84d55; border-left:2px solid #17130f; border-right:2px solid #17130f; }
+  thead .hl { background:#ffd84d; border-top:2px solid #17130f; }
+  tbody tr:last-child .hl { border-bottom:2px solid #17130f; }
+  .yes { color:#1f9d55; font-weight:800; } .no { color:#d6293e; font-weight:800; }
+  .sr { position:absolute; left:-9999px; }
+</style>
+</head>
+<body>
+<div class="wrap" role="region" aria-labelledby="cap" tabindex="0">
+  <table>
+    <caption id="cap">Comparativa de planes</caption>
+    <thead>
+      <tr>
+        <td></td>
+        <th scope="col"><span class="plan">Free</span><span class="price">$0/mes</span></th>
+        <th scope="col" class="hl"><span class="tag">Recomendado</span><span class="plan">Pro</span><span class="price">$12/mes</span></th>
+        <th scope="col"><span class="plan">Team</span><span class="price">$39/mes</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><th scope="row">Proyectos</th><td>3</td><td class="hl">Ilimitados</td><td>Ilimitados</td></tr>
+      <tr><th scope="row">Exportar a PDF</th><td><span class="no" aria-hidden="true">✕</span><span class="sr">No incluido</span></td><td class="hl"><span class="yes" aria-hidden="true">✓</span><span class="sr">Incluido</span></td><td><span class="yes" aria-hidden="true">✓</span><span class="sr">Incluido</span></td></tr>
+      <tr><th scope="row">Dominio propio</th><td><span class="no" aria-hidden="true">✕</span><span class="sr">No incluido</span></td><td class="hl"><span class="yes" aria-hidden="true">✓</span><span class="sr">Incluido</span></td><td><span class="yes" aria-hidden="true">✓</span><span class="sr">Incluido</span></td></tr>
+      <tr><th scope="row">Usuarios</th><td>1</td><td class="hl">1</td><td>Hasta 10</td></tr>
+      <tr><th scope="row">Soporte prioritario</th><td><span class="no" aria-hidden="true">✕</span><span class="sr">No incluido</span></td><td class="hl"><span class="no" aria-hidden="true">✕</span><span class="sr">No incluido</span></td><td><span class="yes" aria-hidden="true">✓</span><span class="sr">Incluido</span></td></tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<div class="p-3">
+  <p id="st" role="status" class="mb-2 font-mono text-[11px] text-[#6b6258]">Clic para copiar el SVG</p>
+  <ul class="grid grid-cols-4 gap-2 pr-1 pb-1">
+    <li>
+      <button type="button" data-icon='<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>' aria-label="Copiar SVG de inicio"
+        class="flex w-full flex-col items-center gap-0.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-0.5 pt-2 pb-1.5 font-mono text-[11px] shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] motion-safe:transition">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>
+        inicio
+      </button>
+    </li>
+    <li>
+      <button type="button" data-icon='<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>' aria-label="Copiar SVG de buscar"
+        class="flex w-full flex-col items-center gap-0.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-0.5 pt-2 pb-1.5 font-mono text-[11px] shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] motion-safe:transition">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        buscar
+      </button>
+    </li>
+    <li>
+      <button type="button" data-icon='<path d="M4 12l5 5L20 6"/>' aria-label="Copiar SVG de listo"
+        class="flex w-full flex-col items-center gap-0.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-0.5 pt-2 pb-1.5 font-mono text-[11px] shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] motion-safe:transition">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M4 12l5 5L20 6"/></svg>
+        listo
+      </button>
+    </li>
+    <li>
+      <button type="button" data-icon='<path d="M5 5l14 14M19 5L5 19"/>' aria-label="Copiar SVG de cerrar"
+        class="flex w-full flex-col items-center gap-0.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-0.5 pt-2 pb-1.5 font-mono text-[11px] shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] motion-safe:transition">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M5 5l14 14M19 5L5 19"/></svg>
+        cerrar
+      </button>
+    </li>
+  </ul>
+</div>
+<script>
+  document.querySelectorAll('[data-icon]').forEach((b) => b.addEventListener('click', async () => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${b.dataset.icon}</svg>`;
+    await navigator.clipboard.writeText(svg);
+    document.getElementById('st').textContent = 'Copiado: ' + b.textContent.trim();
+  }));
+</script>

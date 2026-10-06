@@ -1,0 +1,1 @@
+{ "title": "Sidebar colapsable", "category": "navegacion", "description": "Menú lateral con secciones que se contrae a solo iconos, con aria-expanded y tooltips.", "tags": ["sidebar", "navegacion", "iconos", "a11y"] }

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 16px 20px; font: 14px system-ui, sans-serif; background: #f6f1e7; color: #17130f; }
+  h1 { margin: 0 0 14px; font-size: 1.2rem; letter-spacing: -.02em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px 16px; }
+  .cell { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+  code { font: 11px ui-monospace, monospace; color: #6b6258; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px system-ui, sans-serif; padding: 9px 16px;
+    border: 2px solid #17130f; border-radius: 10px; background: #ff5a36; color: #17130f; box-shadow: 4px 4px 0 #17130f;
+    cursor: pointer; transition: transform .1s, box-shadow .1s; }
+  .btn:hover, .btn.is-hover, .btn:active, .btn.is-active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
+  .btn.is-active { background: #ffd84d; }
+  .btn:active { background: #ffd84d; }
+  .btn:focus-visible, .btn.is-focus { outline: 3px solid #ff5a36; outline-offset: 3px; }
+  .btn:disabled { background: #ebe5d8; color: #6b6258; border-color: #6b6258; box-shadow: none; transform: none; cursor: not-allowed; }
+  .btn[aria-busy="true"] { cursor: progress; transform: none; box-shadow: 4px 4px 0 #17130f; background: #ff5a36; }
+  .spin { width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
+    animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .spin { animation: none; } }
+</style>
+</head>
+<body>
+  <h1>Estados del botón</h1>
+  <div class="grid">
+    <div class="cell"><button class="btn" id="go" type="button">Guardar</button><code>normal · púlsalo</code></div>
+    <div class="cell"><button class="btn is-hover" type="button" tabindex="-1">Guardar</button><code>hover</code></div>
+    <div class="cell"><button class="btn is-active" type="button" tabindex="-1">Guardar</button><code>active</code></div>
+    <div class="cell"><button class="btn is-focus" type="button" tabindex="-1">Guardar</button><code>foco</code></div>
+    <div class="cell"><button class="btn" type="button" disabled>Guardar</button><code>disabled</code></div>
+    <div class="cell"><button class="btn" type="button" aria-busy="true" aria-disabled="true"><span class="spin" aria-hidden="true"></span>Guardando…</button><code>cargando</code></div>
+  </div>
+  <p class="sr" role="status" id="msg"></p>
+<script>
+  const go = document.getElementById('go'), msg = document.getElementById('msg');
+  go.addEventListener('click', () => {
+    if (go.getAttribute('aria-busy') === 'true') return; // aria-disabled: conserva el foco, ignora clics
+    go.setAttribute('aria-busy', 'true');
+    go.innerHTML = '<span class="spin" aria-hidden="true"></span>Guardando…';
+    msg.textContent = 'Guardando cambios';
+    setTimeout(() => {
+      go.removeAttribute('aria-busy');
+      go.textContent = 'Guardar';
+      msg.textContent = 'Cambios guardados';
+    }, 2000);
+  });
+</script>
+</body>
+</html>

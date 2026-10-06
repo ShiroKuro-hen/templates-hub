@@ -1,0 +1,45 @@
+<div class="p-5 text-sm">
+  <p id="status" aria-live="polite" class="mb-4 font-mono text-[13px] text-[#6b6258]"></p>
+  <nav aria-label="Paginación" class="flex items-center justify-center gap-0.5 sm:gap-2">
+    <button id="prev" type="button" aria-label="Página anterior" class="pg">← <span class="max-sm:hidden">Anterior</span></button>
+    <ul id="pages" class="m-0 flex list-none items-center gap-1 p-0 sm:gap-1.5"></ul>
+    <button id="next" type="button" aria-label="Página siguiente" class="pg"><span class="max-sm:hidden">Siguiente</span> →</button>
+  </nav>
+</div>
+
+<script>
+  // Clases Tailwind repetidas (cópialas a @apply .pg si prefieres)
+  const BTN = 'h-9 min-w-[30px] rounded-[10px] border-2 border-[#17130f] px-1 font-bold shadow-[3px_3px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] sm:h-10 sm:min-w-10 sm:px-3 sm:shadow-[4px_4px_0_#17130f]';
+  const OFF = 'bg-[#fffdf8] hover:translate-x-0.5 hover:translate-y-0.5 hover:bg-[#ffd84d] hover:shadow-[2px_2px_0_#17130f]';
+  const ON = 'bg-[#17130f] text-[#fffdf8]';
+  const TOTAL = 12, PER = 10, COUNT = 120;
+  let page = 4;
+  const ul = document.getElementById('pages'), prev = document.getElementById('prev'),
+        next = document.getElementById('next'), status = document.getElementById('status');
+  [prev, next].forEach((b) => (b.className = `${BTN} ${OFF} aria-disabled:cursor-not-allowed aria-disabled:opacity-[.45] aria-disabled:shadow-none aria-disabled:hover:translate-x-0 aria-disabled:hover:translate-y-0 aria-disabled:hover:bg-[#fffdf8]`));
+
+  function pageList(p, total) {
+    const nums = [...new Set([1, p - 1, p, p + 1, total])].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
+    const out = []; let last = 0;
+    for (const n of nums) {
+      if (n - last === 2) out.push(last + 1);
+      else if (n - last > 2) out.push('…');
+      out.push(n); last = n;
+    }
+    return out;
+  }
+  function render(focusCurrent) {
+    ul.innerHTML = pageList(page, TOTAL).map((n) => n === '…'
+      ? '<li aria-hidden="true" class="min-w-3.5 text-center text-[#6b6258] sm:min-w-5">…</li>'
+      : `<li><button type="button" data-p="${n}" aria-label="Página ${n}"${n === page ? ' aria-current="page"' : ''} class="${BTN} ${n === page ? ON : OFF}">${n}</button></li>`).join('');
+    prev.setAttribute('aria-disabled', page === 1);
+    next.setAttribute('aria-disabled', page === TOTAL);
+    status.textContent = `Mostrando ${(page - 1) * PER + 1}–${Math.min(page * PER, COUNT)} de ${COUNT} resultados`;
+    if (focusCurrent) ul.querySelector('[aria-current]').focus();
+  }
+  const go = (p, f) => { page = Math.min(TOTAL, Math.max(1, p)); render(f); };
+  ul.addEventListener('click', (e) => { const b = e.target.closest('[data-p]'); if (b) go(+b.dataset.p, true); });
+  prev.addEventListener('click', () => go(page - 1));
+  next.addEventListener('click', () => go(page + 1));
+  render();
+</script>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:16px 20px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  :focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .btn { margin-bottom:14px; padding:7px 14px; font:inherit; font-weight:700; color:inherit; background:#ffd84d; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
+  .btn:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:16px; align-items:start; }
+  .box { overflow:hidden; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+  .pad { padding:12px; }
+  .sk { display:block; background:linear-gradient(100deg, #e9e2d3 30%, #fffdf8 50%, #e9e2d3 70%) 0 0 / 200% 100%; border-radius:6px; animation:shimmer 1.4s linear infinite; }
+  @keyframes shimmer { to { background-position:-200% 0; } }
+  .media { height:84px; border-radius:0; border-bottom:2px solid #17130f; }
+  .line { height:12px; margin-top:8px; } .w60 { width:60%; } .w40 { width:40%; } .title { height:16px; width:75%; }
+  .row { display:flex; align-items:center; gap:10px; padding:10px 12px; }
+  .row + .row { border-top:1px solid #17130f33; }
+  .row div { flex:1; } .row .line { margin:0; } .row .line + .line { margin-top:6px; }
+  .avatar { flex:none; width:34px; height:34px; border-radius:50%; }
+  .real .media { background:#ffd84d; }
+  .real h3 { margin:0; font-size:1rem; letter-spacing:-.02em; } .real p { margin:2px 0 0; color:#6b6258; }
+  .real .avatar { display:grid; place-items:center; background:#ff5a36; border:2px solid #17130f; font-weight:700; }
+  @media (prefers-reduced-motion:reduce) { .sk { animation:none; } }
+</style>
+</head>
+<body>
+  <button class="btn" id="btn" type="button">Mostrar contenido</button>
+  <p class="sr" id="live" aria-live="polite">Cargando contenido</p>
+  <div class="grid" id="demo" aria-busy="true">
+    <article class="box">
+      <div class="skel" aria-hidden="true">
+        <span class="sk media"></span>
+        <div class="pad"><span class="sk title"></span><span class="sk line"></span><span class="sk line w60"></span></div>
+      </div>
+      <div class="real" hidden>
+        <div class="media"></div>
+        <div class="pad"><h3>Cerámica de otoño</h3><p>Taller de 3 horas con arcilla local.</p></div>
+      </div>
+    </article>
+    <div class="box">
+      <div class="skel" aria-hidden="true">
+        <div class="row"><span class="sk avatar"></span><div><span class="sk line"></span><span class="sk line w60"></span></div></div>
+        <div class="row"><span class="sk avatar"></span><div><span class="sk line"></span><span class="sk line w40"></span></div></div>
+        <div class="row"><span class="sk avatar"></span><div><span class="sk line"></span><span class="sk line w60"></span></div></div>
+      </div>
+      <ul class="real" hidden style="margin:0;padding:0;list-style:none">
+        <li class="row"><span class="avatar">A</span><div><strong>Ana P.</strong><p>Reservó el taller</p></div></li>
+        <li class="row"><span class="avatar">L</span><div><strong>Luis G.</strong><p>Dejó una reseña</p></div></li>
+        <li class="row"><span class="avatar">M</span><div><strong>Marta R.</strong><p>Pidió un cambio</p></div></li>
+      </ul>
+    </div>
+  </div>
+<script>
+  const demo = document.getElementById('demo'), btn = document.getElementById('btn'), live = document.getElementById('live');
+  let loaded = false;
+  btn.addEventListener('click', () => {
+    loaded = !loaded;
+    demo.setAttribute('aria-busy', !loaded);
+    demo.querySelectorAll('.skel').forEach((e) => (e.hidden = loaded));
+    demo.querySelectorAll('.real').forEach((e) => (e.hidden = !loaded));
+    btn.textContent = loaded ? 'Volver a cargar' : 'Mostrar contenido';
+    live.textContent = loaded ? 'Contenido cargado' : 'Cargando contenido';
+  });
+</script>
+</body>
+</html>

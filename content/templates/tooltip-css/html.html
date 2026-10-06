@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tooltips solo CSS</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  .lead { margin:0 0 56px; color:var(--muted); }
+  .row { display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-bottom:56px; }
+  .btn { font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  .btn:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .help { width:28px; height:28px; padding:0; border-radius:50%; font:700 14px ui-monospace, monospace; background:var(--hl); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+
+  .tip { position:relative; display:inline-block; }
+  .tip [role="tooltip"] { position:absolute; left:50%; bottom:calc(100% + 8px); z-index:10; width:max-content; max-width:200px; padding:6px 10px; font-size:13px; line-height:1.35; text-align:center; color:var(--bg); background:var(--ink); border-radius:8px; opacity:0; visibility:hidden; transform:translate(-50%, 4px); transition:opacity .15s, transform .15s, visibility 0s .15s; }
+  .tip [role="tooltip"]::after { content:""; position:absolute; left:50%; top:100%; margin-left:-6px; border:6px solid transparent; border-top-color:var(--ink); }
+  .tip [role="tooltip"]::before { content:""; position:absolute; left:0; right:0; top:100%; height:8px; } /* puente: el puntero no la pierde */
+  .tip.below [role="tooltip"] { bottom:auto; top:calc(100% + 8px); transform:translate(-50%, -4px); }
+  .tip.below [role="tooltip"]::after { top:auto; bottom:100%; border-top-color:transparent; border-bottom-color:var(--ink); }
+  .tip.below [role="tooltip"]::before { top:auto; bottom:100%; }
+  .tip:hover [role="tooltip"], .tip:has(:focus-visible) [role="tooltip"] { opacity:1; visibility:visible; transform:translate(-50%, 0); transition-delay:0s; }
+  @media (prefers-reduced-motion:reduce) { .tip [role="tooltip"] { transition:none; } }
+</style>
+</head>
+<body>
+<h1>Barra de acciones</h1>
+<p class="lead">Pasa el cursor o usa Tab sobre cada botón.</p>
+
+<div class="row">
+  <span class="tip">
+    <button type="button" class="btn" aria-describedby="t1">Copiar</button>
+    <span role="tooltip" id="t1">Copia el enlace al portapapeles</span>
+  </span>
+  <span class="tip">
+    <button type="button" class="btn" aria-describedby="t2">Compartir</button>
+    <span role="tooltip" id="t2">Invita a tu equipo por correo</span>
+  </span>
+  <span class="tip below">
+    <button type="button" class="btn help" aria-describedby="t3" aria-label="Ayuda sobre archivar">?</button>
+    <span role="tooltip" id="t3">Archivar oculta el proyecto sin borrarlo. Puedes recuperarlo cuando quieras.</span>
+  </span>
+</div>
+</body>
+</html>

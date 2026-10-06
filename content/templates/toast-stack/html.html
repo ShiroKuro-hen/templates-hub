@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toasts apilables</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; padding:20px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  p { margin:0 0 16px; color:var(--muted); }
+  .row { display:flex; flex-wrap:wrap; gap:10px; }
+  button { font:inherit; font-weight:600; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; padding:8px 14px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  button:hover, button:active { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .toasts { position:fixed; right:12px; bottom:12px; width:min(320px, calc(100% - 24px)); display:flex; flex-direction:column; gap:8px; margin:0; padding:0; list-style:none; }
+  .toast { --c:#3b5bfd; display:flex; align-items:center; gap:10px; padding:10px 10px 10px 12px; background:var(--surface); border:2px solid var(--ink); border-left:8px solid var(--c); border-radius:10px; box-shadow:4px 4px 0 var(--ink); animation:in .2s ease-out; }
+  .toast.ok { --c:#1f9d55; } .toast.warn { --c:#e0a800; } .toast.err { --c:#d6293e; }
+  .toast span { flex:1; }
+  .toast b { display:block; }
+  .toast small { color:var(--muted); }
+  .toast button { padding:2px 8px; box-shadow:none; font-size:16px; line-height:1.2; }
+  .toast.out { opacity:0; transform:translateX(24px); transition:.2s; }
+  @keyframes in { from { opacity:0; transform:translateY(12px); } }
+  @media (prefers-reduced-motion:reduce) { .toast { animation:none; } .toast.out { transition:none; transform:none; } }
+</style>
+</head>
+<body>
+<h1>Avisos emergentes</h1>
+<p>Se apilan y se cierran solos a los 5 s. Pausa con el cursor.</p>
+<div class="row">
+  <button data-t="ok">Guardar</button>
+  <button data-t="err">Falla de red</button>
+  <button data-t="info">Nuevo mensaje</button>
+  <button data-t="warn">Poco espacio</button>
+</div>
+<ul class="toasts" id="toasts" aria-live="polite" aria-label="Notificaciones"></ul>
+<script>
+  const MSG = {
+    ok:   ['Cambios guardados', 'Tu perfil ya está actualizado.'],
+    err:  ['No se pudo conectar', 'Revisa tu conexión e inténtalo de nuevo.'],
+    info: ['Mensaje nuevo de Ana', '«¿Revisamos el informe hoy?»'],
+    warn: ['Almacenamiento al 90 %', 'Libera espacio para seguir subiendo.'],
+  };
+  const box = document.getElementById('toasts');
+  function toast(type) {
+    const [title, text] = MSG[type];
+    const li = document.createElement('li');
+    li.className = 'toast ' + type;
+    li.setAttribute('role', type === 'err' ? 'alert' : 'status');
+    li.innerHTML = '<span><b></b><small></small></span><button type="button" aria-label="Cerrar aviso">×</button>';
+    li.querySelector('b').textContent = title;
+    li.querySelector('small').textContent = text;
+    let timer;
+    const close = () => { clearTimeout(timer); li.classList.add('out'); setTimeout(() => li.remove(), 200); };
+    const start = () => { timer = setTimeout(close, 5000); };
+    li.querySelector('button').onclick = close;
+    li.onmouseenter = () => clearTimeout(timer);
+    li.onmouseleave = start;
+    box.append(li);
+    while (box.children.length > 4) box.firstElementChild.remove();
+    start();
+  }
+  document.querySelectorAll('[data-t]').forEach((b) => b.addEventListener('click', () => toast(b.dataset.t)));
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px 20px; font:14px/1.5 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  :focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  .empty { max-width:440px; margin:0 auto; padding:14px 20px 18px; text-align:center; background:#fffdf8; border:2px dashed #17130f; border-radius:10px; }
+  .empty svg { display:block; width:128px; height:auto; margin:0 auto; }
+  .empty h2 { margin:4px 0 2px; font-size:1.25rem; letter-spacing:-.02em; }
+  .empty p { max-width:34ch; margin:0 auto 14px; color:#6b6258; }
+  .actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:6px 14px; }
+  .btn { padding:9px 18px; font:inherit; font-weight:700; color:#17130f; background:#ff5a36; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
+  .btn:hover, .btn:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
+  .link { padding:6px; font:inherit; font-weight:600; color:inherit; background:none; border:0; border-radius:6px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+  .empty .note { min-height:1.5em; margin:10px 0 0; font:600 12px ui-monospace, monospace; color:#1f7a45; }
+  @media (prefers-reduced-motion:reduce) { .btn { transition:none; } }
+</style>
+</head>
+<body>
+  <section class="empty" aria-labelledby="t">
+    <svg viewBox="0 0 160 112" fill="none" stroke="#17130f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <ellipse cx="80" cy="104" rx="46" ry="5" fill="#17130f1f" stroke="none"/>
+      <circle cx="80" cy="20" r="10" stroke-dasharray="4 6"/>
+      <path d="M126 14v14M119 21h14" stroke="#3b5bfd"/>
+      <path d="M26 66l12-16h22l6 16zM134 66l-12-16h-22l-6 16z" fill="#ffd84d"/>
+      <rect x="26" y="66" width="108" height="34" rx="5" fill="#fffdf8"/>
+      <rect x="60" y="76" width="40" height="9" rx="4.5" fill="#ff5a36"/>
+    </svg>
+    <h2 id="t">Aún no tienes proyectos</h2>
+    <p>Crea el primero para empezar a organizar tu trabajo.</p>
+    <div class="actions">
+      <button class="btn" id="create" type="button">Crear proyecto</button>
+      <button class="link" type="button">Importar desde CSV</button>
+    </div>
+    <p class="note" id="note" role="status"></p>
+  </section>
+<script>
+  document.getElementById('create').addEventListener('click', () => {
+    document.getElementById('note').textContent = 'Proyecto creado: «Sin título». Aquí abrirías el editor.';
+  });
+</script>
+</body>
+</html>

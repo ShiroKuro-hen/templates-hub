@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; font: 14px system-ui, sans-serif; background: #f6f1e7; color: #17130f; }
+  h1 { margin: 0 0 14px; font-size: 1.2rem; letter-spacing: -.02em; }
+  .box { padding: 12px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  li { display: inline-flex; align-items: center; gap: 2px; padding: 2px 2px 2px 12px; border: 2px solid #17130f; border-radius: 999px; background: #ffd84d; font-weight: 600; }
+  li button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none;
+    font-size: 16px; line-height: 1; color: #17130f; cursor: pointer; }
+  li button:hover { background: #17130f; color: #ffd84d; }
+  button:focus-visible, input:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
+  input { width: 100%; margin-top: 12px; padding: 8px 10px; border: 2px solid #17130f; border-radius: 10px; background: #fff; font: inherit; color: #17130f; }
+  .empty { margin: 0; color: #6b6258; }
+  .hint { margin: 10px 0 0; font: 12px ui-monospace, monospace; color: #6b6258; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+</style>
+</head>
+<body>
+  <h1>Etiquetas del artículo</h1>
+  <div class="box">
+    <ul id="tags" aria-label="Etiquetas actuales">
+      <li><span>diseño</span><button type="button" aria-label="Quitar etiqueta diseño">×</button></li>
+      <li><span>accesibilidad</span><button type="button" aria-label="Quitar etiqueta accesibilidad">×</button></li>
+      <li><span>css</span><button type="button" aria-label="Quitar etiqueta css">×</button></li>
+      <li><span>tutorial</span><button type="button" aria-label="Quitar etiqueta tutorial">×</button></li>
+    </ul>
+    <p class="empty" id="empty" hidden>Sin etiquetas. Escribe una y pulsa Enter.</p>
+    <input id="new" type="text" aria-label="Añadir etiqueta" placeholder="Añadir etiqueta y pulsar Enter" autocomplete="off">
+  </div>
+  <p class="hint">Supr o Retroceso sobre la × elimina</p>
+  <p class="sr" role="status" id="msg"></p>
+
+<script>
+  const list = document.getElementById('tags'), input = document.getElementById('new');
+  const msg = document.getElementById('msg'), empty = document.getElementById('empty');
+  const sync = () => { empty.hidden = list.children.length > 0; };
+
+  function remove(li) {
+    const next = (li.nextElementSibling || li.previousElementSibling)?.querySelector('button') || input;
+    const name = li.querySelector('span').textContent;
+    li.remove();
+    next.focus();
+    msg.textContent = 'Etiqueta ' + name + ' eliminada';
+    sync();
+  }
+  list.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) remove(b.closest('li')); });
+  list.addEventListener('keydown', (e) => {
+    if ((e.key === 'Delete' || e.key === 'Backspace') && e.target.matches('button')) { e.preventDefault(); remove(e.target.closest('li')); }
+  });
+
+  input.addEventListener('keydown', (e) => {
+    const v = input.value.trim();
+    if (e.key !== 'Enter' || !v) return;
+    e.preventDefault();
+    const dup = [...list.querySelectorAll('span')].some((s) => s.textContent.toLowerCase() === v.toLowerCase());
+    msg.textContent = dup ? 'La etiqueta ' + v + ' ya existe' : 'Etiqueta ' + v + ' añadida';
+    if (!dup) {
+      const li = document.createElement('li');
+      li.innerHTML = '<span></span><button type="button">×</button>';
+      li.firstChild.textContent = v;
+      li.lastChild.setAttribute('aria-label', 'Quitar etiqueta ' + v);
+      list.append(li);
+      sync();
+    }
+    input.value = '';
+  });
+</script>
+</body>
+</html>

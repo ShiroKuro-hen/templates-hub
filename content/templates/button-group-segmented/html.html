@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; font: 14px system-ui, sans-serif; background: #f6f1e7; color: #17130f; }
+  h2 { margin: 0 0 8px; font-size: 1rem; letter-spacing: -.02em; }
+  section { margin-bottom: 20px; }
+  .out { margin: 12px 0 0; color: #6b6258; font-family: ui-monospace, monospace; font-size: 12px; }
+  .sample { margin: 12px 0 0; font-size: 1rem; }
+
+  .seg { display: inline-flex; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
+  .seg button { font: 600 14px system-ui, sans-serif; padding: 8px 16px; border: 0; background: transparent; color: #17130f; cursor: pointer; }
+  .seg button + button { border-left: 2px solid #17130f; }
+  .seg button:first-child { border-radius: 8px 0 0 8px; }
+  .seg button:last-child { border-radius: 0 8px 8px 0; }
+  .seg button:hover { background: #ffd84d; }
+  .seg button[aria-pressed="true"] { background: #17130f; color: #fffdf8; }
+  .seg button:focus-visible { outline: 3px solid #ff5a36; outline-offset: -6px; }
+  .seg button[aria-pressed="true"]:focus-visible { outline-color: #ffd84d; }
+</style>
+</head>
+<body>
+  <section>
+    <h2>Periodo</h2>
+    <div class="seg" role="group" aria-label="Periodo del informe" id="period">
+      <button type="button" aria-pressed="false">Día</button>
+      <button type="button" aria-pressed="true">Semana</button>
+      <button type="button" aria-pressed="false">Mes</button>
+      <button type="button" aria-pressed="false">Año</button>
+    </div>
+    <p class="out" aria-live="polite" id="period-out">Mostrando: Semana</p>
+  </section>
+
+  <section>
+    <h2>Formato</h2>
+    <div class="seg" role="group" aria-label="Formato de texto" id="fmt">
+      <button type="button" aria-pressed="true" aria-label="Negrita" data-s="font-weight:800"><b>N</b></button>
+      <button type="button" aria-pressed="false" aria-label="Cursiva" data-s="font-style:italic"><i>C</i></button>
+      <button type="button" aria-pressed="false" aria-label="Subrayado" data-s="text-decoration:underline"><u>S</u></button>
+    </div>
+    <p class="sample" id="sample">Texto de ejemplo</p>
+  </section>
+
+<script>
+  const period = document.getElementById('period');
+  period.addEventListener('click', (e) => {            // selección única
+    const b = e.target.closest('button'); if (!b) return;
+    period.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    document.getElementById('period-out').textContent = 'Mostrando: ' + b.textContent;
+  });
+
+  const fmt = document.getElementById('fmt'), sample = document.getElementById('sample');
+  const paint = () => { sample.style.cssText = [...fmt.querySelectorAll('[aria-pressed=true]')].map((x) => x.dataset.s).join(';'); };
+  fmt.addEventListener('click', (e) => {               // selección múltiple
+    const b = e.target.closest('button'); if (!b) return;
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+    paint();
+  });
+  paint();
+</script>
+</body>
+</html>

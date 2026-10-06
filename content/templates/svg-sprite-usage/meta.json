@@ -1,0 +1,1 @@
+{ "title": "Sprite SVG con symbol y use", "category": "iconos", "description": "Define iconos una vez con <symbol> y reutilízalos con <use>, con color y tamaño.", "tags": ["svg", "sprite", "symbol"] }

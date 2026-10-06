@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkbox, radio y switch</title>
+<style>
+  :root { --ink:#17130f; --paper:#f6f1e7; --surface:#fffdf8; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px; font:14px/1.3 system-ui, sans-serif; background:var(--paper); color:var(--ink); }
+  .cols { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:12px; }
+  fieldset { margin:0; padding:10px 12px 6px; background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
+  legend { padding:0 6px; font-weight:800; letter-spacing:-.01em; }
+  .opt { display:flex; align-items:center; gap:10px; min-height:34px; cursor:pointer; }
+  .opt:has(:disabled) { color:var(--muted); cursor:not-allowed; }
+  input { flex:none; position:relative; appearance:none; margin:0; width:22px; height:22px; background:var(--surface); border:2px solid var(--ink); cursor:inherit; }
+  input:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  input:disabled { border-style:dashed; background:#ebe4d4; }
+  input::before { content:""; position:absolute; opacity:0; }
+  input:checked::before { opacity:1; }
+  [type=checkbox] { border-radius:6px; }
+  [type=checkbox]:checked { background:var(--hl); }
+  [type=checkbox]::before { left:5px; top:2px; width:6px; height:11px; border:solid var(--ink); border-width:0 2.5px 2.5px 0; transform:rotate(45deg); }
+  [type=radio] { border-radius:50%; }
+  [type=radio]::before { inset:3px; border-radius:50%; background:var(--ink); }
+  [type=radio]:checked { background:var(--hl); }
+  [role=switch] { width:44px; height:26px; border-radius:13px; }
+  [role=switch]::before { opacity:1; left:2px; top:2px; width:18px; height:18px; border-radius:50%; background:var(--ink); }
+  [role=switch]:checked { background:var(--accent); }
+  [role=switch]:checked::before { transform:translateX(18px); background:var(--surface); }
+  @media (prefers-reduced-motion:no-preference) { input, input::before { transition:transform .15s, background .15s; } }
+  .row { grid-column:1 / -1; }
+</style>
+</head>
+<body>
+  <div class="cols">
+    <fieldset>
+      <legend>Avisos por</legend>
+      <label class="opt"><input type="checkbox" name="av" checked> Correo</label>
+      <label class="opt"><input type="checkbox" name="av"> SMS</label>
+      <label class="opt"><input type="checkbox" name="av" checked disabled> Push (obligatorio)</label>
+    </fieldset>
+    <fieldset>
+      <legend>Plan</legend>
+      <label class="opt"><input type="radio" name="plan" checked> Gratis</label>
+      <label class="opt"><input type="radio" name="plan"> Pro</label>
+      <label class="opt"><input type="radio" name="plan" disabled> Equipo (agotado)</label>
+    </fieldset>
+    <fieldset class="row">
+      <legend>Preferencias</legend>
+      <label class="opt"><input type="checkbox" role="switch" checked> Sincronizar en segundo plano</label>
+      <label class="opt"><input type="checkbox" role="switch"> Modo ahorro de datos</label>
+    </fieldset>
+  </div>
+</body>
+</html>

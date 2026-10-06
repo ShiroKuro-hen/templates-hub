@@ -1,0 +1,24 @@
+<article class="flex flex-col overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] text-sm text-[#17130f] shadow-[4px_4px_0_#17130f]" aria-labelledby="t1">
+  <svg viewBox="0 0 160 90" aria-hidden="true" focusable="false" class="block aspect-video h-auto w-full border-b-2 border-[#17130f]">
+    <rect width="160" height="90" fill="#ffd84d"/>
+    <circle cx="118" cy="30" r="14" fill="#ff5a36" stroke="#17130f" stroke-width="2"/>
+    <path d="M0 90V62l34-26 30 28 28-18 68 36z" fill="#17130f"/>
+    <path d="M0 90V74l30-14 34 16 40-12 56 26z" fill="#1f9d55" stroke="#17130f" stroke-width="2"/>
+  </svg>
+  <div class="flex flex-1 flex-col gap-1.5 px-3.5 pb-3.5 pt-3">
+    <h2 id="t1" class="text-[1.05rem] font-bold tracking-tight">Cinco rutas para un fin de semana</h2>
+    <p class="flex flex-wrap gap-x-3 font-mono text-xs font-semibold text-[#4d453c]"><span>12 oct 2026</span><span>5 min de lectura</span></p>
+    <div class="mt-auto flex gap-2 pt-1.5">
+      <button type="button" aria-label="Leer el artículo Cinco rutas para un fin de semana" class="rounded-[10px] border-2 border-[#17130f] bg-[#ff5a36] px-3.5 py-1.5 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] focus-visible:outline-offset-2 motion-safe:transition">Leer artículo</button>
+      <button type="button" id="guardar" aria-pressed="false" class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-1.5 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] aria-pressed:bg-[#17130f] aria-pressed:text-[#fffdf8] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] focus-visible:outline-offset-2 motion-safe:transition">Guardar</button>
+    </div>
+  </div>
+</article>
+<script>
+  const g = document.getElementById('guardar');
+  g.addEventListener('click', () => {
+    const on = g.getAttribute('aria-pressed') !== 'true';
+    g.setAttribute('aria-pressed', on);
+    g.textContent = on ? 'Guardado' : 'Guardar';
+  });
+</script>

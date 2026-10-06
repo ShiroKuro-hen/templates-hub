@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:12px; font:14px/1.5 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  :focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  .app { display:flex; align-items:flex-start; gap:16px; }
+  .side { position:relative; flex:none; width:224px; padding:8px; overflow:hidden; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; transition:width .2s; }
+  .side.collapsed { width:64px; }
+  .head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 4px 8px; }
+  .brand { font-weight:800; font-size:1.1rem; letter-spacing:-.02em; white-space:nowrap; }
+  .toggle { flex:none; display:grid; place-items:center; width:34px; height:34px; color:inherit; background:#ffd84d; border:2px solid #17130f; border-radius:8px; cursor:pointer; }
+  .toggle svg { transition:transform .2s; }
+  .collapsed .toggle svg { transform:rotate(180deg); }
+  .collapsed .head { justify-content:center; padding-inline:0; }
+  .grp + .grp { margin-top:8px; padding-top:6px; border-top:2px solid #17130f1f; }
+  .sec { margin:4px 8px; font:600 11px ui-monospace, monospace; color:#6b6258; }
+  .side ul { display:grid; gap:2px; margin:0; padding:0; list-style:none; }
+  .side a { display:flex; align-items:center; gap:10px; height:32px; padding:0 10px; color:inherit; font-weight:600; white-space:nowrap; text-decoration:none; border-radius:8px; }
+  .side a:hover { background:#ffd84d; }
+  .side a[aria-current] { background:#17130f; color:#fffdf8; }
+  .ic { flex:none; width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .collapsed a { justify-content:center; padding:0; }
+  .collapsed .lbl, .collapsed .sec, .collapsed .brand { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  main { flex:1; min-width:0; padding-top:6px; }
+  h1 { margin:0 0 4px; font-size:1.5rem; letter-spacing:-.02em; }
+  main p { margin:0; color:#6b6258; }
+  @media (prefers-reduced-motion:reduce) { .side, .toggle svg { transition:none; } }
+</style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-panel" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></symbol>
+    <symbol id="i-proyectos" viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-tareas" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM8 12l3 3 5-6"/></symbol>
+    <symbol id="i-miembros" viewBox="0 0 24 24"><path d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></symbol>
+    <symbol id="i-ajustes" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9M13 7a2 2 0 1 0 4 0 2 2 0 0 0-4 0M7 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0"/></symbol>
+  </svg>
+  <div class="app">
+    <aside class="side" id="side">
+      <div class="head">
+        <span class="brand">Tinta&amp;Co</span>
+        <button class="toggle" id="toggle" type="button" aria-expanded="true" aria-controls="menu" aria-label="Contraer menú">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+        </button>
+      </div>
+      <nav id="menu" aria-label="Lateral">
+        <div class="grp">
+          <h2 class="sec">Trabajo</h2>
+          <ul>
+            <li><a href="#" aria-current="page"><svg class="ic" aria-hidden="true"><use href="#i-panel"/></svg><span class="lbl">Panel</span></a></li>
+            <li><a href="#"><svg class="ic" aria-hidden="true"><use href="#i-proyectos"/></svg><span class="lbl">Proyectos</span></a></li>
+            <li><a href="#"><svg class="ic" aria-hidden="true"><use href="#i-tareas"/></svg><span class="lbl">Tareas</span></a></li>
+          </ul>
+        </div>
+        <div class="grp">
+          <h2 class="sec">Equipo</h2>
+          <ul>
+            <li><a href="#"><svg class="ic" aria-hidden="true"><use href="#i-miembros"/></svg><span class="lbl">Miembros</span></a></li>
+            <li><a href="#"><svg class="ic" aria-hidden="true"><use href="#i-ajustes"/></svg><span class="lbl">Ajustes</span></a></li>
+          </ul>
+        </div>
+      </nav>
+    </aside>
+    <main><h1 id="title">Panel</h1><p>Resumen de tu espacio de trabajo.</p></main>
+  </div>
+<script>
+  const side = document.getElementById('side'), toggle = document.getElementById('toggle'), title = document.getElementById('title');
+  const set = (c) => {
+    side.classList.toggle('collapsed', c);
+    toggle.setAttribute('aria-expanded', !c);
+    toggle.setAttribute('aria-label', c ? 'Expandir menú' : 'Contraer menú');
+    side.querySelectorAll('nav a').forEach((a) => (c ? (a.title = a.textContent.trim()) : a.removeAttribute('title')));
+  };
+  toggle.addEventListener('click', () => set(!side.classList.contains('collapsed')));
+  side.addEventListener('click', (e) => {
+    const a = e.target.closest('nav a'); if (!a) return;
+    e.preventDefault();
+    side.querySelectorAll('[aria-current]').forEach((x) => x.removeAttribute('aria-current'));
+    a.setAttribute('aria-current', 'page');
+    title.textContent = a.textContent.trim();
+  });
+  set(matchMedia('(max-width:520px)').matches);
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Formulario con validación</title>
+<style>
+  :root { --ink:#17130f; --paper:#f6f1e7; --surface:#fffdf8; --muted:#6b6258; --accent:#ff5a36; --ok:#1f9d55; --err:#d6293e; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:14px; font:14px/1.35 system-ui, sans-serif; background:var(--paper); color:var(--ink); }
+  h1 { margin:0 0 10px; font-size:1.1rem; letter-spacing:-.02em; }
+  form { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px 12px; }
+  .field { display:flex; flex-direction:column; gap:3px; }
+  label { font-weight:700; font-size:13px; }
+  input:not([type=checkbox]) { width:100%; height:36px; padding:0 10px; font:inherit; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; }
+  input:focus-visible, button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  input[aria-invalid=true] { border-color:var(--err); background:#fff3f4; }
+  input.ok { border-color:var(--ok); }
+  .e { min-height:16px; margin:0; font-size:12px; color:var(--err); }
+  .e:not(:empty)::before { content:"✕ "; font-weight:800; }
+  .full { grid-column:1 / -1; }
+  .terms { display:flex; align-items:center; gap:8px; font-weight:400; }
+  .terms input { width:18px; height:18px; margin:0; accent-color:var(--ink); }
+  button { height:40px; padding:0 18px; font:700 14px system-ui; color:var(--ink); background:var(--accent); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  button:active { transform:translate(2px, 2px); box-shadow:2px 2px 0 var(--ink); }
+  #done { margin:10px 0 0; padding:8px 12px; font-weight:700; background:#e3f5ea; border:2px solid var(--ok); border-radius:10px; }
+</style>
+</head>
+<body>
+  <h1>Crea tu cuenta</h1>
+  <form id="f" novalidate>
+    <div class="field"><label for="nombre">Nombre</label>
+      <input id="nombre" name="nombre" required autocomplete="name" value="Ana Torres" aria-describedby="nombre-e">
+      <p class="e" id="nombre-e"></p></div>
+    <div class="field"><label for="email">Correo</label>
+      <input id="email" name="email" type="email" required autocomplete="email" value="ana@correo" aria-describedby="email-e">
+      <p class="e" id="email-e"></p></div>
+    <div class="field"><label for="pw">Contraseña</label>
+      <input id="pw" name="pw" type="password" required minlength="8" pattern=".*\d.*" autocomplete="new-password" aria-describedby="pw-e">
+      <p class="e" id="pw-e"></p></div>
+    <div class="field"><label for="pw2">Repite la contraseña</label>
+      <input id="pw2" name="pw2" type="password" required autocomplete="new-password" aria-describedby="pw2-e">
+      <p class="e" id="pw2-e"></p></div>
+    <div class="field full"><label class="terms"><input id="terms" type="checkbox" required data-missing="Debes aceptar los términos." aria-describedby="terms-e"> Acepto los términos de uso</label>
+      <p class="e" id="terms-e"></p></div>
+    <div class="full"><button type="submit">Crear cuenta</button></div>
+  </form>
+  <p id="done" role="status" hidden>¡Cuenta creada! Revisa tu correo para confirmarla.</p>
+<script>
+  const f = document.getElementById('f'), pw = f.pw, pw2 = f.pw2, done = document.getElementById('done');
+  const M = { valueMissing: 'Este campo es obligatorio.', typeMismatch: 'Escribe un correo válido, p. ej. ana@correo.com.', tooShort: 'Usa al menos 8 caracteres.', patternMismatch: 'Incluye al menos un número.' };
+  function msg(el) {
+    const v = el.validity;
+    if (v.valid) return '';
+    if (v.customError) return el.validationMessage;
+    if (v.valueMissing) return el.dataset.missing || M.valueMissing;
+    for (const k in M) if (v[k]) return M[k];
+    return el.validationMessage;
+  }
+  function show(el) {
+    if (el === pw || el === pw2) pw2.setCustomValidity(pw2.value && pw2.value !== pw.value ? 'Las contraseñas no coinciden.' : '');
+    const m = msg(el);
+    el.setAttribute('aria-invalid', !!m);
+    el.classList.toggle('ok', !m && el.value !== '' && el.type !== 'checkbox');
+    document.getElementById(el.id + '-e').textContent = m;
+  }
+  f.addEventListener('focusout', (e) => e.target.matches('input') && show(e.target));
+  f.addEventListener('input', (e) => { show(e.target); if (e.target === pw && pw2.value) show(pw2); });
+  f.addEventListener('submit', (e) => {
+    e.preventDefault(); done.hidden = true;
+    f.querySelectorAll('input').forEach(show);
+    const bad = f.querySelector('[aria-invalid=true]');
+    if (bad) bad.focus(); else done.hidden = false;
+  });
+  show(f.nombre); show(f.email);
+</script>
+</body>
+</html>

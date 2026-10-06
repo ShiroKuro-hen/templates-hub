@@ -1,0 +1,1 @@
+{ "title": "Modal con dialog nativo", "category": "modales", "description": "Modal con <dialog>: cierra con Esc y clic fuera, atrapa el foco y lo devuelve.", "tags": ["modal", "dialog", "a11y"] }

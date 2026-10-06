@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.5 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  :focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  .label { margin:0 0 8px; font:600 12px ui-monospace, monospace; color:#6b6258; }
+  .crumbs { margin-bottom:22px; padding:10px 14px; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+  .crumbs ol { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; margin:0; padding:0; list-style:none; }
+  .crumbs li { display:flex; align-items:center; gap:8px; }
+  .crumbs li[hidden] { display:none; }
+  .crumbs li + li::before { content:"/"; content:"/" / ""; color:#ff5a36; font:700 14px ui-monospace, monospace; }
+  .crumbs a { color:inherit; font-weight:600; text-underline-offset:3px; border-radius:4px; }
+  .crumbs a:hover { background:#ffd84d; }
+  .crumbs [aria-current] { padding:1px 8px; font-weight:700; background:#ffd84d; border:2px solid #17130f; border-radius:8px; }
+  .crumbs button { min-width:32px; padding:0 8px; font:700 14px/1.3 system-ui, sans-serif; background:#f6f1e7; border:2px solid #17130f; border-radius:8px; cursor:pointer; }
+  .crumbs button:hover { background:#ffd84d; }
+</style>
+</head>
+<body>
+  <p class="label">Ruta corta</p>
+  <nav class="crumbs" aria-label="Migas de pan">
+    <ol>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Tienda</a></li>
+      <li><span aria-current="page">Zapatillas</span></li>
+    </ol>
+  </nav>
+
+  <p class="label">Ruta larga, colapsada</p>
+  <nav class="crumbs" aria-label="Migas de pan (ruta larga)">
+    <ol>
+      <li><a href="#">Inicio</a></li>
+      <li><button type="button" aria-label="Mostrar 2 niveles ocultos">…</button></li>
+      <li hidden><a href="#">Tienda</a></li>
+      <li hidden><a href="#">Calzado</a></li>
+      <li><a href="#">Zapatillas</a></li>
+      <li><span aria-current="page">Modelo Aurora</span></li>
+    </ol>
+  </nav>
+<script>
+  document.querySelectorAll('.crumbs button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const li = btn.closest('li'), hidden = [...li.parentNode.querySelectorAll('li[hidden]')];
+      hidden.forEach((x) => (x.hidden = false));
+      li.remove();
+      hidden[0].querySelector('a').focus();
+    });
+  });
+</script>
+</body>
+</html>

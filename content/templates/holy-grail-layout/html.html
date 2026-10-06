@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; padding:12px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .page { display:grid; gap:12px; min-height:calc(100vh - 24px);
+    grid-template-columns:minmax(0, 1fr);
+    grid-template-areas:"header" "nav" "main" "aside" "footer"; }
+  .page > * { margin:0; padding:12px 14px; border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; }
+  header { grid-area:header; background:#ffd84d; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  nav { grid-area:nav; } main { grid-area:main; } aside { grid-area:aside; background:#cfd8ff; } footer { grid-area:footer; color:#6b6258; }
+  h1, h2 { margin:0 0 6px; letter-spacing:-.02em; } h1 { font-size:1.1rem; } h2 { font-size:1rem; }
+  p { margin:0 0 6px; }
+  .tag { font:600 .75rem ui-monospace, monospace; }
+  nav ul { margin:0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:6px 12px; }
+  nav a { color:#17130f; font-weight:600; text-underline-offset:3px; }
+  nav a[aria-current="page"] { background:#ff5a36; padding:0 6px; border-radius:6px; text-decoration:none; }
+  a:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  .skip { position:absolute; left:-9999px; background:#fffdf8; padding:6px 10px; border:2px solid #17130f; }
+  .skip:focus { left:12px; top:12px; z-index:1; }
+  @media (min-width:600px) {
+    nav ul { flex-direction:column; flex-wrap:nowrap; }
+    .page { grid-template-columns:130px minmax(0, 1fr) 150px; grid-template-rows:auto 1fr auto;
+      grid-template-areas:"header header header" "nav main aside" "footer footer footer"; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+<div class="page">
+  <header><h1>Taller Luna</h1><span class="tag">Panel</span></header>
+  <nav aria-label="Principal">
+    <ul>
+      <li><a href="#inicio" aria-current="page">Inicio</a></li>
+      <li><a href="#pedidos">Pedidos</a></li>
+      <li><a href="#clientes">Clientes</a></li>
+      <li><a href="#ajustes">Ajustes</a></li>
+    </ul>
+  </nav>
+  <main id="contenido">
+    <h2>Resumen del día</h2>
+    <p>Hoy entraron 14 pedidos nuevos y 3 están pendientes de pago.</p>
+    <p>El contenido principal ocupa el espacio sobrante y crece con la ventana.</p>
+  </main>
+  <aside aria-label="Avisos">
+    <h2>Avisos</h2>
+    <p>Quedan 5 unidades de cerámica azul.</p>
+  </aside>
+  <footer><small>© 2026 Taller Luna. Todos los derechos reservados.</small></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<ul class="m-0 flex list-none flex-col gap-2.5 p-4 font-sans text-sm text-[#17130f]">
+  <li role="status" class="flex items-start gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#e6eaff] px-2.5 py-2 shadow-[4px_4px_0_#17130f]">
+    <i aria-hidden="true" class="grid h-6 w-6 flex-none place-items-center rounded-full border-2 border-[#17130f] bg-[#3b5bfd] font-mono text-[13px] font-bold not-italic text-white">i</i>
+    <div class="min-w-0 flex-1"><b class="block tracking-tight">Nueva versión disponible</b><span class="text-[13px] text-[#6b6258]">La 2.4 llega el viernes con mejoras de velocidad.</span></div>
+    <button type="button" data-dismiss aria-label="Descartar aviso: nueva versión" class="h-7 w-7 flex-none rounded-lg border-2 border-transparent text-lg leading-none hover:border-[#17130f] hover:bg-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
+  </li>
+  <li role="status" class="flex items-start gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#dff3e7] px-2.5 py-2 shadow-[4px_4px_0_#17130f]">
+    <i aria-hidden="true" class="grid h-6 w-6 flex-none place-items-center rounded-full border-2 border-[#17130f] bg-[#1f9d55] font-mono text-[13px] font-bold not-italic text-white">✓</i>
+    <div class="min-w-0 flex-1"><b class="block tracking-tight">Pago recibido</b><span class="text-[13px] text-[#6b6258]">Tu suscripción se renovó hasta el 5 de enero.</span></div>
+    <button type="button" data-dismiss aria-label="Descartar aviso: pago recibido" class="h-7 w-7 flex-none rounded-lg border-2 border-transparent text-lg leading-none hover:border-[#17130f] hover:bg-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
+  </li>
+  <li role="alert" class="flex items-start gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#fbe1e5] px-2.5 py-2 shadow-[4px_4px_0_#17130f]">
+    <i aria-hidden="true" class="grid h-6 w-6 flex-none place-items-center rounded-full border-2 border-[#17130f] bg-[#d6293e] font-mono text-[13px] font-bold not-italic text-white">✕</i>
+    <div class="min-w-0 flex-1"><b class="block tracking-tight">No se pudo enviar el formulario</b><span class="text-[13px] text-[#6b6258]">Falta el correo electrónico. Complétalo e inténtalo otra vez.</span></div>
+    <button type="button" data-dismiss aria-label="Descartar aviso: error de formulario" class="h-7 w-7 flex-none rounded-lg border-2 border-transparent text-lg leading-none hover:border-[#17130f] hover:bg-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
+  </li>
+</ul>
+<script>
+  document.querySelectorAll('[data-dismiss]').forEach((b) =>
+    b.addEventListener('click', () => b.closest('li').remove()));
+</script>

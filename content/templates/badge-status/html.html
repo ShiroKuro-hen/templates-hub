@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; font: 14px system-ui, sans-serif; background: #f6f1e7; color: #17130f; }
+  h1 { margin: 0 0 14px; font-size: 1.2rem; letter-spacing: -.02em; }
+  ul { list-style: none; margin: 0; padding: 0; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
+  li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 14px; }
+  li + li { border-top: 2px solid #17130f; }
+  li b { display: block; letter-spacing: -.01em; }
+  li small { color: #6b6258; font: 12px ui-monospace, monospace; }
+
+  .badge { --c: #6b6258; --bg: #ebe5d8; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 8px;
+    border: 2px solid #17130f; border-radius: 999px; background: var(--bg); font-size: 12px; font-weight: 700; white-space: nowrap; }
+  .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+  .badge--ok { --c: #1f9d55; --bg: #dff3e6; }
+  .badge--warn { --c: #e0a800; --bg: #fff1bf; }
+  .badge--err { --c: #d6293e; --bg: #fbdde1; }
+  .badge--ok::before { animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) { .badge--ok::before { animation: none; } }
+</style>
+</head>
+<body>
+  <h1>Pedidos recientes</h1>
+  <ul>
+    <li><div><b>Pedido #1042</b><small>hoy, 09:41</small></div><span class="badge badge--ok">Activo</span></li>
+    <li><div><b>Pedido #1041</b><small>ayer, 18:03</small></div><span class="badge badge--warn">Pendiente</span></li>
+    <li><div><b>Pedido #1040</b><small>ayer, 11:27</small></div><span class="badge badge--err">Error de pago</span></li>
+    <li><div><b>Pedido #1039</b><small>hace 3 días</small></div><span class="badge">Borrador</span></li>
+  </ul>
+</body>
+</html>

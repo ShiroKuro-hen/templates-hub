@@ -1,0 +1,32 @@
+<div class="flex flex-wrap gap-3 p-5 font-sans">
+  <button type="button" data-t="ok" class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-2 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Guardar</button>
+  <button type="button" data-t="err" class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-2 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Falla de red</button>
+</div>
+
+<ul id="toasts" aria-live="polite" aria-label="Notificaciones"
+    class="fixed bottom-3 right-3 m-0 flex w-80 max-w-[calc(100%-1.5rem)] list-none flex-col gap-2 p-0"></ul>
+
+<script>
+  const TYPES = {
+    ok:  { color: '#1f9d55', title: 'Cambios guardados', text: 'Tu perfil ya está actualizado.', role: 'status' },
+    err: { color: '#d6293e', title: 'No se pudo conectar', text: 'Revisa tu conexión e inténtalo de nuevo.', role: 'alert' },
+  };
+  const box = document.getElementById('toasts');
+  document.querySelectorAll('[data-t]').forEach((btn) => btn.addEventListener('click', () => {
+    const t = TYPES[btn.dataset.t];
+    const li = document.createElement('li');
+    li.setAttribute('role', t.role);
+    li.className = 'flex items-center gap-2.5 rounded-[10px] border-2 border-l-8 border-[#17130f] bg-[#fffdf8] py-2.5 pl-3 pr-2.5 shadow-[4px_4px_0_#17130f]';
+    li.style.borderLeftColor = t.color;
+    li.innerHTML = '<span class="flex-1 text-sm"><b class="block"></b><small class="text-[#6b6258]"></small></span>' +
+      '<button type="button" aria-label="Cerrar aviso" class="rounded-md border-2 border-[#17130f] px-2 leading-5 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">×</button>';
+    li.querySelector('b').textContent = t.title;
+    li.querySelector('small').textContent = t.text;
+    const close = () => li.remove();
+    let timer = setTimeout(close, 5000);
+    li.querySelector('button').onclick = close;
+    li.onmouseenter = () => clearTimeout(timer);
+    li.onmouseleave = () => { timer = setTimeout(close, 5000); };
+    box.append(li);
+  }));
+</script>

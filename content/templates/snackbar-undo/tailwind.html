@@ -1,0 +1,41 @@
+<ul id="list" class="m-0 flex list-none flex-col gap-2 p-4 font-sans text-sm text-[#17130f]">
+  <li class="flex items-center gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-2">
+    <span class="flex-1 truncate">propuesta-v3.pdf</span>
+    <button type="button" class="del rounded-lg border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-1 font-semibold hover:bg-[#ffd84d] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Eliminar</button>
+  </li>
+  <li class="flex items-center gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-2">
+    <span class="flex-1 truncate">logo-final.svg</span>
+    <button type="button" class="del rounded-lg border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-1 font-semibold hover:bg-[#ffd84d] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Eliminar</button>
+  </li>
+</ul>
+
+<div id="snack" role="status" hidden
+     class="fixed inset-x-3 bottom-3 mx-auto max-w-md items-center gap-3 overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#17130f] py-3 pb-4 pl-3.5 pr-3 text-[#f6f1e7] shadow-[4px_4px_0_#ff5a36] [&:not([hidden])]:flex">
+  <p id="msg" class="m-0 flex-1 text-sm"></p>
+  <button type="button" id="undo" class="rounded-lg border-2 border-[#ffd84d] bg-[#ffd84d] px-2.5 py-1 text-sm font-bold text-[#17130f] hover:bg-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#f6f1e7]">Deshacer</button>
+  <i id="bar" class="absolute bottom-0 left-0 h-[5px] w-full origin-left bg-[#ff5a36] motion-reduce:hidden"></i>
+</div>
+
+<script>
+  const list = document.getElementById('list'), snack = document.getElementById('snack'), bar = document.getElementById('bar');
+  let pending, timer;
+  const finish = () => { clearTimeout(timer); snack.hidden = true; pending = null; };
+  list.addEventListener('click', (e) => {
+    const b = e.target.closest('.del'); if (!b) return;
+    if (pending) finish();
+    const li = b.closest('li');
+    pending = { li, next: li.nextElementSibling };
+    li.remove();
+    document.getElementById('msg').textContent = '«' + li.firstElementChild.textContent + '» eliminado';
+    snack.hidden = false;
+    bar.style.transition = 'none'; bar.style.transform = 'scaleX(1)'; void bar.offsetWidth;
+    bar.style.transition = 'transform 6s linear'; bar.style.transform = 'scaleX(0)';
+    timer = setTimeout(finish, 6000);
+    document.getElementById('undo').focus();
+  });
+  document.getElementById('undo').addEventListener('click', () => {
+    list.insertBefore(pending.li, pending.next);
+    pending.li.querySelector('.del').focus();
+    finish();
+  });
+</script>

@@ -1,0 +1,35 @@
+<button type="button" id="open" aria-haspopup="dialog"
+        class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-2 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+  Filtros
+</button>
+
+<dialog id="drawer" aria-labelledby="d-title"
+        class="m-0 ml-auto h-full max-h-full w-[min(300px,100%)] rounded-none border-0 border-l-2 border-[#17130f] bg-[#fffdf8] p-0 text-[#17130f] backdrop:bg-[#17130f]/50 open:flex open:flex-col">
+  <header class="flex items-center justify-between border-b-2 border-[#17130f] px-3.5 py-2.5">
+    <h2 id="d-title" class="m-0 text-[17px] font-bold tracking-tight">Filtros</h2>
+    <button type="button" id="x" aria-label="Cerrar filtros"
+            class="h-8 w-8 rounded-lg border-2 border-[#17130f] text-xl leading-none hover:bg-[#ffd84d] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
+  </header>
+  <form method="dialog" class="contents">
+    <div class="flex-1 overflow-auto px-3.5 pb-2.5 pt-1.5">
+      <fieldset class="mt-2 border-0 p-0">
+        <legend class="mb-1 p-0 font-bold">Estado</legend>
+        <label class="flex cursor-pointer items-center gap-2 py-0.5"><input type="checkbox" name="estado" class="h-[18px] w-[18px] accent-[#ff5a36]" checked> Pendiente</label>
+        <label class="flex cursor-pointer items-center gap-2 py-0.5"><input type="checkbox" name="estado" class="h-[18px] w-[18px] accent-[#ff5a36]"> Enviado</label>
+        <label class="flex cursor-pointer items-center gap-2 py-0.5"><input type="checkbox" name="estado" class="h-[18px] w-[18px] accent-[#ff5a36]"> Entregado</label>
+      </fieldset>
+    </div>
+    <footer class="flex justify-end gap-2.5 border-t-2 border-[#17130f] px-3.5 py-2.5">
+      <button type="reset" class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-2 font-semibold focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Limpiar</button>
+      <button class="rounded-[10px] border-2 border-[#17130f] bg-[#ffd84d] px-3.5 py-2 font-semibold shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Aplicar</button>
+    </footer>
+  </form>
+</dialog>
+
+<script>
+  const d = document.getElementById('drawer'), opener = document.getElementById('open');
+  opener.addEventListener('click', () => d.showModal());
+  document.getElementById('x').addEventListener('click', () => d.close());
+  d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+  d.addEventListener('close', () => opener.focus());
+</script>

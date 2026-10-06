@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menú con popover</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; --err:#d6293e; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  p { margin:0 0 14px; color:var(--muted); }
+  .btn { font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  .btn:hover, .btn:active, .btn[aria-expanded="true"] { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  #result { margin-top:14px; font:13px ui-monospace, monospace; }
+  [popover] { position:fixed; inset:auto; margin:0; min-width:190px; padding:6px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
+  [popover]:popover-open { animation:in .12s ease-out; }
+  [role="menuitem"] { display:block; width:100%; padding:7px 10px; font:inherit; text-align:left; color:var(--ink); background:none; border:0; border-radius:6px; cursor:pointer; }
+  [role="menuitem"]:hover, [role="menuitem"]:focus-visible { background:var(--hl); outline:none; }
+  [role="menuitem"]:focus-visible { box-shadow:inset 0 0 0 3px var(--accent); }
+  [role="menuitem"].danger { color:var(--err); font-weight:600; }
+  [role="menuitem"].danger:hover, [role="menuitem"].danger:focus-visible { color:var(--ink); }
+  hr { margin:4px 0; border:0; border-top:2px solid var(--ink); }
+  @keyframes in { from { opacity:0; transform:translateY(-4px); } }
+  @media (prefers-reduced-motion:reduce) { [popover]:popover-open { animation:none; } }
+</style>
+</head>
+<body>
+<h1>informe-octubre.pdf</h1>
+<p>Editado hace 2 horas por Ana.</p>
+<button type="button" class="btn" id="btn" popovertarget="menu" aria-haspopup="menu" aria-expanded="false">Opciones ▾</button>
+<div id="result" role="status"></div>
+
+<div id="menu" popover role="menu" aria-label="Opciones del archivo">
+  <button role="menuitem" popovertarget="menu" popovertargetaction="hide">Renombrar</button>
+  <button role="menuitem" popovertarget="menu" popovertargetaction="hide">Duplicar</button>
+  <button role="menuitem" popovertarget="menu" popovertargetaction="hide">Mover a…</button>
+  <hr role="separator">
+  <button role="menuitem" class="danger" popovertarget="menu" popovertargetaction="hide">Eliminar</button>
+</div>
+<script>
+  const menu = document.getElementById('menu'), btn = document.getElementById('btn');
+  const items = () => [...menu.querySelectorAll('[role=menuitem]')];
+  menu.addEventListener('toggle', (e) => {
+    const open = e.newState === 'open';
+    btn.setAttribute('aria-expanded', open);
+    if (!open) return;
+    const r = btn.getBoundingClientRect();
+    menu.style.top = r.bottom + 6 + 'px';
+    menu.style.left = Math.min(r.left, innerWidth - menu.offsetWidth - 8) + 'px';
+    items()[0].focus();
+  });
+  menu.addEventListener('keydown', (e) => {
+    const l = items(), i = l.indexOf(document.activeElement);
+    const next = { ArrowDown: l[(i + 1) % l.length], ArrowUp: l[(i - 1 + l.length) % l.length], Home: l[0], End: l.at(-1) }[e.key];
+    if (next) { e.preventDefault(); next.focus(); }
+  });
+  menu.addEventListener('click', (e) => {
+    const it = e.target.closest('[role=menuitem]');
+    if (it) document.getElementById('result').textContent = 'Elegiste: ' + it.textContent + '.';
+  });
+</script>
+</body>
+</html>

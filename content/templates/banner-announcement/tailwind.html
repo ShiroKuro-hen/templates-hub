@@ -1,0 +1,21 @@
+<section id="banner" aria-label="Anuncio"
+         class="grid grid-rows-[1fr] border-b-2 border-[#17130f] bg-[#ffd84d] font-sans text-sm text-[#17130f] transition-[grid-template-rows] duration-200 motion-reduce:transition-none [&.off]:grid-rows-[0fr] [&.off]:border-b-0">
+  <div class="min-h-0 overflow-hidden [.off_&]:invisible">
+    <div class="flex items-center gap-2.5 px-3 py-2">
+      <p class="m-0 flex-1">
+        <span class="mr-1.5 rounded-md bg-[#17130f] px-1.5 py-0.5 font-mono text-xs font-bold text-[#ffd84d]">Nuevo</span>
+        Ya puedes exportar tus informes a PDF.
+        <a href="#novedades" class="whitespace-nowrap font-bold underline underline-offset-4 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Ver novedades</a>
+      </p>
+      <button type="button" id="close" aria-label="Cerrar anuncio"
+              class="h-[30px] w-[30px] flex-none rounded-lg border-2 border-transparent text-xl leading-none hover:border-[#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
+    </div>
+  </div>
+</section>
+<script>
+  const banner = document.getElementById('banner');
+  document.getElementById('close').addEventListener('click', () => {
+    banner.classList.add('off');
+    document.getElementById('main')?.focus(); // pon tabindex="-1" id="main" en tu contenido
+  });
+</script>

@@ -1,0 +1,18 @@
+<div class="bg-[#f6f1e7] p-5 text-[#17130f]">
+  <div role="group" aria-label="Periodo del informe" id="period"
+       class="inline-flex rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] shadow-[4px_4px_0_#17130f]">
+    <button type="button" aria-pressed="false" class="seg rounded-l-[8px] px-4 py-2 font-semibold hover:bg-[#ffd84d] aria-pressed:bg-[#17130f] aria-pressed:text-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[6px] focus-visible:outline-[#ff5a36]">Día</button>
+    <button type="button" aria-pressed="true" class="seg border-l-2 border-[#17130f] px-4 py-2 font-semibold hover:bg-[#ffd84d] aria-pressed:bg-[#17130f] aria-pressed:text-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[6px] focus-visible:outline-[#ff5a36]">Semana</button>
+    <button type="button" aria-pressed="false" class="seg rounded-r-[8px] border-l-2 border-[#17130f] px-4 py-2 font-semibold hover:bg-[#ffd84d] aria-pressed:bg-[#17130f] aria-pressed:text-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[6px] focus-visible:outline-[#ff5a36]">Mes</button>
+  </div>
+  <p id="out" aria-live="polite" class="mt-3 font-mono text-xs text-[#6b6258]">Mostrando: Semana</p>
+</div>
+
+<script>
+  const g = document.getElementById('period');
+  g.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    g.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+    document.getElementById('out').textContent = 'Mostrando: ' + b.textContent;
+  });
+</script>

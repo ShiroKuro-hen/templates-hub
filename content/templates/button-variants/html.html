@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; font: 14px system-ui, sans-serif; background: #f6f1e7; color: #17130f; }
+  h1 { margin: 0 0 16px; font-size: 1.2rem; letter-spacing: -.02em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px 16px; }
+  .cell { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  code { font: 11px ui-monospace, monospace; color: #6b6258; }
+
+  .btn { font: 600 14px system-ui, sans-serif; padding: 9px 16px; border: 2px solid #17130f; border-radius: 10px;
+    background: #fffdf8; color: #17130f; box-shadow: 4px 4px 0 #17130f; cursor: pointer;
+    transition: transform .1s, box-shadow .1s, background-color .1s; }
+  .btn:hover, .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
+  .btn:focus-visible { outline: 3px solid #ff5a36; outline-offset: 3px; }
+  .btn--primary { background: #ff5a36; }
+  .btn--danger { background: #d6293e; color: #fff; }
+  .btn--ghost, .btn--link { border-color: transparent; background: transparent; box-shadow: none; }
+  .btn--ghost:hover, .btn--ghost:active, .btn--link:hover { transform: none; box-shadow: none; background: #ffd84d; }
+  .btn--link { padding: 9px 4px; text-decoration: underline 2px #ff5a36; text-underline-offset: 4px; }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+  <h1>Variantes de botón</h1>
+  <div class="grid">
+    <div class="cell"><button class="btn btn--primary" type="button">Guardar cambios</button><code>.btn--primary</code></div>
+    <div class="cell"><button class="btn" type="button">Cancelar</button><code>.btn</code></div>
+    <div class="cell"><button class="btn btn--ghost" type="button">Omitir por ahora</button><code>.btn--ghost</code></div>
+    <div class="cell"><button class="btn btn--danger" type="button">Eliminar cuenta</button><code>.btn--danger</code></div>
+    <div class="cell"><button class="btn btn--link" type="button">Ver detalles</button><code>.btn--link</code></div>
+  </div>
+</body>
+</html>

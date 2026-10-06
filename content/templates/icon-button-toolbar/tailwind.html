@@ -1,0 +1,32 @@
+<div class="p-4">
+  <div role="toolbar" aria-label="Formato de texto" id="tb"
+    class="flex w-fit flex-wrap items-center gap-1.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] p-2 shadow-[4px_4px_0_#17130f]">
+    <button type="button" aria-label="Negrita" aria-pressed="true" tabindex="0"
+      class="group relative grid h-9 w-9 place-items-center rounded-lg border-2 border-transparent text-[#17130f] hover:border-[#17130f] aria-pressed:border-[#17130f] aria-pressed:bg-[#ffd84d] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M7 4h6a4 4 0 0 1 0 8H7z"/><path d="M7 12h7a4 4 0 0 1 0 8H7z"/></svg>
+      <span aria-hidden="true" class="pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-10 -translate-x-1/2 rounded-md bg-[#17130f] px-2 py-0.5 font-mono text-[11px] whitespace-nowrap text-[#f6f1e7] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100">Negrita</span>
+    </button>
+    <button type="button" aria-label="Cursiva" aria-pressed="false" tabindex="-1"
+      class="group relative grid h-9 w-9 place-items-center rounded-lg border-2 border-transparent text-[#17130f] hover:border-[#17130f] aria-pressed:border-[#17130f] aria-pressed:bg-[#ffd84d] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M10 4h8M6 20h8M15 4l-6 16"/></svg>
+      <span aria-hidden="true" class="pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-10 -translate-x-1/2 rounded-md bg-[#17130f] px-2 py-0.5 font-mono text-[11px] whitespace-nowrap text-[#f6f1e7] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100">Cursiva</span>
+    </button>
+    <span class="self-stretch w-0.5 bg-[#17130f]/25" aria-hidden="true"></span>
+    <button type="button" aria-label="Enlace" aria-pressed="false" tabindex="-1"
+      class="group relative grid h-9 w-9 place-items-center rounded-lg border-2 border-transparent text-[#17130f] hover:border-[#17130f] aria-pressed:border-[#17130f] aria-pressed:bg-[#ffd84d] focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>
+      <span aria-hidden="true" class="pointer-events-none absolute top-[calc(100%+8px)] left-1/2 z-10 -translate-x-1/2 rounded-md bg-[#17130f] px-2 py-0.5 font-mono text-[11px] whitespace-nowrap text-[#f6f1e7] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100">Enlace</span>
+    </button>
+  </div>
+</div>
+<script>
+  const bs = [...document.querySelectorAll('#tb button')];
+  document.getElementById('tb').addEventListener('keydown', (e) => {
+    const i = bs.indexOf(document.activeElement);
+    const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: bs.length - 1 }[e.key];
+    if (i < 0 || n === undefined) return;
+    e.preventDefault(); bs.forEach((b) => (b.tabIndex = -1));
+    const t = bs[(n + bs.length) % bs.length]; t.tabIndex = 0; t.focus();
+  });
+  bs.forEach((b) => b.addEventListener('click', () => b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true')));
+</script>
