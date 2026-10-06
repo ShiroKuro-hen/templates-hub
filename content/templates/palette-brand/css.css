@@ -1,0 +1,25 @@
+:root {
+  --bg: #f6f1e7;
+  --surface: #fffdf8;
+  --text: #17130f;
+  --muted: #6b6258;
+  --border: #17130f;
+  --accent: #ff5a36;
+  --ok: #1f9d55;
+  --warn: #e0a800;
+  --err: #d6293e;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14110f;
+    --surface: #1f1b18;
+    --text: #f6f1e7;
+    --muted: #a39a8e;
+    --border: #f6f1e7;
+    --accent: #ff7a59;
+    --ok: #3ddc84;
+    --warn: #ffd84d;
+    --err: #ff6b7d;
+  }
+}
+body { background: var(--bg); color: var(--text); }

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; padding:20px; font:14px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .row { display:grid; grid-template-columns:110px 1fr 48px; align-items:center; gap:12px; margin-bottom:14px; font-weight:600; }
+  .row output { text-align:right; font-variant-numeric:tabular-nums; }
+  progress { appearance:none; width:100%; height:18px; border:2px solid #17130f; border-radius:999px; background:#fffdf8; overflow:hidden; }
+  progress::-webkit-progress-bar { background:#fffdf8; }
+  progress::-webkit-progress-value { background:var(--c); }
+  progress::-moz-progress-bar { background:var(--c); }
+  .lo { --c:#d6293e; } .mid { --c:#e0a800; } .hi { --c:#1f9d55; }
+</style>
+</head>
+<body>
+  <div class="row"><label for="a">Diseño</label><progress id="a" class="hi" max="100" value="88"></progress><output>88%</output></div>
+  <div class="row"><label for="b">Backend</label><progress id="b" class="mid" max="100" value="60"></progress><output>60%</output></div>
+  <div class="row"><label for="c">Pruebas</label><progress id="c" class="lo" max="100" value="25"></progress><output>25%</output></div>
+</body>
+</html>

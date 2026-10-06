@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; padding:20px; font:14px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:16px; }
+  .stat { border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; padding:16px; }
+  .stat small { color:#6b6258; font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
+  .stat strong { display:block; font-size:2rem; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+  .up { color:#1f9d55; } .down { color:#d6293e; }
+  .up::before { content:"▲ "; } .down::before { content:"▼ "; }
+</style>
+</head>
+<body>
+  <div class="stats">
+    <div class="stat"><small>Ingresos</small><strong>$48.2k</strong><span class="up">12.4%</span></div>
+    <div class="stat"><small>Usuarios</small><strong>3,120</strong><span class="up">4.1%</span></div>
+    <div class="stat"><small>Cancelaciones</small><strong>87</strong><span class="down">2.3%</span></div>
+  </div>
+</body>
+</html>

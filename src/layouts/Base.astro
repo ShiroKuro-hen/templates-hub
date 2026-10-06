@@ -1,0 +1,23 @@
+---
+import '../styles/global.css';
+import { url } from '../lib/data';
+const { title = 'Templates Hub', description = 'Plantillas de UI con prompt y código listos para copiar.' } = Astro.props;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href={url('/')}><span class="logo">▚</span> templates<b>hub</b></a>
+      <nav><a href={url('/#categorias')}>Categorías</a><a href={url('/#plantillas')}>Plantillas</a></nav>
+    </header>
+    <main><slot /></main>
+    <footer class="foot">Copia el prompt, copia el código. Hecho con Astro · gratis en GitHub Pages.</footer>
+  </body>
+</html>

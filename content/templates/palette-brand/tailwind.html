@@ -1,0 +1,16 @@
+<!-- tailwind.config: extiende los colores con variables CSS (ver pestaña CSS) -->
+<script>
+  tailwind.config = {
+    theme: { extend: { colors: {
+      bg: 'var(--bg)', surface: 'var(--surface)', ink: 'var(--text)', muted: 'var(--muted)',
+      accent: 'var(--accent)', ok: 'var(--ok)', warn: 'var(--warn)', err: 'var(--err)',
+    } } },
+  };
+</script>
+
+<div class="grid grid-cols-2 gap-3 bg-bg p-5 text-ink sm:grid-cols-4">
+  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-accent"></div><p class="mt-2 font-mono text-xs">accent</p></div>
+  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-ok"></div><p class="mt-2 font-mono text-xs">ok</p></div>
+  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-warn"></div><p class="mt-2 font-mono text-xs">warn</p></div>
+  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-err"></div><p class="mt-2 font-mono text-xs">err</p></div>
+</div>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  table { width:100%; border-collapse:collapse; background:#fffdf8; border:2px solid #17130f; }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #17130f33; }
+  th { position:sticky; top:0; background:#ffd84d; border-bottom:2px solid #17130f; cursor:pointer; user-select:none; }
+  th[aria-sort="ascending"]::after { content:" ▲"; }
+  th[aria-sort="descending"]::after { content:" ▼"; }
+  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
+  tbody tr:nth-child(even) { background:#17130f0d; }
+</style>
+</head>
+<body>
+<table id="t">
+  <thead><tr><th scope="col">Nombre</th><th scope="col">Plan</th><th scope="col" class="num">Ventas</th></tr></thead>
+  <tbody>
+    <tr><td>Ana Pérez</td><td>Pro</td><td class="num">1240</td></tr>
+    <tr><td>Luis Gómez</td><td>Free</td><td class="num">310</td></tr>
+    <tr><td>Marta Ruiz</td><td>Pro</td><td class="num">2890</td></tr>
+    <tr><td>Carlos Díaz</td><td>Team</td><td class="num">760</td></tr>
+  </tbody>
+</table>
+<script>
+  const t = document.getElementById('t');
+  t.tHead.rows[0].addEventListener('click', (e) => {
+    const th = e.target.closest('th'); if (!th) return;
+    const i = th.cellIndex, asc = th.getAttribute('aria-sort') !== 'ascending';
+    [...t.tHead.rows[0].cells].forEach((c) => c.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
+    const rows = [...t.tBodies[0].rows].sort((a, b) =>
+      a.cells[i].textContent.localeCompare(b.cells[i].textContent, 'es', { numeric: true }) * (asc ? 1 : -1));
+    t.tBodies[0].append(...rows);
+  });
+</script>
+</body>
+</html>

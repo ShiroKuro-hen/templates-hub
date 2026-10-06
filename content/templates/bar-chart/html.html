@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { margin:0; padding:20px; font:13px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  .chart { display:flex; align-items:flex-end; gap:14px; height:240px; padding:0 8px; border-bottom:2px solid #17130f;
+           background:repeating-linear-gradient(to top, transparent 0 59px, #17130f1a 59px 60px); }
+  .bar { flex:1; height:calc(var(--v) * 1%); background:#17130f; border:2px solid #17130f; border-radius:6px 6px 0 0; position:relative; }
+  .bar.max { background:#ff5a36; }
+  .bar b { position:absolute; top:-22px; left:0; right:0; text-align:center; }
+  .labels { display:flex; gap:14px; padding:6px 8px 0; }
+  .labels span { flex:1; text-align:center; font-weight:600; }
+</style>
+</head>
+<body>
+  <div class="chart">
+    <div class="bar" style="--v:40"><b>40</b></div>
+    <div class="bar" style="--v:65"><b>65</b></div>
+    <div class="bar max" style="--v:92"><b>92</b></div>
+    <div class="bar" style="--v:55"><b>55</b></div>
+    <div class="bar" style="--v:78"><b>78</b></div>
+  </div>
+  <div class="labels"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span></div>
+</body>
+</html>

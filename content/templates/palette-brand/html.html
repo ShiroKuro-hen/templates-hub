@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --text:#17130f; --muted:#6b6258; --border:#17130f; --accent:#ff5a36; --ok:#1f9d55; --warn:#e0a800; --err:#d6293e; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14110f; --surface:#1f1b18; --text:#f6f1e7; --muted:#a39a8e; --border:#f6f1e7; --accent:#ff7a59; --ok:#3ddc84; --warn:#ffd84d; --err:#ff6b7d; }
+  }
+  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--text); }
+  .swatches { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:12px; }
+  .sw { border:2px solid var(--border); border-radius:10px; overflow:hidden; background:var(--surface); }
+  .sw i { display:block; height:64px; border-bottom:2px solid var(--border); }
+  .sw span { display:block; padding:6px 8px; font:600 12px ui-monospace, monospace; }
+</style>
+</head>
+<body>
+  <div class="swatches">
+    <div class="sw"><i style="background:var(--bg)"></i><span>--bg</span></div>
+    <div class="sw"><i style="background:var(--surface)"></i><span>--surface</span></div>
+    <div class="sw"><i style="background:var(--text)"></i><span>--text</span></div>
+    <div class="sw"><i style="background:var(--muted)"></i><span>--muted</span></div>
+    <div class="sw"><i style="background:var(--accent)"></i><span>--accent</span></div>
+    <div class="sw"><i style="background:var(--ok)"></i><span>--ok</span></div>
+    <div class="sw"><i style="background:var(--warn)"></i><span>--warn</span></div>
+    <div class="sw"><i style="background:var(--err)"></i><span>--err</span></div>
+  </div>
+</body>
+</html>

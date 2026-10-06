@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { CATEGORIES, templates, url } from '../lib/data';
+const count = (c: string) => templates.filter((t) => t.category === c).length;
+---
+<Base>
+  <section class="hero">
+    <h1>Prompt + código, <mark>listos para copiar</mark>.</h1>
+    <p>Plantillas de interfaz —paletas, tablas, barras, grids— con su prompt para IA y el código en HTML, Tailwind, React y Vue.</p>
+    <a class="btn" href="#categorias">Explorar categorías</a>
+    <a class="btn ghost" href="#plantillas">Ver todas</a>
+  </section>
+
+  <h2 id="categorias">Categorías</h2>
+  <div class="grid">
+    {Object.entries(CATEGORIES).map(([id, c]) => (
+      <a class="card" href={url(`/c/${id}/`)}>
+        <div class="ico">{c.icon}</div>
+        <h3>{c.label}</h3>
+        <p>{c.blurb}</p>
+        <div class="meta"><span class="chip hot">{count(id)} plantillas</span></div>
+      </a>
+    ))}
+  </div>
+
+  <h2 id="plantillas">Todas las plantillas</h2>
+  <div class="grid">
+    {templates.map((t) => (
+      <a class="card" href={url(`/t/${t.slug}/`)}>
+        <span class="chip">{CATEGORIES[t.category]?.label}</span>
+        <h3>{t.title}</h3>
+        <p>{t.description}</p>
+        <div class="meta">{Object.keys(t.code).map((l) => <span class="chip">{l}</span>)}</div>
+      </a>
+    ))}
+  </div>
+</Base>

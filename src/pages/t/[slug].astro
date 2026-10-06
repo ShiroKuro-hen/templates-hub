@@ -1,0 +1,59 @@
+---
+import { Code } from 'astro:components';
+import Base from '../../layouts/Base.astro';
+import { LANGS, templates, url } from '../../lib/data';
+export const getStaticPaths = () => templates.map((t) => ({ params: { slug: t.slug }, props: { t } }));
+const { t } = Astro.props;
+const langs = Object.keys(t.code).filter((l) => LANGS[l]);
+---
+<Base title={`${t.title} · Templates Hub`} description={t.description}>
+  <p class="crumbs"><a href={url('/')}>inicio</a> / <a href={url(`/c/${t.category}/`)}>{t.category}</a></p>
+  <section class="tpl-head"><h1>{t.title}</h1><p>{t.description}</p>
+    <div class="meta">{t.tags.map((x) => <span class="chip">#{x}</span>)}</div>
+  </section>
+
+  {t.code.html && (
+    <section class="panel preview">
+      <div class="bar">Vista previa</div>
+      <iframe srcdoc={t.code.html} title={`Vista previa de ${t.title}`} loading="lazy" sandbox="allow-scripts"></iframe>
+    </section>
+  )}
+
+  <section class="panel prompt">
+    <div class="bar">Prompt <button class="btn sm" data-copy={t.prompt}>Copiar prompt</button></div>
+    <pre>{t.prompt}</pre>
+  </section>
+
+  <section class="panel" id="code">
+    <div class="tabs" role="tablist">
+      {langs.map((l, i) => <button role="tab" aria-selected={i === 0} data-tab={l}>{LANGS[l].label}</button>)}
+    </div>
+    {langs.map((l, i) => (
+      <div class="codewrap" data-panel={l} hidden={i !== 0}>
+        <div class="bar"><span>{l}.{LANGS[l].ext}</span><button class="btn sm" data-copy={t.code[l]}>Copiar código</button></div>
+        <Code code={t.code[l]} lang={LANGS[l].shiki as any} theme="github-dark" />
+      </div>
+    ))}
+  </section>
+</Base>
+
+<script>
+  // Tabs por lenguaje (recuerda la última elección) + botones Copiar.
+  const tabs = [...document.querySelectorAll<HTMLElement>('[data-tab]')];
+  const show = (l: string) => {
+    tabs.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === l)));
+    document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== l));
+    try { localStorage.setItem('lang', l); } catch {}
+  };
+  tabs.forEach((b) => b.addEventListener('click', () => show(b.dataset.tab!)));
+  try { const s = localStorage.getItem('lang'); if (s && tabs.some((b) => b.dataset.tab === s)) show(s); } catch {}
+
+  document.querySelectorAll<HTMLElement>('[data-copy]').forEach((b) =>
+    b.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(b.dataset.copy!);
+      const old = b.textContent;
+      b.textContent = '¡Copiado!';
+      setTimeout(() => (b.textContent = old), 1200);
+    }),
+  );
+</script>

@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import { CATEGORIES, templates, url } from '../../lib/data';
+export const getStaticPaths = () => Object.keys(CATEGORIES).map((cat) => ({ params: { cat } }));
+const { cat } = Astro.params;
+const c = CATEGORIES[cat!];
+const list = templates.filter((t) => t.category === cat);
+---
+<Base title={`${c.label} · Templates Hub`} description={c.blurb}>
+  <p class="crumbs"><a href={url('/')}>inicio</a> / {cat}</p>
+  <section class="tpl-head"><h1>{c.icon} {c.label}</h1><p>{c.blurb}</p></section>
+  <div class="grid">
+    {list.map((t) => (
+      <a class="card" href={url(`/t/${t.slug}/`)}>
+        <h3>{t.title}</h3><p>{t.description}</p>
+        <div class="meta">{Object.keys(t.code).map((l) => <span class="chip">{l}</span>)}</div>
+      </a>
+    ))}
+  </div>
+  {list.length === 0 && <p>Pronto habrá plantillas aquí.</p>}
+</Base>
