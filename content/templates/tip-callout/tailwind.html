@@ -1,0 +1,35 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div id="tips" class="mx-auto grid max-w-xl gap-3 [&_.x]:grid [&_.x]:size-7 [&_.x]:shrink-0 [&_.x]:place-items-center [&_.x]:rounded-lg [&_.x]:text-slate-500 hover:[&_.x]:bg-blue-50 hover:[&_.x]:text-slate-900 dark:hover:[&_.x]:bg-slate-800 dark:hover:[&_.x]:text-slate-100 [&_.ico]:grid [&_.ico]:size-8 [&_.ico]:shrink-0 [&_.ico]:place-items-center [&_.ico]:rounded-lg [&_.ico]:border [&_a]:mt-1.5 [&_a]:inline-block [&_a]:font-medium [&_a]:text-blue-600 hover:[&_a]:underline dark:[&_a]:text-blue-400 [&_kbd]:rounded [&_kbd]:border [&_kbd]:border-slate-200 [&_kbd]:px-1.5 [&_kbd]:font-mono [&_kbd]:text-xs dark:[&_kbd]:border-slate-700 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600">
+    <aside role="note" class="tip relative flex items-start gap-3 rounded-lg border border-slate-200 bg-white py-3.5 pl-3.5 pr-3 shadow-sm before:absolute before:inset-x-2 before:-top-px before:h-px before:bg-gradient-to-r before:from-cyan-600 before:to-transparent dark:border-slate-700 dark:bg-slate-900">
+      <span class="ico border-cyan-600 bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-400"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25V11M8 5h.01"/></svg></span>
+      <div class="min-w-0 flex-1"><strong class="block font-semibold">Los informes se actualizan cada hora</strong><p class="mt-0.5 text-slate-500 dark:text-slate-400">Los datos de ventas pueden tardar hasta 60 minutos en aparecer.</p><a href="#sync">Ver estado de sincronización</a></div>
+      <button type="button" class="x" aria-label="Descartar consejo: Los informes se actualizan cada hora"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+    </aside>
+    <aside role="note" class="tip relative flex items-start gap-3 rounded-lg border border-slate-200 bg-white py-3.5 pl-3.5 pr-3 shadow-sm before:absolute before:inset-x-2 before:-top-px before:h-px before:bg-gradient-to-r before:from-emerald-600 before:to-transparent dark:border-slate-700 dark:bg-slate-900">
+      <span class="ico border-emerald-600 bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.75l1.5 4.25 4.25 1.5-4.25 1.5L8 13.25 6.5 9 2.25 7.5 6.5 6z"/></svg></span>
+      <div class="min-w-0 flex-1"><strong class="block font-semibold">Filtra más rápido con atajos</strong><p class="mt-0.5 text-slate-500 dark:text-slate-400">Pulsa <kbd>/</kbd> para buscar y <kbd>F</kbd> para abrir los filtros desde cualquier panel.</p></div>
+      <button type="button" class="x" aria-label="Descartar consejo: Filtra más rápido con atajos"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+    </aside>
+    <aside role="note" class="tip relative flex items-start gap-3 rounded-lg border border-slate-200 bg-white py-3.5 pl-3.5 pr-3 shadow-sm before:absolute before:inset-x-2 before:-top-px before:h-px before:bg-gradient-to-r before:from-amber-600 before:to-transparent dark:border-slate-700 dark:bg-slate-900">
+      <span class="ico border-amber-600 bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2l6.25 11H1.75z"/><path d="M8 6.75v3M8 11.75h.01"/></svg></span>
+      <div class="min-w-0 flex-1"><strong class="block font-semibold">Tu conexión con PostgreSQL caduca en 3 días</strong><p class="mt-0.5 text-slate-500 dark:text-slate-400">Renuévala para que los paneles sigan actualizándose.</p><a href="#renovar">Renovar conexión</a></div>
+      <button type="button" class="x" aria-label="Descartar consejo: Tu conexión con PostgreSQL caduca en 3 días"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+    </aside>
+  </div>
+  <div id="none" hidden role="status" class="mx-auto max-w-xl rounded-lg border border-dashed border-slate-200 p-4 text-center text-slate-500 dark:border-slate-700 dark:text-slate-400">
+    <p class="mb-2">Has descartado todos los consejos.</p>
+    <button type="button" id="back" class="h-9 rounded-lg border border-slate-200 bg-white px-4 font-medium text-slate-900 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">Restaurar consejos</button>
+  </div>
+</div>
+<script>
+  const box = document.getElementById('tips'), none = document.getElementById('none'), html = box.innerHTML;
+  box.addEventListener('click', (e) => {
+    const x = e.target.closest('.x'); if (!x) return;
+    const tip = x.closest('.tip');
+    const near = (tip.nextElementSibling || tip.previousElementSibling)?.querySelector('.x');
+    tip.remove();
+    if (near) return near.focus();
+    none.hidden = false; document.getElementById('back').focus();
+  });
+  document.getElementById('back').onclick = () => { box.innerHTML = html; none.hidden = true; box.querySelector('.x').focus(); };
+</script>

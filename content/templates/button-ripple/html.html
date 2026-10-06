@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:440px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h1{margin:0;font-size:16px;font-weight:600}
+  .card p{margin:4px 0 0;color:var(--muted)}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+  .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:150px;padding:9px 18px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;font-weight:600;cursor:pointer;transition:background .14s,border-color .14s,color .14s}
+  .btn:hover{border-color:var(--accent)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .primary:hover{filter:brightness(1.08)}
+  .ripple{position:absolute;border-radius:50%;background:currentColor;opacity:0;pointer-events:none}
+  .ico{display:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  [data-state=loading] .spin,[data-state=done] .check{display:block}
+  .spin circle{stroke-dasharray:.7 .3}
+  .check path{stroke-dasharray:1}
+  [data-state=done]{background:var(--ok-soft);border-color:var(--ok);color:var(--text)}
+  [data-state=done] .check{stroke:var(--ok)}
+  .live{min-height:21px;margin-top:12px!important;font-size:13px}
+  @media (prefers-reduced-motion:no-preference){
+    .spin{animation:turn .8s linear infinite}
+    [data-state=done] .check path{animation:draw .4s ease-out both}
+    @keyframes turn{to{transform:rotate(360deg)}}
+    @keyframes draw{from{stroke-dashoffset:1}}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Preferencias de notificación</h1>
+  <p>Recibe un aviso por correo cuando termine de generarse un informe.</p>
+  <div class="actions">
+    <button class="btn primary" id="save" type="button" data-state="idle">
+      <svg class="ico spin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" pathLength="1"/></svg>
+      <svg class="ico check" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5" pathLength="1"/></svg>
+      <span class="lbl">Guardar cambios</span>
+    </button>
+    <button class="btn" type="button">Restablecer</button>
+  </div>
+  <p class="live" id="live" role="status"></p>
+</main>
+<script>
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const save = document.getElementById('save'), lbl = save.querySelector('.lbl'), live = document.getElementById('live');
+  document.querySelectorAll('.btn').forEach((b) => b.addEventListener('click', (e) => {
+    if (calm) return; // alternativa estática: sin onda
+    const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2, s = document.createElement('span');
+    const x = e.detail ? e.clientX - r.left : r.width / 2, y = e.detail ? e.clientY - r.top : r.height / 2; // detail 0 = teclado
+    s.className = 'ripple';
+    s.style.cssText = `width:${d}px;height:${d}px;left:${x - d / 2}px;top:${y - d / 2}px`;
+    b.append(s);
+    s.animate([{ transform: 'scale(0)', opacity: 0.3 }, { transform: 'scale(1)', opacity: 0 }], { duration: 600, easing: 'ease-out' })
+      .finished.then(() => s.remove());
+  }));
+  function set(state, text) { save.dataset.state = state; save.ariaBusy = state === 'loading'; lbl.textContent = text; }
+  save.addEventListener('click', () => {
+    if (save.dataset.state !== 'idle') return;
+    set('loading', 'Guardando…');
+    setTimeout(() => {
+      set('done', 'Guardado'); live.textContent = 'Cambios guardados.';
+      setTimeout(() => { set('idle', 'Guardar cambios'); live.textContent = ''; }, 1800);
+    }, calm ? 300 : 900);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<section class="mx-auto max-w-[640px] rounded-lg border border-slate-200 bg-white px-6 py-7 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h1 class="min-h-[2.5em] text-[clamp(22px,5.5vw,34px)] font-bold leading-tight tracking-tight">
+    Automatiza <span class="text-blue-600 dark:text-blue-400"><span id="t" aria-hidden="true">tus informes semanales</span><span class="ml-[3px] inline-block h-[.95em] w-0.5 align-[-.1em] bg-gradient-to-br from-cyan-400 to-blue-600 motion-safe:animate-pulse motion-reduce:hidden" aria-hidden="true"></span></span><span class="sr-only">tus informes, pagos, inventario y bienvenidas</span>
+  </h1>
+  <p class="mb-5 mt-3 max-w-prose text-slate-500 dark:text-slate-400">Aurora conecta tus herramientas y repite por ti las tareas que se llevan horas cada semana.</p>
+  <div id="ctl" class="flex flex-wrap gap-3">
+    <button id="pause" type="button" class="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 font-semibold transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Pausar</button>
+    <button id="rep" type="button" class="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 font-semibold transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Repetir</button>
+  </div>
+</section>
+<script>
+  const P = ['tus informes semanales', 'la conciliación de pagos', 'las alertas de inventario', 'la bienvenida a clientes'];
+  const el = document.getElementById('t'), pause = document.getElementById('pause'), rep = document.getElementById('rep');
+  let i = 0, n = 0, del = false, paused = false, timer;
+  function tick() {
+    const p = P[i];
+    n += del ? -1 : 1;
+    el.textContent = p.slice(0, n);
+    let ms = del ? 28 : 55;
+    if (!del && n === p.length) { del = true; ms = 1500; }
+    else if (del && n === 0) { del = false; i = (i + 1) % P.length; ms = 350; }
+    timer = setTimeout(tick, ms);
+  }
+  function play(on) { paused = !on; pause.textContent = on ? 'Pausar' : 'Reanudar'; clearTimeout(timer); if (on) tick(); }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.getElementById('ctl').hidden = true;
+  else {
+    pause.onclick = () => play(paused);
+    rep.onclick = () => { clearTimeout(timer); i = n = 0; del = false; el.textContent = ''; play(true); };
+    n = 0; el.textContent = ''; tick();
+  }
+</script>

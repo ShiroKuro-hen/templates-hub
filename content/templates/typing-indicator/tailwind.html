@@ -1,0 +1,45 @@
+<section aria-label="Conversación con Lucía Ortega" class="mx-auto max-w-md overflow-hidden rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <ol id="log" role="log" aria-live="polite" tabindex="0" class="m-0 flex h-72 list-none flex-col gap-2.5 overflow-y-auto bg-slate-50 p-4 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600 dark:bg-slate-950">
+    <li class="flex max-w-[80%] flex-col items-start gap-0.5"><p class="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900">¿Pudiste revisar el informe de septiembre?</p></li>
+    <li id="ty" hidden class="max-w-[80%] self-start [&:not([hidden])]:flex">
+      <p aria-hidden="true" class="flex h-9 items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 dark:border-slate-700 dark:bg-slate-900">
+        <i class="size-1.5 animate-bounce rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 motion-reduce:animate-none"></i>
+        <i class="size-1.5 animate-bounce rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 [animation-delay:150ms] motion-reduce:animate-none"></i>
+        <i class="size-1.5 animate-bounce rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 [animation-delay:300ms] motion-reduce:animate-none"></i>
+      </p>
+      <span class="sr-only" role="status">Lucía está escribiendo</span>
+    </li>
+  </ol>
+  <form id="f" class="flex gap-2 border-t border-slate-200 p-3 dark:border-slate-700">
+    <label for="m" class="sr-only">Mensaje</label>
+    <input id="m" autocomplete="off" placeholder="Escribe un mensaje" required class="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900">
+    <button class="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-400 dark:text-slate-950">Enviar</button>
+  </form>
+</section>
+<script>
+  const log = document.getElementById('log'), ty = document.getElementById('ty'), f = document.getElementById('f'), m = document.getElementById('m');
+  const LABEL = { sent: 'Enviado', delivered: 'Entregado', read: 'Leído' };
+  const ICON = { sent: 'M3 8.5l3.5 3.5L13 5', delivered: 'M1 8.5l3.5 3.5L11 5M7.5 11.5l.5.5L15 5' };
+  const replies = ['Recibido, gracias.', 'Perfecto, lo reviso ahora.', 'Listo, te confirmo en unos minutos.'];
+  const bubble = 'rounded-lg border px-3 py-2 ';
+  let k = 0, typers = 0;
+  const bottom = () => (log.scrollTop = log.scrollHeight);
+  function status(el, s) {
+    el.className = 'inline-flex items-center gap-1 text-xs ' + (s === 'read' ? 'text-blue-600 dark:text-blue-300' : 'text-slate-500 dark:text-slate-400');
+    el.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true" class="size-3.5 fill-none stroke-current" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="' + (ICON[s] || ICON.delivered) + '"/></svg>' + LABEL[s];
+  }
+  function add(text, me) {
+    const li = document.createElement('li'), p = document.createElement('p'), s = document.createElement('span');
+    li.className = 'flex max-w-[80%] flex-col gap-0.5 ' + (me ? 'items-end self-end' : 'items-start');
+    p.className = bubble + (me ? 'border-blue-600 bg-blue-600 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-slate-950' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900');
+    p.textContent = text; li.append(p); if (me) { status(s, 'sent'); li.append(s); }
+    log.insertBefore(li, ty); bottom(); return s;
+  }
+  f.addEventListener('submit', (e) => {
+    e.preventDefault(); const v = m.value.trim(); if (!v) return;
+    const s = add(v, true); m.value = '';
+    setTimeout(() => status(s, 'delivered'), 900);
+    setTimeout(() => { status(s, 'read'); typers++; ty.hidden = false; bottom(); }, 1900);
+    setTimeout(() => { typers--; ty.hidden = typers > 0; add(replies[k++ % replies.length], false); }, 4200);
+  });
+</script>

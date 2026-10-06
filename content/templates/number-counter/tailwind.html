@@ -1,0 +1,55 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h1 class="text-base font-semibold">Resumen del trimestre</h1>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400">Las cifras cuentan hasta su valor al entrar en vista.</p>
+    </div>
+    <button id="rep" type="button" class="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 font-semibold transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Repetir</button>
+  </div>
+  <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 [&>div]:rounded-lg [&>div]:border [&>div]:border-slate-200 [&>div]:bg-white [&>div]:p-[18px] [&>div]:shadow-sm dark:[&>div]:border-slate-700 dark:[&>div]:bg-slate-900">
+    <div data-to="128450" class="stat [--p:86]">
+      <dt class="text-slate-500 dark:text-slate-400">Usuarios activos</dt>
+      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">128.450</span></dd>
+      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
+      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">86 % de la meta anual</p>
+    </div>
+    <div data-to="99.98" data-dec="2" class="stat [--p:100]">
+      <dt class="text-slate-500 dark:text-slate-400">Disponibilidad</dt>
+      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">99,98</span><small class="ml-1 text-[15px] font-semibold text-slate-500 dark:text-slate-400">%</small></dd>
+      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
+      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Objetivo de servicio cumplido</p>
+    </div>
+    <div data-to="182" class="stat [--p:64]">
+      <dt class="text-slate-500 dark:text-slate-400">Latencia mediana</dt>
+      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">182</span><small class="ml-1 text-[15px] font-semibold text-slate-500 dark:text-slate-400">ms</small></dd>
+      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
+      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">64 % del presupuesto de 285 ms</p>
+    </div>
+    <div data-to="1284560" class="stat [--p:72]">
+      <dt class="text-slate-500 dark:text-slate-400">Pedidos procesados</dt>
+      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">1.284.560</span></dd>
+      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
+      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">72 % de la capacidad contratada</p>
+    </div>
+  </dl>
+</div>
+<script>
+  const cards = [...document.querySelectorAll('.stat')], rep = document.getElementById('rep');
+  const fmt = (n, d) => n.toLocaleString('es-ES', { minimumFractionDigits: d, maximumFractionDigits: d });
+  function run(el) {
+    const v = el.querySelector('.v'), to = +el.dataset.to, d = +(el.dataset.dec || 0), t0 = performance.now();
+    cancelAnimationFrame(el.raf);
+    (function f(now) {
+      const p = Math.min((now - t0) / 1400, 1), e = 1 - (1 - p) ** 3;
+      v.textContent = fmt(to * e, d);
+      el.style.setProperty('--t', e);
+      if (p < 1) el.raf = requestAnimationFrame(f);
+    })(t0);
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) rep.hidden = true;
+  else {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } }), { threshold: 0.4 });
+    cards.forEach((c) => io.observe(c));
+    rep.onclick = () => cards.forEach(run);
+  }
+</script>

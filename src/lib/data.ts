@@ -18,15 +18,26 @@ export const CATEGORIES: Record<string, { label: string; blurb: string; icon: st
   secciones: { label: 'Secciones de landing', blurb: 'Hero, features, testimonios, FAQ y footer.', icon: '▭' },
   graficos: { label: 'Gráficos', blurb: 'Donut, líneas, sparklines y heatmaps en SVG.', icon: '◔' },
   paginas: { label: 'Páginas completas', blurb: 'Login, dashboard, ajustes y precios listos para adaptar.', icon: '▣' },
+  ecommerce: { label: 'Comercio', blurb: 'Carrito, checkout, galerías de producto y reseñas.', icon: '⛁' },
+  dashboards: { label: 'Dashboards', blurb: 'Analítica, actividad, uso y estado del sistema.', icon: '◧' },
+  autenticacion: { label: 'Cuenta y acceso', blurb: 'Login, 2FA, sesiones, claves API e invitaciones.', icon: '⚿' },
+  onboarding: { label: 'Onboarding', blurb: 'Checklists, tours, asistentes y anuncios de producto.', icon: '➤' },
+  mensajeria: { label: 'Mensajería', blurb: 'Chat, comentarios, menciones y reacciones.', icon: '✉' },
+  medios: { label: 'Medios', blurb: 'Reproductores, galerías, comparadores y subida de imágenes.', icon: '▶' },
+  filtros: { label: 'Búsqueda y filtros', blurb: 'Filtros facetados, sugerencias, orden y vistas guardadas.', icon: '⌕' },
+  documentos: { label: 'Documentación', blurb: 'Layouts de docs, índice, avisos y referencia de API.', icon: '❡' },
+  animaciones: { label: 'Animaciones', blurb: 'Hover, scroll, contadores y transiciones con CSS.', icon: '≋' },
 };
 
 // Agrupación estilo design-system de gran empresa (orden de la home).
 export const GROUPS: { label: string; blurb: string; cats: string[] }[] = [
-  { label: 'Fundamentos', blurb: 'Color, tipografía e iconografía.', cats: ['paleta-de-color', 'tipografia', 'iconos'] },
+  { label: 'Fundamentos', blurb: 'Color, tipografía, iconografía y movimiento.', cats: ['paleta-de-color', 'tipografia', 'iconos', 'animaciones'] },
   { label: 'Componentes', blurb: 'Los bloques de toda interfaz.', cats: ['botones', 'etiquetas', 'formularios', 'tarjetas', 'elementos'] },
   { label: 'Feedback', blurb: 'Comunicar estados al usuario.', cats: ['notificaciones', 'modales', 'cargando'] },
-  { label: 'Navegación', blurb: 'Moverse por la aplicación.', cats: ['navegacion'] },
-  { label: 'Datos', blurb: 'Mostrar y visualizar información.', cats: ['tablas', 'barras', 'graficos'] },
+  { label: 'Navegación y búsqueda', blurb: 'Moverse, buscar y filtrar.', cats: ['navegacion', 'filtros'] },
+  { label: 'Datos', blurb: 'Mostrar y visualizar información.', cats: ['tablas', 'barras', 'graficos', 'dashboards'] },
+  { label: 'Producto y negocio', blurb: 'Flujos completos de una aplicación.', cats: ['autenticacion', 'onboarding', 'ecommerce'] },
+  { label: 'Contenido y comunicación', blurb: 'Chat, medios y documentación.', cats: ['mensajeria', 'medios', 'documentos'] },
   { label: 'Layout y páginas', blurb: 'Estructura y secciones completas.', cats: ['grids', 'secciones', 'paginas'] },
 ];
 

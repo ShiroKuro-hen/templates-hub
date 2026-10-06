@@ -1,0 +1,40 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <svg width="0" height="0" hidden aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+    <symbol id="s0" viewBox="0 0 100 100"><rect x="38" y="6" width="24" height="24" rx="6"/><rect x="38" y="70" width="24" height="24" rx="6"/><circle cx="50" cy="50" r="26"/><circle cx="50" cy="50" r="20"/><path d="M50 50V37M50 50l9 5"/></symbol>
+    <symbol id="s1" viewBox="0 0 100 100"><rect x="34" y="28" width="32" height="44" rx="8"/><rect x="66" y="45" width="7" height="10" rx="2"/><path d="M42 28L46 8h8l4 20M42 72l4 20h8l4-20"/></symbol>
+    <symbol id="s2" viewBox="0 0 100 100"><rect x="34" y="6" width="32" height="88" rx="14"/><circle cx="50" cy="30" r="2.5"/><circle cx="50" cy="42" r="2.5"/><circle cx="50" cy="54" r="2.5"/><circle cx="50" cy="66" r="2.5"/></symbol>
+    <symbol id="s3" viewBox="0 0 100 100"><rect x="14" y="34" width="72" height="42" rx="6"/><path d="M14 48h72"/><circle cx="50" cy="62" r="6"/></symbol>
+  </svg>
+  <section id="g" aria-roledescription="galería" aria-label="Reloj Orbit S2" class="max-w-lg rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <figure class="relative m-0">
+      <div id="stage" class="grid aspect-[4/3] place-items-center rounded-lg border border-slate-200 bg-blue-50 dark:border-slate-700 dark:bg-slate-800">
+        <svg id="main" aria-hidden="true" viewBox="0 0 100 100" class="h-auto w-3/5 text-blue-600 dark:text-blue-400"><use href="#s0"/></svg>
+      </div>
+      <button type="button" data-d="-1" aria-label="Imagen anterior" class="absolute left-2 top-[calc(50%-20px)] size-9 rounded-full border border-slate-200 bg-white text-lg shadow-sm hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">&lsaquo;</button>
+      <button type="button" data-d="1" aria-label="Imagen siguiente" class="absolute right-2 top-[calc(50%-20px)] size-9 rounded-full border border-slate-200 bg-white text-lg shadow-sm hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">&rsaquo;</button>
+      <figcaption id="cap" aria-live="polite" class="mt-2 tabular-nums text-slate-500 dark:text-slate-400"></figcaption>
+    </figure>
+    <div id="thumbs" role="group" aria-label="Miniaturas. Usa las flechas para cambiar de imagen." class="mt-3 grid grid-cols-4 gap-2"></div>
+  </section>
+</div>
+<script>
+  const VIEWS = ['Frontal', 'Perfil', 'Correa', 'Caja'], n = VIEWS.length, $ = (id) => document.getElementById(id);
+  const T = 'aspect-square rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-[current=true]:border-blue-600 aria-[current=true]:bg-blue-50 aria-[current=true]:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:aria-[current=true]:bg-slate-800';
+  $('thumbs').innerHTML = VIEWS.map((v, i) => `<button type="button" class="${T}" aria-label="${v}, imagen ${i + 1} de ${n}"><svg viewBox="0 0 100 100" aria-hidden="true" class="size-full"><use href="#s${i}"/></svg></button>`).join('');
+  const thumbs = [...$('thumbs').children]; let cur = 0;
+  function show(i, focus) {
+    cur = (i + n) % n;
+    $('main').firstElementChild.setAttribute('href', '#s' + cur);
+    $('cap').textContent = `${VIEWS[cur]} (${cur + 1} de ${n})`;
+    thumbs.forEach((t, j) => { t.setAttribute('aria-current', j === cur); t.tabIndex = j === cur ? 0 : -1; });
+    if (focus) thumbs[cur].focus();
+  }
+  $('thumbs').addEventListener('click', (e) => { const t = e.target.closest('button'); if (t) show(thumbs.indexOf(t)); });
+  $('thumbs').addEventListener('keydown', (e) => {
+    const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (!d && e.key !== 'Home' && e.key !== 'End') return;
+    e.preventDefault(); show(e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : cur + d, true);
+  });
+  $('g').querySelectorAll('[data-d]').forEach((b) => b.addEventListener('click', () => show(cur + Number(b.dataset.d))));
+  show(0);
+</script>

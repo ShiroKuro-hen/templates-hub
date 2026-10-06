@@ -1,0 +1,1 @@
+{ "title": "Activar verificación en dos pasos", "category": "autenticacion", "description": "Configuración de 2FA con QR en SVG, clave manual copiable y código de 6 dígitos.", "tags": ["2fa", "seguridad", "qr", "a11y"] }

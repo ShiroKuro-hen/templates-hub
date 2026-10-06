@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .box{max-width:680px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 16px;border-bottom:1px solid var(--border)}
+  h2{margin:0;font-size:16px}
+  .badge{padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-variant-numeric:tabular-nums}
+  .tools{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;padding:8px 16px;border-bottom:1px solid var(--border);color:var(--muted)}
+  .tools label{display:flex;align-items:center;gap:8px;margin-right:auto}
+  input[type=checkbox]{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+  button{font:inherit;padding:4px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s}
+  button:hover:not(:disabled){background:var(--accent-soft)}
+  button:disabled{color:var(--muted);opacity:.6;cursor:not-allowed}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ul{list-style:none;margin:0;padding:0}
+  .row{display:flex;align-items:center;gap:12px;padding:0 16px;border-bottom:1px solid var(--border);transition:background .14s}
+  .row:last-child{border-bottom:0}
+  .row:hover{background:var(--accent-soft)}
+  .row:has(input:checked){background:var(--accent-soft)}
+  .open{all:unset;box-sizing:border-box;flex:1;min-width:0;display:grid;grid-template-columns:1fr auto;gap:0 12px;padding:10px 0;cursor:pointer}
+  .open:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .who,.sub{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sub{grid-column:1/-1;color:var(--muted)}
+  time{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .sub b{font-weight:500}
+  .row[data-unread] .who,.row[data-unread] .sub b{font-weight:700}
+  .row[data-unread] .sub{color:var(--text)}
+  .row[data-unread] .who::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .empty{margin:0;padding:32px 16px;text-align:center;color:var(--muted)}
+  .empty b{display:block;color:var(--text)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="box" aria-labelledby="h">
+  <div class="bar"><h2 id="h">Bandeja de entrada</h2><span class="badge" id="un"></span></div>
+  <div class="tools" role="toolbar" aria-label="Acciones de la selección">
+    <label><input type="checkbox" id="all"><span id="cnt"></span></label>
+    <button type="button" data-a="read">Marcar como leído</button>
+    <button type="button" data-a="unread">Marcar como no leído</button>
+    <button type="button" data-a="archive">Archivar</button>
+  </div>
+  <ul id="list">
+    <li class="row" data-unread><input type="checkbox" aria-label="Seleccionar mensaje de Lucía Ortega"><button class="open" type="button"><span class="who"><span class="sr">No leído. </span>Lucía Ortega</span><time>09:41</time><span class="sub"><b>Informe de incidencias de septiembre</b> - Adjunto el resumen con los tiempos de respuesta.</span></button></li>
+    <li class="row" data-unread><input type="checkbox" aria-label="Seleccionar mensaje de Soporte Nimbus"><button class="open" type="button"><span class="who"><span class="sr">No leído. </span>Soporte Nimbus</span><time>08:15</time><span class="sub"><b>Tu ticket 4821 está resuelto</b> - Confirma si el problema de acceso continúa.</span></button></li>
+    <li class="row"><input type="checkbox" aria-label="Seleccionar mensaje de Gonzalo Paredes"><button class="open" type="button"><span class="who">Gonzalo Paredes</span><time>Ayer</time><span class="sub"><b>Agenda del comité del jueves</b> - Faltan dos puntos por confirmar.</span></button></li>
+    <li class="row"><input type="checkbox" aria-label="Seleccionar mensaje de Facturación"><button class="open" type="button"><span class="who">Facturación</span><time>Ayer</time><span class="sub"><b>Factura de septiembre disponible</b> - Descárgala desde el portal de cuenta.</span></button></li>
+    <li class="row" data-unread><input type="checkbox" aria-label="Seleccionar mensaje de Rocío Aguirre"><button class="open" type="button"><span class="who"><span class="sr">No leído. </span>Rocío Aguirre</span><time>3 oct</time><span class="sub"><b>Re: Revisión del contrato marco</b> - Acepto los cambios de la cláusula 7.</span></button></li>
+    <li class="row"><input type="checkbox" aria-label="Seleccionar mensaje de Seguridad"><button class="open" type="button"><span class="who">Equipo de Seguridad</span><time>2 oct</time><span class="sub"><b>Nuevo inicio de sesión desde Lima</b> - Si no fuiste tú, cambia tu contraseña.</span></button></li>
+  </ul>
+  <p class="empty" id="empty" hidden><b>No quedan mensajes por revisar</b>Los mensajes nuevos aparecerán aquí.</p>
+  <p class="sr" id="st" role="status"></p>
+</section>
+<script>
+  const list = document.getElementById('list'), all = document.getElementById('all'), cnt = document.getElementById('cnt');
+  const un = document.getElementById('un'), empty = document.getElementById('empty'), st = document.getElementById('st');
+  const tools = document.querySelectorAll('[data-a]');
+  const rows = () => [...list.children], picked = () => rows().filter((r) => r.querySelector('input').checked);
+  function sync() {
+    const s = picked().length, n = rows().length, u = rows().filter((r) => r.hasAttribute('data-unread')).length;
+    all.checked = n > 0 && s === n; all.indeterminate = s > 0 && s < n; all.disabled = !n;
+    cnt.textContent = s ? s + (s === 1 ? ' seleccionado' : ' seleccionados') : 'Seleccionar todo';
+    un.textContent = u + ' sin leer'; empty.hidden = n > 0;
+    tools.forEach((b) => (b.disabled = !s));
+  }
+  function mark(r, unread) {
+    r.toggleAttribute('data-unread', unread);
+    const sr = r.querySelector('.who .sr');
+    if (unread && !sr) r.querySelector('.who').insertAdjacentHTML('afterbegin', '<span class="sr">No leído. </span>');
+    if (!unread && sr) sr.remove();
+  }
+  list.addEventListener('change', sync);
+  list.addEventListener('click', (e) => { const b = e.target.closest('.open'); if (b) { mark(b.closest('.row'), false); sync(); } });
+  all.addEventListener('change', () => { rows().forEach((r) => (r.querySelector('input').checked = all.checked)); sync(); });
+  document.querySelector('.tools').addEventListener('click', (e) => {
+    const a = e.target.closest('[data-a]')?.dataset.a, s = picked(); if (!a) return;
+    s.forEach((r) => { if (a === 'archive') r.remove(); else { mark(r, a === 'unread'); r.querySelector('input').checked = false; } });
+    st.textContent = a === 'archive' ? s.length + ' archivados' : s.length + ' actualizados'; sync();
+    (a === 'archive' ? all : e.target).focus();
+  });
+  sync();
+</script>
+</body>
+</html>

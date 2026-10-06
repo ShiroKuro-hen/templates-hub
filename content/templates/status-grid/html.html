@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  h1{margin:0;font-size:18px;font-weight:600}
+  .banner{display:flex;align-items:center;gap:10px;margin:12px 0 16px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .dot{flex:none;width:10px;height:10px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);animation:ping 2s ease-out infinite}
+  .banner.w .dot{background:var(--warn);animation:none}
+  @keyframes ping{from{box-shadow:0 0 0 0 var(--accent)}to{box-shadow:0 0 0 8px transparent}}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:0;padding:0;list-style:none}
+  .svc{padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px;margin-bottom:12px}
+  h3{margin:0;font-size:14px;font-weight:600}
+  .st{display:inline-flex;align-items:center;gap:6px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:600}
+  .st::before{content:"";width:8px;height:8px;border-radius:999px;background:var(--c)}
+  .st.o{--c:var(--ok);background:var(--ok-soft)}
+  .st.d{--c:var(--warn);background:var(--warn-soft)}
+  .st.x{--c:var(--err);background:var(--err-soft)}
+  .bars{display:flex;gap:2px;height:28px}
+  .bars i{flex:1;min-width:0;border-radius:2px}
+  .bars .o{background:var(--ok)}
+  .bars .d{background:var(--warn)}
+  .bars .x{background:var(--err)}
+  .foot{display:flex;justify-content:space-between;margin-top:8px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .foot b{color:var(--text);font-weight:600}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<h1>Estado de los servicios</h1>
+<p class="banner" id="b" role="status"><span class="dot"></span><span id="bt"></span></p>
+<ul class="grid" id="g"></ul>
+<script>
+  // Cada servicio: días con problema (0 = hace 29 días, 29 = hoy). o = operativo, d = degradado, x = incidencia.
+  const S = [['API pública', {}], ['Panel web', { 14: 'd' }], ['Autenticación', {}], ['Pagos', { 6: 'x', 7: 'd' }],
+             ['Notificaciones', { 3: 'd', 28: 'd', 29: 'd' }], ['Almacenamiento', {}], ['Webhooks', { 19: 'd', 20: 'd' }], ['Búsqueda', {}]];
+  const T = { o: 'operativo', d: 'degradado', x: 'con incidencia' };
+  const L = { o: 'Operativo', d: 'Degradado', x: 'Con incidencia' };
+  const fecha = (i) => new Date(2026, 9, 6 - (29 - i)).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  const n = (a, c) => a.filter((x) => x === c).length;
+  let alerta = 0;
+  document.getElementById('g').innerHTML = S.map(([name, bad]) => {
+    const d = Array.from({ length: 30 }, (_, i) => bad[i] || 'o'), x = n(d, 'x'), w = n(d, 'd'), hoy = d[29];
+    if (hoy !== 'o') alerta++;
+    return `<li class="svc"><div class="top"><h3>${name}</h3><span class="st ${hoy}">${L[hoy]}</span></div>
+      <div class="bars" role="img" aria-label="${name}, últimos 30 días: ${30 - x - w} operativos, ${w} degradados, ${x} con incidencia">${d.map((c, i) => `<i class="${c}" title="${fecha(i)}: ${T[c]}"></i>`).join('')}</div>
+      <div class="foot"><span>Hace 30 días</span><span><b>${(100 - x * 0.8 - w * 0.2).toFixed(1).replace('.', ',')} %</b> disponible</span></div></li>`;
+  }).join('');
+  document.getElementById('b').classList.toggle('w', alerta > 0);
+  document.getElementById('bt').textContent = alerta ? `Hay ${alerta} ${alerta > 1 ? 'servicios' : 'servicio'} con problemas. Seguimos investigando la causa.` : 'Todos los sistemas funcionan con normalidad.';
+</script>
+</body>
+</html>

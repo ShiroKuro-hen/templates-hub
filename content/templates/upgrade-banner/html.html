@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .banner{position:relative;max-width:900px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;padding:16px 56px 16px 20px}
+  .txt{flex:1 1 260px;min-width:0}
+  .txt strong{display:block;font-size:15px;font-weight:600}
+  .txt p{margin:2px 0 0;color:var(--muted)}
+  .cd{display:flex;gap:8px}
+  .cd div{min-width:52px;padding:6px 8px;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  .cd b{display:block;font-size:18px;line-height:1.2;font-weight:600;font-variant-numeric:tabular-nums}
+  .cd span{color:var(--muted);font-size:12px}
+  .acts{display:flex;flex-wrap:wrap;gap:8px}
+  .btn{height:36px;padding:0 16px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;font-weight:500;cursor:pointer;transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.main:hover{filter:brightness(.94)}
+  .x{position:absolute;top:12px;right:12px;display:grid;place-items:center;width:32px;height:32px;padding:0;background:none;border:0;border-radius:var(--radius);color:var(--muted);cursor:pointer}
+  .x:hover{color:var(--text);background:var(--accent-soft)}
+  progress{display:block;width:100%;height:4px;border:0;background:var(--accent-soft);-webkit-appearance:none;appearance:none}
+  progress::-webkit-progress-bar{background:var(--accent-soft)}
+  progress::-webkit-progress-value{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  progress::-moz-progress-bar{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  #again{margin:0 auto;display:block}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<aside class="banner" id="banner" aria-labelledby="ttl">
+  <div class="row">
+    <div class="txt">
+      <strong id="ttl">Tu prueba de Pro termina el <time id="end"></time></strong>
+      <p id="sub">Mejora tu plan para conservar informes ilimitados y hasta 10 personas en tu equipo.</p>
+    </div>
+    <div class="cd" role="timer" aria-label="Tiempo restante de la prueba">
+      <div><b id="d">0</b><span>días</span></div><div><b id="h">00</b><span>horas</span></div><div><b id="m">00</b><span>min</span></div><div><b id="s">00</b><span>seg</span></div>
+    </div>
+    <div class="acts"><button type="button" class="btn main">Mejorar plan</button><button type="button" class="btn">Comparar planes</button></div>
+  </div>
+  <button type="button" class="x" id="close" aria-label="Cerrar banner"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+  <progress id="bar" max="14" value="8" aria-label="Días de prueba usados"></progress>
+</aside>
+<button type="button" class="btn" id="again" hidden>Mostrar banner</button>
+<script>
+  const $ = (id) => document.getElementById(id), TOTAL = 14, end = Date.now() + (5 * 86400 + 19 * 3600 + 23 * 60 + 40) * 1000;
+  const pad = (n) => String(n).padStart(2, '0');
+  $('end').textContent = new Date(end).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+  $('end').dateTime = new Date(end).toISOString();
+  function tick() {
+    const s = Math.max(0, Math.floor((end - Date.now()) / 1000));
+    $('d').textContent = Math.floor(s / 86400); $('h').textContent = pad(Math.floor(s % 86400 / 3600));
+    $('m').textContent = pad(Math.floor(s % 3600 / 60)); $('s').textContent = pad(s % 60);
+    $('bar').value = TOTAL - Math.ceil(s / 86400);
+    if (!s) { clearInterval(t); $('ttl').textContent = 'Tu prueba de Pro ha terminado'; $('sub').textContent = 'Mejora tu plan para recuperar el acceso a tus informes.'; }
+  }
+  const t = setInterval(tick, 1000); tick();
+  $('close').onclick = () => { $('banner').hidden = true; $('again').hidden = false; $('again').focus(); };
+  $('again').onclick = () => { $('banner').hidden = false; $('again').hidden = true; $('close').focus(); };
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<article class="max-w-3xl rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-900 shadow-sm sm:p-6 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 [&_code]:font-mono [&_code]:text-[13px] [&_h2]:mb-2 [&_h2]:mt-6 [&_h2]:text-[15px] [&_h2]:font-bold">
+  <h1 class="mb-3 text-[22px] font-bold leading-tight">Crear un pedido</h1>
+  <div class="flex items-center gap-2.5 overflow-x-auto rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-700 dark:bg-slate-950">
+    <span class="inline-flex flex-none items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-px font-semibold before:size-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 before:content-[''] dark:bg-emerald-950">POST</span>
+    <code class="whitespace-nowrap">/v1/pedidos</code>
+  </div>
+  <p class="mt-3 max-w-[64ch] text-slate-500 dark:text-slate-400">Registra un pedido para un cliente existente. Requiere una clave de API en la cabecera <code>Authorization</code>.</p>
+
+  <h2 id="ph">Parámetros del cuerpo</h2>
+  <div role="region" aria-labelledby="ph" tabindex="0" class="overflow-x-auto rounded-lg border border-slate-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700">
+    <table class="w-full min-w-[520px] border-collapse text-left [&_td]:border-b [&_td]:border-slate-200 [&_td]:px-3 [&_td]:py-2 [&_td]:align-top [&_th]:border-b [&_th]:border-slate-200 [&_th]:px-3 [&_th]:py-2 [&_th]:align-top dark:[&_td]:border-slate-700 dark:[&_th]:border-slate-700 [&_tbody_tr:last-child_*]:border-0">
+      <thead class="bg-slate-50 text-slate-500 dark:bg-slate-950 dark:text-slate-400"><tr><th scope="col">Nombre</th><th scope="col">Tipo</th><th scope="col">Uso</th><th scope="col">Descripción</th></tr></thead>
+      <tbody class="[&_th]:whitespace-nowrap [&_th]:font-normal [&_td:nth-child(2)_code]:text-blue-600 dark:[&_td:nth-child(2)_code]:text-blue-400 [&_td:nth-child(3)]:text-xs [&_td:nth-child(3)]:text-slate-500">
+        <tr><th scope="row"><code>cliente_id</code></th><td><code>string</code></td><td><b class="font-semibold text-slate-900 dark:text-slate-100">Obligatorio</b></td><td>Identificador del cliente. Empieza por <code>cli_</code>.</td></tr>
+        <tr><th scope="row"><code>total</code></th><td><code>integer</code></td><td><b class="font-semibold text-slate-900 dark:text-slate-100">Obligatorio</b></td><td>Importe en centavos. Debe ser mayor que 0.</td></tr>
+        <tr><th scope="row"><code>moneda</code></th><td><code>string</code></td><td>Opcional</td><td>Código ISO 4217. Por defecto <code>USD</code>.</td></tr>
+        <tr><th scope="row"><code>notas</code></th><td><code>string</code></td><td>Opcional</td><td>Texto libre de hasta 200 caracteres.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Respuestas</h2>
+  <div class="space-y-2 [&_details]:overflow-hidden [&_details]:rounded-lg [&_details]:border [&_details]:border-slate-200 dark:[&_details]:border-slate-700 [&_summary]:flex [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:items-center [&_summary]:gap-2.5 [&_summary]:px-3 [&_summary]:py-2.5 [&_summary:hover]:bg-blue-50 dark:[&_summary:hover]:bg-slate-800 [&_summary::-webkit-details-marker]:hidden [&_summary]:after:ml-auto [&_summary]:after:size-1.5 [&_summary]:after:rotate-45 [&_summary]:after:border-b-[1.5px] [&_summary]:after:border-r-[1.5px] [&_summary]:after:border-slate-500 [&_summary]:after:content-[''] [&_details[open]>summary]:after:-rotate-[135deg] [&_summary:focus-visible]:outline-2 [&_summary:focus-visible]:outline-offset-2 [&_summary:focus-visible]:outline-blue-600 [&_pre]:m-0 [&_pre]:overflow-auto [&_pre]:border-t [&_pre]:border-slate-200 [&_pre]:bg-slate-50 [&_pre]:px-4 [&_pre]:py-3 dark:[&_pre]:border-slate-700 dark:[&_pre]:bg-slate-950">
+    <details open>
+      <summary><span class="rounded-full bg-emerald-50 px-2 font-semibold tabular-nums dark:bg-emerald-950">201</span>Pedido creado</summary>
+<pre><code>{
+  "id": "ped_9f3k2",
+  "cliente_id": "cli_204",
+  "total": 128000,
+  "moneda": "USD",
+  "estado": "pendiente",
+  "creado": "2026-10-06T14:32:10Z"
+}</code></pre>
+    </details>
+    <details>
+      <summary><span class="rounded-full bg-rose-50 px-2 font-semibold tabular-nums dark:bg-rose-950">422</span>Datos no válidos</summary>
+<pre><code>{
+  "error": "datos_no_validos",
+  "mensaje": "El campo total debe ser mayor que 0.",
+  "campo": "total"
+}</code></pre>
+    </details>
+  </div>
+</article>

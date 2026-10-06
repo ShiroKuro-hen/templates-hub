@@ -1,0 +1,48 @@
+<div class="relative mx-auto max-w-lg rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <label for="t" class="mb-1.5 block font-semibold">Comentario para el equipo</label>
+  <textarea id="t" rows="3" placeholder="Escribe @ para mencionar a alguien" role="combobox" aria-expanded="false" aria-controls="list" aria-autocomplete="list" aria-describedby="m" class="block w-full resize-y rounded-lg border border-slate-200 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900"></textarea>
+  <ul id="list" role="listbox" aria-label="Personas del equipo" hidden class="absolute inset-x-4 z-10 mt-1 rounded-lg border border-slate-200 bg-white p-1 shadow-md dark:border-slate-700 dark:bg-slate-900"></ul>
+  <p id="m" aria-live="polite" class="mt-2.5 min-h-6 text-xs text-slate-500 dark:text-slate-400">Usa las flechas para elegir y Enter para insertar.</p>
+</div>
+<script>
+  const team = [['Ana Pérez', 'Diseño'], ['Bruno Salas', 'Ingeniería'], ['Carla Núñez', 'Producto'], ['Diego Herrera', 'Soporte'], ['Elena Vidal', 'Datos']];
+  const t = document.getElementById('t'), list = document.getElementById('list'), m = document.getElementById('m');
+  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  const on = 'bg-blue-50 dark:bg-blue-500/15', av = 'grid size-7 shrink-0 place-items-center rounded-full text-[11px] font-semibold ';
+  let items = [], sel = 0, from = 0;
+  function close() { list.hidden = true; t.setAttribute('aria-expanded', 'false'); t.removeAttribute('aria-activedescendant'); }
+  function paint() {
+    [...list.children].forEach((li, i) => {
+      li.setAttribute('aria-selected', i === sel); li.className = 'flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-1.5 ' + (i === sel ? on : '');
+      li.firstChild.className = av + (i === sel ? 'bg-gradient-to-br from-cyan-400 to-blue-600 text-white' : 'bg-blue-50 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300');
+    });
+    if (items.length) t.setAttribute('aria-activedescendant', 'o' + sel);
+  }
+  function pick(i) { t.setRangeText('@' + items[i][0] + ' ', from, t.selectionStart, 'end'); close(); t.focus(); notes(); }
+  function notes() {
+    const hit = team.filter(([n]) => t.value.includes('@' + n));
+    m.textContent = hit.length ? 'Se notificará a ' : 'Usa las flechas para elegir y Enter para insertar.';
+    hit.forEach(([n]) => { const c = document.createElement('span'); c.className = 'mr-1 rounded-full bg-blue-50 px-2 text-blue-600 dark:bg-blue-500/15 dark:text-blue-300'; c.textContent = n; m.append(c); });
+  }
+  t.addEventListener('input', () => {
+    const pos = t.selectionStart, r = /(^|\s)@([^\s@]*)$/.exec(t.value.slice(0, pos));
+    notes(); if (!r) return close();
+    from = pos - r[2].length - 1; sel = 0; list.innerHTML = '';
+    items = team.filter(([n]) => norm(n).includes(norm(r[2])));
+    items.forEach(([n, role], i) => {
+      const li = document.createElement('li'); li.id = 'o' + i; li.setAttribute('role', 'option');
+      li.innerHTML = '<span aria-hidden="true"></span><span class="grid leading-tight"><b></b><small class="text-slate-500 dark:text-slate-400"></small></span>';
+      li.firstChild.textContent = n.split(' ').map((w) => w[0]).join(''); li.querySelector('b').textContent = n; li.querySelector('small').textContent = role;
+      li.onmousedown = (e) => { e.preventDefault(); pick(i); }; list.append(li);
+    });
+    if (!items.length) list.innerHTML = '<li class="px-2 py-1.5 text-slate-500 dark:text-slate-400" role="presentation">Sin resultados. Prueba con otro nombre.</li>';
+    list.hidden = false; t.setAttribute('aria-expanded', 'true'); paint();
+  });
+  t.addEventListener('keydown', (e) => {
+    if (list.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (items.length && /^Arrow(Down|Up)$/.test(e.key)) { e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; paint(); }
+    else if (items.length && (e.key === 'Enter' || e.key === 'Tab')) { e.preventDefault(); pick(sel); }
+  });
+  t.addEventListener('blur', close);
+</script>

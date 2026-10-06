@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:16px;max-width:860px}
+  .wrap>*{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .scroll{height:400px;overflow:auto;padding:8px 24px}
+  .scroll:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .scroll::after{content:"";display:block;height:300px}
+  section{min-height:200px;padding:16px 0}
+  h2{margin:0 0 8px;font-size:20px;scroll-margin-top:8px}
+  p{margin:0 0 12px;max-width:62ch;color:var(--muted)}
+  .toc{align-self:start;position:sticky;top:20px;padding:16px}
+  .toc h2{margin:0 0 8px;font-size:14px}
+  ul{list-style:none;margin:0;padding:0;border-left:1px solid var(--border)}
+  .toc a{position:relative;display:block;padding:4px 12px;color:var(--muted);text-decoration:none;transition:color .14s}
+  .toc a:hover{color:var(--text)}
+  .toc a[aria-current]{color:var(--accent);font-weight:600}
+  .toc a[aria-current]::before{content:"";position:absolute;left:-1px;top:3px;bottom:3px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  @media (prefers-reduced-motion:no-preference){.scroll{scroll-behavior:smooth}}
+  @media (max-width:560px){.wrap{grid-template-columns:minmax(0,1fr)}.toc{order:-1;position:static}.scroll{height:320px;padding:8px 16px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="scroll" id="sc" tabindex="0" role="region" aria-label="Contenido del artículo">
+    <section id="conceptos"><h2>Conceptos</h2><p>Un proyecto agrupa servicios, variables y miembros. Cada proyecto tiene entornos independientes para pruebas y producción.</p><p>Los servicios se comunican por una red privada y solo exponen los puertos que declaras.</p></section>
+    <section id="instalacion"><h2>Instalación</h2><p>Instala la herramienta de línea de comandos con tu gestor de paquetes y verifica la versión antes de continuar.</p><p>Necesitas permisos de administrador solo la primera vez que la instalas.</p></section>
+    <section id="configuracion"><h2>Configuración</h2><p>Define las variables de entorno en el panel o en el archivo de configuración del proyecto.</p><p>Los valores secretos se cifran y no se muestran después de guardarlos.</p></section>
+    <section id="despliegue"><h2>Despliegue</h2><p>Cada cambio que llega a la rama principal genera un despliegue. Puedes revisarlo antes de publicarlo.</p><p>Si algo falla, vuelve a la versión anterior con un clic.</p></section>
+    <section id="problemas"><h2>Solución de problemas</h2><p>Revisa el registro del despliegue para ver qué paso falló. La mayoría de los errores son variables sin definir.</p><p>Si el problema continúa, escribe al equipo de soporte con el identificador del despliegue.</p></section>
+  </div>
+  <nav class="toc" aria-labelledby="tt">
+    <h2 id="tt">En esta página</h2>
+    <ul>
+      <li><a href="#conceptos">Conceptos</a></li><li><a href="#instalacion">Instalación</a></li><li><a href="#configuracion">Configuración</a></li>
+      <li><a href="#despliegue">Despliegue</a></li><li><a href="#problemas">Solución de problemas</a></li>
+    </ul>
+  </nav>
+</div>
+<script>
+  const links = [...document.querySelectorAll('.toc a')];
+  const secs = links.map((a) => document.getElementById(a.hash.slice(1)));
+  const vis = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? vis.add(e.target) : vis.delete(e.target)));
+    const cur = secs.find((s) => vis.has(s));
+    if (cur) links.forEach((a) => a.hash === '#' + cur.id ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
+  }, { root: document.getElementById('sc'), rootMargin: '0px 0px -65% 0px' });
+  secs.forEach((s) => io.observe(s));
+</script>
+</body>
+</html>

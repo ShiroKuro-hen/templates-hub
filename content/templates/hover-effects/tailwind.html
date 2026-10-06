@@ -1,0 +1,43 @@
+<div class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <!-- Elevación -->
+  <a href="#" class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-white p-[18px] transition duration-150 hover:-translate-y-[3px] hover:border-blue-500 hover:shadow-lg focus-visible:-translate-y-[3px] focus-visible:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-slate-700 dark:bg-slate-900">
+    <h3 class="mb-1 text-[15px] font-semibold">Elevación</h3>
+    <p class="text-slate-500 dark:text-slate-400">Para tarjetas de proyecto: sube 3px y gana sombra.</p>
+  </a>
+  <!-- Brillo que sigue al cursor -->
+  <a href="#" data-glow class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-white p-[18px] before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(180px_circle_at_var(--x,50%)_var(--y,50%),theme(colors.blue.500/0.16),transparent_70%)] before:opacity-0 before:transition-opacity before:duration-150 hover:before:opacity-100 focus-visible:before:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:before:transition-none dark:border-slate-700 dark:bg-slate-900">
+    <h3 class="relative mb-1 text-[15px] font-semibold">Brillo</h3>
+    <p class="relative text-slate-500 dark:text-slate-400">Un halo suave sigue al cursor sobre la tarjeta.</p>
+  </a>
+  <!-- Subrayado -->
+  <a href="#" class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-white p-[18px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+    <h3 class="mb-1 text-[15px] font-semibold"><span class="bg-gradient-to-br from-cyan-400 to-blue-600 bg-[length:0_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-150 group-hover:bg-[length:100%_1px] group-focus-visible:bg-[length:100%_1px] motion-reduce:transition-none">Subrayado</span></h3>
+    <p class="text-slate-500 dark:text-slate-400">Para enlaces de documentación: la línea crece.</p>
+  </a>
+  <!-- Giro -->
+  <a href="#" class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-white p-[18px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" class="mb-2.5 block text-blue-600 transition-transform duration-150 group-hover:rotate-90 group-focus-visible:rotate-90 motion-reduce:transition-none motion-reduce:group-hover:rotate-0 dark:text-blue-400"><circle cx="12" cy="12" r="10"/><path d="m10 8 4 4-4 4"/></svg>
+    <h3 class="mb-1 text-[15px] font-semibold">Giro</h3>
+    <p class="text-slate-500 dark:text-slate-400">El icono gira 90° y anuncia que se despliega.</p>
+  </a>
+  <!-- Relleno -->
+  <a href="#" class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-white p-[18px] transition-colors duration-150 after:absolute after:inset-0 after:origin-left after:scale-x-0 after:bg-blue-600 after:transition-transform after:duration-150 hover:border-blue-600 hover:after:scale-x-100 focus-visible:after:scale-x-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none motion-reduce:after:transition-none dark:border-slate-700 dark:bg-slate-900">
+    <h3 class="relative z-10 mb-1 text-[15px] font-semibold transition-colors duration-150 group-hover:text-white group-focus-visible:text-white">Relleno</h3>
+    <p class="relative z-10 text-slate-500 transition-colors duration-150 group-hover:text-white group-focus-visible:text-white dark:text-slate-400">El fondo se llena de izquierda a derecha.</p>
+  </a>
+  <!-- Escala -->
+  <a href="#" class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-white p-[18px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+    <div class="mb-3 h-[72px] overflow-hidden rounded-md bg-blue-50 dark:bg-slate-800">
+      <svg viewBox="0 0 200 72" preserveAspectRatio="none" aria-hidden="true" class="block h-full w-full text-blue-600 transition-transform duration-150 group-hover:scale-110 group-focus-visible:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100 dark:text-blue-400"><path d="M0 60 30 48 60 52 90 30 120 36 150 18 200 24V72H0Z" fill="currentColor" opacity=".18"/><path d="M0 60 30 48 60 52 90 30 120 36 150 18 200 24" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+    </div>
+    <h3 class="mb-1 text-[15px] font-semibold">Escala</h3>
+    <p class="text-slate-500 dark:text-slate-400">La imagen crece dentro de su marco.</p>
+  </a>
+</div>
+<script>
+  document.querySelectorAll('[data-glow]').forEach((el) => el.addEventListener('pointermove', (e) => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--x', e.clientX - r.left + 'px');
+    el.style.setProperty('--y', e.clientY - r.top + 'px');
+  }));
+</script>

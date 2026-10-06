@@ -7,8 +7,10 @@ import '@fontsource/ibm-plex-mono/400.css';
 import '../styles/global.css';
 import { CATEGORIES, GROUPS, groupOf, templates, url } from '../lib/data';
 
-const { title = 'Templates Hub', description = 'Componentes de interfaz con vista previa, código en varios lenguajes y prompt para IA.', current = '' } = Astro.props;
+const { title = 'Templates Hub', description = 'Componentes de interfaz con vista previa, código en varios lenguajes y prompt para IA.', current = '', currentCat = '' } = Astro.props;
 const inCat = (c: string) => templates.filter((t) => t.category === c);
+// Solo se abre el grupo de la página actual: con cientos de componentes, el sidebar se mantiene legible.
+const activeCat = currentCat || templates.find((t) => t.slug === current)?.category || '';
 ---
 <!doctype html>
 <html lang="es">
@@ -59,8 +61,8 @@ const inCat = (c: string) => templates.filter((t) => t.category === c);
         <label class="sr" for="filter">Filtrar componentes</label>
         <input id="filter" type="search" placeholder="Filtrar componentes" autocomplete="off" />
         {GROUPS.map((g) => (
-          <details open data-group>
-            <summary>{g.label}</summary>
+          <details open={g.cats.includes(activeCat)} data-group>
+            <summary>{g.label} <span class="n">{g.cats.reduce((n, c) => n + inCat(c).length, 0)}</span></summary>
             {g.cats.map((c) => (
               <div data-cat>
                 <a class="catlabel" href={url(`/c/${c}/`)}>{CATEGORIES[c].label}</a>
@@ -115,7 +117,10 @@ const inCat = (c: string) => templates.filter((t) => t.category === c);
       if (ok) shown++;
     });
     $<HTMLElement>('.side [data-cat]').forEach((c) => (c.hidden = !c.querySelector('li:not([hidden])')));
-    $<HTMLDetailsElement>('.side [data-group]').forEach((g) => (g.hidden = !g.querySelector('li:not([hidden])')));
+    $<HTMLDetailsElement>('.side [data-group]').forEach((g) => {
+      g.hidden = !g.querySelector('li:not([hidden])');
+      if (words.length) g.open = true; // al filtrar, se despliega todo lo que coincide
+    });
     document.getElementById('none')!.hidden = shown > 0;
   });
   const here = document.querySelector<HTMLElement>('.side a[aria-current]');

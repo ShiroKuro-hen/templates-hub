@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .cover{display:block;width:100%;height:150px}
+  .main{padding:0 20px 20px}
+  .top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-top:-44px}
+  .av{display:grid;place-items:center;width:88px;height:88px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:28px;font-weight:600;box-shadow:0 0 0 4px var(--surface)}
+  .acts{display:flex;gap:8px}
+  button{font:inherit;font-weight:600;padding:8px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s,filter .14s}
+  button:hover{background:var(--accent-soft)}
+  button.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button.pri:hover{filter:brightness(1.08);background:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  h1{display:flex;align-items:center;gap:6px;margin:12px 0 0;font-size:20px;line-height:1.3}
+  .ver{width:18px;height:18px;color:var(--accent)}
+  .handle{margin:0;color:var(--muted)}
+  .bio{margin:10px 0;max-width:60ch}
+  .loc{display:flex;align-items:center;gap:6px;margin:0;color:var(--muted)}
+  .loc svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  dl{display:flex;flex-wrap:wrap;gap:8px 28px;margin:16px 0 0;padding-top:16px;border-top:1px solid var(--border)}
+  dl div{display:flex;flex-direction:column-reverse}
+  dt{color:var(--muted);font-size:13px}
+  dd{margin:0;font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<article class="card" aria-labelledby="n">
+  <svg class="cover" viewBox="0 0 800 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient>
+      <pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".18"/></pattern>
+    </defs>
+    <rect width="800" height="150" fill="url(#g)"/>
+    <rect width="800" height="150" fill="url(#p)"/>
+    <circle cx="640" cy="40" r="90" fill="none" stroke="#fff" stroke-opacity=".3"/>
+    <circle cx="640" cy="40" r="52" fill="none" stroke="#fff" stroke-opacity=".3"/>
+    <circle cx="640" cy="40" r="6" fill="#fff" fill-opacity=".8"/>
+  </svg>
+  <div class="main">
+    <div class="top">
+      <span class="av" aria-hidden="true">VM</span>
+      <div class="acts">
+        <button type="button">Enviar mensaje</button>
+        <button type="button" class="pri" id="follow">Seguir</button>
+      </div>
+    </div>
+    <h1 id="n">Valeria Montoya
+      <svg class="ver" viewBox="0 0 24 24" role="img" aria-label="Cuenta verificada"><path fill="currentColor" d="M12 2l2.4 1.8 3-.2 1 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-1 2.8-3-.2L12 22l-2.4-1.8-3 .2-1-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7 1-2.8 3 .2z"/><path fill="none" stroke="var(--accent-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12.5l2.6 2.6L16 9.5"/></svg>
+    </h1>
+    <p class="handle">@valeriamontoya</p>
+    <p class="bio">Diseñadora de producto en Nimbus. Escribo sobre sistemas de diseño, accesibilidad y trabajo en equipo.</p>
+    <p class="loc"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14s5-4.2 5-8A5 5 0 0 0 3 6c0 3.8 5 8 5 8z"/><circle cx="8" cy="6" r="1.8"/></svg>Lima, Perú</p>
+    <dl>
+      <div><dt>Publicaciones</dt><dd>248</dd></div>
+      <div><dt>Seguidores</dt><dd id="fl">12480</dd></div>
+      <div><dt>Siguiendo</dt><dd>312</dd></div>
+    </dl>
+    <p class="sr" id="st" role="status"></p>
+  </div>
+</article>
+<script>
+  const b = document.getElementById('follow'), fl = document.getElementById('fl'), st = document.getElementById('st');
+  let n = 12480, on = false;
+  const fmt = () => (fl.textContent = n.toLocaleString('es'));
+  b.addEventListener('click', () => {
+    on = !on; n += on ? 1 : -1; fmt();
+    b.textContent = on ? 'Siguiendo' : 'Seguir'; b.classList.toggle('pri', !on);
+    st.textContent = on ? 'Ahora sigues a Valeria Montoya' : 'Dejaste de seguir a Valeria Montoya';
+  });
+  fmt();
+</script>
+</body>
+</html>

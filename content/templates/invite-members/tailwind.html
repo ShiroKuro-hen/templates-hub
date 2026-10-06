@@ -1,0 +1,52 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <main class="mx-auto max-w-[620px] rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <section class="p-5" aria-labelledby="t">
+      <h1 id="t" class="text-lg font-semibold">Invitar al equipo</h1>
+      <p class="mb-4 mt-1 text-slate-500 dark:text-slate-400">Los miembros nuevos reciben un correo con un enlace válido por 7 días.</p>
+      <p id="seats" class="mb-1.5 tabular-nums text-slate-500 dark:text-slate-400">7 de 10 puestos ocupados</p>
+      <div id="meter" class="mb-5 h-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700" role="meter" aria-label="Puestos ocupados" aria-valuemin="0" aria-valuemax="10" aria-valuenow="7"><i id="fill" class="block h-full w-[70%] bg-gradient-to-br from-cyan-400 to-blue-600 transition-[width] motion-reduce:transition-none"></i></div>
+      <form id="f" novalidate class="flex flex-wrap items-end gap-3 [&_label]:mb-1.5 [&_label]:block [&_label]:font-semibold [&_input]:h-10 [&_input]:w-full [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-3 [&_input]:aria-[invalid=true]:border-red-600 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 [&_select]:h-10 [&_select]:w-full [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900 [&_input]:focus-visible:border-blue-600 [&_input]:focus-visible:outline-2 [&_input]:focus-visible:outline-offset-2 [&_input]:focus-visible:outline-blue-600 [&_select]:focus-visible:outline-2 [&_select]:focus-visible:outline-offset-2 [&_select]:focus-visible:outline-blue-600">
+        <div class="min-w-[200px] flex-1"><label for="email">Correo electrónico</label><input id="email" type="email" autocomplete="off" placeholder="nombre@empresa.com" required aria-describedby="msg"></div>
+        <div class="w-40 min-w-[140px] flex-initial"><label for="role">Rol</label><select id="role" aria-describedby="rh"><option>Editor</option><option>Lector</option><option>Administrador</option></select></div>
+        <button type="submit" class="h-10 rounded-lg bg-blue-600 px-4 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300">Enviar invitación</button>
+        <p id="rh" class="basis-full text-[13px] text-slate-500 dark:text-slate-400">Crea y edita proyectos. No ve la facturación.</p>
+        <p id="msg" class="basis-full text-[13px] text-red-600 empty:hidden dark:text-red-400" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <section class="border-t border-slate-200 p-5 dark:border-slate-700" aria-labelledby="p">
+      <h2 id="p" class="mb-3 flex items-center gap-2 text-[15px] font-semibold">Invitaciones pendientes <span id="n" class="rounded-full bg-blue-50 px-2 text-xs tabular-nums text-blue-700 dark:bg-slate-800 dark:text-blue-300">3</span></h2>
+      <ul id="list" class="[&>li]:flex [&>li]:flex-wrap [&>li]:items-center [&>li]:gap-3 [&>li]:border-t [&>li]:border-slate-200 [&>li]:py-3 dark:[&>li]:border-slate-700 [&>li:first-child]:border-0 [&>li:first-child]:pt-0 [&_.w]:min-w-0 [&_.w]:flex-[1_1_180px] [&_.w>*]:block [&_.w>*]:break-words [&_.w>span]:text-slate-500 dark:[&_.w>span]:text-slate-400 [&_button]:h-8 [&_button]:rounded-lg [&_button]:border [&_button]:border-slate-200 [&_button]:px-3 [&_button]:font-semibold hover:[&_button]:border-blue-600 hover:[&_button]:bg-blue-50 focus-visible:[&_button]:outline-2 focus-visible:[&_button]:outline-offset-2 focus-visible:[&_button]:outline-blue-600 dark:[&_button]:border-slate-700 dark:hover:[&_button]:bg-slate-800 [&_.x]:text-red-600 dark:[&_.x]:text-red-400"></ul>
+      <p id="empty" class="rounded-lg border border-dashed border-slate-200 p-4 text-center text-slate-500 dark:border-slate-700 dark:text-slate-400" hidden>No hay invitaciones pendientes. Escribe un correo arriba para sumar a tu equipo.</p>
+    </section>
+    <p id="live" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</div>
+<script>
+  const $ = (i) => document.getElementById(i), MAX = 10, MEMBERS = 4;
+  const HINT = { Administrador: 'Gestiona miembros, facturación y ajustes.', Editor: 'Crea y edita proyectos. No ve la facturación.', Lector: 'Solo consulta proyectos y comentarios.' };
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  const pending = [{ email: 'carlos.mendoza@norte.cloud', role: 'Editor', when: 'hace 2 días' }, { email: 'valeria.rios@norte.cloud', role: 'Lector', when: 'hace 5 días' }, { email: 'andres.paz@norte.cloud', role: 'Administrador', when: 'hoy' }];
+  const say = (t, ok) => { $('msg').textContent = t; $('msg').className = 'basis-full text-[13px] empty:hidden ' + (ok ? '' : 'text-red-600 dark:text-red-400'); $('live').textContent = t; };
+  function render() {
+    $('list').innerHTML = pending.map((p, i) => `<li><span class="grid h-9 w-9 flex-none place-items-center rounded-full bg-blue-50 font-semibold text-blue-700 dark:bg-slate-800 dark:text-blue-300" aria-hidden="true">${esc(p.email[0].toUpperCase())}</span><div class="w"><strong>${esc(p.email)}</strong><span>${p.role}, enviada ${p.when}</span></div><div class="flex gap-1.5"><button type="button" data-a="resend" data-i="${i}" aria-label="Reenviar invitación a ${esc(p.email)}">Reenviar</button><button type="button" class="x" data-a="cancel" data-i="${i}" aria-label="Cancelar invitación a ${esc(p.email)}">Cancelar</button></div></li>`).join('');
+    const used = MEMBERS + pending.length;
+    $('empty').hidden = pending.length > 0; $('n').textContent = pending.length;
+    $('seats').textContent = `${used} de ${MAX} puestos ocupados`; $('fill').style.width = `${(used / MAX) * 100}%`; $('meter').setAttribute('aria-valuenow', used);
+  }
+  $('role').onchange = () => ($('rh').textContent = HINT[$('role').value]);
+  $('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const i = $('email'), v = i.value.trim().toLowerCase();
+    const m = !i.checkValidity() ? 'Escribe un correo válido, por ejemplo nombre@empresa.com.' : pending.some((p) => p.email === v) ? `${v} ya tiene una invitación pendiente. Usa Reenviar en la lista.` : MEMBERS + pending.length >= MAX ? `Alcanzaste el límite de ${MAX} puestos. Cancela una invitación o amplía tu plan.` : '';
+    i.setAttribute('aria-invalid', String(!!m));
+    if (m) return say(m);
+    pending.unshift({ email: v, role: $('role').value, when: 'ahora' }); i.value = ''; render(); say(`Invitación enviada a ${v}.`, true);
+  });
+  $('list').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const p = pending[b.dataset.i];
+    if (b.dataset.a === 'cancel') { pending.splice(b.dataset.i, 1); render(); say(`Invitación a ${p.email} cancelada.`); $('email').focus(); }
+    else { b.textContent = 'Reenviada'; say(`Invitación reenviada a ${p.email}.`, true); setTimeout(() => (b.textContent = 'Reenviar'), 1600); }
+  });
+  render();
+</script>

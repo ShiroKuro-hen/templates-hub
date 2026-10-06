@@ -1,0 +1,28 @@
+<div class="grid max-w-4xl gap-4 bg-slate-50 p-5 text-sm text-slate-900 sm:grid-cols-[minmax(0,1fr)_200px] dark:bg-slate-950 dark:text-slate-100">
+  <div id="sc" tabindex="0" role="region" aria-label="Contenido del artículo"
+       class="order-2 h-80 overflow-auto rounded-lg border border-slate-200 bg-white px-4 py-2 shadow-sm after:block after:h-[300px] after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-safe:scroll-smooth sm:order-1 sm:h-[400px] sm:px-6 dark:border-slate-700 dark:bg-slate-900 [&_h2]:mb-2 [&_h2]:scroll-mt-2 [&_h2]:text-xl [&_h2]:font-semibold [&_p]:mb-3 [&_p]:max-w-[62ch] [&_p]:text-slate-500 dark:[&_p]:text-slate-400 [&_section]:min-h-[200px] [&_section]:py-4">
+    <section id="conceptos"><h2>Conceptos</h2><p>Un proyecto agrupa servicios, variables y miembros. Cada proyecto tiene entornos independientes para pruebas y producción.</p><p>Los servicios se comunican por una red privada y solo exponen los puertos que declaras.</p></section>
+    <section id="instalacion"><h2>Instalación</h2><p>Instala la herramienta de línea de comandos con tu gestor de paquetes y verifica la versión antes de continuar.</p><p>Necesitas permisos de administrador solo la primera vez.</p></section>
+    <section id="configuracion"><h2>Configuración</h2><p>Define las variables de entorno en el panel o en el archivo de configuración del proyecto.</p><p>Los valores secretos se cifran y no se muestran después de guardarlos.</p></section>
+    <section id="despliegue"><h2>Despliegue</h2><p>Cada cambio que llega a la rama principal genera un despliegue. Puedes revisarlo antes de publicarlo.</p><p>Si algo falla, vuelve a la versión anterior con un clic.</p></section>
+    <section id="problemas"><h2>Solución de problemas</h2><p>Revisa el registro del despliegue para ver qué paso falló. La mayoría de los errores son variables sin definir.</p><p>Si el problema continúa, escribe a soporte con el identificador del despliegue.</p></section>
+  </div>
+  <nav aria-labelledby="tt" class="order-1 self-start rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:sticky sm:top-5 sm:order-2 dark:border-slate-700 dark:bg-slate-900">
+    <h2 id="tt" class="mb-2 text-sm font-semibold">En esta página</h2>
+    <ul class="m-0 list-none border-l border-slate-200 p-0 dark:border-slate-700 [&_a]:relative [&_a]:block [&_a]:px-3 [&_a]:py-1 [&_a]:text-slate-500 [&_a]:no-underline [&_a:hover]:text-slate-900 dark:[&_a]:text-slate-400 dark:[&_a:hover]:text-slate-100 [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-blue-600 [&_a[aria-current]]:font-semibold [&_a[aria-current]]:text-blue-600 dark:[&_a[aria-current]]:text-blue-400 [&_a[aria-current]]:before:absolute [&_a[aria-current]]:before:-left-px [&_a[aria-current]]:before:inset-y-[3px] [&_a[aria-current]]:before:w-[3px] [&_a[aria-current]]:before:rounded-full [&_a[aria-current]]:before:bg-gradient-to-br [&_a[aria-current]]:before:from-cyan-400 [&_a[aria-current]]:before:to-blue-600 [&_a[aria-current]]:before:content-['']">
+      <li><a href="#conceptos">Conceptos</a></li><li><a href="#instalacion">Instalación</a></li><li><a href="#configuracion">Configuración</a></li>
+      <li><a href="#despliegue">Despliegue</a></li><li><a href="#problemas">Solución de problemas</a></li>
+    </ul>
+  </nav>
+</div>
+<script>
+  const links = [...document.querySelectorAll('nav a')];
+  const secs = links.map((a) => document.getElementById(a.hash.slice(1)));
+  const vis = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? vis.add(e.target) : vis.delete(e.target)));
+    const cur = secs.find((s) => vis.has(s));
+    if (cur) links.forEach((a) => a.hash === '#' + cur.id ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current'));
+  }, { root: document.getElementById('sc'), rootMargin: '0px 0px -65% 0px' });
+  secs.forEach((s) => io.observe(s));
+</script>

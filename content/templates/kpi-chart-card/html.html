@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  h2{margin:0;font-size:18px;font-weight:600}
+  .sub{margin:2px 0 0;color:var(--muted)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:16px 0 12px}
+  .card{padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .card h3{margin:0;font-size:14px;font-weight:500;color:var(--muted)}
+  .v{margin:4px 0 0;font-size:28px;font-weight:600;line-height:1.2;font-variant-numeric:tabular-nums}
+  .cmp{margin:6px 0 12px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .delta{font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px}
+  .up{color:var(--ok);background:var(--ok-soft)}
+  .down{color:var(--err);background:var(--err-soft)}
+  svg.spark{display:block;width:100%;height:48px;overflow:visible}
+  .cur,.prev{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+  .cur{stroke-width:2}
+  .prev{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+  .key{margin:0;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="kg"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs></svg>
+<section aria-labelledby="t">
+  <h2 id="t">Rendimiento de octubre</h2>
+  <p class="sub">Últimos 30 días frente a los 30 anteriores.</p>
+  <div class="cards">
+    <article class="card">
+      <h3>Ingresos</h3>
+      <p class="v">48.920 €</p>
+      <p class="cmp"><span class="delta up">+16,1 %</span> frente a 42.150 €</p>
+      <svg class="spark" viewBox="0 0 120 40" preserveAspectRatio="none" role="img" aria-label="Ingresos al alza respecto al periodo anterior">
+        <polyline class="prev" points="0,24.3 20,22.9 40,23.6 60,20 80,20.7 100,18.2 120,17.1"/>
+        <polyline class="cur" stroke="url(#kg)" points="0,23.6 20,20.7 40,21.8 60,16.4 80,17.1 100,12.1 120,9.2"/>
+      </svg>
+    </article>
+    <article class="card">
+      <h3>Pedidos</h3>
+      <p class="v">1.284</p>
+      <p class="cmp"><span class="delta down">−4,1 %</span> frente a 1.339</p>
+      <svg class="spark" viewBox="0 0 120 40" preserveAspectRatio="none" role="img" aria-label="Pedidos a la baja respecto al periodo anterior">
+        <polyline class="prev" points="0,17.1 20,16.4 40,15 60,17.1 80,16.4 100,17.1 120,15.7"/>
+        <polyline class="cur" stroke="url(#kg)" points="0,16.4 20,18.2 40,15.7 60,20 80,19.3 100,21.8 120,20.7"/>
+      </svg>
+    </article>
+    <article class="card">
+      <h3>Visitantes</h3>
+      <p class="v">31.240</p>
+      <p class="cmp"><span class="delta up">+4,9 %</span> frente a 29.780</p>
+      <svg class="spark" viewBox="0 0 120 40" preserveAspectRatio="none" role="img" aria-label="Visitantes al alza respecto al periodo anterior">
+        <polyline class="prev" points="0,20 20,20 40,19.6 60,20 80,19.3 100,19.6 120,19.3"/>
+        <polyline class="cur" stroke="url(#kg)" points="0,20 20,19.3 40,20.4 60,18.2 80,17.5 100,17.8 120,15.3"/>
+      </svg>
+    </article>
+  </div>
+  <p class="key">Línea de color: este periodo. Línea discontinua: periodo anterior.</p>
+</section>
+</body>
+</html>

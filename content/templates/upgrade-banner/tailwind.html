@@ -1,0 +1,39 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <aside id="banner" aria-labelledby="ttl" class="relative mx-auto max-w-4xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-4 py-4 pl-5 pr-14">
+      <div class="min-w-0 flex-[1_1_260px]">
+        <strong id="ttl" class="block text-[15px] font-semibold">Tu prueba de Pro termina el <time id="end"></time></strong>
+        <p id="sub" class="mt-0.5 text-slate-500 dark:text-slate-400">Mejora tu plan para conservar informes ilimitados y hasta 10 personas en tu equipo.</p>
+      </div>
+      <div role="timer" aria-label="Tiempo restante de la prueba" class="flex gap-2 [&>div]:min-w-[52px] [&>div]:rounded-lg [&>div]:border [&>div]:border-slate-200 [&>div]:bg-slate-50 [&>div]:px-2 [&>div]:py-1.5 [&>div]:text-center dark:[&>div]:border-slate-700 dark:[&>div]:bg-slate-950 [&_b]:block [&_b]:text-lg [&_b]:font-semibold [&_b]:leading-tight [&_b]:tabular-nums [&_span]:text-xs [&_span]:text-slate-500 dark:[&_span]:text-slate-400">
+        <div><b id="d">0</b><span>días</span></div><div><b id="h">00</b><span>horas</span></div><div><b id="m">00</b><span>min</span></div><div><b id="s">00</b><span>seg</span></div>
+      </div>
+      <div class="flex flex-wrap gap-2 [&>button]:h-9 [&>button]:rounded-lg [&>button]:border [&>button]:border-slate-200 [&>button]:px-4 [&>button]:font-medium hover:[&>button]:bg-blue-50 dark:[&>button]:border-slate-700 dark:hover:[&>button]:bg-slate-800 [&>button:focus-visible]:outline-2 [&>button:focus-visible]:outline-offset-2 [&>button:focus-visible]:outline-blue-600">
+        <button type="button" class="!border-blue-600 !bg-blue-600 text-white hover:!bg-blue-700">Mejorar plan</button>
+        <button type="button">Comparar planes</button>
+      </div>
+    </div>
+    <button type="button" id="close" aria-label="Cerrar banner" class="absolute right-3 top-3 grid size-8 place-items-center rounded-lg text-slate-500 hover:bg-blue-50 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:hover:bg-slate-800 dark:hover:text-slate-100">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+    </button>
+    <progress id="bar" max="14" value="8" aria-label="Días de prueba usados"
+      class="block h-1 w-full appearance-none border-0 [&::-webkit-progress-bar]:bg-blue-100 dark:[&::-webkit-progress-bar]:bg-slate-800 [&::-webkit-progress-value]:bg-gradient-to-br [&::-webkit-progress-value]:from-cyan-400 [&::-webkit-progress-value]:to-blue-600 [&::-moz-progress-bar]:bg-blue-600"></progress>
+  </aside>
+  <button type="button" id="again" hidden class="mx-auto block h-9 rounded-lg border border-slate-200 bg-white px-4 font-medium hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Mostrar banner</button>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id), TOTAL = 14, end = Date.now() + (5 * 86400 + 19 * 3600 + 23 * 60 + 40) * 1000;
+  const pad = (n) => String(n).padStart(2, '0');
+  $('end').textContent = new Date(end).toLocaleDateString('es-ES', { day: 'numeric', month: 'long' });
+  $('end').dateTime = new Date(end).toISOString();
+  function tick() {
+    const s = Math.max(0, Math.floor((end - Date.now()) / 1000));
+    $('d').textContent = Math.floor(s / 86400); $('h').textContent = pad(Math.floor(s % 86400 / 3600));
+    $('m').textContent = pad(Math.floor(s % 3600 / 60)); $('s').textContent = pad(s % 60);
+    $('bar').value = TOTAL - Math.ceil(s / 86400);
+    if (!s) { clearInterval(t); $('ttl').textContent = 'Tu prueba de Pro ha terminado'; $('sub').textContent = 'Mejora tu plan para recuperar el acceso a tus informes.'; }
+  }
+  const t = setInterval(tick, 1000); tick();
+  $('close').onclick = () => { $('banner').hidden = true; $('again').hidden = false; $('again').focus(); };
+  $('again').onclick = () => { $('banner').hidden = false; $('again').hidden = true; $('close').focus(); };
+</script>

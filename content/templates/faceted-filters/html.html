@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .ff{display:grid;grid-template-columns:220px 1fr;align-items:start;gap:16px;max-width:900px}
+  .ff>*{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;min-width:0}
+  @media (max-width:560px){.ff{grid-template-columns:1fr}}
+  fieldset{border:0;margin:0 0 14px;padding:0}
+  legend{font-weight:600;margin-bottom:6px}
+  label{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;cursor:pointer;transition:background .14s}
+  label:hover{background:var(--accent-soft)}
+  label:has(:disabled){color:var(--muted);cursor:default}
+  input{accent-color:var(--accent);margin:0}
+  label small{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .head{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-weight:600}
+  .head::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .head span{font-variant-numeric:tabular-nums}
+  ul{list-style:none;margin:0;padding:0}
+  li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--border)}
+  li small{color:var(--muted)}
+  li.empty{display:block;padding:24px 0;text-align:center;color:var(--muted)}
+  button{font:inherit;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);cursor:pointer}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="ff">
+  <aside aria-label="Filtros"><form id="f"></form></aside>
+  <section aria-labelledby="h">
+    <p class="head" id="h" aria-live="polite"><span id="n">0</span> servidores</p>
+    <ul id="list"></ul>
+  </section>
+</div>
+<script>
+  const items = [
+    { nombre: 'api-lima-01', region: 'Lima', tipo: 'Cómputo', estado: 'Activo' },
+    { nombre: 'db-lima-02', region: 'Lima', tipo: 'Base de datos', estado: 'Activo' },
+    { nombre: 'cache-scl-01', region: 'Santiago', tipo: 'Caché', estado: 'Detenido' },
+    { nombre: 'api-scl-03', region: 'Santiago', tipo: 'Cómputo', estado: 'Activo' },
+    { nombre: 'db-bog-01', region: 'Bogotá', tipo: 'Base de datos', estado: 'Mantenimiento' },
+    { nombre: 'api-bog-02', region: 'Bogotá', tipo: 'Cómputo', estado: 'Detenido' },
+    { nombre: 'cache-lima-04', region: 'Lima', tipo: 'Caché', estado: 'Activo' },
+  ];
+  const facets = { region: 'Región', tipo: 'Tipo', estado: 'Estado' };
+  const f = document.getElementById('f'), list = document.getElementById('list');
+  f.innerHTML = Object.entries(facets).map(([k, t]) =>
+    `<fieldset><legend>${t}</legend>${[...new Set(items.map((i) => i[k]))].map((v) =>
+      `<label><input type="checkbox" name="${k}" value="${v}"> ${v} <small></small></label>`).join('')}</fieldset>`).join('');
+  const sel = () => Object.fromEntries(Object.keys(facets).map((k) => [k, new FormData(f).getAll(k)]));
+  const match = (i, s, skip) => Object.keys(s).every((k) => k === skip || !s[k].length || s[k].includes(i[k]));
+  function render() {
+    const s = sel(), hits = items.filter((i) => match(i, s));
+    f.querySelectorAll('input').forEach((c) => {
+      const n = items.filter((i) => match(i, s, c.name) && i[c.name] === c.value).length;
+      c.nextElementSibling.textContent = n;
+      c.disabled = !n && !c.checked;
+    });
+    document.getElementById('n').textContent = hits.length;
+    list.innerHTML = hits.length
+      ? hits.map((i) => `<li><span>${i.nombre}</span><small>${i.region}, ${i.tipo}, ${i.estado}</small></li>`).join('')
+      : '<li class="empty">Ningún servidor cumple estos filtros. <button type="button" id="clr">Quitar filtros</button></li>';
+  }
+  f.addEventListener('change', render);
+  list.addEventListener('click', (e) => { if (e.target.id === 'clr') { f.reset(); render(); } });
+  render();
+</script>
+</body>
+</html>

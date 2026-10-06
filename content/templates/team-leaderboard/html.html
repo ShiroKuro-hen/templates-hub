@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .board{max-width:560px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:18px;font-weight:600}
+  .board>p{margin:2px 0 0;color:var(--muted)}
+  ol{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:4px}
+  .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid transparent;border-radius:var(--radius)}
+  .row[aria-current]{background:var(--accent-soft);border-color:var(--accent)}
+  .pos{flex:none;width:24px;text-align:right;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+  .row:nth-child(-n+3) .pos{color:var(--text)}
+  .av{flex:none;display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--border);border-radius:999px;background:var(--bg);font-size:12px;font-weight:600}
+  .who{flex:1;min-width:0}
+  .name{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 8px}
+  .name b{font-weight:600}
+  .name small{color:var(--muted);font-size:13px}
+  .me{padding:0 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:600}
+  .bar{height:6px;margin-top:6px;border-radius:999px;background:var(--border);overflow:hidden}
+  .bar::after{content:"";display:block;width:calc(var(--v) * 1%);height:100%;border-radius:999px;background:var(--accent)}
+  .row:first-child .bar::after{background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  .pts{flex:none;font-weight:600;font-variant-numeric:tabular-nums}
+  .pts small{font-weight:400;color:var(--muted)}
+  @media (max-width:400px){.av{display:none}}
+</style>
+</head>
+<body>
+<section class="board" aria-labelledby="t">
+  <h2 id="t">Ranking del equipo de ventas</h2>
+  <p>Puntos acumulados en octubre. Se actualiza cada día.</p>
+  <ol>
+    <li class="row">
+      <span class="pos">1</span><span class="av" aria-hidden="true">MR</span>
+      <div class="who"><div class="name"><b>Marta Ruiz</b><small>Ejecutiva sénior</small></div><div class="bar" style="--v:100"></div></div>
+      <span class="pts">128 <small>pts</small></span>
+    </li>
+    <li class="row">
+      <span class="pos">2</span><span class="av" aria-hidden="true">CD</span>
+      <div class="who"><div class="name"><b>Carlos Díaz</b><small>Ejecutivo sénior</small></div><div class="bar" style="--v:89"></div></div>
+      <span class="pts">114 <small>pts</small></span>
+    </li>
+    <li class="row">
+      <span class="pos">3</span><span class="av" aria-hidden="true">SV</span>
+      <div class="who"><div class="name"><b>Sofía Vega</b><small>Ejecutiva</small></div><div class="bar" style="--v:76"></div></div>
+      <span class="pts">97 <small>pts</small></span>
+    </li>
+    <li class="row" aria-current="true">
+      <span class="pos">4</span><span class="av" aria-hidden="true">LG</span>
+      <div class="who"><div class="name"><b>Luis Gómez</b><span class="me">Tú</span><small>Ejecutivo</small></div><div class="bar" style="--v:63"></div></div>
+      <span class="pts">81 <small>pts</small></span>
+    </li>
+    <li class="row">
+      <span class="pos">5</span><span class="av" aria-hidden="true">AP</span>
+      <div class="who"><div class="name"><b>Ana Pérez</b><small>Ejecutiva</small></div><div class="bar" style="--v:50"></div></div>
+      <span class="pts">64 <small>pts</small></span>
+    </li>
+    <li class="row">
+      <span class="pos">6</span><span class="av" aria-hidden="true">DT</span>
+      <div class="who"><div class="name"><b>Diego Torres</b><small>Junior</small></div><div class="bar" style="--v:33"></div></div>
+      <span class="pts">42 <small>pts</small></span>
+    </li>
+  </ol>
+</section>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  header{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px}
+  h1{margin:0;font-size:18px;line-height:1.3}
+  h1:focus{outline:none}
+  header p{margin:4px 0 0;color:var(--muted);max-width:44ch}
+  h1 .meta{margin-left:6px;font-size:14px;font-weight:400;font-variant-numeric:tabular-nums}
+  ul{margin:0;padding:0;list-style:none}
+  .row{display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:14px;padding:16px 20px;border-top:1px solid var(--border)}
+  .ico{display:grid;place-items:center;width:40px;height:40px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  .ico svg{width:20px;height:20px}
+  .name{margin:0;font-weight:600}
+  .meta{margin:0;color:var(--muted)}
+  .badge{margin-left:6px;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600;vertical-align:1px}
+  .dot{display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn{font:inherit;font-weight:600;height:32px;padding:0 12px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .14s,border-color .14s}
+  .btn:hover:not(:disabled){background:var(--accent-soft);border-color:var(--accent)}
+  .btn:disabled{color:var(--muted);cursor:not-allowed}
+  .btn.danger{color:var(--err)}
+  .btn.danger:hover:not(:disabled){background:var(--err-soft);border-color:var(--err)}
+  .btn.fill{height:36px;color:var(--accent-ink);background:var(--err);border-color:var(--err)}
+  .btn.fill:hover{background:var(--err);filter:brightness(1.08)}
+  .empty{margin:0;padding:20px;border-top:1px solid var(--border);color:var(--muted)}
+  dialog{width:min(400px,calc(100vw - 40px));padding:24px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  dialog::backdrop{background:rgba(14,23,38,.5)}
+  dialog h2{margin:0 0 8px;font-size:16px}
+  dialog p{margin:0 0 20px;color:var(--muted)}
+  .actions{display:flex;justify-content:flex-end;gap:8px}
+  .actions .btn{height:36px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media (max-width:460px){.row{grid-template-columns:40px 1fr}.row .btn{grid-column:2;justify-self:start}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card" aria-labelledby="t">
+  <header>
+    <div><h1 id="t" tabindex="-1">Sesiones activas <span id="count" class="meta">4 sesiones activas</span></h1>
+      <p>Estos dispositivos tienen la sesión abierta. Cierra los que no reconozcas.</p></div>
+    <button id="all" class="btn danger" type="button">Cerrar las demás sesiones</button>
+  </header>
+  <ul id="list">
+    <li class="row" data-current data-name="MacBook Pro 14&quot;">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14v10H5zM2 19h20"/></svg></span>
+      <div><p class="name">MacBook Pro 14"<span class="badge">Este dispositivo</span></p><p class="meta">Chrome 126 en macOS, Lima, Perú</p><p class="meta"><span class="dot" aria-hidden="true"></span>Activa ahora</p></div>
+    </li>
+    <li class="row" data-name="iPhone 15">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg></span>
+      <div><p class="name">iPhone 15</p><p class="meta">App Norte Cloud 4.2 en iOS 18, Lima, Perú</p><p class="meta">Hace 2 horas</p></div>
+      <button class="btn" type="button" data-end aria-label="Cerrar sesión en iPhone 15">Cerrar sesión</button>
+    </li>
+    <li class="row" data-name="Equipo de oficina">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v12H3zM9 20h6M12 16v4"/></svg></span>
+      <div><p class="name">Equipo de oficina</p><p class="meta">Edge 125 en Windows 11, Bogotá, Colombia</p><p class="meta">Ayer a las 18:42</p></div>
+      <button class="btn" type="button" data-end aria-label="Cerrar sesión en Equipo de oficina">Cerrar sesión</button>
+    </li>
+    <li class="row" data-name="iPad Air">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM11 18h2"/></svg></span>
+      <div><p class="name">iPad Air</p><p class="meta">Safari 17 en iPadOS, Madrid, España</p><p class="meta">Hace 6 días</p></div>
+      <button class="btn" type="button" data-end aria-label="Cerrar sesión en iPad Air">Cerrar sesión</button>
+    </li>
+  </ul>
+  <p id="empty" class="empty" hidden>No hay otras sesiones abiertas. Tu cuenta solo está activa en este dispositivo.</p>
+  <dialog id="dlg" aria-labelledby="dt">
+    <form method="dialog">
+      <h2 id="dt">¿Cerrar 3 sesiones?</h2>
+      <p>Se cerrará la sesión en los demás dispositivos. Tendrás que iniciar sesión de nuevo en cada uno.</p>
+      <div class="actions"><button class="btn" value="cancel">Cancelar</button><button class="btn fill" value="ok">Cerrar sesiones</button></div>
+    </form>
+  </dialog>
+  <p id="live" class="sr" role="status" aria-live="polite"></p>
+</main>
+<script>
+  const $ = (i) => document.getElementById(i), list = $('list'), dlg = $('dlg');
+  const others = () => list.querySelectorAll('li:not([data-current])');
+  function sync() {
+    const o = others().length, n = o + 1;
+    $('count').textContent = `${n} ${n === 1 ? 'sesión activa' : 'sesiones activas'}`;
+    $('all').disabled = !o; $('empty').hidden = !!o;
+    $('dt').textContent = `¿Cerrar ${o} ${o === 1 ? 'sesión' : 'sesiones'}?`;
+  }
+  function done(msg) { $('live').textContent = msg; sync(); $('t').focus(); }
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('[data-end]')?.closest('li'); if (!li) return;
+    li.remove(); done(`Sesión cerrada en ${li.dataset.name}.`);
+  });
+  $('all').addEventListener('click', () => { dlg.returnValue = ''; dlg.showModal(); });
+  dlg.addEventListener('close', () => {
+    if (dlg.returnValue === 'ok') { others().forEach((li) => li.remove()); done('Cerraste las demás sesiones.'); }
+  });
+  sync();
+</script>
+</body>
+</html>

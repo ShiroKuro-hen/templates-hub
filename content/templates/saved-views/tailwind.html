@@ -1,0 +1,58 @@
+<div class="grid max-w-4xl items-start gap-4 bg-slate-50 p-5 text-sm text-slate-900 sm:grid-cols-[240px_1fr] dark:bg-slate-950 dark:text-slate-100">
+  <aside aria-labelledby="vh" class="min-w-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <h2 id="vh" class="mb-2 text-sm font-semibold">Vistas guardadas</h2>
+    <ul id="views" class="m-0 list-none p-0"></ul>
+    <form id="sf" class="mt-3 border-t border-slate-200 pt-3 dark:border-slate-700">
+      <label for="nm" class="mb-1 block font-semibold">Guardar filtros como vista</label>
+      <div class="flex gap-2">
+        <input id="nm" autocomplete="off" placeholder="Nombre de la vista" class="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 dark:border-slate-700 dark:bg-slate-900">
+        <button class="rounded-lg border border-blue-600 bg-blue-600 px-3 py-1.5 text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Guardar</button>
+      </div>
+      <p id="msg" aria-live="polite" class="mt-1.5 min-h-[21px] text-slate-500"></p>
+    </form>
+  </aside>
+  <section aria-label="Pedidos" class="min-w-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="mb-3 grid gap-3 sm:grid-cols-[1fr_160px] [&_input]:mt-1 [&_input]:block [&_input]:w-full [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-2.5 [&_input]:py-1.5 [&_select]:mt-1 [&_select]:block [&_select]:w-full [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-2.5 [&_select]:py-1.5 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900">
+      <label class="font-semibold">Buscar<input type="search" id="q" placeholder="Cliente o ciudad" class="font-normal"></label>
+      <label class="font-semibold">Estado<select id="st" class="font-normal"><option value="">Todos</option><option>Pagado</option><option>Pendiente</option><option>Cancelado</option></select></label>
+    </div>
+    <p id="n" aria-live="polite" class="mb-1 font-semibold tabular-nums"></p>
+    <ul id="list" class="m-0 list-none divide-y divide-slate-200 border-t border-slate-200 p-0 dark:divide-slate-700 dark:border-slate-700"></ul>
+  </section>
+</div>
+<script>
+  const D = [['Café Andino', 'Lima', 'Pagado', 1280], ['Textiles Sur', 'Arequipa', 'Pendiente', 640], ['Logística Norte', 'Lima', 'Pendiente', 2150],
+    ['Panadería Sol', 'Cusco', 'Pagado', 310], ['Distribuidora Pacífico', 'Lima', 'Cancelado', 980], ['Hotel Valle', 'Cusco', 'Pendiente', 3890]];
+  let views = [{ n: 'Pendientes de pago', q: '', s: 'Pendiente' }, { n: 'Pedidos de Lima', q: 'Lima', s: '' }];
+  const $ = (id) => document.getElementById(id);
+  const q = $('q'), st = $('st'), nm = $('nm'), msg = $('msg');
+  const cur = () => ({ q: q.value.trim(), s: st.value });
+  const money = (v) => v.toLocaleString('es', { style: 'currency', currency: 'USD' });
+  const X = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m2 2 8 8M10 2l-8 8"/></svg>';
+  const APPLY = 'min-w-0 flex-1 rounded-md px-2 py-1.5 text-left hover:bg-blue-50 aria-pressed:bg-blue-50 aria-pressed:font-semibold aria-pressed:before:absolute aria-pressed:before:inset-y-1.5 aria-pressed:before:-left-2 aria-pressed:before:w-[3px] aria-pressed:before:rounded-full aria-pressed:before:bg-gradient-to-br aria-pressed:before:from-cyan-400 aria-pressed:before:to-blue-600 aria-pressed:before:content-[\'\'] dark:hover:bg-slate-800 dark:aria-pressed:bg-slate-800';
+  const say = (t, bad) => { msg.textContent = t; msg.className = 'mt-1.5 min-h-[21px] ' + (bad ? 'text-rose-600 dark:text-rose-400' : 'text-slate-500'); };
+  function render() {
+    const c = cur(), hits = D.filter(([n, ci, e]) => (!c.q || (n + ci).toLowerCase().includes(c.q.toLowerCase())) && (!c.s || e === c.s));
+    $('n').textContent = `${hits.length} pedidos`;
+    $('list').innerHTML = hits.length ? hits.map(([n, ci, e, t]) => `<li class="flex justify-between gap-3 py-2.5"><span>${n}<small class="block text-slate-500">${ci}, ${e}</small></span><output class="tabular-nums">${money(t)}</output></li>`).join('')
+      : '<li class="py-6 text-center text-slate-500">Ningún pedido coincide. Cambia los filtros o aplica otra vista.</li>';
+    $('views').innerHTML = views.map((v, i) => `<li class="relative flex items-center gap-1"><button type="button" class="${APPLY}" data-i="${i}" aria-pressed="${v.q === c.q && v.s === c.s}">${v.n}<small class="block font-normal text-slate-500">${[v.q && `“${v.q}”`, v.s].filter(Boolean).join(', ') || 'Sin filtros'}</small></button><button type="button" data-d="${i}" aria-label="Eliminar vista ${v.n}" class="grid size-7 flex-none place-items-center rounded-md text-slate-500 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950">${X}</button></li>`).join('')
+      || '<li class="px-2 py-1.5 text-slate-500">Aún no hay vistas. Aplica filtros y guarda la primera.</li>';
+  }
+  $('views').addEventListener('click', (e) => {
+    const a = e.target.closest('[data-i]'), d = e.target.closest('[data-d]');
+    if (a) { const v = views[a.dataset.i]; q.value = v.q; st.value = v.s; say(`Vista «${v.n}» aplicada.`); }
+    if (d) { const [v] = views.splice(d.dataset.d, 1); say(`Vista «${v.n}» eliminada.`); nm.focus(); }
+    render();
+  });
+  $('sf').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const n = nm.value.trim(), c = cur();
+    if (!n) return say('Escribe un nombre para la vista.', true);
+    if (!c.q && !c.s) return say('Aplica al menos un filtro antes de guardar.', true);
+    if (views.some((v) => v.n.toLowerCase() === n.toLowerCase())) return say('Ya existe una vista con ese nombre. Elige otro.', true);
+    views.push({ n, ...c }); nm.value = ''; say(`Vista «${n}» guardada.`); render();
+  });
+  [q, st].forEach((x) => x.addEventListener('input', render));
+  render();
+</script>

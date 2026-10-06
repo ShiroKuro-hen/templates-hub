@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .th{max-width:640px;margin:0 auto;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0 0 4px;font-size:16px}
+  h2 span{color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
+  ul{list-style:none;margin:0;padding:0}
+  .replies{margin-left:14px;padding-left:14px;border-left:1px solid var(--border)}
+  .item{display:flex;gap:12px;padding:10px 0}
+  .av{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600}
+  .body{flex:1;min-width:0}
+  header{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  time{font-size:12px;color:var(--muted)}
+  .tag{display:inline-flex;align-items:center;gap:5px;padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px}
+  .tag::before{content:"";width:6px;height:6px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .txt{margin:2px 0 4px;overflow-wrap:anywhere}
+  .acts{display:flex;gap:2px;margin-left:-8px}
+  button{font:inherit;padding:4px 8px;border:1px solid transparent;border-radius:var(--radius);background:none;color:var(--muted);cursor:pointer;transition:background .14s,color .14s}
+  button:hover{background:var(--accent-soft);color:var(--accent)}
+  button.pri{padding:6px 14px;font-weight:600;background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button.pri:hover{filter:brightness(1.08);color:var(--accent-ink)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .ed{display:grid;gap:8px;margin:4px 0 8px 44px}
+  .item + .ed{margin-top:-4px}
+  .body .ed{margin:4px 0 8px}
+  textarea{width:100%;box-sizing:border-box;resize:vertical;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px}
+  .row{display:flex;gap:8px}
+  .new{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--border)}
+  .new>.ed{margin:0}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="th" id="th" aria-labelledby="h">
+  <h2 id="h">Comentarios <span id="n"></span></h2>
+  <ul id="root">
+    <li class="c">
+      <article class="item"><span class="av" aria-hidden="true">IM</span><div class="body">
+        <header><strong>Irene Molina</strong><span class="tag">Autora</span><time>hace 2 h</time></header>
+        <p class="txt">Subí la versión 2 del documento de arquitectura. Necesito revisión del apartado de colas antes del jueves.</p>
+        <div class="acts"><button type="button" data-a="reply">Responder</button><button type="button" data-a="edit">Editar</button></div>
+      </div></article>
+      <ul class="replies">
+        <li class="c">
+          <article class="item"><span class="av" aria-hidden="true">JR</span><div class="body">
+            <header><strong>Javier Ramos</strong><time>hace 1 h</time></header>
+            <p class="txt">Lo reviso hoy. ¿Mantenemos el límite de 5.000 mensajes por segundo?</p>
+            <div class="acts"><button type="button" data-a="reply">Responder</button></div>
+          </div></article>
+          <ul class="replies"></ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <form class="ed new" id="nf" data-root>
+    <label class="sr" for="nt">Nuevo comentario</label>
+    <textarea id="nt" rows="2" placeholder="Escribe un comentario" required></textarea>
+    <div class="row"><button class="pri">Comentar</button></div>
+  </form>
+</section>
+<script>
+  const root = document.getElementById('root'), n = document.getElementById('n');
+  const count = () => (n.textContent = '(' + root.querySelectorAll('.c').length + ')');
+  function add(list, text) {
+    const li = document.createElement('li'); li.className = 'c';
+    li.innerHTML = '<article class="item"><span class="av" aria-hidden="true">TÚ</span><div class="body"><header><strong>Tú</strong><time>ahora</time></header><p class="txt"></p><div class="acts"><button type="button" data-a="reply">Responder</button><button type="button" data-a="edit">Editar</button></div></div></article><ul class="replies"></ul>';
+    li.querySelector('.txt').textContent = text; list.append(li); count();
+  }
+  function editor(label, value, cta, ok, close) {
+    const f = document.createElement('form'); f.className = 'ed';
+    f.innerHTML = '<label class="sr"></label><textarea rows="2" required></textarea><div class="row"><button class="pri">' + cta + '</button><button type="button">Cancelar</button></div>';
+    const t = f.querySelector('textarea'); f.querySelector('label').textContent = label; t.value = value;
+    f.onsubmit = (e) => { e.preventDefault(); if (t.value.trim()) { ok(t.value.trim()); close(); } };
+    f.querySelector('[type=button]').onclick = close;
+    f.onkeydown = (e) => { if (e.key === 'Escape') close(); };
+    return [f, t];
+  }
+  root.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-a]'); if (!b) return;
+    const c = b.closest('.c'), item = c.querySelector('.item'), p = c.querySelector('.txt'), edit = b.dataset.a === 'edit';
+    if (c.querySelector(':scope > .ed') || item.querySelector('.ed')) return;
+    const close = () => { f.remove(); p.hidden = false; b.focus(); };
+    const [f, t] = edit
+      ? editor('Editar comentario', p.textContent, 'Guardar cambios', (v) => (p.textContent = v), close)
+      : editor('Responder a ' + c.querySelector('strong').textContent, '', 'Responder', (v) => add(c.querySelector(':scope > .replies'), v), close);
+    if (edit) { p.hidden = true; p.after(f); } else item.after(f);
+    t.focus();
+  });
+  document.getElementById('nf').addEventListener('submit', (e) => { e.preventDefault(); const t = e.target.querySelector('textarea'); add(root, t.value.trim()); t.value = ''; });
+  count();
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .player{max-width:480px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .now{display:flex;gap:12px;align-items:center;padding:16px 16px 8px}
+  .cover{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:var(--radius);background:var(--accent-soft);color:var(--accent)}
+  .now h2{margin:0;font-size:15px;font-weight:600}
+  .now p{margin:0;color:var(--muted)}
+  .wave{position:relative;margin:8px 16px 0;height:48px;border-radius:4px}
+  .wave svg{display:block;width:100%;height:100%}
+  .wave rect{fill:var(--muted);opacity:.35;transition:opacity .12s}
+  .wave rect.on{fill:url(#g);opacity:1}
+  .wave input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+  .wave:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+  .ctl{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 16px 12px}
+  .time{color:var(--muted);font-variant-numeric:tabular-nums}
+  .ctl .time:last-child{text-align:right}
+  .btns{display:flex;gap:4px;align-items:center}
+  button{font:inherit;color:var(--text);background:transparent;border:1px solid transparent;border-radius:var(--radius);height:36px;min-width:36px;display:inline-grid;place-items:center;cursor:pointer;transition:background .14s}
+  button:hover{background:var(--accent-soft)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  svg.i{width:18px;height:18px;fill:currentColor}
+  .btns .main{width:40px;height:40px;border-radius:50%;background:var(--accent);color:var(--accent-ink)}
+  .btns .main:hover{background:var(--accent);filter:brightness(1.1)}
+  ol{list-style:none;margin:0;padding:4px;border-top:1px solid var(--border)}
+  .trk{display:grid;grid-template-columns:24px 1fr auto;gap:12px;place-items:center start;width:100%;height:auto;padding:8px 12px;text-align:left}
+  .trk>*{min-width:0}
+  .trk .n,.trk .eq{grid-area:1/1}
+  .trk .n{color:var(--muted);font-variant-numeric:tabular-nums}
+  .trk small{display:block;color:var(--muted);font-size:12px}
+  .trk .d{color:var(--muted);font-variant-numeric:tabular-nums}
+  .trk[aria-current]{background:var(--accent-soft)}
+  .trk[aria-current] .t{font-weight:600}
+  .eq{display:none;gap:2px;align-items:flex-end;height:14px}
+  .eq i{width:3px;height:100%;border-radius:1px;background:var(--accent);transform:scaleY(.4);transform-origin:bottom}
+  .trk[aria-current] .eq{display:flex}
+  .trk[aria-current] .n{display:none}
+  .playing .eq i{animation:eq .9s ease-in-out infinite alternate}
+  .eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}
+  @keyframes eq{to{transform:scaleY(1)}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<section class="player" id="p" aria-label="Reproductor de audio">
+  <div class="now">
+    <div class="cover"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6A4 4 0 1 0 14 17V7h4V3z"/></svg></div>
+    <div><h2 id="title"></h2><p id="artist"></p></div>
+  </div>
+  <div class="wave">
+    <svg id="wave" viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" x2="240"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+    </svg>
+    <input id="seek" type="range" min="0" max="214" step="1" value="0" aria-label="Posición de la pista">
+  </div>
+  <div class="ctl">
+    <span class="time" id="cur">0:00</span>
+    <div class="btns">
+      <button type="button" id="prev" aria-label="Pista anterior"><svg class="i" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+      <button type="button" id="play" class="main" aria-label="Reproducir"><svg class="i" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      <button type="button" id="next" aria-label="Pista siguiente"><svg class="i" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+    </div>
+    <span class="time" id="dur">3:34</span>
+  </div>
+  <ol>
+    <li><button type="button" class="trk"><span class="n">1</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span><b class="t">Marea de neón</b><small>Lumen Ensemble</small></span><span class="d">3:34</span></button></li>
+    <li><button type="button" class="trk"><span class="n">2</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span><b class="t">Horizonte lento</b><small>Aurora Sur</small></span><span class="d">3:07</span></button></li>
+    <li><button type="button" class="trk"><span class="n">3</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span><b class="t">Código abierto</b><small>Nube Cuántica</small></span><span class="d">4:05</span></button></li>
+    <li><button type="button" class="trk"><span class="n">4</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span><b class="t">Luz de madrugada</b><small>Lumen Ensemble</small></span><span class="d">2:52</span></button></li>
+  </ol>
+</section>
+<script>
+  const T = [['Marea de neón', 'Lumen Ensemble', 214], ['Horizonte lento', 'Aurora Sur', 187], ['Código abierto', 'Nube Cuántica', 245], ['Luz de madrugada', 'Lumen Ensemble', 172]];
+  const PLAY = 'M8 5v14l11-7z', PAUSE = 'M6 5h4v14H6zm8 0h4v14h-4z', N = 60;
+  const $ = (id) => document.getElementById(id), seek = $('seek'), svg = $('wave'), btns = [...document.querySelectorAll('.trk')];
+  const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  svg.insertAdjacentHTML('beforeend', Array.from({ length: N }, (_, k) => `<rect x="${k * 4}" width="2.4" rx="1.2"/>`).join(''));
+  const bars = [...svg.querySelectorAll('rect')];
+  let i = 0, t = 0, on = false, last = 0, raf = 0;
+
+  function render() {
+    const d = T[i][2];
+    seek.value = t; seek.setAttribute('aria-valuetext', fmt(t) + ' de ' + fmt(d)); $('cur').textContent = fmt(t);
+    bars.forEach((b, k) => b.classList.toggle('on', k / N < t / d));
+  }
+  function load(n) {
+    i = n; t = 0; const [name, artist, d] = T[n];
+    $('title').textContent = name; $('artist').textContent = artist; $('dur').textContent = fmt(d); seek.max = d;
+    bars.forEach((b, k) => {
+      const h = 8 + 38 * Math.abs(Math.sin((k + 2) * (n + 3) * 0.9) * Math.cos(k * 0.31 + n));
+      b.setAttribute('y', (48 - h) / 2); b.setAttribute('height', h);
+    });
+    btns.forEach((b, k) => (k === n ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current')));
+    render();
+  }
+  function setPlay(v) {
+    on = v; cancelAnimationFrame(raf); $('p').classList.toggle('playing', v);
+    $('play').setAttribute('aria-label', v ? 'Pausar' : 'Reproducir');
+    $('play').querySelector('path').setAttribute('d', v ? PAUSE : PLAY);
+    if (v) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  function tick(now) {
+    t += (now - last) / 1000; last = now;
+    if (t >= T[i][2]) { if (i === T.length - 1) { load(0); return setPlay(false); } load(i + 1); }
+    render(); raf = requestAnimationFrame(tick);
+  }
+  $('play').onclick = () => setPlay(!on);
+  $('prev').onclick = () => (t > 3 ? ((t = 0), render()) : load((i + T.length - 1) % T.length));
+  $('next').onclick = () => load((i + 1) % T.length);
+  btns.forEach((b, k) => (b.onclick = () => { load(k); setPlay(true); }));
+  seek.oninput = () => { t = +seek.value; render(); };
+  load(0);
+</script>
+</body>
+</html>

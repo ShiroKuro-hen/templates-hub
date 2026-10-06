@@ -1,0 +1,42 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="max-w-2xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <form aria-label="Rango de fechas" onsubmit="return false" class="grid gap-3 border-b border-slate-200 p-4 dark:border-slate-700">
+      <div id="pres" class="flex flex-wrap gap-2" role="group" aria-label="Rangos rápidos"></div>
+      <div class="grid gap-3 min-[420px]:grid-cols-2 [&_label]:grid [&_label]:gap-1 [&_label]:font-semibold [&_input]:min-w-0 [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-2.5 [&_input]:py-2 [&_input]:font-normal [&_input]:scheme-light dark:[&_input]:scheme-dark dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 [&_input]:focus-visible:outline-2 [&_input]:focus-visible:outline-offset-2 [&_input]:focus-visible:outline-blue-600">
+        <label>Desde<input type="date" id="a"></label>
+        <label>Hasta<input type="date" id="b"></label>
+      </div>
+      <p id="e" role="alert" hidden class="rounded-lg bg-rose-50 px-3 py-2 text-rose-700 dark:bg-rose-950 dark:text-rose-300">La fecha final es anterior a la inicial. Cambia «Hasta» o elige un rango rápido.</p>
+    </form>
+    <h2 aria-live="polite" class="m-0 flex justify-between gap-3 px-4 py-3 text-sm tabular-nums"><span id="n"></span><span id="sum"></span></h2>
+    <ul id="list" class="m-0 list-none divide-y divide-slate-200 border-t border-slate-200 p-0 dark:divide-slate-700 dark:border-slate-700"></ul>
+  </div>
+</div>
+<script>
+  const iso = (d) => new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const ago = (n) => { const d = new Date(today); d.setDate(d.getDate() - n); return iso(d); };
+  const items = [['Suscripción Pro', 49, 1], ['Licencias adicionales', 180, 4], ['Soporte premium', 320, 9], ['Dominio renovado', 18, 17],
+    ['Almacenamiento extra', 75, 26], ['Capacitación del equipo', 640, 62]].map(([n, m, o]) => ({ n, m, f: ago(o) }));
+  const presets = [['7', 'Últimos 7 días'], ['30', 'Últimos 30 días'], ['90', 'Últimos 90 días'], ['year', 'Este año'], ['all', 'Todo']];
+  const range = (p) => p === 'all' ? ['', ''] : p === 'year' ? [today.getFullYear() + '-01-01', iso(today)] : [ago(+p), iso(today)];
+  const a = document.getElementById('a'), b = document.getElementById('b'), list = document.getElementById('list'), pres = document.getElementById('pres');
+  const BTN = 'inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1 hover:border-blue-600 aria-pressed:border-blue-600 aria-pressed:bg-blue-50 aria-pressed:font-semibold aria-pressed:text-blue-600 aria-pressed:before:size-2 aria-pressed:before:rounded-full aria-pressed:before:bg-gradient-to-br aria-pressed:before:from-cyan-400 aria-pressed:before:to-blue-600 aria-pressed:before:content-[\'\'] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:aria-pressed:bg-slate-800 dark:aria-pressed:text-blue-400';
+  pres.innerHTML = presets.map(([p, t]) => `<button type="button" data-p="${p}" class="${BTN}">${t}</button>`).join('');
+  const money = (v) => v.toLocaleString('es', { style: 'currency', currency: 'USD' });
+  const date = (d) => new Date(d + 'T00:00').toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' });
+  function render() {
+    const bad = a.value && b.value && a.value > b.value;
+    document.getElementById('e').hidden = !bad;
+    const hits = bad ? [] : items.filter((i) => (!a.value || i.f >= a.value) && (!b.value || i.f <= b.value));
+    document.getElementById('n').textContent = `${hits.length} movimientos`;
+    document.getElementById('sum').textContent = money(hits.reduce((s, i) => s + i.m, 0));
+    list.innerHTML = hits.length ? hits.map((i) => `<li class="flex justify-between gap-3 px-4 py-2.5"><span>${i.n}<small class="block text-slate-500 dark:text-slate-400"><time datetime="${i.f}">${date(i.f)}</time></small></span><output class="tabular-nums">${money(i.m)}</output></li>`).join('')
+      : '<li class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">No hay movimientos en este rango. Amplía las fechas o elige «Todo».</li>';
+    pres.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(range(x.dataset.p).join() === [a.value, b.value].join())));
+  }
+  pres.addEventListener('click', (e) => { const p = e.target.closest('[data-p]'); if (p) { [a.value, b.value] = range(p.dataset.p); render(); } });
+  [a, b].forEach((x) => x.addEventListener('input', render));
+  a.max = b.max = iso(today);
+  [a.value, b.value] = range('30'); render();
+</script>

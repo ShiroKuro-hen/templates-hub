@@ -1,0 +1,90 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const kpis = [
+  { label: 'Ingresos', value: '48.920 €', delta: '+12 % frente al mes anterior' },
+  { label: 'Pedidos', value: '1.284', delta: '+8 % frente al mes anterior' },
+  { label: 'Conversión', value: '3,8 %', delta: '+0,4 puntos' },
+];
+const demo = ref(false);
+</script>
+
+<template>
+  <section class="dash" aria-labelledby="ttl">
+    <header class="top">
+      <div>
+        <h2 id="ttl">Resumen de ventas</h2>
+        <p class="sub">{{ demo ? 'Mostrando datos de ejemplo.' : 'Aún no hay fuentes conectadas.' }}</p>
+      </div>
+      <span class="chip">Últimos 30 días</span>
+    </header>
+
+    <dl class="kpis">
+      <div v-for="k in kpis" :key="k.label" class="kpi panel" :class="{ on: demo }">
+        <dt>{{ k.label }}</dt>
+        <dd><b>{{ demo ? k.value : '—' }}</b><small>{{ demo ? k.delta : 'Sin datos' }}</small></dd>
+      </div>
+    </dl>
+
+    <div class="chart panel" :class="{ demo }">
+      <svg viewBox="0 0 600 210" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <path class="grid" d="M0 50H600M0 100H600M0 150H600" />
+        <path class="line" d="M20 150C80 140 110 90 170 100S260 150 320 110 420 50 480 70 560 40 585 30" />
+      </svg>
+      <div v-if="!demo" class="invite">
+        <h3>Conecta tus datos para ver métricas</h3>
+        <p>Tus paneles se llenarán en cuanto conectes una fuente. Tarda unos 5 minutos.</p>
+        <div class="btns"><a class="btn main" href="#conectar">Conectar fuente de datos</a><a class="btn" href="#csv">Importar CSV</a></div>
+      </div>
+    </div>
+
+    <ul class="cards">
+      <li><a class="card panel" href="#conectar"><strong>Conectar una base de datos</strong><span>PostgreSQL, MySQL o BigQuery.</span><small>5 min</small></a></li>
+      <li><a class="card panel" href="#csv"><strong>Importar un archivo CSV</strong><span>Sube un archivo de hasta 50 MB.</span><small>2 min</small></a></li>
+      <li>
+        <button type="button" class="card panel" :aria-pressed="demo" @click="demo = !demo">
+          <strong>Explorar con datos de ejemplo</strong><span>Mira cómo quedaría tu panel sin conectar nada.</span><small>Al instante</small>
+        </button>
+      </li>
+    </ul>
+  </section>
+</template>
+
+<style scoped>
+.dash{max-width:860px;margin:0 auto;color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}
+h2{margin:0;font-size:18px;font-weight:600}
+.sub{margin:0;color:var(--muted)}
+.chip{padding:2px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--muted);white-space:nowrap}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:0 0 12px}
+.kpi{padding:14px 16px}
+.kpi dt{color:var(--muted)}
+.kpi dd{margin:0}
+.kpi b{display:block;font-size:24px;line-height:1.3;font-weight:600;font-variant-numeric:tabular-nums;color:var(--muted)}
+.kpi.on b{color:var(--text)}
+.kpi small{color:var(--muted)}
+.chart{position:relative;height:210px;margin-bottom:12px;overflow:hidden}
+.chart svg{display:block;width:100%;height:100%}
+.grid{stroke:var(--border);vector-effect:non-scaling-stroke}
+.line{fill:none;stroke:url(#g);stroke-width:2;stroke-dasharray:6 6;opacity:.45;vector-effect:non-scaling-stroke}
+.invite{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:4px;padding:16px;text-align:center;background:color-mix(in srgb,var(--surface) 80%,transparent)}
+.invite h3{margin:0;font-size:16px;font-weight:600}
+.invite p{margin:0 0 12px;max-width:380px;color:var(--muted)}
+.chart.demo .line{stroke-dasharray:none;opacity:1}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.btn{display:inline-flex;align-items:center;height:36px;padding:0 16px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font-weight:500;text-decoration:none;transition:background .14s}
+.btn:hover{background:var(--accent-soft)}
+.btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:0;padding:0;list-style:none}
+.card{display:block;box-sizing:border-box;width:100%;height:100%;padding:14px 16px;text-align:left;color:inherit;font:inherit;text-decoration:none;cursor:pointer;transition:border-color .14s}
+.card:hover,.card[aria-pressed=true]{border-color:var(--accent)}
+.card[aria-pressed=true]{background:var(--accent-soft)}
+.card strong{display:block;font-weight:600}
+.card span{display:block;margin-top:2px;color:var(--muted)}
+.card small{display:inline-block;margin-top:8px;padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Tokens: ver pestaña HTML + CSS */
+</style>

@@ -1,0 +1,40 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="max-w-xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+      <h2 class="m-0 text-sm font-semibold tabular-nums">6 proyectos</h2>
+      <label for="s" class="flex items-center gap-2 text-slate-500 dark:text-slate-400">Ordenar por
+        <select id="s" class="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-slate-900 hover:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+          <option value="reciente">Más recientes</option>
+          <option value="antiguo">Más antiguos</option>
+          <option value="az">Nombre (A a Z)</option>
+          <option value="za">Nombre (Z a A)</option>
+          <option value="tamano">Mayor tamaño</option>
+        </select>
+      </label>
+    </div>
+    <ol id="list" class="m-0 list-none divide-y divide-slate-200 p-0 dark:divide-slate-700"></ol>
+    <p id="st" class="sr-only" aria-live="polite"></p>
+  </div>
+</div>
+<script>
+  const data = [
+    ['Portal de clientes', '2026-09-28', 482], ['Migración a Postgres', '2026-08-14', 1260],
+    ['Rediseño de facturación', '2026-09-02', 214], ['API de pagos', '2026-07-21', 96],
+    ['Panel de analítica', '2026-10-01', 738], ['Auditoría de accesos', '2026-06-30', 58],
+  ];
+  const sorters = {
+    reciente: (a, b) => b[1].localeCompare(a[1]), antiguo: (a, b) => a[1].localeCompare(b[1]),
+    az: (a, b) => a[0].localeCompare(b[0], 'es'), za: (a, b) => b[0].localeCompare(a[0], 'es'),
+    tamano: (a, b) => b[2] - a[2],
+  };
+  const s = document.getElementById('s'), list = document.getElementById('list');
+  const fmt = (d) => new Date(d + 'T00:00').toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' });
+  const LI = 'relative flex justify-between gap-3 px-4 py-3 first:before:absolute first:before:inset-y-2.5 first:before:left-0 first:before:w-[3px] first:before:rounded-full first:before:bg-gradient-to-br first:before:from-cyan-400 first:before:to-blue-600 first:before:content-[\'\']';
+  function render() {
+    list.innerHTML = [...data].sort(sorters[s.value]).map(([n, f, mb]) =>
+      `<li class="${LI}"><span class="font-semibold">${n}<small class="block font-normal text-slate-500 dark:text-slate-400">Actualizado el <time datetime="${f}">${fmt(f)}</time></small></span><output class="whitespace-nowrap tabular-nums text-slate-500 dark:text-slate-400">${mb} MB</output></li>`).join('');
+    document.getElementById('st').textContent = `Lista ordenada: ${s.selectedOptions[0].text}.`;
+  }
+  s.addEventListener('change', render);
+  render();
+</script>

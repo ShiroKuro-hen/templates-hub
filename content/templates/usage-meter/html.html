@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .plan{max-width:560px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+  h2{margin:0;font-size:18px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .btn{padding:6px 14px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;cursor:pointer;transition:filter .14s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ul{margin:20px 0 0;padding:0;list-style:none;display:grid;gap:20px}
+  .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 12px;margin-bottom:6px}
+  .top label{font-weight:600}
+  .val{color:var(--muted);font-variant-numeric:tabular-nums}
+  .val b{color:var(--text);font-weight:600}
+  progress{display:block;width:100%;height:8px;border:0;border-radius:999px;appearance:none;-webkit-appearance:none;background:var(--border);overflow:hidden}
+  progress::-webkit-progress-bar{background:var(--border);border-radius:999px}
+  progress::-webkit-progress-value{background:linear-gradient(90deg,#22d3ee,#2f5bff);border-radius:999px;transition:width .16s}
+  progress::-moz-progress-bar{background:var(--accent);border-radius:999px}
+  progress.warn::-webkit-progress-value{background:var(--warn)}
+  progress.warn::-moz-progress-bar{background:var(--warn)}
+  progress.err::-webkit-progress-value{background:var(--err)}
+  progress.err::-moz-progress-bar{background:var(--err)}
+  .note{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;margin:6px 0 0;color:var(--muted);font-variant-numeric:tabular-nums}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:600;color:var(--text)}
+  .badge::before{content:"";width:8px;height:8px;border-radius:999px}
+  .b-warn{background:var(--warn-soft)} .b-warn::before{background:var(--warn)}
+  .b-err{background:var(--err-soft)} .b-err::before{background:var(--err)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="plan" aria-labelledby="t">
+  <div class="head">
+    <div><h2 id="t">Uso del plan</h2><p>Plan Business. Se renueva el 1 de noviembre.</p></div>
+    <button type="button" class="btn">Mejorar plan</button>
+  </div>
+  <ul>
+    <li>
+      <div class="top"><label for="m1">Almacenamiento</label><span class="val"><b>42,6</b> de 100 GB</span></div>
+      <progress id="m1" value="42.6" max="100">43 %</progress>
+      <p class="note">Quedan 57,4 GB.</p>
+    </li>
+    <li>
+      <div class="top"><label for="m2">Usuarios</label><span class="val"><b>18</b> de 25</span></div>
+      <progress id="m2" value="18" max="25">72 %</progress>
+      <p class="note">Quedan 7 puestos.</p>
+    </li>
+    <li>
+      <div class="top"><label for="m3">Llamadas a la API</label><span class="val"><b>91.400</b> de 100.000</span></div>
+      <progress id="m3" class="warn" value="91400" max="100000">91 %</progress>
+      <p class="note"><span class="badge b-warn">Cerca del límite</span> Quedan 8.600 llamadas este mes.</p>
+    </li>
+    <li>
+      <div class="top"><label for="m4">Dominios personalizados</label><span class="val"><b>5</b> de 5</span></div>
+      <progress id="m4" class="err" value="5" max="5">100 %</progress>
+      <p class="note"><span class="badge b-err">Límite alcanzado</span> Elimina un dominio o mejora el plan para añadir otro.</p>
+    </li>
+  </ul>
+</section>
+</body>
+</html>

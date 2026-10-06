@@ -1,0 +1,40 @@
+<article class="mx-auto flex max-w-lg gap-3 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <span aria-hidden="true" class="grid size-9 shrink-0 place-items-center rounded-full bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">MQ</span>
+  <div class="min-w-0 flex-1">
+    <header class="flex flex-wrap items-baseline gap-2"><strong>Marina Quiroga</strong><time class="text-xs text-slate-500 dark:text-slate-400">10:32</time></header>
+    <p class="mb-2.5 mt-0.5 break-words">Lanzamos la versión 3.2 con las correcciones de accesibilidad. Gracias a todo el equipo.</p>
+    <div id="bar" role="group" aria-label="Reacciones al mensaje" class="flex flex-wrap items-center gap-1.5 [&>button]:inline-flex [&>button]:min-h-7 [&>button]:items-center [&>button]:gap-1.5 [&>button]:rounded-full [&>button]:border [&>button]:border-slate-200 [&>button]:bg-white [&>button]:px-2.5 [&>button]:text-slate-500 [&>button:hover]:bg-blue-50 dark:[&>button]:border-slate-700 dark:[&>button]:bg-slate-900 dark:[&>button]:text-slate-400 dark:[&>button:hover]:bg-slate-800 [&>button]:focus-visible:outline-2 [&>button]:focus-visible:outline-offset-2 [&>button]:focus-visible:outline-blue-600 [&>button[aria-pressed=true]]:border-blue-600 [&>button[aria-pressed=true]]:bg-blue-50 [&>button[aria-pressed=true]]:text-blue-600 dark:[&>button[aria-pressed=true]]:border-blue-400 dark:[&>button[aria-pressed=true]]:bg-blue-500/15 dark:[&>button[aria-pressed=true]]:text-blue-300">
+      <button type="button" data-e="👍" aria-pressed="true" aria-label="👍, 12 reacciones"><span aria-hidden="true">👍</span><b class="tabular-nums" aria-hidden="true">12</b></button>
+      <button type="button" data-e="🎉" aria-pressed="false" aria-label="🎉, 7 reacciones"><span aria-hidden="true">🎉</span><b class="tabular-nums" aria-hidden="true">7</b></button>
+      <button type="button" data-e="🚀" aria-pressed="false" aria-label="🚀, 3 reacciones"><span aria-hidden="true">🚀</span><b class="tabular-nums" aria-hidden="true">3</b></button>
+      <details id="add" class="relative">
+        <summary aria-label="Añadir reacción" class="inline-flex min-h-7 cursor-pointer list-none items-center rounded-full border border-slate-200 px-2.5 text-slate-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 [&::-webkit-details-marker]:hidden">+</summary>
+        <div id="pick" role="group" aria-label="Elegir emoji" class="absolute left-0 top-9 z-10 flex w-max max-w-56 flex-wrap gap-0.5 rounded-lg border border-slate-200 bg-white p-1 shadow-md dark:border-slate-700 dark:bg-slate-900"></div>
+      </details>
+    </div>
+    <p id="st" role="status" class="sr-only"></p>
+  </div>
+</article>
+<script>
+  const bar = document.getElementById('bar'), add = document.getElementById('add'), pick = document.getElementById('pick'), st = document.getElementById('st');
+  const tpl = bar.querySelector('button').cloneNode(true);
+  const plural = (n) => n + (n === 1 ? ' reacción' : ' reacciones');
+  function toggle(e) {
+    let b = bar.querySelector('[data-e="' + e + '"]');
+    if (!b) {
+      b = tpl.cloneNode(true); b.dataset.e = e; b.setAttribute('aria-pressed', 'false');
+      b.firstChild.textContent = e; b.lastChild.textContent = '0'; add.before(b);
+    }
+    const me = b.getAttribute('aria-pressed') !== 'true', n = +b.lastChild.textContent + (me ? 1 : -1);
+    b.setAttribute('aria-pressed', me); b.lastChild.textContent = n; b.setAttribute('aria-label', e + ', ' + plural(n));
+    st.textContent = 'Reacción ' + e + (me ? ' añadida' : ' quitada');
+    if (!n) { b.remove(); add.querySelector('summary').focus(); } else b.focus();
+  }
+  ['👍', '❤️', '🎉', '🚀', '👀', '✅', '😄', '🙌'].forEach((e) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = e; b.setAttribute('aria-label', 'Reaccionar con ' + e);
+    b.className = 'min-h-8 rounded-lg px-2 text-base hover:bg-blue-50 dark:hover:bg-slate-800'; pick.append(b);
+  });
+  bar.addEventListener('click', (ev) => { const b = ev.target.closest('button[data-e]'); if (b) toggle(b.dataset.e); });
+  pick.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) { add.open = false; toggle(b.textContent); } });
+  add.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') { add.open = false; add.querySelector('summary').focus(); } });
+</script>

@@ -1,0 +1,39 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-label="Reseñas de clientes" class="max-w-2xl">
+    <div class="grid items-center gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm sm:grid-cols-[auto_1fr] sm:gap-6 dark:border-slate-700 dark:bg-slate-900">
+      <div role="img" aria-label="Valoración media 3,3 de 5, 6 reseñas" class="text-center">
+        <b class="block text-[44px] font-semibold leading-none tabular-nums">3,3</b>
+        <span class="whitespace-nowrap tracking-wide text-amber-600">★★★<span class="text-slate-300 dark:text-slate-600">★★</span></span><br>
+        <span class="text-slate-500 dark:text-slate-400">6 reseñas</span>
+      </div>
+      <div id="dist" role="group" aria-label="Filtrar por valoración" class="grid gap-0.5"></div>
+    </div>
+    <div class="mb-2 mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+      <span id="shown" role="status"></span>
+      <label>Ordenar por <select id="sort" class="ml-1.5 rounded-lg border border-slate-200 bg-white px-2 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900"><option value="new">Más recientes</option><option value="high">Mejor valoradas</option><option value="low">Menos valoradas</option></select></label>
+    </div>
+    <ol id="list" class="grid gap-3"></ol>
+  </section>
+</div>
+<script>
+  const R = [[5,'2026-09-28','Laura M.','Justo lo que buscaba','Llegó en dos días y la batería dura toda la semana.',14],[4,'2026-09-15','Carlos R.','Muy buena relación calidad-precio','Pantalla nítida y buen GPS. Echo en falta más esferas gratuitas.',9],[3,'2026-08-21','Javier P.','Cumple, sin más','Las notificaciones tardan unos segundos en aparecer.',3],[2,'2026-08-10','Elena T.','La correa se despegó','A los dos meses empezó a soltarse. El soporte la cambió, pero tardó diez días.',11],[5,'2026-06-25','Íñigo L.','Batería excelente','Con uso normal llego a nueve días sin cargar.',4],[1,'2026-06-03','Rosa D.','No encendía','Llegó sin carga y no respondía al cargador. Pedí la devolución.',1]].map(([r, d, a, t, x, h], id) => ({ id, r, d, a, t, x, h, on: false }));
+  const $ = (id) => document.getElementById(id), stars = (n) => '★'.repeat(n) + `<span class="text-slate-300 dark:text-slate-600">${'★'.repeat(5 - n)}</span>`;
+  const cmp = { new: (a, b) => b.d.localeCompare(a.d), high: (a, b) => b.r - a.r, low: (a, b) => a.r - b.r };
+  const B = 'grid grid-cols-[44px_1fr_28px] items-center gap-2.5 rounded-lg border border-transparent px-1.5 py-0.5 text-left hover:enabled:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:text-slate-500 aria-pressed:border-blue-600 aria-pressed:bg-blue-50 dark:hover:enabled:bg-slate-800 dark:aria-pressed:bg-slate-800';
+  let filter = 0;
+  $('dist').innerHTML = [5, 4, 3, 2, 1].map((n) => { const c = R.filter((x) => x.r === n).length;
+    return `<button type="button" data-n="${n}" ${c ? '' : 'disabled'} aria-pressed="false" aria-label="${n} estrellas, ${c} reseñas" class="${B}"><span aria-hidden="true">${n} ★</span><span aria-hidden="true" class="h-1.5 overflow-hidden rounded-full bg-blue-50 dark:bg-slate-800"><i class="block h-full bg-gradient-to-br from-cyan-400 to-blue-600" style="width:${(c / R.length) * 100}%"></i></span><span aria-hidden="true" class="text-right tabular-nums text-slate-500">${c}</span></button>`; }).join('');
+  function render() {
+    const rows = R.filter((x) => !filter || x.r === filter).sort(cmp[$('sort').value]);
+    $('list').innerHTML = rows.map((x) => `<li><article class="rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"><header class="flex justify-between gap-3"><span role="img" aria-label="${x.r} de 5 estrellas" class="text-amber-600">${stars(x.r)}</span><time class="text-slate-500" datetime="${x.d}">${new Date(x.d).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</time></header>
+      <h3 class="mb-1 mt-1.5 font-semibold">${x.t}</h3><p class="max-w-prose">${x.x}</p><div class="mt-1.5 text-slate-500 dark:text-slate-400">${x.a}</div>
+      <button type="button" data-id="${x.id}" aria-pressed="${x.on}" class="mt-2.5 rounded-lg border border-slate-200 px-2.5 py-1 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-pressed:border-blue-600 aria-pressed:text-blue-600 dark:border-slate-700 dark:hover:bg-slate-800 dark:aria-pressed:text-blue-400">Me resulta útil <span class="tabular-nums">${x.h + x.on}</span></button></article></li>`).join('');
+    $('shown').innerHTML = `Mostrando ${rows.length} de ${R.length}` + (filter ? ' <button type="button" data-clear class="px-1 text-blue-600 underline focus-visible:outline-2 focus-visible:outline-blue-600 dark:text-blue-400">Quitar filtro</button>' : '');
+    $('dist').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', +b.dataset.n === filter));
+  }
+  $('dist').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { filter = filter === +b.dataset.n ? 0 : +b.dataset.n; render(); } });
+  $('shown').addEventListener('click', (e) => { if (e.target.closest('[data-clear]')) { filter = 0; render(); } });
+  $('list').addEventListener('click', (e) => { const b = e.target.closest('[data-id]'); if (!b) return; const x = R[b.dataset.id]; x.on = !x.on; render(); $('list').querySelector(`[data-id="${x.id}"]`).focus(); });
+  $('sort').addEventListener('change', render);
+  render();
+</script>

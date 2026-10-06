@@ -1,0 +1,36 @@
+<section aria-labelledby="h" class="mx-auto max-w-2xl overflow-hidden rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <div class="flex items-center gap-3 border-b border-slate-200 px-4 py-2.5 dark:border-slate-700"><h2 id="h" class="text-base font-semibold">Bandeja de entrada</h2><span id="un" class="rounded-full bg-blue-50 px-2 text-xs tabular-nums text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"></span></div>
+  <div role="toolbar" aria-label="Acciones de la selección" class="flex flex-wrap items-center gap-x-2 gap-y-1 border-b border-slate-200 px-4 py-2 text-slate-500 dark:border-slate-700 dark:text-slate-400 [&_button]:rounded-lg [&_button]:border [&_button]:border-slate-200 [&_button]:bg-white [&_button]:px-2.5 [&_button]:py-1 [&_button]:text-slate-900 [&_button:hover:not(:disabled)]:bg-blue-50 [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-60 dark:[&_button]:border-slate-700 dark:[&_button]:bg-slate-900 dark:[&_button]:text-slate-100 dark:[&_button:hover:not(:disabled)]:bg-slate-800">
+    <label class="mr-auto flex items-center gap-2"><input type="checkbox" id="all" class="size-4 accent-blue-600"><span id="cnt"></span></label>
+    <button type="button" data-a="read">Marcar como leído</button>
+    <button type="button" data-a="unread">Marcar como no leído</button>
+    <button type="button" data-a="archive">Archivar</button>
+  </div>
+  <ul id="list" class="[&>li]:flex [&>li]:items-center [&>li]:gap-3 [&>li]:border-b [&>li]:border-slate-200 [&>li]:px-4 [&>li:hover]:bg-blue-50 [&>li:has(input:checked)]:bg-blue-50 dark:[&>li]:border-slate-700 dark:[&>li:hover]:bg-slate-800 dark:[&>li:has(input:checked)]:bg-slate-800 [&>li:last-child]:border-0">
+    <li class="group" data-unread><input type="checkbox" class="size-4 accent-blue-600" aria-label="Seleccionar mensaje de Lucía Ortega"><button type="button" class="open grid min-w-0 flex-1 grid-cols-[1fr_auto] gap-x-3 py-2.5 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="who truncate group-data-[unread]:font-bold before:mr-2 before:hidden before:size-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 group-data-[unread]:before:inline-block"><span class="sr-only">No leído. </span>Lucía Ortega</span><time class="text-xs tabular-nums text-slate-500 dark:text-slate-400">09:41</time><span class="sub col-span-full truncate text-slate-500 dark:text-slate-400 group-data-[unread]:text-slate-900 dark:group-data-[unread]:text-slate-100 [&_b]:font-medium group-data-[unread]:[&_b]:font-bold"><b>Informe de incidencias de septiembre</b> - Adjunto el resumen con los tiempos.</span></button></li>
+    <li class="group" data-unread><input type="checkbox" class="size-4 accent-blue-600" aria-label="Seleccionar mensaje de Soporte Nimbus"><button type="button" class="open grid min-w-0 flex-1 grid-cols-[1fr_auto] gap-x-3 py-2.5 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="who truncate group-data-[unread]:font-bold before:mr-2 before:hidden before:size-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 group-data-[unread]:before:inline-block"><span class="sr-only">No leído. </span>Soporte Nimbus</span><time class="text-xs tabular-nums text-slate-500 dark:text-slate-400">08:15</time><span class="sub col-span-full truncate text-slate-500 dark:text-slate-400 group-data-[unread]:text-slate-900 dark:group-data-[unread]:text-slate-100 [&_b]:font-medium group-data-[unread]:[&_b]:font-bold"><b>Tu ticket 4821 está resuelto</b> - Confirma si el acceso funciona.</span></button></li>
+    <li class="group"><input type="checkbox" class="size-4 accent-blue-600" aria-label="Seleccionar mensaje de Gonzalo Paredes"><button type="button" class="open grid min-w-0 flex-1 grid-cols-[1fr_auto] gap-x-3 py-2.5 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="who truncate group-data-[unread]:font-bold before:mr-2 before:hidden before:size-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 group-data-[unread]:before:inline-block">Gonzalo Paredes</span><time class="text-xs tabular-nums text-slate-500 dark:text-slate-400">Ayer</time><span class="sub col-span-full truncate text-slate-500 dark:text-slate-400 group-data-[unread]:text-slate-900 dark:group-data-[unread]:text-slate-100 [&_b]:font-medium group-data-[unread]:[&_b]:font-bold"><b>Agenda del comité del jueves</b> - Faltan dos puntos por confirmar.</span></button></li>
+  </ul>
+  <p id="empty" hidden class="px-4 py-8 text-center text-slate-500 dark:text-slate-400"><b class="block text-slate-900 dark:text-slate-100">No quedan mensajes por revisar</b>Los mensajes nuevos aparecerán aquí.</p>
+</section>
+<script>
+  const list = document.getElementById('list'), all = document.getElementById('all'), cnt = document.getElementById('cnt');
+  const un = document.getElementById('un'), empty = document.getElementById('empty'), tools = document.querySelectorAll('[data-a]');
+  const rows = () => [...list.children], picked = () => rows().filter((r) => r.querySelector('input').checked);
+  function sync() {
+    const s = picked().length, n = rows().length;
+    all.checked = n > 0 && s === n; all.indeterminate = s > 0 && s < n;
+    cnt.textContent = s ? s + (s === 1 ? ' seleccionado' : ' seleccionados') : 'Seleccionar todo';
+    un.textContent = rows().filter((r) => r.hasAttribute('data-unread')).length + ' sin leer'; empty.hidden = n > 0;
+    tools.forEach((b) => (b.disabled = !s));
+  }
+  list.addEventListener('change', sync);
+  list.addEventListener('click', (e) => { const b = e.target.closest('.open'); if (b) { b.parentElement.removeAttribute('data-unread'); sync(); } });
+  all.addEventListener('change', () => { rows().forEach((r) => (r.querySelector('input').checked = all.checked)); sync(); });
+  document.querySelector('[role=toolbar]').addEventListener('click', (e) => {
+    const a = e.target.closest('[data-a]')?.dataset.a; if (!a) return;
+    picked().forEach((r) => { if (a === 'archive') r.remove(); else { r.toggleAttribute('data-unread', a === 'unread'); r.querySelector('input').checked = false; } });
+    sync();
+  });
+  sync();
+</script>

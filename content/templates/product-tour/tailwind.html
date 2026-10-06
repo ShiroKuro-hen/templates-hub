@@ -1,0 +1,70 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div id="stage" class="relative mx-auto min-h-[360px] max-w-xl rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="flex flex-wrap gap-2 [&>button]:inline-flex [&>button]:h-9 [&>button]:items-center [&>button]:gap-2 [&>button]:rounded-lg [&>button]:border [&>button]:border-slate-200 [&>button]:px-3 hover:[&>button]:border-blue-500 dark:[&>button]:border-slate-700">
+      <button type="button" id="t1" class="min-w-36 flex-1 text-slate-500 dark:text-slate-400">Buscar pedidos, clientes…</button>
+      <button type="button" id="t2" class="!border-blue-600 bg-blue-600 font-medium text-white">Nuevo panel</button>
+      <button type="button" id="t3" aria-label="Notificaciones, 3 nuevas">Avisos (3)</button>
+    </div>
+    <div class="mt-3.5 h-2.5 w-3/5 rounded-full bg-blue-100 dark:bg-slate-800"></div>
+    <div class="mt-3.5 h-2.5 w-[85%] rounded-full bg-blue-100 dark:bg-slate-800"></div>
+    <div class="mt-3.5 h-2.5 w-2/5 rounded-full bg-blue-100 dark:bg-slate-800"></div>
+    <button type="button" id="again" hidden class="absolute bottom-4 right-4 h-9 rounded-lg border border-slate-200 px-3 hover:border-blue-500 dark:border-slate-700">Repetir recorrido</button>
+    <div id="pop" role="dialog" aria-labelledby="tt" aria-describedby="tb" hidden
+      class="absolute z-10 w-[min(300px,calc(100%-32px))] rounded-lg border border-slate-200 bg-white p-4 shadow-md before:absolute before:-top-1.5 before:left-[var(--ax)] before:size-2.5 before:rotate-45 before:border-l before:border-t before:border-slate-200 before:bg-white dark:border-slate-700 dark:bg-slate-900 dark:before:border-slate-700 dark:before:bg-slate-900">
+      <h3 id="tt" class="text-[15px] font-semibold"></h3>
+      <p id="tb" class="mb-3 mt-1 text-slate-500 dark:text-slate-400"></p>
+      <div class="flex items-center gap-2">
+        <small id="n" class="tabular-nums text-slate-500 dark:text-slate-400"></small>
+        <span id="dots" aria-hidden="true" class="ml-auto flex items-center gap-1"></span>
+      </div>
+      <div class="mt-3 flex gap-2">
+        <button type="button" id="prev" class="h-8 rounded-lg border border-slate-200 px-3 hover:border-blue-500 disabled:opacity-50 dark:border-slate-700">Anterior</button>
+        <button type="button" id="next" class="h-8 rounded-lg bg-blue-600 px-3 font-medium text-white hover:bg-blue-700">Siguiente</button>
+        <button type="button" id="skip" class="ml-auto rounded text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">Omitir</button>
+      </div>
+      <p class="mt-3 border-t border-slate-200 pt-2.5 text-[13px] text-slate-500 dark:border-slate-700 dark:text-slate-400">
+        <kbd class="rounded border border-slate-200 px-1 font-mono text-xs dark:border-slate-700">←</kbd> <kbd class="rounded border border-slate-200 px-1 font-mono text-xs dark:border-slate-700">→</kbd> para navegar, <kbd class="rounded border border-slate-200 px-1 font-mono text-xs dark:border-slate-700">Esc</kbd> para cerrar
+      </p>
+    </div>
+  </div>
+</div>
+<script>
+  const S = [
+    ['t1', 'Busca en todo el panel', 'Encuentra pedidos, clientes y facturas con unas pocas letras.'],
+    ['t2', 'Crea un panel nuevo', 'Empieza en blanco o parte de una plantilla de ventas.'],
+    ['t3', 'Revisa tus avisos', 'Aquí llegan las alertas cuando una métrica cambia.'],
+  ];
+  const HL = ['outline', 'outline-2', 'outline-offset-4', 'outline-blue-600'];
+  const $ = (id) => document.getElementById(id), pop = $('pop'), st = $('stage');
+  const dot = (on) => `<i class="h-1.5 rounded-full ${on ? 'w-4 bg-gradient-to-br from-cyan-400 to-blue-600' : 'w-1.5 bg-slate-200 dark:bg-slate-700'}"></i>`;
+  let i = 0;
+  const clear = () => S.forEach(([id]) => $(id).classList.remove(...HL));
+  function show(n, focus) {
+    i = n; clear();
+    const el = $(S[i][0]); el.classList.add(...HL);
+    $('tt').textContent = S[i][1]; $('tb').textContent = S[i][2];
+    $('n').textContent = `Paso ${i + 1} de ${S.length}`;
+    $('prev').disabled = !i;
+    $('next').textContent = i === S.length - 1 ? 'Terminar' : 'Siguiente';
+    $('dots').innerHTML = S.map((_, k) => dot(k === i)).join('');
+    pop.hidden = false;
+    const s = st.getBoundingClientRect(), r = el.getBoundingClientRect();
+    const x = Math.max(16, Math.min(r.left - s.left, s.width - pop.offsetWidth - 16));
+    const ax = Math.min(Math.max(r.left - s.left + r.width / 2 - x - 5, 12), pop.offsetWidth - 24);
+    pop.style.cssText = `left:${x}px;top:${r.bottom - s.top + 14}px;--ax:${ax}px`;
+    if (focus) $('next').focus({ preventScroll: true });
+  }
+  function end() { pop.hidden = true; clear(); $('again').hidden = false; $('again').focus(); }
+  $('next').onclick = () => (i < S.length - 1 ? show(i + 1, 1) : end());
+  $('prev').onclick = () => show(i - 1, 1);
+  $('skip').onclick = end;
+  $('again').onclick = () => { $('again').hidden = true; show(0, 1); };
+  document.addEventListener('keydown', (e) => {
+    if (pop.hidden) return;
+    if (e.key === 'Escape') end();
+    else if (e.key === 'ArrowRight' && i < S.length - 1) show(i + 1, 1);
+    else if (e.key === 'ArrowLeft' && i > 0) show(i - 1, 1);
+  });
+  addEventListener('resize', () => !pop.hidden && show(i));
+  show(0);
+</script>

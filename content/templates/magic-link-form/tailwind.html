@@ -1,0 +1,49 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <main class="mx-auto max-w-[420px] rounded-lg border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <section id="v1" aria-labelledby="t1">
+      <h1 id="t1" tabindex="-1" class="mb-1 text-xl font-semibold focus:outline-none">Accede sin contraseña</h1>
+      <p class="mb-5 text-slate-500 dark:text-slate-400">Escribe tu correo y te enviamos un enlace de un solo uso.</p>
+      <form id="f" novalidate>
+        <label for="email" class="mb-1.5 block font-semibold">Correo electrónico</label>
+        <input id="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required aria-describedby="msg"
+               class="mb-3 h-10 w-full rounded-lg border border-slate-200 bg-white px-3 aria-[invalid=true]:border-red-600 focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900">
+        <p id="msg" class="-mt-1 mb-3 text-[13px] text-red-600 empty:hidden dark:text-red-400" aria-live="polite"></p>
+        <button type="submit" class="h-10 w-full rounded-lg bg-blue-600 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300">Enviar enlace de acceso</button>
+      </form>
+    </section>
+    <section id="v2" aria-labelledby="t2" hidden>
+      <div class="relative mb-4 h-14 w-14">
+        <svg class="-rotate-90" width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+          <circle class="stroke-slate-200 dark:stroke-slate-700" cx="28" cy="28" r="24"/>
+          <circle id="bar" class="transition-[stroke-dashoffset] duration-1000 ease-linear motion-reduce:transition-none" cx="28" cy="28" r="24" stroke="url(#g)" stroke-dasharray="150.8"/>
+        </svg>
+        <b id="n" class="absolute inset-0 grid place-items-center font-semibold tabular-nums" aria-hidden="true">30</b>
+      </div>
+      <h1 id="t2" tabindex="-1" class="mb-1 text-xl font-semibold focus:outline-none">Revisa tu correo</h1>
+      <p class="mb-5 text-slate-500 dark:text-slate-400">Enviamos un enlace a <strong id="to" class="text-slate-900 dark:text-slate-100"></strong>. Caduca en 10 minutos.</p>
+      <button id="re" type="button" disabled class="h-10 w-full rounded-lg border border-slate-200 font-semibold tabular-nums hover:enabled:border-blue-600 hover:enabled:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:text-slate-500 dark:border-slate-700 dark:hover:enabled:bg-slate-800 dark:disabled:text-slate-400">Reenviar en 30 s</button>
+      <p class="mt-4 text-[13px] text-slate-500 dark:text-slate-400">¿Correo equivocado? <button id="back" type="button" class="text-blue-600 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-blue-400">Usar otro correo</button></p>
+    </section>
+    <p id="live" class="sr-only" role="status" aria-live="polite"></p>
+  </main>
+</div>
+<script>
+  const $ = (i) => document.getElementById(i), N = 30, C = 2 * Math.PI * 24;
+  let left = 0, timer;
+  const paint = () => {
+    $('n').textContent = left; $('bar').style.strokeDashoffset = C * (1 - left / N);
+    $('re').disabled = left > 0; $('re').textContent = left > 0 ? `Reenviar en ${left} s` : 'Reenviar enlace';
+  };
+  const start = () => { left = N; paint(); clearInterval(timer); timer = setInterval(() => { left--; paint(); if (!left) clearInterval(timer); }, 1000); };
+  const show = (s) => { $('v1').hidden = s; $('v2').hidden = !s; (s ? $('t2') : $('email')).focus(); };
+  $('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const i = $('email'), ok = i.checkValidity();
+    i.setAttribute('aria-invalid', String(!ok));
+    $('msg').textContent = ok ? '' : 'Escribe un correo válido, por ejemplo nombre@empresa.com.';
+    if (ok) { $('to').textContent = i.value; start(); show(true); }
+  });
+  $('re').addEventListener('click', () => { start(); $('live').textContent = `Enlace reenviado a ${$('email').value}.`; });
+  $('back').addEventListener('click', () => { clearInterval(timer); show(false); });
+</script>

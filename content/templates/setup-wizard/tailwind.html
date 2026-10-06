@@ -1,0 +1,79 @@
+<section aria-labelledby="ttl" class="mx-auto max-w-lg rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <div class="border-b border-slate-200 px-5 pb-4 pt-5 dark:border-slate-700">
+    <h2 id="ttl" class="mb-4 text-base font-semibold">Configura tu espacio en Nimbus</h2>
+    <ol id="steps" aria-label="Pasos de configuración" class="flex gap-2 [&>li]:group [&>li]:flex [&>li]:min-w-0 [&>li]:flex-1 [&>li]:items-center [&>li]:gap-2 [&>li]:text-slate-500 dark:[&>li]:text-slate-400 [&>li]:after:h-px [&>li]:after:flex-1 [&>li]:after:bg-slate-200 dark:[&>li]:after:bg-slate-700 [&>li:last-child]:after:hidden [&>li[aria-current=step]]:font-medium [&>li[aria-current=step]]:text-slate-900 dark:[&>li[aria-current=step]]:text-slate-100 [&_b]:grid [&_b]:size-6 [&_b]:shrink-0 [&_b]:place-items-center [&_b]:rounded-full [&_b]:border [&_b]:border-slate-200 [&_b]:text-xs [&_b]:tabular-nums dark:[&_b]:border-slate-700 [&_span]:hidden sm:[&_span]:inline [&_[aria-current=step]_span]:inline [&_[aria-current=step]_b]:border-transparent [&_[aria-current=step]_b]:bg-gradient-to-br [&_[aria-current=step]_b]:from-cyan-400 [&_[aria-current=step]_b]:to-blue-600 [&_[aria-current=step]_b]:text-white [&_.done_b]:border-emerald-500 [&_.done_b]:bg-emerald-50 [&_.done_b]:text-emerald-600 dark:[&_.done_b]:bg-emerald-950">
+      <li><b>1</b><span>Cuenta</span></li><li><b>2</b><span>Espacio</span></li><li><b>3</b><span>Equipo</span></li><li><b>4</b><span>Revisión</span></li>
+    </ol>
+  </div>
+  <form id="f" novalidate class="p-5 [&_fieldset]:min-w-0 [&_legend]:mb-3 [&_legend]:text-[15px] [&_legend]:font-semibold [&_label]:mb-1 [&_label]:block [&_label]:font-medium [&_.f]:mb-3.5 [&_input:not([type=radio],[type=checkbox])]:h-9 [&_input:not([type=radio],[type=checkbox])]:w-full [&_input:not([type=radio],[type=checkbox])]:rounded-lg [&_input:not([type=radio],[type=checkbox])]:border [&_input:not([type=radio],[type=checkbox])]:border-slate-200 [&_input:not([type=radio],[type=checkbox])]:bg-white [&_input:not([type=radio],[type=checkbox])]:px-3 dark:[&_input:not([type=radio],[type=checkbox])]:border-slate-700 dark:[&_input:not([type=radio],[type=checkbox])]:bg-slate-900 [&_input[aria-invalid=true]]:border-red-500 [&_input]:accent-blue-600 [&_small]:mt-1 [&_small]:block [&_small]:text-red-600 dark:[&_small]:text-red-400 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600">
+    <fieldset class="pane"><legend>Tus datos</legend>
+      <div class="f"><label for="nom">Nombre completo</label><input id="nom" type="text" required autocomplete="name" data-err="Escribe tu nombre completo." aria-describedby="nom-e"><small id="nom-e" role="alert"></small></div>
+      <div class="f"><label for="mail">Correo de trabajo</label><input id="mail" type="email" required autocomplete="email" data-err="Escribe un correo válido, por ejemplo ana@empresa.es." aria-describedby="mail-e"><small id="mail-e" role="alert"></small></div>
+    </fieldset>
+    <fieldset class="pane" hidden><legend>Tu espacio</legend>
+      <div class="f"><label for="esp">Nombre del espacio</label><input id="esp" type="text" required minlength="3" data-err="Usa al menos 3 caracteres para el nombre." aria-describedby="esp-e"><small id="esp-e" role="alert"></small></div>
+      <div class="f"><label for="url">Dirección web</label><div class="flex items-center gap-2"><input id="url" type="text" required pattern="[a-z0-9]{3,}" data-err="Usa 3 o más letras minúsculas o números, sin espacios." aria-describedby="url-e"><span class="whitespace-nowrap text-slate-500">.nimbus.app</span></div><small id="url-e" role="alert"></small></div>
+    </fieldset>
+    <fieldset class="pane [&_label]:mb-2 [&_label]:flex [&_label]:cursor-pointer [&_label]:items-center [&_label]:gap-2.5 [&_label]:rounded-lg [&_label]:border [&_label]:border-slate-200 [&_label]:px-3 [&_label]:py-2.5 [&_label]:font-normal dark:[&_label]:border-slate-700 [&_label:has(:checked)]:border-blue-600 [&_label:has(:checked)]:bg-blue-50 dark:[&_label:has(:checked)]:bg-slate-800" hidden><legend>Tamaño del equipo</legend>
+      <label><input type="radio" name="eq" value="1 a 10 personas" required data-err="Elige el tamaño de tu equipo para continuar." id="eq1" aria-describedby="eq1-e">1 a 10 personas</label>
+      <label><input type="radio" name="eq" value="11 a 50 personas">11 a 50 personas</label>
+      <label><input type="radio" name="eq" value="Más de 50 personas">Más de 50 personas</label>
+      <small id="eq1-e" role="alert"></small>
+    </fieldset>
+    <fieldset class="pane" hidden><legend>Revisa y confirma</legend>
+      <dl id="sum" class="mb-3.5 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-950 [&_dt]:text-slate-500 [&_dd]:m-0 [&_dd]:break-words [&_dd]:font-medium"></dl>
+      <label class="!flex items-center gap-2 !font-normal"><input id="tos" type="checkbox" required data-err="Acepta los términos para crear el espacio." aria-describedby="tos-e">Acepto los términos del servicio</label><small id="tos-e" role="alert"></small>
+    </fieldset>
+    <div class="mt-5 flex justify-between [&>button]:h-9 [&>button]:rounded-lg [&>button]:border [&>button]:border-slate-200 [&>button]:px-4 [&>button]:font-medium hover:[&>button]:bg-blue-50 dark:[&>button]:border-slate-700 dark:hover:[&>button]:bg-slate-800">
+      <button type="button" id="back" hidden>Atrás</button>
+      <button type="submit" id="next" class="!ml-auto !border-blue-600 !bg-blue-600 text-white hover:!bg-blue-700">Continuar</button>
+    </div>
+  </form>
+  <div id="done" hidden tabindex="-1" class="m-5 rounded-lg bg-emerald-50 p-5 dark:bg-emerald-950"><h3 class="mb-1 text-[15px] font-semibold">Espacio creado</h3><p id="msg"></p></div>
+</section>
+<script>
+  const $ = (id) => document.getElementById(id), P = [...document.querySelectorAll('.pane')], L = [...$('steps').children];
+  let n = 0;
+  function go(k, focus) {
+    n = k;
+    P.forEach((p, j) => (p.hidden = j !== n));
+    L.forEach((li, j) => {
+      li.className = j < n ? 'done' : '';
+      j === n ? li.setAttribute('aria-current', 'step') : li.removeAttribute('aria-current');
+      li.firstChild.textContent = j < n ? '✓' : j + 1;
+    });
+    $('back').hidden = !n;
+    $('next').textContent = n === 3 ? 'Crear espacio' : 'Continuar';
+    if (n === 3) {
+      $('sum').innerHTML = '';
+      [['Nombre', $('nom').value], ['Correo', $('mail').value], ['Espacio', $('esp').value], ['Dirección', $('url').value + '.nimbus.app'], ['Equipo', document.querySelector('[name=eq]:checked').value]]
+        .forEach(([k, v]) => { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = k; dd.textContent = v; $('sum').append(dt, dd); });
+    }
+    if (focus) P[n].querySelector('input').focus();
+  }
+  function valid() {
+    let first = null;
+    P[n].querySelectorAll('[data-err]').forEach((el) => {
+      const ok = el.checkValidity();
+      el.setAttribute('aria-invalid', !ok);
+      $(el.id + '-e').textContent = ok ? '' : el.dataset.err;
+      if (!ok && !first) first = el;
+    });
+    first?.focus();
+    return !first;
+  }
+  $('f').addEventListener('input', (e) => {
+    const el = e.target.name ? document.querySelector(`[name=${e.target.name}][data-err]`) : e.target;
+    if (el.checkValidity()) { el.setAttribute('aria-invalid', 'false'); $(el.id + '-e').textContent = ''; }
+  });
+  $('back').onclick = () => go(n - 1, 1);
+  $('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!valid()) return;
+    if (n < 3) return go(n + 1, 1);
+    $('f').hidden = true; $('done').hidden = false;
+    $('msg').textContent = `Tu espacio ${$('esp').value} está listo en ${$('url').value}.nimbus.app.`;
+    $('done').focus();
+  });
+  go(0);
+</script>

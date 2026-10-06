@@ -1,0 +1,49 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="ttl" class="mx-auto max-w-4xl [&_.panel]:rounded-lg [&_.panel]:border [&_.panel]:border-slate-200 [&_.panel]:bg-white [&_.panel]:shadow-sm dark:[&_.panel]:border-slate-700 dark:[&_.panel]:bg-slate-900 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600">
+    <header class="mb-4 flex items-start justify-between gap-3">
+      <div><h2 id="ttl" class="text-lg font-semibold">Resumen de ventas</h2><p id="sub" class="text-slate-500 dark:text-slate-400">Aún no hay fuentes conectadas.</p></div>
+      <span class="whitespace-nowrap rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">Últimos 30 días</span>
+    </header>
+    <dl class="mb-3 grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 text-slate-500 dark:text-slate-400 [&_b]:block [&_b]:text-2xl [&_b]:font-semibold [&_b]:leading-snug [&_b]:tabular-nums [&_dd]:m-0 [&_.on_b]:text-slate-900 dark:[&_.on_b]:text-slate-100">
+      <div class="panel kpi px-4 py-3.5"><dt>Ingresos</dt><dd><b data-v="48.920 €">—</b><small data-d="+12 % frente al mes anterior">Sin datos</small></dd></div>
+      <div class="panel kpi px-4 py-3.5"><dt>Pedidos</dt><dd><b data-v="1.284">—</b><small data-d="+8 % frente al mes anterior">Sin datos</small></dd></div>
+      <div class="panel kpi px-4 py-3.5"><dt>Conversión</dt><dd><b data-v="3,8 %">—</b><small data-d="+0,4 puntos">Sin datos</small></dd></div>
+    </dl>
+    <div class="panel relative mb-3 h-[210px] overflow-hidden">
+      <svg viewBox="0 0 600 210" preserveAspectRatio="none" aria-hidden="true" class="block size-full">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+        <path d="M0 50H600M0 100H600M0 150H600" class="stroke-slate-200 [vector-effect:non-scaling-stroke] dark:stroke-slate-700"/>
+        <path id="line" d="M20 150C80 140 110 90 170 100S260 150 320 110 420 50 480 70 560 40 585 30" fill="none" stroke="url(#g)" stroke-width="2" stroke-dasharray="6 6" opacity=".45" class="[vector-effect:non-scaling-stroke]"/>
+      </svg>
+      <div id="invite" class="absolute inset-0 grid place-content-center justify-items-center gap-1 bg-white/80 p-4 text-center dark:bg-slate-900/80">
+        <h3 class="text-base font-semibold">Conecta tus datos para ver métricas</h3>
+        <p class="mb-3 max-w-sm text-slate-500 dark:text-slate-400">Tus paneles se llenarán en cuanto conectes una fuente. Tarda unos 5 minutos.</p>
+        <div class="flex flex-wrap justify-center gap-2 [&>a]:inline-flex [&>a]:h-9 [&>a]:items-center [&>a]:rounded-lg [&>a]:border [&>a]:border-slate-200 [&>a]:px-4 [&>a]:font-medium hover:[&>a]:bg-blue-50 dark:[&>a]:border-slate-700 dark:hover:[&>a]:bg-slate-800">
+          <a href="#conectar" class="!border-blue-600 !bg-blue-600 text-white hover:!bg-blue-700">Conectar fuente de datos</a><a href="#csv">Importar CSV</a>
+        </div>
+      </div>
+    </div>
+    <ul class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-3 [&_.card]:block [&_.card]:size-full [&_.card]:px-4 [&_.card]:py-3.5 [&_.card]:text-left hover:[&_.card]:border-blue-600 [&_.card]:aria-pressed:border-blue-600 [&_.card]:aria-pressed:bg-blue-50 dark:[&_.card]:aria-pressed:bg-slate-800 [&_strong]:block [&_strong]:font-semibold [&_span]:mt-0.5 [&_span]:block [&_span]:text-slate-500 dark:[&_span]:text-slate-400 [&_small]:mt-2 [&_small]:inline-block [&_small]:rounded-full [&_small]:bg-blue-100 [&_small]:px-2 [&_small]:text-blue-700 dark:[&_small]:bg-slate-800 dark:[&_small]:text-blue-400">
+      <li><a class="card panel" href="#conectar"><strong>Conectar una base de datos</strong><span>PostgreSQL, MySQL o BigQuery.</span><small>5 min</small></a></li>
+      <li><a class="card panel" href="#csv"><strong>Importar un archivo CSV</strong><span>Sube un archivo de hasta 50 MB.</span><small>2 min</small></a></li>
+      <li><button type="button" class="card panel" id="demo" aria-pressed="false"><strong>Explorar con datos de ejemplo</strong><span>Mira cómo quedaría tu panel sin conectar nada.</span><small>Al instante</small></button></li>
+    </ul>
+  </section>
+</div>
+<script>
+  const demo = document.getElementById('demo'), line = document.getElementById('line');
+  demo.addEventListener('click', () => {
+    const on = demo.getAttribute('aria-pressed') !== 'true';
+    demo.setAttribute('aria-pressed', on);
+    document.getElementById('invite').classList.toggle('hidden', on);
+    on ? line.removeAttribute('stroke-dasharray') : line.setAttribute('stroke-dasharray', '6 6');
+    line.setAttribute('opacity', on ? 1 : 0.45);
+    document.getElementById('sub').textContent = on ? 'Mostrando datos de ejemplo.' : 'Aún no hay fuentes conectadas.';
+    document.querySelectorAll('.kpi').forEach((k) => {
+      const b = k.querySelector('b'), s = k.querySelector('small');
+      k.classList.toggle('on', on);
+      b.textContent = on ? b.dataset.v : '—';
+      s.textContent = on ? s.dataset.d : 'Sin datos';
+    });
+  });
+</script>

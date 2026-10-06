@@ -1,0 +1,50 @@
+<div class="min-h-[400px] bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <main class="mx-auto max-w-[720px]">
+    <header class="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <span class="flex items-center gap-2 font-semibold"><span class="h-5 w-5 rounded-md bg-gradient-to-br from-cyan-400 to-blue-600" aria-hidden="true"></span>Norte Cloud</span>
+      <div class="relative">
+        <button id="btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="pop"
+                class="group flex h-10 items-center gap-2 rounded-lg border border-slate-200 bg-white pl-1.5 pr-2.5 transition-colors hover:border-blue-600 hover:bg-blue-50 aria-expanded:border-blue-600 aria-expanded:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800 dark:aria-expanded:bg-slate-800">
+          <span class="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 p-px text-xs font-semibold" aria-hidden="true"><span class="grid h-full w-full place-items-center rounded-full bg-blue-50 text-blue-700 dark:bg-slate-800 dark:text-blue-300">LF</span></span>Lucía Ferrer
+          <svg class="h-4 w-4 text-slate-500 transition-transform group-aria-expanded:rotate-180 motion-reduce:transition-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div id="pop" hidden class="absolute right-0 top-[calc(100%+8px)] z-10 w-[280px] max-w-[calc(100vw-40px)] rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900">
+          <div class="flex items-center gap-3 p-4">
+            <span class="grid h-10 w-10 place-items-center rounded-full bg-blue-50 text-sm font-semibold text-blue-700 dark:bg-slate-800 dark:text-blue-300" aria-hidden="true">LF</span>
+            <div><strong class="block">Lucía Ferrer</strong><span class="block break-words text-slate-500 dark:text-slate-400">lucia.ferrer@norte.cloud</span></div>
+          </div>
+          <div class="border-y border-slate-200 px-4 py-3 dark:border-slate-700">
+            <div class="mb-2 flex items-center justify-between tabular-nums text-slate-500 dark:text-slate-400"><span class="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-slate-800 dark:text-blue-300">Plan Business</span><span>6,4 de 10 GB</span></div>
+            <div class="h-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700" aria-hidden="true"><i class="block h-full w-[64%] bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
+          </div>
+          <div role="menu" aria-label="Acciones de la cuenta" class="p-1.5 [&>button]:flex [&>button]:h-9 [&>button]:w-full [&>button]:items-center [&>button]:gap-2.5 [&>button]:rounded-lg [&>button]:px-2.5 [&>button]:text-left hover:[&>button]:bg-blue-50 focus-visible:[&>button]:bg-blue-50 focus-visible:[&>button]:outline-2 focus-visible:[&>button]:-outline-offset-2 focus-visible:[&>button]:outline-blue-600 dark:hover:[&>button]:bg-slate-800 dark:focus-visible:[&>button]:bg-slate-800">
+            <button role="menuitem" tabindex="-1" type="button">Mi perfil</button>
+            <button role="menuitem" tabindex="-1" type="button">Facturación</button>
+            <button role="menuitem" tabindex="-1" type="button">Equipo</button>
+            <button role="menuitem" tabindex="-1" type="button">Atajos de teclado<kbd class="ml-auto rounded border border-slate-200 px-1.5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400" aria-hidden="true">?</kbd></button>
+            <hr class="my-1.5 border-t border-slate-200 dark:border-slate-700" role="separator">
+            <button role="menuitem" tabindex="-1" type="button" class="danger text-red-600 dark:text-red-400">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <p id="log" class="mx-1 my-4 text-slate-500 dark:text-slate-400" role="status">Abre el menú desde tu avatar.</p>
+  </main>
+</div>
+<script>
+  const btn = document.getElementById('btn'), pop = document.getElementById('pop'), log = document.getElementById('log');
+  const items = [...pop.querySelectorAll('[role=menuitem]')];
+  const open = (i = 0) => { pop.hidden = false; btn.setAttribute('aria-expanded', 'true'); items.at(i).focus(); };
+  const close = (back) => { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); if (back) btn.focus(); };
+  btn.onclick = () => (pop.hidden ? open() : close());
+  btn.onkeydown = (e) => { if (/^Arrow(Up|Down)$/.test(e.key)) { e.preventDefault(); open(e.key === 'ArrowDown' ? 0 : -1); } };
+  pop.onkeydown = (e) => {
+    const i = items.indexOf(document.activeElement), n = items.length;
+    const to = { ArrowDown: (i + 1) % n, ArrowUp: (i - 1 + n) % n, Home: 0, End: n - 1 }[e.key];
+    if (to !== undefined) { e.preventDefault(); items[to].focus(); } else if (e.key === 'Escape') close(true); else if (e.key === 'Tab') close();
+  };
+  items.forEach((it) => it.addEventListener('click', () => {
+    log.textContent = it.classList.contains('danger') ? 'Cerraste la sesión.' : `Elegiste «${it.textContent.replace('?', '')}».`; close(true);
+  }));
+  document.addEventListener('click', (e) => { if (!pop.hidden && !e.target.closest('.relative')) close(); });
+</script>

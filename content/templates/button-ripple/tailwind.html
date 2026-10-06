@@ -1,0 +1,37 @@
+<style>@keyframes draw{from{stroke-dashoffset:1}}</style>
+<main class="mx-auto max-w-[440px] rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h1 class="text-base font-semibold">Preferencias de notificación</h1>
+  <p class="mt-1 text-slate-500 dark:text-slate-400">Recibe un aviso por correo cuando termine de generarse un informe.</p>
+  <div class="mt-5 flex flex-wrap gap-3">
+    <button id="save" type="button" data-state="idle" class="btn group relative inline-flex min-w-[150px] items-center justify-center gap-2 overflow-hidden rounded-lg border border-blue-600 bg-blue-600 px-[18px] py-2 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none data-[state=done]:border-emerald-600 data-[state=done]:bg-emerald-50 data-[state=done]:text-slate-900 dark:data-[state=done]:bg-emerald-950 dark:data-[state=done]:text-slate-100">
+      <svg class="hidden size-[18px] animate-spin motion-reduce:animate-none group-data-[state=loading]:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" pathLength="1" stroke-dasharray=".7 .3"/></svg>
+      <svg class="hidden size-[18px] stroke-emerald-600 group-data-[state=done]:block dark:stroke-emerald-400" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="animate-[draw_.4s_ease-out_both] motion-reduce:animate-none" d="m5 12.5 4.5 4.5L19 7.5" pathLength="1" stroke-dasharray="1"/></svg>
+      <span class="lbl">Guardar cambios</span>
+    </button>
+    <button type="button" class="btn relative inline-flex min-w-[150px] items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-white px-[18px] py-2 font-semibold transition-colors hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900">Restablecer</button>
+  </div>
+  <p id="live" role="status" class="mt-3 min-h-[21px] text-[13px] text-slate-500 dark:text-slate-400"></p>
+</main>
+<script>
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const save = document.getElementById('save'), lbl = save.querySelector('.lbl'), live = document.getElementById('live');
+  document.querySelectorAll('.btn').forEach((b) => b.addEventListener('click', (e) => {
+    if (calm) return;
+    const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2, s = document.createElement('span');
+    const x = e.detail ? e.clientX - r.left : r.width / 2, y = e.detail ? e.clientY - r.top : r.height / 2;
+    s.className = 'pointer-events-none absolute rounded-full bg-current opacity-0';
+    s.style.cssText = `width:${d}px;height:${d}px;left:${x - d / 2}px;top:${y - d / 2}px`;
+    b.append(s);
+    s.animate([{ transform: 'scale(0)', opacity: 0.3 }, { transform: 'scale(1)', opacity: 0 }], { duration: 600, easing: 'ease-out' })
+      .finished.then(() => s.remove());
+  }));
+  function set(state, text) { save.dataset.state = state; save.ariaBusy = state === 'loading'; lbl.textContent = text; }
+  save.addEventListener('click', () => {
+    if (save.dataset.state !== 'idle') return;
+    set('loading', 'Guardando…');
+    setTimeout(() => {
+      set('done', 'Guardado'); live.textContent = 'Cambios guardados.';
+      setTimeout(() => { set('idle', 'Guardar cambios'); live.textContent = ''; }, 1800);
+    }, calm ? 300 : 900);
+  });
+</script>

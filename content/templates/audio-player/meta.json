@@ -1,0 +1,1 @@
+{ "title": "Reproductor de audio con forma de onda", "category": "medios", "description": "Reproductor con onda SVG que avanza, control de posición y lista de pistas.", "tags": ["audio", "player", "waveform", "svg", "a11y"] }

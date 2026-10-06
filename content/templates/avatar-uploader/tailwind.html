@@ -1,0 +1,49 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="h" class="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <h2 id="h" class="m-0 text-base font-semibold">Foto de perfil</h2>
+    <p class="mt-0.5 text-slate-500 dark:text-slate-400">Elige una imagen cuadrada para que se vea mejor.</p>
+    <div class="my-5 flex flex-wrap items-center gap-6">
+      <div class="shrink-0 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 p-px ring-4 ring-blue-50 dark:ring-slate-800">
+        <div id="av" class="grid size-32 place-items-center overflow-hidden rounded-full bg-white text-slate-400 dark:bg-slate-900">
+          <img id="img" alt="Vista previa del avatar" hidden class="size-full object-cover transition-transform duration-100">
+          <svg id="ph" class="size-16 fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>
+        </div>
+      </div>
+      <div class="grid min-w-44 flex-1 gap-3">
+        <div class="flex flex-wrap gap-2">
+          <input id="file" type="file" accept="image/*" class="peer sr-only">
+          <label for="file" class="grid h-9 cursor-pointer place-items-center rounded-lg border border-slate-200 bg-white px-3.5 font-medium hover:bg-blue-50 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Elegir imagen</label>
+          <button type="button" id="clear" disabled class="h-9 rounded-lg border border-slate-200 bg-white px-3.5 font-medium enabled:hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:enabled:hover:bg-slate-800">Quitar</button>
+        </div>
+        <div>
+          <label for="zoom" class="mb-1 flex justify-between font-medium">Zoom <output id="zv" class="tabular-nums text-slate-500 dark:text-slate-400">100 %</output></label>
+          <input id="zoom" type="range" min="100" max="300" step="5" value="100" disabled class="m-0 w-full accent-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:opacity-50">
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4 dark:border-slate-700">
+      <p id="msg" role="status" class="m-0 min-w-48 flex-1 text-slate-500 dark:text-slate-400">Formatos PNG, JPG o WebP, hasta 2 MB.</p>
+      <button type="button" id="save" disabled class="h-9 rounded-lg border border-blue-600 bg-blue-600 px-3.5 font-medium text-white hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:cursor-not-allowed disabled:opacity-50">Guardar avatar</button>
+    </div>
+  </section>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id), img = $('img'), file = $('file'), zoom = $('zoom'), msgEl = $('msg');
+  const TONE = { '': 'text-slate-500 dark:text-slate-400', err: 'text-rose-600 dark:text-rose-400', ok: 'text-emerald-600 dark:text-emerald-400' };
+  let url = '';
+  const msg = (t, kind = '') => { msgEl.textContent = t; msgEl.className = 'm-0 min-w-48 flex-1 ' + TONE[kind]; };
+  const set = (on) => { img.hidden = !on; $('ph').hidden = on; ['zoom', 'clear', 'save'].forEach((id) => ($(id).disabled = !on)); };
+  const render = () => { img.style.transform = `scale(${zoom.value / 100})`; $('zv').textContent = zoom.value + ' %'; };
+
+  file.onchange = () => {
+    const f = file.files[0]; if (!f) return;
+    if (!f.type.startsWith('image/')) return msg(`"${f.name}" no es una imagen. Elige un archivo PNG, JPG o WebP.`, 'err');
+    if (f.size > 2 * 1024 ** 2) return msg(`La imagen pesa ${(f.size / 1024 ** 2).toFixed(1).replace('.', ',')} MB. Elige una de hasta 2 MB.`, 'err');
+    URL.revokeObjectURL(url); url = URL.createObjectURL(f); img.src = url;
+    zoom.value = 100; render(); set(true); msg(`${f.name} lista. Ajusta el zoom y guarda.`);
+    file.value = '';
+  };
+  zoom.oninput = render;
+  $('clear').onclick = () => { URL.revokeObjectURL(url); img.removeAttribute('src'); set(false); msg('Sin imagen. Elige una para continuar.'); };
+  $('save').onclick = () => msg('Avatar guardado. Ya aparece en tu perfil.', 'ok');
+</script>

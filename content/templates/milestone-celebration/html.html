@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{position:relative;max-width:480px;margin:0 auto;padding:32px 20px 20px;overflow:hidden;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .ring{position:relative;width:120px;height:120px;margin:0 auto 16px}
+  .ring svg{display:block;transform:rotate(-90deg)}
+  .ring circle{fill:none;stroke-width:4}
+  .track{stroke:var(--border)}
+  .arc{stroke:url(#g);stroke-linecap:round;stroke-dasharray:327}
+  .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums}
+  h2{margin:0;font-size:20px;font-weight:600}
+  .msg{margin:4px auto 0;max-width:340px;color:var(--muted)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);margin:24px 0 20px;padding-top:16px;border-top:1px solid var(--border)}
+  .stats div+div{border-left:1px solid var(--border)}
+  .stats dt{color:var(--muted);font-size:13px}
+  .stats dd{margin:0;font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+  .btns{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .btn{height:36px;padding:0 16px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;font-weight:500;cursor:pointer;transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.main:hover{filter:brightness(.94)}
+  #st{min-height:21px;margin:12px 0 0;color:var(--muted)}
+  .confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+  .confetti i{position:absolute;top:-14px;left:var(--x);width:8px;height:12px;border-radius:2px;background:var(--c);opacity:0}
+  @keyframes fall{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),360px) rotate(540deg)}}
+  @keyframes draw{from{stroke-dashoffset:327}}
+  @media (prefers-reduced-motion:no-preference){
+    .go .confetti i{animation:fall 2.2s cubic-bezier(.2,.6,.4,1) var(--d) forwards}
+    .go .arc{animation:draw .9s ease-out}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}#again{display:none}}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<section class="card" id="card" aria-labelledby="ttl">
+  <div class="confetti" id="cf" aria-hidden="true"></div>
+  <div class="ring">
+    <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+      <circle class="track" cx="60" cy="60" r="52"/><circle class="arc" cx="60" cy="60" r="52"/>
+    </svg>
+    <b>1.000</b>
+  </div>
+  <h2 id="ttl">Has llegado a 1.000 clientes</h2>
+  <p class="msg">Empezaste hace 14 meses. Este mes se sumaron 86 clientes nuevos.</p>
+  <dl class="stats">
+    <div><dt>Este mes</dt><dd>+86</dd></div>
+    <div><dt>Ingresos</dt><dd>48.920 €</dd></div>
+    <div><dt>Retención</dt><dd>94 %</dd></div>
+  </dl>
+  <div class="btns">
+    <button type="button" class="btn main" id="share">Compartir logro</button>
+    <button type="button" class="btn" id="again">Repetir celebración</button>
+  </div>
+  <p id="st" role="status"></p>
+</section>
+<script>
+  const card = document.getElementById('card'), cf = document.getElementById('cf'), st = document.getElementById('st');
+  const COLORS = ['--accent', '--ok', '--warn', '--info', '--err'];
+  cf.replaceChildren(...Array.from({ length: 20 }, (_, i) => {
+    const p = document.createElement('i');
+    p.style.cssText = `--x:${(i * 37 + 8) % 96 + 2}%;--d:${(i % 7) * 0.1}s;--dx:${(i % 2 ? 1 : -1) * (12 + (i % 5) * 10)}px;--c:var(${COLORS[i % 5]})`;
+    return p;
+  }));
+  function play() { card.classList.remove('go'); void card.offsetWidth; card.classList.add('go'); }
+  document.getElementById('again').onclick = play;
+  document.getElementById('share').onclick = async () => {
+    try {
+      await navigator.clipboard.writeText('Hemos llegado a 1.000 clientes en Nimbus.');
+      st.textContent = 'Texto copiado. Pégalo donde quieras compartirlo.';
+    } catch {
+      st.textContent = 'No se pudo copiar. Selecciona el título y cópialo a mano.';
+    }
+  };
+  play();
+</script>
+</body>
+</html>

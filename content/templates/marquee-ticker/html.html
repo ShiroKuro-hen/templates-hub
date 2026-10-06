@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .panel{display:grid;gap:20px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+  h1{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .btn{padding:7px 14px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;font-weight:600;cursor:pointer;transition:border-color .14s,background .14s}
+  .btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .btn:focus-visible,.logo:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .track{display:flex}
+  ul{display:flex;flex-wrap:wrap;flex:none;gap:12px;margin:0;padding:0 12px 0 0;list-style:none}
+  .logo,.msg{display:flex;align-items:center;gap:8px;padding:8px 18px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-weight:600;white-space:nowrap;text-decoration:none;transition:border-color .14s}
+  .logo:hover{border-color:var(--accent)}
+  .logo svg{color:var(--accent)}
+  .msg{font-weight:400;padding:6px 14px;border-radius:999px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .dot.ok{background:var(--ok)}.dot.info{background:var(--info)}.dot.warn{background:var(--warn)}
+  .dot.on{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  /* Modo animado: solo si el usuario no pidió menos movimiento (lo activa el script) */
+  .live .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+  .live .track{width:max-content;animation:slide var(--d,34s) linear infinite}
+  .live ul{flex-wrap:nowrap}
+  .live .rev .track{animation-direction:reverse}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  .marquee:hover .track,.marquee:focus-within .track,.panel[data-paused] .track{animation-play-state:paused}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="panel" id="p">
+  <div class="head">
+    <div><h1>Empresas que usan Aurora</h1><p>La cinta se detiene al pasar el cursor o al enfocar un logo.</p></div>
+    <button class="btn" id="pause" type="button">Pausar</button>
+  </div>
+  <div class="marquee" role="group" aria-label="Clientes">
+    <div class="track"><ul>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>Norte Labs</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/></svg>Vértice</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 4 9 16H3z"/></svg>Kairos</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12a8 8 0 0 1 16 0M4 18h16"/></svg>Alba Cloud</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 9 9-9 9-9-9z"/></svg>Órbita</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>Lumen</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="3"/></svg>Pivote</a></li>
+      <li><a class="logo" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 18 10 6l4 8 2-4 4 8z"/></svg>Sierra Data</a></li>
+    </ul></div>
+  </div>
+  <div class="marquee rev" role="group" aria-label="Estado del servicio">
+    <div class="track" style="--d:44s"><ul>
+      <li class="msg"><span class="dot on"></span>Todos los sistemas operativos</li>
+      <li class="msg"><span class="dot info"></span>Nueva región disponible: Santiago</li>
+      <li class="msg"><span class="dot warn"></span>Mantenimiento el 14 oct a las 02:00 (30 min)</li>
+      <li class="msg"><span class="dot ok"></span>API v3 estable desde el 28 sep</li>
+      <li class="msg"><span class="dot info"></span>Webinar de seguridad el jueves a las 17:00</li>
+    </ul></div>
+  </div>
+</section>
+<script>
+  const p = document.getElementById('p'), b = document.getElementById('pause');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) b.hidden = true; // alternativa estática: lista envuelta
+  else {
+    p.classList.add('live');
+    p.querySelectorAll('.track').forEach((t) => { // duplica la lista para un bucle sin saltos
+      const c = t.firstElementChild.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.querySelectorAll('a').forEach((a) => (a.tabIndex = -1));
+      t.append(c);
+    });
+    b.onclick = () => { b.textContent = p.toggleAttribute('data-paused') ? 'Reanudar' : 'Pausar'; };
+  }
+</script>
+</body>
+</html>

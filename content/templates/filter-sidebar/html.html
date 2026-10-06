@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .side{width:min(100%,280px);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+  .top h2{margin:0;font-size:16px}
+  .badge{margin-left:6px;padding:1px 8px;font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px}
+  .badge:empty{display:none}
+  button{font:inherit;cursor:pointer}
+  .link{padding:2px 4px;color:var(--accent);background:none;border:0;text-decoration:underline}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  details{border-bottom:1px solid var(--border)}
+  summary{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-weight:600;cursor:pointer;list-style:none;transition:background .14s}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"";width:7px;height:7px;border:solid var(--muted);border-width:0 1.5px 1.5px 0;transform:rotate(45deg);transition:transform .14s}
+  details[open] summary::after{transform:rotate(-135deg)}
+  summary:hover{background:var(--accent-soft)}
+  .body{padding:0 16px 14px}
+  .opt{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer}
+  .opt[hidden]{display:none}
+  .opt input{margin:0;accent-color:var(--accent)}
+  .stars{color:var(--warn);letter-spacing:1px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pair label{color:var(--muted);font-size:13px}
+  input[type=number],input[type=search]{box-sizing:border-box;width:100%;margin-top:2px;padding:7px 9px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  input[type=search]{margin:0 0 6px}
+  input[aria-invalid=true]{border-color:var(--err)}
+  .err{margin:6px 0 0;font-size:13px;color:var(--err)}
+  .foot{padding:14px 16px}
+  .go{width:100%;padding:9px 14px;font-weight:600;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);transition:filter .14s}
+  .go:hover:not(:disabled){filter:brightness(1.08)}
+  .go:disabled{color:var(--muted);background:var(--accent-soft);border-color:var(--border);cursor:not-allowed}
+  .meter{height:4px;margin-top:10px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
+  .meter i{display:block;height:100%;width:100%;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form class="side" id="f" aria-label="Filtros de la tienda" novalidate>
+  <div class="top"><h2>Filtros<span class="badge" id="n"></span></h2><button class="link" type="reset">Limpiar todo</button></div>
+  <details open><summary>Categoría</summary><div class="body">
+    <label class="opt"><input type="checkbox" name="cat" value="Zapatillas"> Zapatillas</label>
+    <label class="opt"><input type="checkbox" name="cat" value="Ropa"> Ropa</label>
+    <label class="opt"><input type="checkbox" name="cat" value="Mochilas"> Mochilas</label>
+    <label class="opt"><input type="checkbox" name="cat" value="Accesorios"> Accesorios</label>
+  </div></details>
+  <details open><summary>Precio</summary><div class="body">
+    <div class="pair">
+      <label>Mínimo (€)<input type="number" name="min" min="0" max="500" inputmode="numeric" aria-describedby="perr"></label>
+      <label>Máximo (€)<input type="number" name="max" min="0" max="500" inputmode="numeric" aria-describedby="perr"></label>
+    </div>
+    <p class="err" id="perr" role="alert" hidden>El mínimo supera al máximo. Cambia uno de los dos valores.</p>
+  </div></details>
+  <details open><summary>Marca</summary><div class="body" id="brands">
+    <input type="search" id="bq" placeholder="Buscar marca" aria-label="Buscar marca">
+    <label class="opt"><input type="checkbox" name="brand" value="Aero"> Aero</label>
+    <label class="opt"><input type="checkbox" name="brand" value="Lumen"> Lumen</label>
+    <label class="opt"><input type="checkbox" name="brand" value="Nordik"> Nordik</label>
+    <label class="opt"><input type="checkbox" name="brand" value="Pulse"> Pulse</label>
+    <label class="opt"><input type="checkbox" name="brand" value="Vento"> Vento</label>
+  </div></details>
+  <details open><summary>Valoración</summary><div class="body">
+    <label class="opt"><input type="radio" name="rate" value="0" checked> Todas</label>
+    <label class="opt"><input type="radio" name="rate" value="4"> <span class="stars" aria-hidden="true">★★★★</span> 4 estrellas o más</label>
+    <label class="opt"><input type="radio" name="rate" value="3"> <span class="stars" aria-hidden="true">★★★</span> 3 estrellas o más</label>
+  </div></details>
+  <div class="foot">
+    <button class="go" type="submit" id="go"></button>
+    <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+  </div>
+</form>
+<script>
+  const P = [['Zapatillas','Aero',89,4.6],['Zapatillas','Vento',129,4.2],['Zapatillas','Pulse',74,3.8],['Zapatillas','Nordik',159,4.8],
+    ['Ropa','Aero',45,4.1],['Ropa','Lumen',62,3.4],['Ropa','Nordik',98,4.5],['Ropa','Pulse',29,3.1],['Ropa','Vento',84,4.0],
+    ['Mochilas','Lumen',39,4.4],['Mochilas','Nordik',119,4.7],['Mochilas','Aero',55,3.6],
+    ['Accesorios','Pulse',12,3.9],['Accesorios','Lumen',24,4.3],['Accesorios','Vento',18,2.9],['Accesorios','Aero',33,4.5]];
+  const f = document.getElementById('f'), $ = (id) => document.getElementById(id);
+  function update() {
+    const d = new FormData(f), cats = d.getAll('cat'), brands = d.getAll('brand'), rate = +d.get('rate');
+    const min = d.get('min') === '' ? 0 : +d.get('min'), max = d.get('max') === '' ? Infinity : +d.get('max');
+    const bad = min > max;
+    [f.min, f.max].forEach((el) => el.setAttribute('aria-invalid', bad));
+    $('perr').hidden = !bad;
+    const n = bad ? 0 : P.filter(([c, b, p, r]) => (!cats.length || cats.includes(c)) && (!brands.length || brands.includes(b)) && p >= min && p <= max && r >= rate).length;
+    const active = (cats.length ? 1 : 0) + (brands.length ? 1 : 0) + (d.get('min') || d.get('max') ? 1 : 0) + (rate ? 1 : 0);
+    $('n').textContent = active || '';
+    $('go').disabled = !n;
+    $('go').textContent = n ? `Ver ${n} resultado${n > 1 ? 's' : ''}` : 'Sin resultados';
+    $('bar').style.width = (n / P.length) * 100 + '%';
+  }
+  $('bq').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    $('brands').querySelectorAll('.opt').forEach((l) => { l.hidden = !l.textContent.toLowerCase().includes(q); });
+  });
+  f.addEventListener('input', update);
+  f.addEventListener('reset', () => setTimeout(update));
+  f.addEventListener('submit', (e) => e.preventDefault());
+  update();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .pl{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;align-items:center;gap:14px;padding:16px;border-bottom:1px solid var(--border)}
+  .art{flex:none;display:grid;place-items:center;width:48px;height:48px;color:var(--accent);background:var(--accent-soft);border-radius:var(--radius)}
+  .art svg{width:22px;height:22px;fill:currentColor}
+  .head div:nth-child(2){flex:1;min-width:0}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .meta{margin:0;color:var(--muted);font-variant-numeric:tabular-nums}
+  .btn{height:36px;padding:0 16px;font:inherit;font-weight:500;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer;transition:filter .14s}
+  .btn:hover{filter:brightness(1.1)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ol{list-style:none;margin:0;padding:8px}
+  .row{position:relative;display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:12px;width:100%;padding:10px 12px;font:inherit;color:var(--text);text-align:left;background:transparent;border:0;border-radius:var(--radius);cursor:pointer;transition:background .14s}
+  .row:hover{background:var(--accent-soft)}
+  .row:focus-visible{outline-offset:-2px}
+  .row>*{min-width:0}
+  .n,.eq{grid-area:1/1}
+  .n{color:var(--muted);font-variant-numeric:tabular-nums}
+  .info b{display:block;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .info small{color:var(--muted)}
+  .alb{display:none;color:var(--muted)}
+  .dur{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .row[aria-current]{background:var(--accent-soft)}
+  .row[aria-current] .info b{font-weight:600}
+  .row[aria-current] .n{display:none}
+  .eq{display:none;gap:2px;align-items:flex-end;height:14px}
+  .row[aria-current] .eq{display:flex}
+  .eq i{width:3px;height:100%;border-radius:1px;background:var(--accent);transform:scaleY(.4);transform-origin:bottom}
+  .playing .row[aria-current] .eq i{animation:eq .9s ease-in-out infinite alternate}
+  .eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}
+  @keyframes eq{to{transform:scaleY(1)}}
+  .bar{display:none;position:absolute;left:12px;right:12px;bottom:3px;height:2px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff) 0/var(--p,0%) 100% no-repeat,var(--border)}
+  .row[aria-current] .bar{display:block}
+  @media (min-width:520px){.row{grid-template-columns:28px 1fr 140px auto}.alb{display:block}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<section class="pl" id="pl" aria-labelledby="h">
+  <header class="head">
+    <div class="art"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h12v2H4zm0 4h12v2H4zm0 4h8v2H4zm12 0v6l5-3z"/></svg></div>
+    <div><h2 id="h">Música para enfocarse</h2><p class="meta">6 pistas, 20 min 33 s</p></div>
+    <button type="button" class="btn" id="all">Reproducir</button>
+  </header>
+  <ol id="list">
+    <li><button type="button" class="row" data-d="198"><span class="n">1</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="info"><b>Primer plano</b><small>Estudio Alba</small></span><span class="alb">Foco</span><span class="dur">3:18</span><i class="bar" aria-hidden="true"></i></button></li>
+    <li><button type="button" class="row" data-d="224"><span class="n">2</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="info"><b>Teclas de lluvia</b><small>Marisol Vega</small></span><span class="alb">Foco</span><span class="dur">3:44</span><i class="bar" aria-hidden="true"></i></button></li>
+    <li><button type="button" class="row" data-d="176"><span class="n">3</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="info"><b>Cinta magnética</b><small>Estudio Alba</small></span><span class="alb">Archivo</span><span class="dur">2:56</span><i class="bar" aria-hidden="true"></i></button></li>
+    <li><button type="button" class="row" data-d="241"><span class="n">4</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="info"><b>Ventana abierta</b><small>Tomás Rey</small></span><span class="alb">Archivo</span><span class="dur">4:01</span><i class="bar" aria-hidden="true"></i></button></li>
+    <li><button type="button" class="row" data-d="205"><span class="n">5</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="info"><b>Frecuencia baja</b><small>Marisol Vega</small></span><span class="alb">Foco</span><span class="dur">3:25</span><i class="bar" aria-hidden="true"></i></button></li>
+    <li><button type="button" class="row" data-d="189"><span class="n">6</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span class="info"><b>Última hora</b><small>Tomás Rey</small></span><span class="alb">Archivo</span><span class="dur">3:09</span><i class="bar" aria-hidden="true"></i></button></li>
+  </ol>
+</section>
+<script>
+  const rows = [...document.querySelectorAll('.row')], all = document.getElementById('all');
+  const D = rows.map((r) => +r.dataset.d), total = rows.map((r) => r.querySelector('.dur').textContent);
+  const fmt = (s) => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  let cur = 1, el = 47, on = false, timer = 0;
+
+  function render() {
+    rows.forEach((r, k) => {
+      const a = k === cur;
+      a ? r.setAttribute('aria-current', 'true') : r.removeAttribute('aria-current');
+      r.querySelector('.dur').textContent = a ? `${fmt(el)} / ${total[k]}` : total[k];
+      if (a) r.style.setProperty('--p', (el / D[k]) * 100 + '%');
+    });
+    document.getElementById('pl').classList.toggle('playing', on);
+    all.textContent = on ? 'Pausar' : 'Reproducir';
+  }
+  function setPlay(v) { on = v; clearInterval(timer); if (v) timer = setInterval(tick, 1000); render(); }
+  function tick() {
+    if (++el < D[cur]) return render();
+    if (cur < rows.length - 1) { cur++; el = 0; render(); } else { cur = 0; el = 0; setPlay(false); }
+  }
+  rows.forEach((r, k) => (r.onclick = () => { if (k === cur) setPlay(!on); else { cur = k; el = 0; setPlay(true); } }));
+  all.onclick = () => setPlay(!on);
+  document.getElementById('list').onkeydown = (e) => {
+    const i = rows.indexOf(document.activeElement), j = e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowUp' ? i - 1 : -1;
+    if (j >= 0 && j < rows.length) { rows[j].focus(); e.preventDefault(); }
+  };
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <figure id="fig" data-ready="false" aria-busy="true" class="group m-0 mx-auto max-w-2xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div role="img" aria-label="Sierra de Ion al amanecer: montañas azules con cumbres nevadas y un sol dorado" class="relative aspect-video overflow-hidden bg-amber-100 dark:bg-amber-950">
+      <svg viewBox="0 0 16 10" preserveAspectRatio="none" aria-hidden="true" class="absolute inset-0 size-full scale-110 blur-xl transition-opacity duration-150 group-data-[ready=true]:opacity-0">
+        <rect class="fill-amber-100 dark:fill-amber-950" width="16" height="10"/><circle class="fill-amber-500" cx="11.5" cy="3" r="1.6"/>
+        <path class="fill-blue-600" d="M0 10V6l3-3 3 3 2-2 8 6z"/><path class="fill-emerald-600" d="M0 10l5-2 5 1 6-1v2z"/>
+      </svg>
+      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 size-full opacity-0 blur-sm transition duration-150 group-data-[ready=true]:opacity-100 group-data-[ready=true]:blur-none">
+        <rect class="fill-amber-100 dark:fill-amber-950" width="160" height="100"/><circle class="fill-amber-500/25" cx="112" cy="30" r="20"/><circle class="fill-amber-500" cx="112" cy="30" r="12"/>
+        <path class="fill-blue-600" d="M0 74 24 40l16 18 22-34 30 38 18-16 50 40V100H0z"/>
+        <path class="fill-white dark:fill-slate-200" d="M62 24 53 37l4-2 5 4 5-4 4 2zM24 40 17 50l3-2 4 3 4-3 3 2z"/>
+        <path class="fill-cyan-600" d="M0 84q30-18 62-4t58-6 40 8V100H0z"/><path class="fill-emerald-600" d="M0 94q40-14 80-4t80-6V100H0z"/>
+      </svg>
+      <div role="progressbar" id="pg" aria-label="Progreso de carga" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" class="absolute inset-x-0 bottom-0 h-[3px] bg-slate-200 transition-opacity duration-150 group-data-[ready=true]:opacity-0 dark:bg-slate-700">
+        <i id="bar" class="block h-full w-0 bg-gradient-to-br from-cyan-400 to-blue-600 transition-[width] duration-100"></i>
+      </div>
+    </div>
+    <figcaption class="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
+      <div class="min-w-0"><b class="block font-semibold">Sierra de Ion al amanecer</b><span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="st" role="status">Cargando imagen</span> <span id="pct">0 %</span></span></div>
+      <button type="button" id="re" disabled class="h-9 cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 font-medium enabled:hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:enabled:hover:bg-slate-800">Volver a cargar</button>
+    </figcaption>
+  </figure>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id), fig = $('fig'), re = $('re');
+  let timer = 0, pct = 0;
+  function load() {
+    clearInterval(timer); pct = 0;
+    fig.dataset.ready = 'false'; fig.setAttribute('aria-busy', 'true'); re.disabled = true; $('st').textContent = 'Cargando imagen';
+    timer = setInterval(() => {
+      pct = Math.min(100, pct + 8 + Math.random() * 14);
+      $('bar').style.width = pct + '%'; $('pg').setAttribute('aria-valuenow', Math.round(pct)); $('pct').textContent = Math.round(pct) + ' %';
+      if (pct < 100) return;
+      clearInterval(timer); fig.dataset.ready = 'true'; fig.setAttribute('aria-busy', 'false');
+      re.disabled = false; $('st').textContent = 'Imagen cargada';
+    }, 180);
+  }
+  re.onclick = load;
+  load();
+</script>

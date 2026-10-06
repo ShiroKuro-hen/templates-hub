@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .box{max-width:620px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+  .bar h2{margin:0;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+  .bar label{display:flex;align-items:center;gap:8px;color:var(--muted)}
+  .sel{position:relative}
+  .sel::after{content:"";position:absolute;right:12px;top:50%;width:6px;height:6px;border:solid var(--muted);border-width:0 1.5px 1.5px 0;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+  select{appearance:none;font:inherit;color:var(--text);padding:6px 32px 6px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color .14s}
+  select:hover{border-color:var(--accent)}
+  select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ol{list-style:none;margin:0;padding:0}
+  li{position:relative;display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--border)}
+  li:first-child{border-top:0}
+  li:first-child::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  li span{font-weight:600}
+  li small{display:block;color:var(--muted);font-weight:400}
+  li time,li output{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="bar">
+    <h2>6 proyectos</h2>
+    <label for="s">Ordenar por
+      <span class="sel"><select id="s">
+        <option value="reciente">Más recientes</option>
+        <option value="antiguo">Más antiguos</option>
+        <option value="az">Nombre (A a Z)</option>
+        <option value="za">Nombre (Z a A)</option>
+        <option value="tamano">Mayor tamaño</option>
+      </select></span>
+    </label>
+  </div>
+  <ol id="list"></ol>
+  <p class="sr" id="st" aria-live="polite"></p>
+</div>
+<script>
+  const data = [
+    ['Portal de clientes', '2026-09-28', 482], ['Migración a Postgres', '2026-08-14', 1260],
+    ['Rediseño de facturación', '2026-09-02', 214], ['API de pagos', '2026-07-21', 96],
+    ['Panel de analítica', '2026-10-01', 738], ['Auditoría de accesos', '2026-06-30', 58],
+  ];
+  const sorters = {
+    reciente: (a, b) => b[1].localeCompare(a[1]), antiguo: (a, b) => a[1].localeCompare(b[1]),
+    az: (a, b) => a[0].localeCompare(b[0], 'es'), za: (a, b) => b[0].localeCompare(a[0], 'es'),
+    tamano: (a, b) => b[2] - a[2],
+  };
+  const s = document.getElementById('s'), list = document.getElementById('list');
+  const fmt = (d) => new Date(d + 'T00:00').toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' });
+  function render() {
+    list.innerHTML = [...data].sort(sorters[s.value]).map(([n, f, mb]) =>
+      `<li><span>${n}<small>Actualizado el <time datetime="${f}">${fmt(f)}</time></small></span><output>${mb} MB</output></li>`).join('');
+    document.getElementById('st').textContent = `Lista ordenada: ${s.selectedOptions[0].text}.`;
+  }
+  s.addEventListener('change', render);
+  render();
+</script>
+</body>
+</html>

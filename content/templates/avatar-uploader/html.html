@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:440px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .muted{margin:2px 0 0;color:var(--muted)}
+  .row{display:flex;flex-wrap:wrap;gap:24px;align-items:center;margin:20px 0}
+  .ring{flex:none;padding:1px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#2f5bff);box-shadow:0 0 0 5px var(--accent-soft)}
+  .avatar{display:grid;place-items:center;width:128px;height:128px;border-radius:50%;overflow:hidden;background:var(--surface);color:var(--muted)}
+  .avatar img{width:100%;height:100%;object-fit:cover;transform:scale(var(--z,1));transition:transform .12s}
+  .avatar svg{width:64px;height:64px;fill:currentColor}
+  [hidden]{display:none!important}
+  .ctl{flex:1 1 180px;display:grid;gap:12px}
+  .btns{display:flex;flex-wrap:wrap;gap:8px}
+  .btn{display:inline-grid;place-items:center;height:36px;padding:0 14px;font:inherit;font-weight:500;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn:disabled:hover{background:var(--surface)}
+  .primary{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+  .primary:hover{background:var(--accent);filter:brightness(1.1)}
+  .primary:disabled:hover{background:var(--accent)}
+  .sr{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+  .sr:focus-visible+label,.btn:focus-visible,input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .zoom label{display:flex;justify-content:space-between;margin-bottom:4px;font-weight:500}
+  output{color:var(--muted);font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;margin:0;accent-color:var(--accent)}
+  input[type=range]:disabled{opacity:.5}
+  .foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border)}
+  .msg{flex:1 1 200px;margin:0;color:var(--muted)}
+  .msg.err{color:var(--err)}.msg.ok{color:var(--ok)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="h">
+  <h2 id="h">Foto de perfil</h2>
+  <p class="muted">Elige una imagen cuadrada para que se vea mejor.</p>
+  <div class="row">
+    <div class="ring"><div class="avatar" id="av">
+      <img id="img" alt="Vista previa del avatar" hidden>
+      <svg id="ph" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9zm0 2c-4 0-8 2-8 5v2h16v-2c0-3-4-5-8-5z"/></svg>
+    </div></div>
+    <div class="ctl">
+      <div class="btns">
+        <input class="sr" id="file" type="file" accept="image/*">
+        <label class="btn" for="file">Elegir imagen</label>
+        <button type="button" class="btn" id="clear" disabled>Quitar</button>
+      </div>
+      <div class="zoom">
+        <label for="zoom">Zoom <output id="zv" for="zoom">100 %</output></label>
+        <input id="zoom" type="range" min="100" max="300" step="5" value="100" disabled>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <p class="msg" id="msg" role="status">Formatos PNG, JPG o WebP, hasta 2 MB.</p>
+    <button type="button" class="btn primary" id="save" disabled>Guardar avatar</button>
+  </div>
+</section>
+<script>
+  const $ = (id) => document.getElementById(id), img = $('img'), file = $('file'), zoom = $('zoom');
+  let url = '';
+  const msg = (t, kind = '') => { $('msg').textContent = t; $('msg').className = 'msg ' + kind; };
+  const set = (on) => { img.hidden = !on; $('ph').hidden = on; ['zoom', 'clear', 'save'].forEach((id) => ($(id).disabled = !on)); };
+  const render = () => { $('av').style.setProperty('--z', zoom.value / 100); $('zv').textContent = zoom.value + ' %'; };
+
+  file.onchange = () => {
+    const f = file.files[0]; if (!f) return;
+    if (!f.type.startsWith('image/')) return msg(`"${f.name}" no es una imagen. Elige un archivo PNG, JPG o WebP.`, 'err');
+    if (f.size > 2 * 1024 ** 2) return msg(`La imagen pesa ${(f.size / 1024 ** 2).toFixed(1).replace('.', ',')} MB. Elige una de hasta 2 MB.`, 'err');
+    URL.revokeObjectURL(url); url = URL.createObjectURL(f); img.src = url;
+    zoom.value = 100; render(); set(true); msg(`${f.name} lista. Ajusta el zoom y guarda.`);
+    file.value = '';
+  };
+  zoom.oninput = render;
+  $('clear').onclick = () => { URL.revokeObjectURL(url); img.removeAttribute('src'); set(false); msg('Sin imagen. Elige una para continuar.'); };
+  $('save').onclick = () => msg('Avatar guardado. Ya aparece en tu perfil.', 'ok');
+</script>
+</body>
+</html>

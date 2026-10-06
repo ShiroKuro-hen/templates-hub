@@ -1,0 +1,61 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-label="Reproductor de audio" class="mx-auto max-w-md overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="flex items-center gap-3 px-4 pb-2 pt-4">
+      <div class="grid size-12 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-slate-800 dark:text-blue-400"><svg class="size-[18px] fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6A4 4 0 1 0 14 17V7h4V3z"/></svg></div>
+      <div><h2 id="title" class="m-0 text-[15px] font-semibold"></h2><p id="artist" class="m-0 text-slate-500 dark:text-slate-400"></p></div>
+    </div>
+    <div class="relative mx-4 mt-2 h-12 rounded-sm focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-500">
+      <svg id="wave" viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true" class="block size-full"></svg>
+      <input id="seek" type="range" min="0" max="214" value="0" aria-label="Posición de la pista" class="absolute inset-0 m-0 size-full cursor-pointer opacity-0">
+    </div>
+    <div class="grid grid-cols-[1fr_auto_1fr] items-center px-4 pb-3 pt-2 tabular-nums text-slate-500 dark:text-slate-400">
+      <span id="cur">0:00</span>
+      <div class="flex items-center gap-1 text-slate-900 dark:text-slate-100 [&_button]:grid [&_button]:size-9 [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:rounded-lg [&_button:hover]:bg-blue-50 dark:[&_button:hover]:bg-slate-800 [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-blue-500">
+        <button type="button" id="prev" aria-label="Pista anterior"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg></button>
+        <button type="button" id="play" aria-label="Reproducir" class="!size-10 !rounded-full !bg-blue-600 !text-white hover:!bg-blue-500"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+        <button type="button" id="next" aria-label="Pista siguiente"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z"/></svg></button>
+      </div>
+      <span id="dur" class="text-right">3:34</span>
+    </div>
+    <ol id="list" class="m-0 list-none border-t border-slate-200 p-1 dark:border-slate-700"></ol>
+  </section>
+</div>
+<script>
+  const T = [['Marea de neón', 'Lumen Ensemble', 214], ['Horizonte lento', 'Aurora Sur', 187], ['Código abierto', 'Nube Cuántica', 245], ['Luz de madrugada', 'Lumen Ensemble', 172]];
+  const PLAY = 'M8 5v14l11-7z', PAUSE = 'M6 5h4v14H6zm8 0h4v14h-4z', N = 60;
+  const $ = (id) => document.getElementById(id), seek = $('seek'), svg = $('wave');
+  const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
+  const OFF = 'fill-slate-300 dark:fill-slate-600', ON = 'fill-blue-600 dark:fill-blue-400';
+  svg.innerHTML = Array.from({ length: N }, (_, k) => `<rect x="${k * 4}" width="2.4" rx="1.2" class="${OFF}"/>`).join('');
+  $('list').innerHTML = T.map(([n, a, d], k) => `<li><button type="button" data-k="${k}" class="grid w-full cursor-pointer grid-cols-[24px_1fr_auto] items-center gap-3 rounded-lg px-3 py-2 text-left hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-blue-500 aria-[current=true]:bg-blue-50 aria-[current=true]:font-semibold dark:hover:bg-slate-800 dark:aria-[current=true]:bg-slate-800"><span class="tabular-nums text-slate-500">${k + 1}</span><span>${n}<small class="block text-xs font-normal text-slate-500 dark:text-slate-400">${a}</small></span><span class="tabular-nums text-slate-500">${fmt(d)}</span></button></li>`).join('');
+  const bars = [...svg.children], btns = [...document.querySelectorAll('#list button')];
+  let i = 0, t = 0, on = false, last = 0, raf = 0;
+  function render() {
+    const d = T[i][2]; seek.value = t; $('cur').textContent = fmt(t);
+    seek.setAttribute('aria-valuetext', fmt(t) + ' de ' + fmt(d));
+    bars.forEach((b, k) => b.setAttribute('class', k / N < t / d ? ON : OFF));
+  }
+  function load(n) {
+    i = n; t = 0; $('title').textContent = T[n][0]; $('artist').textContent = T[n][1]; $('dur').textContent = fmt(T[n][2]); seek.max = T[n][2];
+    bars.forEach((b, k) => { const h = 8 + 38 * Math.abs(Math.sin((k + 2) * (n + 3) * 0.9) * Math.cos(k * 0.31 + n)); b.setAttribute('y', (48 - h) / 2); b.setAttribute('height', h); });
+    btns.forEach((b, k) => b.setAttribute('aria-current', k === n));
+    render();
+  }
+  function setPlay(v) {
+    on = v; cancelAnimationFrame(raf);
+    $('play').setAttribute('aria-label', v ? 'Pausar' : 'Reproducir');
+    $('play').querySelector('path').setAttribute('d', v ? PAUSE : PLAY);
+    if (v) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  function tick(now) {
+    t += (now - last) / 1000; last = now;
+    if (t >= T[i][2]) { if (i === T.length - 1) { load(0); return setPlay(false); } load(i + 1); }
+    render(); raf = requestAnimationFrame(tick);
+  }
+  $('play').onclick = () => setPlay(!on);
+  $('prev').onclick = () => (t > 3 ? ((t = 0), render()) : load((i + T.length - 1) % T.length));
+  $('next').onclick = () => load((i + 1) % T.length);
+  btns.forEach((b, k) => (b.onclick = () => { load(k); setPlay(true); }));
+  seek.oninput = () => { t = +seek.value; render(); };
+  load(0);
+</script>

@@ -1,0 +1,63 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <main class="mx-auto max-w-[560px] rounded-lg border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div id="setup">
+      <h1 class="mb-1 text-xl font-semibold">Activa la verificación en dos pasos</h1>
+      <p class="mb-5 text-slate-500 dark:text-slate-400">Protege tu cuenta con un código temporal de tu app de autenticación.</p>
+      <div class="mb-5 flex flex-wrap gap-5">
+        <div class="flex-none rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 p-px">
+          <svg id="qr" class="block h-[152px] w-[152px] rounded-[7px] bg-white p-3 text-slate-900 dark:bg-slate-900 dark:text-slate-100" viewBox="0 0 25 25" shape-rendering="crispEdges" role="img" aria-label="Código QR para configurar la app de autenticación"><path fill="currentColor" fill-rule="evenodd"/></svg>
+        </div>
+        <ol class="grid min-w-[220px] flex-1 content-start gap-3 pl-5 marker:text-slate-500">
+          <li>Escanea el código con Google Authenticator, 1Password o Authy.</li>
+          <li>¿No puedes escanear? Escribe esta clave en la app.
+            <div class="mt-2 flex items-center justify-between gap-2 rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-3 pr-1.5 dark:border-slate-700 dark:bg-slate-950">
+              <code class="break-all font-mono text-[13px] font-semibold">JBSW Y3DP EHPK 3PXP</code>
+              <button id="copy" type="button" class="h-7 rounded-lg border border-slate-200 bg-white px-2.5 text-[13px] font-semibold hover:border-blue-600 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Copiar</button>
+            </div></li>
+          <li>Escribe el código de 6 dígitos que muestra la app.</li>
+        </ol>
+      </div>
+      <form id="f" novalidate>
+        <label for="code" class="mb-1.5 block font-semibold">Código de verificación</label>
+        <div class="flex flex-wrap gap-2">
+          <input id="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" placeholder="6 dígitos" aria-describedby="msg"
+                 class="h-10 min-w-[140px] flex-1 rounded-lg border border-slate-200 bg-white px-3 tracking-widest tabular-nums aria-[invalid=true]:border-red-600 focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900">
+          <button type="submit" class="h-10 rounded-lg bg-blue-600 px-4 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-400 dark:text-slate-950 dark:hover:bg-blue-300">Verificar y activar</button>
+        </div>
+        <p id="msg" class="mt-2 text-[13px] text-red-600 empty:hidden dark:text-red-400" aria-live="polite"></p>
+      </form>
+    </div>
+    <div id="done" class="flex gap-3 rounded-lg border border-emerald-600 bg-emerald-50 p-4 dark:border-emerald-400 dark:bg-emerald-950" hidden>
+      <svg class="h-6 w-6 flex-none text-emerald-600 dark:text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>
+      <div><h2 id="td" tabindex="-1" class="font-semibold focus:outline-none">Verificación en dos pasos activada</h2>
+        <p>Desde ahora te pediremos un código al iniciar sesión. Guarda tus códigos de recuperación en un lugar seguro.</p></div>
+    </div>
+  </main>
+</div>
+<script>
+  const $ = (i) => document.getElementById(i);
+  function qr(n = 25) { // simulado: no es un QR real
+    let s = 7, d = '';
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+      if ((x < 8 || x > n - 9) && (y < 8 || y > n - 9) && !(x > n - 9 && y > n - 9)) continue;
+      s = (Math.imul(s, 1103515245) + 12345) & 0x7fffffff;
+      if ((s >> 16) & 1) d += `M${x} ${y}h1v1h-1z`;
+    }
+    for (const [x, y] of [[0, 0], [n - 7, 0], [0, n - 7]]) d += `M${x} ${y}h7v7h-7zM${x + 1} ${y + 1}h5v5h-5zM${x + 2} ${y + 2}h3v3h-3z`;
+    return d;
+  }
+  $('qr').firstElementChild.setAttribute('d', qr());
+  $('copy').addEventListener('click', async (e) => {
+    const b = e.currentTarget;
+    try { await navigator.clipboard.writeText('JBSWY3DPEHPK3PXP'); b.textContent = 'Copiado'; } catch { b.textContent = 'Cópiala a mano'; }
+    setTimeout(() => (b.textContent = 'Copiar'), 1800);
+  });
+  $('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = $('code').value.trim();
+    const m = !/^\d{6}$/.test(v) ? 'Escribe los 6 dígitos que muestra tu app, sin espacios.'
+      : v === '000000' ? 'El código no coincide o caducó. Espera al siguiente código en tu app e inténtalo de nuevo.' : '';
+    $('code').setAttribute('aria-invalid', String(!!m)); $('msg').textContent = m;
+    if (!m) { $('setup').hidden = true; $('done').hidden = false; $('td').focus(); }
+  });
+</script>

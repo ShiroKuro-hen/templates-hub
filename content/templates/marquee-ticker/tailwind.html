@@ -1,0 +1,53 @@
+<style>@keyframes slide{to{transform:translateX(-50%)}}</style>
+<section id="p" class="grid gap-5 overflow-hidden rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h1 class="text-base font-semibold">Empresas que usan Aurora</h1>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400">La cinta se detiene al pasar el cursor o al enfocar un logo.</p>
+    </div>
+    <button id="pause" type="button" class="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 font-semibold transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Pausar</button>
+  </div>
+  <div role="group" aria-label="Clientes" class="group overflow-hidden motion-safe:[mask-image:linear-gradient(90deg,transparent,black_6%,black_94%,transparent)]">
+    <div class="track flex motion-safe:w-max motion-safe:animate-[slide_34s_linear_infinite] group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]">
+      <ul class="flex flex-none gap-3 pr-3 motion-reduce:flex-wrap [&_a]:flex [&_a]:items-center [&_a]:gap-2 [&_a]:whitespace-nowrap [&_a]:rounded-lg [&_a]:border [&_a]:border-slate-200 [&_a]:bg-slate-50 [&_a]:px-[18px] [&_a]:py-2 [&_a]:font-semibold [&_a]:no-underline [&_a]:transition-colors hover:[&_a]:border-blue-500 [&_a]:focus-visible:outline-2 [&_a]:focus-visible:outline-offset-2 [&_a]:focus-visible:outline-blue-500 dark:[&_a]:border-slate-700 dark:[&_a]:bg-slate-950 [&_svg]:text-blue-600 dark:[&_svg]:text-blue-400">
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg>Norte Labs</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/></svg>Vértice</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 4 9 16H3z"/></svg>Kairos</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 12a8 8 0 0 1 16 0M4 18h16"/></svg>Alba Cloud</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m12 3 9 9-9 9-9-9z"/></svg>Órbita</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>Lumen</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="3"/></svg>Pivote</a></li>
+        <li><a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 18 10 6l4 8 2-4 4 8z"/></svg>Sierra Data</a></li>
+      </ul>
+    </div>
+  </div>
+  <div role="group" aria-label="Estado del servicio" class="group overflow-hidden motion-safe:[mask-image:linear-gradient(90deg,transparent,black_6%,black_94%,transparent)]">
+    <div class="track flex motion-safe:w-max motion-safe:animate-[slide_44s_linear_infinite_reverse] group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused]">
+      <ul class="flex flex-none gap-3 pr-3 motion-reduce:flex-wrap [&>li]:flex [&>li]:items-center [&>li]:gap-2 [&>li]:whitespace-nowrap [&>li]:rounded-full [&>li]:border [&>li]:border-slate-200 [&>li]:bg-slate-50 [&>li]:px-3.5 [&>li]:py-1.5 dark:[&>li]:border-slate-700 dark:[&>li]:bg-slate-950 [&_i]:size-2 [&_i]:flex-none [&_i]:rounded-full">
+        <li><i class="bg-gradient-to-br from-cyan-400 to-blue-600"></i>Todos los sistemas operativos</li>
+        <li><i class="bg-cyan-600"></i>Nueva región disponible: Santiago</li>
+        <li><i class="bg-amber-600"></i>Mantenimiento el 14 oct a las 02:00 (30 min)</li>
+        <li><i class="bg-emerald-600"></i>API v3 estable desde el 28 sep</li>
+        <li><i class="bg-cyan-600"></i>Webinar de seguridad el jueves a las 17:00</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<script>
+  const b = document.getElementById('pause'), tracks = [...document.querySelectorAll('.track')];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) b.hidden = true;
+  else {
+    tracks.forEach((t) => {
+      const c = t.firstElementChild.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.querySelectorAll('a').forEach((a) => (a.tabIndex = -1));
+      t.append(c);
+    });
+    let paused = false;
+    b.onclick = () => {
+      paused = !paused;
+      b.textContent = paused ? 'Reanudar' : 'Pausar';
+      tracks.forEach((t) => (t.style.animationPlayState = paused ? 'paused' : ''));
+    };
+  }
+</script>

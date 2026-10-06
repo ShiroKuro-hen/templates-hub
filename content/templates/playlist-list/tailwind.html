@@ -1,0 +1,46 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="h" class="mx-auto max-w-2xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <header class="flex items-center gap-3.5 border-b border-slate-200 p-4 dark:border-slate-700">
+      <div class="grid size-12 shrink-0 place-items-center rounded-lg bg-blue-50 text-blue-600 dark:bg-slate-800 dark:text-blue-400"><svg class="size-[22px] fill-current" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h12v2H4zm0 4h12v2H4zm0 4h8v2H4zm12 0v6l5-3z"/></svg></div>
+      <div class="min-w-0 flex-1"><h2 id="h" class="m-0 text-base font-semibold">Música para enfocarse</h2><p class="m-0 tabular-nums text-slate-500 dark:text-slate-400">6 pistas, 20 min 33 s</p></div>
+      <button type="button" id="all" class="h-9 rounded-lg border border-blue-600 bg-blue-600 px-4 font-medium text-white hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">Reproducir</button>
+    </header>
+    <ol id="list" class="m-0 list-none p-2"></ol>
+  </section>
+</div>
+<script>
+  const T = [['Primer plano', 'Estudio Alba', 'Foco', 198], ['Teclas de lluvia', 'Marisol Vega', 'Foco', 224], ['Cinta magnética', 'Estudio Alba', 'Archivo', 176],
+    ['Ventana abierta', 'Tomás Rey', 'Archivo', 241], ['Frecuencia baja', 'Marisol Vega', 'Foco', 205], ['Última hora', 'Tomás Rey', 'Archivo', 189]];
+  const fmt = (s) => Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'), all = document.getElementById('all');
+  document.getElementById('list').innerHTML = T.map(([t, a, al, d], k) =>
+    `<li><button type="button" class="relative grid w-full cursor-pointer grid-cols-[28px_1fr_auto] items-center gap-3 rounded-lg px-3 py-2.5 text-left hover:bg-blue-50 focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-blue-500 aria-[current=true]:bg-blue-50 dark:hover:bg-slate-800 dark:aria-[current=true]:bg-slate-800 sm:grid-cols-[28px_1fr_140px_auto]">
+      <span class="tabular-nums text-slate-500">${k + 1}</span>
+      <span class="min-w-0"><b class="block truncate font-medium">${t}</b><small class="text-slate-500 dark:text-slate-400">${a}</small></span>
+      <span class="hidden text-slate-500 sm:block dark:text-slate-400">${al}</span>
+      <span class="dur whitespace-nowrap tabular-nums text-slate-500 dark:text-slate-400">${fmt(d)}</span>
+      <i class="bar absolute inset-x-3 bottom-[3px] hidden h-0.5 rounded-full bg-slate-200 dark:bg-slate-700"><i class="block h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-600"></i></i>
+    </button></li>`).join('');
+  const rows = [...document.querySelectorAll('#list button')];
+  let cur = 1, el = 47, on = false, timer = 0;
+  function render() {
+    rows.forEach((r, k) => {
+      const a = k === cur, bar = r.querySelector('.bar');
+      r.setAttribute('aria-current', a); bar.classList.toggle('hidden', !a);
+      r.querySelector('.dur').textContent = a ? `${fmt(el)} / ${fmt(T[k][3])}` : fmt(T[k][3]);
+      if (a) bar.firstElementChild.style.width = (el / T[k][3]) * 100 + '%';
+    });
+    all.textContent = on ? 'Pausar' : 'Reproducir';
+  }
+  function setPlay(v) { on = v; clearInterval(timer); if (v) timer = setInterval(tick, 1000); render(); }
+  function tick() {
+    if (++el < T[cur][3]) return render();
+    if (cur < T.length - 1) { cur++; el = 0; render(); } else { cur = 0; el = 0; setPlay(false); }
+  }
+  rows.forEach((r, k) => (r.onclick = () => { if (k === cur) setPlay(!on); else { cur = k; el = 0; setPlay(true); } }));
+  all.onclick = () => setPlay(!on);
+  document.getElementById('list').onkeydown = (e) => {
+    const i = rows.indexOf(document.activeElement), j = e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowUp' ? i - 1 : -1;
+    if (j >= 0 && j < rows.length) { rows[j].focus(); e.preventDefault(); }
+  };
+  render();
+</script>

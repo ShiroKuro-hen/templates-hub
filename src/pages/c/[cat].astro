@@ -6,7 +6,7 @@ const { cat } = Astro.params;
 const c = CATEGORIES[cat!];
 const list = templates.filter((t) => t.category === cat);
 ---
-<Base title={`${c.label} · Templates Hub`} description={c.blurb}>
+<Base title={`${c.label} · Templates Hub`} description={c.blurb} currentCat={cat}>
   <nav class="crumbs" aria-label="Ruta">
     <a href={url('/')}>Inicio</a><span aria-hidden="true">/</span><span>{groupOf(cat!).label}</span>
   </nav>

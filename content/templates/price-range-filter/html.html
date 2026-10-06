@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  fieldset{width:min(100%,360px);box-sizing:border-box;margin:0;padding:16px 20px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  legend{padding:0 6px;font-size:16px;font-weight:600}
+  .hist{display:flex;align-items:flex-end;gap:3px;height:56px;margin:8px 9px 0}
+  .hist i{flex:1;height:calc(var(--h) * 1%);background:var(--border);border-radius:2px 2px 0 0;transition:background .14s}
+  .hist i.in{background:var(--accent-soft);box-shadow:inset 0 2px 0 var(--accent)}
+  .slider{position:relative;height:24px}
+  .rail{position:absolute;left:9px;right:9px;top:10px;height:4px;border-radius:999px;background:var(--accent-soft)}
+  .fill{position:absolute;top:0;bottom:0;left:calc(var(--a) * 1%);right:calc((100 - var(--b)) * 1%);border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .slider input{position:absolute;inset:0;width:100%;height:24px;margin:0;background:none;pointer-events:none;-webkit-appearance:none;appearance:none}
+  .slider input::-webkit-slider-runnable-track{height:24px;background:none}
+  .slider input::-moz-range-track{height:24px;background:none}
+  .slider input::-webkit-slider-thumb{-webkit-appearance:none;pointer-events:auto;width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--accent);border:1px solid var(--surface);box-shadow:var(--shadow);cursor:grab}
+  .slider input::-moz-range-thumb{pointer-events:auto;width:16px;height:16px;border-radius:50%;background:var(--accent);border:1px solid var(--surface);box-shadow:var(--shadow);cursor:grab}
+  .slider input:focus-visible{outline:none}
+  .slider input:focus-visible::-webkit-slider-thumb{outline:2px solid var(--accent);outline-offset:2px}
+  .slider input:focus-visible::-moz-range-thumb{outline:2px solid var(--accent);outline-offset:2px}
+  .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  label{display:block;color:var(--muted);font-size:13px}
+  .field{display:flex;align-items:center;gap:6px;margin-top:2px;padding:0 10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .field:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+  .field input{width:100%;min-width:0;padding:7px 0;font:inherit;color:var(--text);font-variant-numeric:tabular-nums;background:none;border:0;outline:0}
+  .field[data-bad]{border-color:var(--err)}
+  .err{margin:8px 0 0;font-size:13px;color:var(--err)}
+  .err[hidden]{display:none}
+  .go{width:100%;margin-top:14px;padding:9px 14px;font:inherit;font-weight:600;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer;transition:filter .14s}
+  .go:hover:not(:disabled){filter:brightness(1.08)}
+  .go:disabled{color:var(--muted);background:var(--accent-soft);border-color:var(--border);cursor:not-allowed}
+  .go:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form id="f" novalidate>
+<fieldset>
+  <legend>Precio</legend>
+  <div class="hist" id="hist" aria-hidden="true"></div>
+  <div class="slider" id="sl" style="--a:0;--b:100">
+    <div class="rail" aria-hidden="true"><div class="fill"></div></div>
+    <input type="range" id="rlo" min="0" max="300" step="5" value="40" aria-label="Precio mínimo">
+    <input type="range" id="rhi" min="0" max="300" step="5" value="180" aria-label="Precio máximo">
+  </div>
+  <div class="fields">
+    <label>Mínimo<span class="field"><input type="number" id="nlo" min="0" max="300" step="5" inputmode="numeric" aria-describedby="err"><span aria-hidden="true">€</span></span></label>
+    <label>Máximo<span class="field"><input type="number" id="nhi" min="0" max="300" step="5" inputmode="numeric" aria-describedby="err"><span aria-hidden="true">€</span></span></label>
+  </div>
+  <p class="err" id="err" role="alert" hidden></p>
+  <button class="go" type="submit" id="go"></button>
+</fieldset>
+</form>
+<script>
+  const MAX = 300, STEP = 25, C = [4, 9, 18, 26, 31, 24, 19, 12, 8, 5, 3, 2], TOP = Math.max(...C);
+  const $ = (id) => document.getElementById(id), eur = (n) => n.toLocaleString('es-ES') + ' €';
+  $('hist').innerHTML = C.map((c) => `<i style="--h:${(c / TOP) * 100}"></i>`).join('');
+  let lo = 40, hi = 180;
+  function render(from) {
+    const bad = lo > hi;
+    $('sl').style.cssText = `--a:${(Math.min(lo, hi) / MAX) * 100};--b:${(Math.max(lo, hi) / MAX) * 100}`;
+    if (from !== 'r') { $('rlo').value = lo; $('rhi').value = hi; }
+    if (from !== 'n') { $('nlo').value = lo; $('nhi').value = hi; }
+    document.querySelectorAll('.field').forEach((f) => (f.toggleAttribute('data-bad', bad)));
+    [$('nlo'), $('nhi')].forEach((i) => i.setAttribute('aria-invalid', bad));
+    $('err').hidden = !bad;
+    if (bad) $('err').textContent = `El mínimo (${eur(lo)}) supera al máximo (${eur(hi)}). Baja el mínimo o sube el máximo.`;
+    [...$('hist').children].forEach((b, i) => b.classList.toggle('in', !bad && (i + 1) * STEP > lo && i * STEP < hi));
+    const n = bad ? 0 : C.reduce((s, c, i) => s + c * Math.max(0, Math.min(hi, (i + 1) * STEP) - Math.max(lo, i * STEP)) / STEP, 0);
+    $('go').disabled = bad;
+    $('go').textContent = bad ? 'Corrige el rango' : `Ver ${Math.round(n)} artículos`;
+  }
+  const num = (v, d) => (v === '' || isNaN(+v) ? d : Math.min(MAX, Math.max(0, +v)));
+  $('rlo').addEventListener('input', (e) => { lo = Math.min(+e.target.value, hi); render('r'); e.target.value = lo; });
+  $('rhi').addEventListener('input', (e) => { hi = Math.max(+e.target.value, lo); render('r'); e.target.value = hi; });
+  $('nlo').addEventListener('input', (e) => { lo = num(e.target.value, 0); render('n'); });
+  $('nhi').addEventListener('input', (e) => { hi = num(e.target.value, MAX); render('n'); });
+  [$('nlo'), $('nhi')].forEach((i) => i.addEventListener('change', () => render()));
+  $('f').addEventListener('submit', (e) => e.preventDefault());
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <button id="open" type="button" aria-haspopup="dialog" class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Ver carrito (<span id="count">3</span>)</button>
+  <dialog id="cart" aria-labelledby="cart-title" class="m-0 ml-auto h-dvh max-h-none w-full max-w-sm flex-col border-l border-slate-200 bg-white p-0 text-slate-900 shadow-xl backdrop:bg-slate-900/40 open:flex dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+    <header class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-slate-700">
+      <h2 id="cart-title" class="text-base font-semibold">Tu carrito</h2>
+      <button type="button" data-close aria-label="Cerrar carrito" class="rounded-lg px-2 py-1 text-xl leading-none focus-visible:outline-2 focus-visible:outline-blue-600">&times;</button>
+    </header>
+    <div class="border-b border-slate-200 px-5 py-3 dark:border-slate-700">
+      <p id="ship" class="text-[13px] text-slate-500 dark:text-slate-400"></p>
+      <div class="mt-1.5 h-1 overflow-hidden rounded-full bg-blue-50 dark:bg-slate-800" aria-hidden="true"><i id="bar" class="block h-full bg-gradient-to-br from-cyan-400 to-blue-600 transition-all motion-reduce:transition-none"></i></div>
+    </div>
+    <ul id="lines" aria-live="polite" class="flex-1 overflow-auto px-5"></ul>
+    <footer class="border-t border-slate-200 px-5 py-4 dark:border-slate-700">
+      <div class="mb-3 flex justify-between text-base font-semibold"><span>Subtotal</span><span id="total" class="tabular-nums"></span></div>
+      <button type="button" class="w-full rounded-lg bg-blue-600 px-3.5 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-500 dark:text-slate-950">Ir al pago</button>
+    </footer>
+  </dialog>
+</div>
+<script>
+  const items = [
+    { id: 1, name: 'Auriculares Nova ANC', variant: 'Grafito', price: 129.9, qty: 1 },
+    { id: 2, name: 'Cable USB-C trenzado', variant: '2 m', price: 14.5, qty: 2 },
+    { id: 3, name: 'Funda de viaje rígida', variant: 'Azul noche', price: 24, qty: 1 },
+  ];
+  const FREE = 200, eur = (n) => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+  const $ = (id) => document.getElementById(id), dlg = $('cart');
+  const qb = 'size-7 focus-visible:outline-2 focus-visible:outline-blue-600';
+  function render() {
+    const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+    $('lines').innerHTML = items.length ? items.map((i) => `
+      <li data-id="${i.id}" class="grid grid-cols-[48px_1fr_auto] gap-3 border-b border-slate-200 py-4 dark:border-slate-700">
+        <span class="size-12 rounded-lg border border-slate-200 bg-blue-50 dark:border-slate-700 dark:bg-slate-800" aria-hidden="true"></span>
+        <div><div class="font-semibold">${i.name}</div><div class="text-[13px] text-slate-500 dark:text-slate-400">${i.variant}</div>
+          <div role="group" aria-label="Cantidad de ${i.name}" class="mt-2 inline-flex items-center rounded-lg border border-slate-200 dark:border-slate-700">
+            <button type="button" data-d="-1" aria-label="Quitar una unidad" class="${qb}">−</button>
+            <output class="min-w-6 text-center tabular-nums">${i.qty}</output>
+            <button type="button" data-d="1" aria-label="Añadir una unidad" class="${qb}">+</button></div></div>
+        <div class="text-right"><div class="font-semibold tabular-nums">${eur(i.price * i.qty)}</div>
+          <button type="button" data-rm class="mt-2 text-[13px] text-slate-500 underline dark:text-slate-400">Eliminar</button></div>
+      </li>`).join('') : '<li class="py-10 text-center text-slate-500">Tu carrito está vacío. Explora el catálogo y añade tu primer producto.</li>';
+    $('total').textContent = eur(total);
+    $('count').textContent = items.reduce((s, i) => s + i.qty, 0);
+    $('ship').textContent = total >= FREE ? 'Tienes envío gratis.' : `Te faltan ${eur(FREE - total)} para el envío gratis.`;
+    $('bar').style.width = Math.min(100, (total / FREE) * 100) + '%';
+  }
+  $('lines').addEventListener('click', (e) => {
+    const li = e.target.closest('li[data-id]'), b = e.target.closest('button'); if (!li || !b) return;
+    const idx = items.findIndex((i) => i.id == li.dataset.id);
+    if (b.hasAttribute('data-rm')) items.splice(idx, 1);
+    else items[idx].qty = Math.max(1, items[idx].qty + Number(b.dataset.d));
+    render();
+  });
+  $('open').onclick = () => dlg.showModal();
+  dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
+  render();
+</script>

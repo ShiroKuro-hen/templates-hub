@@ -1,0 +1,63 @@
+<section aria-labelledby="h" class="mx-auto max-w-2xl rounded-lg border border-slate-200 bg-white px-5 py-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h2 id="h" class="mb-1 text-base font-semibold">Comentarios <span id="n" class="font-normal tabular-nums text-slate-500 dark:text-slate-400"></span></h2>
+  <ul id="root" class="[&_button:hover]:bg-blue-50 [&_button:hover]:text-blue-600 dark:[&_button:hover]:bg-blue-500/15 dark:[&_button:hover]:text-blue-300 [&_button]:rounded-lg [&_button]:px-2 [&_button]:py-1 [&_button]:text-slate-500 dark:[&_button]:text-slate-400 [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-blue-600">
+    <li class="c">
+      <article class="flex gap-3 py-2.5">
+        <span aria-hidden="true" class="grid size-8 shrink-0 place-items-center rounded-full bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">IM</span>
+        <div class="min-w-0 flex-1">
+          <header class="flex flex-wrap items-center gap-2">
+            <strong>Irene Molina</strong>
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2 text-xs text-blue-600 dark:bg-blue-500/15 dark:text-blue-300"><i class="size-1.5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i>Autora</span>
+            <time class="text-xs text-slate-500 dark:text-slate-400">hace 2 h</time>
+          </header>
+          <p class="txt my-0.5 break-words">Subí la versión 2 del documento de arquitectura. Necesito revisión del apartado de colas antes del jueves.</p>
+          <div class="-ml-2 flex gap-0.5"><button type="button" data-a="reply">Responder</button><button type="button" data-a="edit">Editar</button></div>
+        </div>
+      </article>
+      <ul class="replies ml-3.5 border-l border-slate-200 pl-3.5 dark:border-slate-700">
+        <li class="c">
+          <article class="flex gap-3 py-2.5">
+            <span aria-hidden="true" class="grid size-8 shrink-0 place-items-center rounded-full bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">JR</span>
+            <div class="min-w-0 flex-1">
+              <header class="flex items-center gap-2"><strong>Javier Ramos</strong><time class="text-xs text-slate-500 dark:text-slate-400">hace 1 h</time></header>
+              <p class="txt my-0.5 break-words">Lo reviso hoy. ¿Mantenemos el límite de 5.000 mensajes por segundo?</p>
+              <div class="-ml-2 flex gap-0.5"><button type="button" data-a="reply">Responder</button></div>
+            </div>
+          </article>
+          <ul class="replies ml-3.5 border-l border-slate-200 pl-3.5 dark:border-slate-700"></ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</section>
+<script>
+  const root = document.getElementById('root'), n = document.getElementById('n');
+  const count = () => (n.textContent = '(' + root.querySelectorAll('.c').length + ')');
+  const box = 'w-full rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900';
+  root.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-a]'); if (!b) return;
+    const c = b.closest('.c'), p = c.querySelector('.txt'), edit = b.dataset.a === 'edit';
+    if (c.querySelector('form')) return;
+    const f = document.createElement('form'); f.className = 'my-2 grid gap-2';
+    f.innerHTML = '<label class="sr-only">Comentario</label><textarea rows="2" required class="' + box + '"></textarea><div class="flex gap-2"><button class="!bg-blue-600 !px-3.5 font-semibold !text-white dark:!bg-blue-400 dark:!text-slate-950">' + (edit ? 'Guardar cambios' : 'Responder') + '</button><button type="button">Cancelar</button></div>';
+    const t = f.querySelector('textarea'), close = () => { f.remove(); p.hidden = false; b.focus(); };
+    t.value = edit ? p.textContent : '';
+    f.onkeydown = (ev) => ev.key === 'Escape' && close();
+    f.querySelector('[type=button]').onclick = close;
+    f.onsubmit = (ev) => {
+      ev.preventDefault(); const v = t.value.trim(); if (!v) return;
+      if (edit) p.textContent = v;
+      else {
+        const li = c.cloneNode(true); li.querySelectorAll('.replies').forEach((u) => (u.innerHTML = ''));
+        li.querySelectorAll('form,header span').forEach((x) => x.remove());
+        li.querySelector('strong').textContent = 'Tú'; li.querySelector('time').textContent = 'ahora'; li.querySelector('.txt').textContent = v;
+        li.querySelector('[aria-hidden]').textContent = 'TÚ'; li.querySelector('.-ml-2').innerHTML = b.parentElement.innerHTML;
+        c.querySelector('.replies').append(li); count();
+      }
+      close();
+    };
+    if (edit) { p.hidden = true; p.after(f); } else c.querySelector('article > div').append(f);
+    t.focus();
+  });
+  count();
+</script>

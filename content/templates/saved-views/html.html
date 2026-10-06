@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .sv{display:grid;grid-template-columns:240px 1fr;align-items:start;gap:16px;max-width:900px}
+  .sv>*{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;min-width:0}
+  @media (max-width:600px){.sv{grid-template-columns:1fr}}
+  h2{margin:0 0 8px;font-size:14px}
+  ul{list-style:none;margin:0;padding:0}
+  .v{position:relative;display:flex;align-items:center;gap:4px;border-radius:6px}
+  .apply{flex:1;min-width:0;text-align:left;padding:6px 8px;font:inherit;color:inherit;background:none;border:0;border-radius:6px;cursor:pointer;transition:background .14s}
+  .apply:hover,.apply[aria-pressed=true]{background:var(--accent-soft)}
+  .apply[aria-pressed=true]{font-weight:600}
+  .apply[aria-pressed=true]::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .apply small{display:block;font-weight:400;color:var(--muted)}
+  .del{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;color:var(--muted);background:none;border:0;border-radius:6px;cursor:pointer}
+  .del:hover{color:var(--err);background:var(--err-soft)}
+  .none{color:var(--muted);padding:6px 8px}
+  form{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+  label{display:block;font-weight:600;margin-bottom:4px}
+  .row{display:flex;gap:8px}
+  input,select{font:inherit;color:var(--text);min-width:0;padding:6px 10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  input{flex:1}
+  .go{font:inherit;padding:6px 12px;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer}
+  .msg{min-height:21px;margin:6px 0 0;color:var(--muted)}
+  .msg.bad{color:var(--err)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .filters{display:grid;grid-template-columns:1fr 160px;gap:12px;margin-bottom:12px}
+  .filters label{margin:0}
+  .filters input,.filters select{display:block;width:100%;box-sizing:border-box;margin-top:4px;font-weight:400}
+  .head{margin:0 0 4px;font-weight:600;font-variant-numeric:tabular-nums}
+  #list li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--border)}
+  #list small{display:block;color:var(--muted)}
+  #list output{font-variant-numeric:tabular-nums}
+  #list .empty{display:block;text-align:center;padding:24px 0;color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sv">
+  <aside aria-labelledby="vh">
+    <h2 id="vh">Vistas guardadas</h2>
+    <ul id="views"></ul>
+    <form id="sf">
+      <label for="nm">Guardar filtros como vista</label>
+      <div class="row"><input id="nm" autocomplete="off" placeholder="Nombre de la vista"><button class="go">Guardar</button></div>
+      <p class="msg" id="msg" aria-live="polite"></p>
+    </form>
+  </aside>
+  <section aria-label="Pedidos">
+    <div class="filters">
+      <label>Buscar<input type="search" id="q" placeholder="Cliente o ciudad"></label>
+      <label>Estado<select id="st"><option value="">Todos</option><option>Pagado</option><option>Pendiente</option><option>Cancelado</option></select></label>
+    </div>
+    <p class="head" id="n" aria-live="polite"></p>
+    <ul id="list"></ul>
+  </section>
+</div>
+<script>
+  const D = [['Café Andino', 'Lima', 'Pagado', 1280], ['Textiles Sur', 'Arequipa', 'Pendiente', 640], ['Logística Norte', 'Lima', 'Pendiente', 2150],
+    ['Panadería Sol', 'Cusco', 'Pagado', 310], ['Distribuidora Pacífico', 'Lima', 'Cancelado', 980], ['Ferretería Central', 'Trujillo', 'Pendiente', 455],
+    ['Librería Nube', 'Arequipa', 'Pagado', 1720], ['Hotel Valle', 'Cusco', 'Pendiente', 3890]];
+  let views = [{ n: 'Pendientes de pago', q: '', s: 'Pendiente' }, { n: 'Pedidos de Lima', q: 'Lima', s: '' }]; // en memoria
+  const $ = (id) => document.getElementById(id);
+  const q = $('q'), st = $('st'), nm = $('nm'), msg = $('msg');
+  const cur = () => ({ q: q.value.trim(), s: st.value });
+  const money = (v) => v.toLocaleString('es', { style: 'currency', currency: 'USD' });
+  const X = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m2 2 8 8M10 2l-8 8"/></svg>';
+  const say = (t, bad) => { msg.textContent = t; msg.classList.toggle('bad', !!bad); };
+  function render() {
+    const c = cur(), hits = D.filter(([n, ci, e]) => (!c.q || (n + ci).toLowerCase().includes(c.q.toLowerCase())) && (!c.s || e === c.s));
+    $('n').textContent = `${hits.length} pedidos`;
+    $('list').innerHTML = hits.length ? hits.map(([n, ci, e, t]) => `<li><span>${n}<small>${ci}, ${e}</small></span><output>${money(t)}</output></li>`).join('')
+      : '<li class="empty">Ningún pedido coincide. Cambia los filtros o aplica otra vista.</li>';
+    $('views').innerHTML = views.map((v, i) => `<li class="v"><button type="button" class="apply" data-i="${i}" aria-pressed="${v.q === c.q && v.s === c.s}">${v.n}<small>${[v.q && `“${v.q}”`, v.s].filter(Boolean).join(', ') || 'Sin filtros'}</small></button><button type="button" class="del" data-d="${i}" aria-label="Eliminar vista ${v.n}">${X}</button></li>`).join('')
+      || '<li class="none">Aún no hay vistas. Aplica filtros y guarda la primera.</li>';
+  }
+  $('views').addEventListener('click', (e) => {
+    const a = e.target.closest('.apply'), d = e.target.closest('.del');
+    if (a) { const v = views[a.dataset.i]; q.value = v.q; st.value = v.s; say(`Vista «${v.n}» aplicada.`); }
+    if (d) { const [v] = views.splice(d.dataset.d, 1); say(`Vista «${v.n}» eliminada.`); nm.focus(); }
+    render();
+  });
+  $('sf').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const n = nm.value.trim(), c = cur();
+    if (!n) return say('Escribe un nombre para la vista.', true);
+    if (!c.q && !c.s) return say('Aplica al menos un filtro antes de guardar.', true);
+    if (views.some((v) => v.n.toLowerCase() === n.toLowerCase())) return say('Ya existe una vista con ese nombre. Elige otro.', true);
+    views.push({ n, ...c }); nm.value = ''; say(`Vista «${n}» guardada.`); render();
+  });
+  [q, st].forEach((x) => x.addEventListener('input', render));
+  render();
+</script>
+</body>
+</html>

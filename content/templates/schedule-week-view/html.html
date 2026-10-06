@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .cal{max-width:1000px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .top{padding:16px 20px;border-bottom:1px solid var(--border)}
+  h2{margin:0;font-size:18px;font-weight:600}
+  .top p{margin:2px 0 0;color:var(--muted)}
+  .scroll{overflow-x:auto}
+  .wk{--h:48px;min-width:720px}
+  .hd,.bd{display:grid;grid-template-columns:48px repeat(5,1fr)}
+  .hd{border-bottom:1px solid var(--border)}
+  .dh{padding:8px 0;text-align:center;color:var(--muted);border-left:1px solid var(--border)}
+  .dh b{display:inline-grid;place-items:center;min-width:28px;height:28px;margin-left:4px;border-radius:999px;color:var(--text);font-variant-numeric:tabular-nums}
+  .dh.today b{background:var(--accent);color:var(--accent-ink)}
+  .bd{padding-top:8px}
+  .hrs span{display:block;height:var(--h);padding-right:8px;text-align:right;color:var(--muted);font-size:12px;transform:translateY(-8px);font-variant-numeric:tabular-nums}
+  .day{position:relative;height:calc(10 * var(--h));margin:0;padding:0;list-style:none;border-left:1px solid var(--border);background:repeating-linear-gradient(to bottom,var(--border) 0 1px,transparent 1px var(--h))}
+  .ev{position:absolute;left:3px;right:3px;top:calc(var(--s) * var(--h) + 1px);height:calc(var(--d) * var(--h) - 3px);padding:2px 8px;border:1px solid var(--c);border-radius:6px;background:var(--cs);overflow:hidden;font-size:12px;line-height:1.2}
+  .ev b,.ev time{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ev time{color:var(--muted)}
+  .ev.sh time{display:none}
+  .accent{--c:var(--accent);--cs:var(--accent-soft)}
+  .info{--c:var(--info);--cs:var(--info-soft)}
+  .ok{--c:var(--ok);--cs:var(--ok-soft)}
+  .warn{--c:var(--warn);--cs:var(--warn-soft)}
+  .now{position:absolute;left:0;right:0;top:calc(var(--s) * var(--h));z-index:1;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  .now::before{content:"";position:absolute;left:-4px;top:-3px;width:7px;height:7px;border-radius:999px;background:var(--accent)}
+</style>
+</head>
+<body>
+<section class="cal" aria-labelledby="t">
+  <div class="top"><h2 id="t">Semana del 5 al 9 de octubre</h2><p>Agenda del equipo de producto.</p></div>
+  <div class="scroll"><div class="wk">
+    <div class="hd">
+      <span></span>
+      <div class="dh">Lun <b>5</b></div>
+      <div class="dh today" aria-current="date">Mar <b>6</b></div>
+      <div class="dh">Mié <b>7</b></div>
+      <div class="dh">Jue <b>8</b></div>
+      <div class="dh">Vie <b>9</b></div>
+    </div>
+    <div class="bd">
+      <div class="hrs" aria-hidden="true"><span>8:00</span><span>9:00</span><span>10:00</span><span>11:00</span><span>12:00</span><span>13:00</span><span>14:00</span><span>15:00</span><span>16:00</span><span>17:00</span></div>
+      <ol class="day" aria-label="Lunes 5 de octubre">
+        <li class="ev accent" style="--s:1;--d:1"><b>Planificación</b><time>9:00 – 10:00</time></li>
+        <li class="ev info" style="--s:3;--d:1.5"><b>Revisión de diseño</b><time>11:00 – 12:30</time></li>
+        <li class="ev ok" style="--s:7;--d:1"><b>Demo Norte Digital</b><time>15:00 – 16:00</time></li>
+      </ol>
+      <ol class="day" aria-label="Martes 6 de octubre">
+        <li class="ev accent sh" style="--s:1;--d:.5"><b>Daily</b><time>9:00 – 9:30</time></li>
+        <li class="ev warn" style="--s:2.5;--d:1"><b>Entrevista UX</b><time>10:30 – 11:30</time></li>
+        <li class="ev info" style="--s:6;--d:1.5"><b>Sprint review</b><time>14:00 – 15:30</time></li>
+        <li class="now" style="--s:4.33" aria-hidden="true"></li>
+      </ol>
+      <ol class="day" aria-label="Miércoles 7 de octubre">
+        <li class="ev accent sh" style="--s:1;--d:.5"><b>Daily</b><time>9:00 – 9:30</time></li>
+        <li class="ev ok" style="--s:2;--d:2"><b>Taller de accesibilidad</b><time>10:00 – 12:00</time></li>
+        <li class="ev accent sh" style="--s:8;--d:.5"><b>1:1 con Marta</b><time>16:00 – 16:30</time></li>
+      </ol>
+      <ol class="day" aria-label="Jueves 8 de octubre">
+        <li class="ev accent sh" style="--s:1;--d:.5"><b>Daily</b><time>9:00 – 9:30</time></li>
+        <li class="ev warn" style="--s:3;--d:2"><b>Auditoría de seguridad</b><time>11:00 – 13:00</time></li>
+        <li class="ev info" style="--s:7.5;--d:1"><b>Retrospectiva</b><time>15:30 – 16:30</time></li>
+      </ol>
+      <ol class="day" aria-label="Viernes 9 de octubre">
+        <li class="ev accent sh" style="--s:1;--d:.5"><b>Daily</b><time>9:00 – 9:30</time></li>
+        <li class="ev ok" style="--s:4;--d:1"><b>Lanzamiento v2.5</b><time>12:00 – 13:00</time></li>
+        <li class="ev accent sh" style="--s:9;--d:.5"><b>Cierre de semana</b><time>17:00 – 17:30</time></li>
+      </ol>
+    </div>
+  </div></div>
+</section>
+</body>
+</html>

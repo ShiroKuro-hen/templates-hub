@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  figure{max-width:640px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .frame{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--warn-soft)}
+  .frame>svg{position:absolute;inset:0;width:100%;height:100%}
+  .ph{filter:blur(12px);transform:scale(1.1);transition:opacity .16s}
+  .full{opacity:0;filter:blur(8px);transition:opacity .16s,filter .16s}
+  .ready .ph{opacity:0}
+  .ready .full{opacity:1;filter:none}
+  .bg{fill:var(--warn-soft)}.sun{fill:var(--warn)}.halo{fill:var(--warn);opacity:.25}.far{fill:var(--accent)}.snow{fill:var(--surface)}.mid{fill:var(--info)}.near{fill:var(--ok)}
+  progress{position:absolute;left:0;right:0;bottom:0;width:100%;height:3px;border:0;appearance:none;background:var(--border);transition:opacity .16s}
+  progress::-webkit-progress-bar{background:var(--border)}
+  progress::-webkit-progress-value{background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .12s}
+  progress::-moz-progress-bar{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .ready progress{opacity:0}
+  figcaption{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:12px 16px}
+  figcaption div{min-width:0}
+  b{display:block;font-weight:600}
+  .st{color:var(--muted);font-variant-numeric:tabular-nums}
+  .btn{height:36px;padding:0 14px;font:inherit;font-weight:500;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn:disabled:hover{background:var(--surface)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure id="fig" aria-busy="true">
+  <div class="frame" role="img" aria-label="Sierra de Ion al amanecer: montañas azules con cumbres nevadas y un sol dorado">
+    <svg class="ph" viewBox="0 0 16 10" preserveAspectRatio="none" aria-hidden="true">
+      <rect class="bg" width="16" height="10"/><circle class="sun" cx="11.5" cy="3" r="1.6"/>
+      <path class="far" d="M0 10V6l3-3 3 3 2-2 8 6z"/><path class="near" d="M0 10l5-2 5 1 6-1v2z"/>
+    </svg>
+    <svg class="full" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect class="bg" width="160" height="100"/><circle class="halo" cx="112" cy="30" r="20"/><circle class="sun" cx="112" cy="30" r="12"/>
+      <path class="far" d="M0 74 24 40l16 18 22-34 30 38 18-16 50 40V100H0z"/>
+      <path class="snow" d="M62 24 53 37l4-2 5 4 5-4 4 2zM24 40 17 50l3-2 4 3 4-3 3 2z"/>
+      <path class="mid" d="M0 84q30-18 62-4t58-6 40 8V100H0z"/><path class="near" d="M0 94q40-14 80-4t80-6V100H0z"/>
+    </svg>
+    <progress id="pg" max="100" value="0" aria-label="Progreso de carga"></progress>
+  </div>
+  <figcaption>
+    <div><b>Sierra de Ion al amanecer</b><span class="st"><span id="st" role="status">Cargando imagen</span> <span id="pct">0 %</span></span></div>
+    <button type="button" class="btn" id="re" disabled>Volver a cargar</button>
+  </figcaption>
+</figure>
+<script>
+  const $ = (id) => document.getElementById(id), fig = $('fig'), pg = $('pg'), re = $('re');
+  let timer = 0;
+  function load() {
+    clearInterval(timer);
+    fig.classList.remove('ready'); fig.setAttribute('aria-busy', 'true');
+    re.disabled = true; pg.value = 0; $('pct').textContent = '0 %'; $('st').textContent = 'Cargando imagen';
+    timer = setInterval(() => {
+      pg.value = Math.min(100, pg.value + 8 + Math.random() * 14);
+      $('pct').textContent = Math.round(pg.value) + ' %';
+      if (pg.value < 100) return;
+      clearInterval(timer); fig.classList.add('ready'); fig.setAttribute('aria-busy', 'false');
+      re.disabled = false; $('st').textContent = 'Imagen cargada';
+    }, 180);
+  }
+  re.onclick = load;
+  load();
+</script>
+</body>
+</html>

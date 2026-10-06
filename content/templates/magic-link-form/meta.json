@@ -1,0 +1,1 @@
+{ "title": "Acceso por enlace mágico", "category": "autenticacion", "description": "Acceso sin contraseña con estados enviar, enviado y reenviar con cuenta atrás.", "tags": ["login", "magic-link", "passwordless", "a11y"] }

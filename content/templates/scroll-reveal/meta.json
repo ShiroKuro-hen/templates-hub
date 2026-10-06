@@ -1,0 +1,1 @@
+{ "title": "Revelado al hacer scroll", "category": "animaciones", "description": "Elementos que aparecen al entrar en vista, con IntersectionObserver y escalonado.", "tags": ["scroll", "intersection-observer", "animation"] }

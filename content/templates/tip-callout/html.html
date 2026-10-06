@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .tips{display:grid;gap:12px;max-width:600px;margin:0 auto}
+  .tip{--c:var(--info);--s:var(--info-soft);position:relative;display:flex;gap:12px;align-items:flex-start;padding:14px 12px 14px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .tip.consejo{--c:var(--ok);--s:var(--ok-soft)}
+  .tip.atencion{--c:var(--warn);--s:var(--warn-soft)}
+  .tip::before{content:"";position:absolute;top:-1px;left:8px;right:8px;height:1px;background:linear-gradient(90deg,var(--c),transparent 70%)}
+  .ico{display:grid;place-items:center;flex:none;width:32px;height:32px;background:var(--s);color:var(--c);border:1px solid var(--c);border-radius:var(--radius)}
+  .tip div{flex:1;min-width:0}
+  .tip strong{display:block;font-weight:600}
+  .tip p{margin:2px 0 0;color:var(--muted)}
+  .tip a{display:inline-block;margin-top:6px;color:var(--accent);font-weight:500;text-decoration:none;border-radius:4px}
+  .tip a:hover{text-decoration:underline}
+  kbd{padding:0 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);font:12px ui-monospace,"Cascadia Code",Menlo,monospace}
+  .x{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;background:none;border:0;border-radius:var(--radius);color:var(--muted);cursor:pointer;transition:background .14s}
+  .x:hover{color:var(--text);background:var(--accent-soft)}
+  .none{max-width:600px;margin:0 auto;padding:16px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:var(--radius)}
+  .none p{margin:0 0 8px}
+  .btn{height:36px;padding:0 16px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;font-weight:500;cursor:pointer}
+  .btn:hover{background:var(--accent-soft)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="tips" id="tips">
+  <aside class="tip info" role="note">
+    <span class="ico"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M8 7.25V11M8 5h.01"/></svg></span>
+    <div><strong>Los informes se actualizan cada hora</strong><p>Los datos de ventas pueden tardar hasta 60 minutos en aparecer.</p><a href="#sync">Ver estado de sincronización</a></div>
+    <button type="button" class="x" aria-label="Descartar consejo: Los informes se actualizan cada hora"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+  </aside>
+  <aside class="tip consejo" role="note">
+    <span class="ico"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1.75l1.5 4.25 4.25 1.5-4.25 1.5L8 13.25 6.5 9 2.25 7.5 6.5 6z"/></svg></span>
+    <div><strong>Filtra más rápido con atajos</strong><p>Pulsa <kbd>/</kbd> para buscar y <kbd>F</kbd> para abrir los filtros desde cualquier panel.</p></div>
+    <button type="button" class="x" aria-label="Descartar consejo: Filtra más rápido con atajos"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+  </aside>
+  <aside class="tip atencion" role="note">
+    <span class="ico"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2l6.25 11H1.75z"/><path d="M8 6.75v3M8 11.75h.01"/></svg></span>
+    <div><strong>Tu conexión con PostgreSQL caduca en 3 días</strong><p>Renuévala para que los paneles sigan actualizándose.</p><a href="#renovar">Renovar conexión</a></div>
+    <button type="button" class="x" aria-label="Descartar consejo: Tu conexión con PostgreSQL caduca en 3 días"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button>
+  </aside>
+</div>
+<div class="none" id="none" hidden role="status"><p>Has descartado todos los consejos.</p><button type="button" class="btn" id="back">Restaurar consejos</button></div>
+<script>
+  const box = document.getElementById('tips'), none = document.getElementById('none'), html = box.innerHTML;
+  box.addEventListener('click', (e) => {
+    const x = e.target.closest('.x'); if (!x) return;
+    const tip = x.closest('.tip');
+    const near = (tip.nextElementSibling || tip.previousElementSibling)?.querySelector('.x');
+    tip.remove();
+    if (near) return near.focus();
+    none.hidden = false; document.getElementById('back').focus();
+  });
+  document.getElementById('back').onclick = () => { box.innerHTML = html; none.hidden = true; box.querySelector('.x').focus(); };
+</script>
+</body>
+</html>

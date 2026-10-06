@@ -1,0 +1,58 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <symbol id="s0" viewBox="0 0 160 100"><rect class="fill-amber-100 dark:fill-amber-950" width="160" height="100"/><path class="fill-amber-500" d="M108 28a12 12 0 1 0 24 0a12 12 0 1 0-24 0"/><path class="fill-blue-600" d="M0 100V70L40 38l28 28 26-22 66 56z"/><path class="fill-cyan-600" d="M0 100 50 74l40 14 70-18v30z"/></symbol>
+    <symbol id="s1" viewBox="0 0 160 100"><rect class="fill-cyan-100 dark:fill-cyan-950" width="160" height="100"/><path class="fill-amber-500" d="M28 26a10 10 0 1 0 20 0a10 10 0 1 0-20 0"/><path class="fill-cyan-600" d="M0 62q20-10 40 0t40 0t40 0t40 0V100H0z"/><path class="fill-blue-600" d="M0 80q20-10 40 0t40 0t40 0t40 0V100H0z"/></symbol>
+    <symbol id="s2" viewBox="0 0 160 100"><rect class="fill-blue-100 dark:fill-blue-950" width="160" height="100"/><path class="fill-cyan-600" d="M122 20a8 8 0 1 0 16 0a8 8 0 1 0-16 0"/><path class="fill-blue-600" d="M10 100V50h22v50zM38 100V28h26v72zM70 100V58h20v42zM96 100V40h24v60zM126 100V60h24v40z"/></symbol>
+    <symbol id="s3" viewBox="0 0 160 100"><rect class="fill-emerald-100 dark:fill-emerald-950" width="160" height="100"/><path class="fill-amber-500" d="M108 28a12 12 0 1 0 24 0a12 12 0 1 0-24 0"/><path class="fill-emerald-600" d="M0 100V64q40-30 80 0t80 0v36z"/></symbol>
+    <symbol id="s4" viewBox="0 0 160 100"><rect class="fill-rose-100 dark:fill-rose-950" width="160" height="100"/><path class="fill-rose-500" d="M60 70a20 20 0 0 1 40 0z"/><path class="fill-blue-600" d="M0 100V74l30-10 40 14 40-16 50 12v26z"/></symbol>
+  </svg>
+  <section id="car" role="region" aria-roledescription="carrusel" aria-label="Rutas de senderismo" class="mx-auto max-w-2xl">
+    <h2 class="m-0 text-base font-semibold">Rutas de senderismo</h2>
+    <p class="mb-4 mt-0.5 text-slate-500 dark:text-slate-400">Elige una miniatura o usa las flechas del teclado.</p>
+    <div class="relative overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 [&_button]:absolute [&_button]:top-1/2 [&_button]:grid [&_button]:size-9 [&_button]:-translate-y-1/2 [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:rounded-full [&_button]:border [&_button]:border-slate-200 [&_button]:bg-white [&_button]:text-lg [&_button]:shadow-sm [&_button:hover]:bg-blue-50 [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-blue-500 dark:[&_button]:border-slate-700 dark:[&_button]:bg-slate-900">
+      <div id="track" class="flex transition-transform duration-150">
+        <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="group" aria-roledescription="diapositiva" aria-label="1 de 5" class="block aspect-video w-full flex-none"><use href="#s0"/></svg>
+        <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="group" aria-roledescription="diapositiva" aria-label="2 de 5" class="block aspect-video w-full flex-none"><use href="#s1"/></svg>
+        <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="group" aria-roledescription="diapositiva" aria-label="3 de 5" class="block aspect-video w-full flex-none"><use href="#s2"/></svg>
+        <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="group" aria-roledescription="diapositiva" aria-label="4 de 5" class="block aspect-video w-full flex-none"><use href="#s3"/></svg>
+        <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="group" aria-roledescription="diapositiva" aria-label="5 de 5" class="block aspect-video w-full flex-none"><use href="#s4"/></svg>
+      </div>
+      <button type="button" id="prev" aria-label="Imagen anterior" class="left-2.5">&#x2039;</button>
+      <button type="button" id="next" aria-label="Imagen siguiente" class="right-2.5">&#x203A;</button>
+    </div>
+    <div class="mx-0.5 my-2.5 flex justify-between gap-3"><b id="cap" class="font-semibold"></b><span id="cnt" aria-live="polite" class="tabular-nums text-slate-500 dark:text-slate-400"></span></div>
+    <div id="strip" role="group" aria-label="Miniaturas" class="relative flex gap-2 overflow-x-auto px-0.5 pb-2.5 pt-1">
+      <button type="button" aria-label="Ver Sierra al amanecer" class="th"><svg viewBox="0 0 160 100" aria-hidden="true" class="block aspect-[16/10] w-full"><use href="#s0"/></svg></button>
+      <button type="button" aria-label="Ver Costa norte" class="th"><svg viewBox="0 0 160 100" aria-hidden="true" class="block aspect-[16/10] w-full"><use href="#s1"/></svg></button>
+      <button type="button" aria-label="Ver Ciudad nocturna" class="th"><svg viewBox="0 0 160 100" aria-hidden="true" class="block aspect-[16/10] w-full"><use href="#s2"/></svg></button>
+      <button type="button" aria-label="Ver Valle verde" class="th"><svg viewBox="0 0 160 100" aria-hidden="true" class="block aspect-[16/10] w-full"><use href="#s3"/></svg></button>
+      <button type="button" aria-label="Ver Atardecer en la loma" class="th"><svg viewBox="0 0 160 100" aria-hidden="true" class="block aspect-[16/10] w-full"><use href="#s4"/></svg></button>
+    </div>
+  </section>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id), car = $('car'), strip = $('strip');
+  const T = ['Sierra al amanecer', 'Costa norte', 'Ciudad nocturna', 'Valle verde', 'Atardecer en la loma'];
+  const slides = [...$('track').children], ths = [...strip.children];
+  const BASE = 'th relative w-24 flex-none cursor-pointer overflow-hidden rounded-lg border bg-white p-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-slate-900 ';
+  const ON = BASE + 'border-blue-500 after:absolute after:inset-x-0 after:bottom-0 after:h-[3px] after:bg-gradient-to-br after:from-cyan-400 after:to-blue-600 after:content-[""]';
+  const OFF = BASE + 'border-slate-200 opacity-70 hover:opacity-100 dark:border-slate-700';
+  const calm = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let n = 0;
+  function go(k) {
+    n = (k + T.length) % T.length;
+    $('track').style.transform = `translateX(${-n * 100}%)`;
+    slides.forEach((s, j) => s.setAttribute('aria-hidden', j !== n));
+    ths.forEach((b, j) => { b.className = j === n ? ON : OFF; j === n ? b.setAttribute('aria-current', 'true') : b.removeAttribute('aria-current'); });
+    $('cap').textContent = T[n]; $('cnt').textContent = `${n + 1} de ${T.length}`;
+    const b = ths[n];
+    strip.scrollTo({ left: b.offsetLeft - (strip.clientWidth - b.offsetWidth) / 2, behavior: calm ? 'auto' : 'smooth' });
+  }
+  $('prev').onclick = () => go(n - 1); $('next').onclick = () => go(n + 1);
+  ths.forEach((b, k) => (b.onclick = () => go(k)));
+  car.onkeydown = (e) => {
+    if (e.key === 'ArrowLeft') go(n - 1); else if (e.key === 'ArrowRight') go(n + 1); else return;
+    e.preventDefault();
+  };
+  go(0);
+</script>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .mi{position:relative;max-width:520px;margin:0 auto;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  label{display:block;margin-bottom:6px;font-weight:600}
+  textarea{display:block;width:100%;box-sizing:border-box;resize:vertical;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .list{position:absolute;z-index:2;left:16px;right:16px;margin:4px 0 0;padding:4px;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .list[hidden]{display:none}
+  .list li{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:var(--radius);cursor:pointer;transition:background .12s}
+  .list li[aria-selected=true]{background:var(--accent-soft)}
+  .list .none{color:var(--muted);cursor:default}
+  .av{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600}
+  [aria-selected=true] .av{background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#fff}
+  .who{display:grid;line-height:1.3}
+  .who small{color:var(--muted)}
+  .meta{margin:10px 0 0;min-height:24px;font-size:12px;color:var(--muted)}
+  .chip{display:inline-block;margin:0 4px 0 0;padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="mi">
+  <label for="t">Comentario para el equipo</label>
+  <textarea id="t" rows="3" placeholder="Escribe @ para mencionar a alguien" role="combobox" aria-expanded="false" aria-controls="list" aria-autocomplete="list" aria-describedby="m"></textarea>
+  <ul class="list" id="list" role="listbox" aria-label="Personas del equipo" hidden></ul>
+  <p class="meta" id="m" aria-live="polite">Usa las flechas para elegir y Enter para insertar.</p>
+  <p class="sr" id="st" role="status"></p>
+</div>
+<script>
+  const team = [['Ana Pérez', 'Diseño'], ['Bruno Salas', 'Ingeniería'], ['Carla Núñez', 'Producto'], ['Diego Herrera', 'Soporte'], ['Elena Vidal', 'Datos']];
+  const t = document.getElementById('t'), list = document.getElementById('list'), m = document.getElementById('m'), st = document.getElementById('st');
+  const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  let items = [], sel = 0, from = 0;
+  const open = () => !list.hidden;
+  function close() { list.hidden = true; t.setAttribute('aria-expanded', 'false'); t.removeAttribute('aria-activedescendant'); }
+  function paint() {
+    [...list.children].forEach((li, i) => li.setAttribute('aria-selected', i === sel));
+    if (items.length) t.setAttribute('aria-activedescendant', 'o' + sel);
+  }
+  function show(q) {
+    list.innerHTML = '';
+    items.forEach(([n, r], i) => {
+      const li = document.createElement('li'); li.id = 'o' + i; li.setAttribute('role', 'option');
+      li.innerHTML = '<span class="av" aria-hidden="true"></span><span class="who"><b></b><small></small></span>';
+      li.querySelector('.av').textContent = n.split(' ').map((w) => w[0]).join('');
+      li.querySelector('b').textContent = n; li.querySelector('small').textContent = r;
+      li.onmousedown = (e) => { e.preventDefault(); pick(i); };
+      list.append(li);
+    });
+    if (!items.length) { const li = document.createElement('li'); li.className = 'none'; li.textContent = 'Sin resultados para «' + q + '». Prueba con otro nombre.'; list.append(li); }
+    list.hidden = false; t.setAttribute('aria-expanded', 'true'); paint();
+    st.textContent = items.length ? items.length + ' sugerencias' : 'Sin resultados';
+  }
+  function pick(i) {
+    t.setRangeText('@' + items[i][0] + ' ', from, t.selectionStart, 'end');
+    close(); t.focus(); notes();
+  }
+  function notes() {
+    const hit = team.filter(([n]) => t.value.includes('@' + n));
+    m.textContent = hit.length ? 'Se notificará a ' : 'Usa las flechas para elegir y Enter para insertar.';
+    hit.forEach(([n]) => { const c = document.createElement('span'); c.className = 'chip'; c.textContent = n; m.append(c); });
+  }
+  t.addEventListener('input', () => {
+    const pos = t.selectionStart, r = /(^|\s)@([^\s@]*)$/.exec(t.value.slice(0, pos));
+    notes(); if (!r) return close();
+    from = pos - r[2].length - 1; sel = 0;
+    items = team.filter(([n]) => norm(n).includes(norm(r[2]))); show(r[2]);
+  });
+  t.addEventListener('keydown', (e) => {
+    if (!open()) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (items.length && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) { e.preventDefault(); sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length; paint(); }
+    else if (items.length && (e.key === 'Enter' || e.key === 'Tab')) { e.preventDefault(); pick(sel); }
+  });
+  t.addEventListener('blur', close);
+</script>
+</body>
+</html>

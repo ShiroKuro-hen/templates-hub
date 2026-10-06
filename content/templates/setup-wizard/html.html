@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:520px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .top{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+  h2{margin:0 0 16px;font-size:17px;font-weight:600}
+  .steps{display:flex;gap:8px;margin:0;padding:0;list-style:none}
+  .steps li{display:flex;flex:1;align-items:center;gap:8px;color:var(--muted);min-width:0}
+  .steps li::after{content:"";flex:1;height:1px;background:var(--border)}
+  .steps li:last-child::after{display:none}
+  .steps b{display:grid;place-items:center;flex:none;width:24px;height:24px;border:1px solid var(--border);border-radius:999px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+  .steps li[aria-current=step]{color:var(--text);font-weight:500}
+  .steps li[aria-current=step] b{border-color:transparent;background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#fff}
+  .steps li.done b{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+  .steps span{white-space:nowrap}
+  @media (max-width:480px){.steps li:not([aria-current=step]) span{display:none}}
+  form{padding:20px}
+  .pane{margin:0;padding:0;border:0;min-width:0}
+  legend{padding:0;margin-bottom:12px;font-weight:600;font-size:15px}
+  .f{margin-bottom:14px}
+  label,.lbl{display:block;margin-bottom:4px;font-weight:500}
+  input[type=text],input[type=email]{box-sizing:border-box;width:100%;height:36px;padding:0 12px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;transition:border-color .14s}
+  input:hover{border-color:var(--muted)}
+  input[aria-invalid=true]{border-color:var(--err)}
+  .suf{display:flex;align-items:center;gap:8px}.suf span{color:var(--muted);white-space:nowrap}
+  .err{display:block;min-height:0;margin-top:4px;color:var(--err)}
+  .opt{display:flex;gap:10px;align-items:center;margin:0 0 8px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-weight:400;cursor:pointer}
+  .opt:has(:checked){border-color:var(--accent);background:var(--accent-soft)}
+  input[type=radio],input[type=checkbox]{accent-color:var(--accent);margin:0}
+  dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 14px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  dt{color:var(--muted)}dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+  .check{display:flex;gap:8px;align-items:center;font-weight:400}
+  .btns{display:flex;justify-content:space-between;margin-top:20px}
+  button{height:36px;padding:0 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;font-weight:500;cursor:pointer;transition:background .14s}
+  button:hover{background:var(--accent-soft)}
+  button[type=submit]{margin-left:auto;background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button[type=submit]:hover{filter:brightness(.94)}
+  .ok{margin:0;padding:20px;background:var(--ok-soft);border-radius:var(--radius)}
+  .ok h3{margin:0 0 4px;font-size:15px}.ok p{margin:0}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="ttl">
+  <div class="top">
+    <h2 id="ttl">Configura tu espacio en Nimbus</h2>
+    <ol class="steps" id="steps" aria-label="Pasos de configuración">
+      <li><b>1</b><span>Cuenta</span></li><li><b>2</b><span>Espacio</span></li><li><b>3</b><span>Equipo</span></li><li><b>4</b><span>Revisión</span></li>
+    </ol>
+  </div>
+  <form id="f" novalidate>
+    <fieldset class="pane"><legend>Tus datos</legend>
+      <div class="f"><label for="nom">Nombre completo</label><input id="nom" type="text" required autocomplete="name" data-err="Escribe tu nombre completo." aria-describedby="nom-e"><small class="err" id="nom-e" role="alert"></small></div>
+      <div class="f"><label for="mail">Correo de trabajo</label><input id="mail" type="email" required autocomplete="email" data-err="Escribe un correo válido, por ejemplo ana@empresa.es." aria-describedby="mail-e"><small class="err" id="mail-e" role="alert"></small></div>
+    </fieldset>
+    <fieldset class="pane" hidden><legend>Tu espacio</legend>
+      <div class="f"><label for="esp">Nombre del espacio</label><input id="esp" type="text" required minlength="3" data-err="Usa al menos 3 caracteres para el nombre." aria-describedby="esp-e"><small class="err" id="esp-e" role="alert"></small></div>
+      <div class="f"><label for="url">Dirección web</label><div class="suf"><input id="url" type="text" required pattern="[a-z0-9]{3,}" data-err="Usa 3 o más letras minúsculas o números, sin espacios." aria-describedby="url-e"><span>.nimbus.app</span></div><small class="err" id="url-e" role="alert"></small></div>
+    </fieldset>
+    <fieldset class="pane" hidden><legend>Tamaño del equipo</legend>
+      <label class="opt"><input type="radio" name="eq" value="1 a 10 personas" required data-err="Elige el tamaño de tu equipo para continuar." id="eq1" aria-describedby="eq1-e">1 a 10 personas</label>
+      <label class="opt"><input type="radio" name="eq" value="11 a 50 personas">11 a 50 personas</label>
+      <label class="opt"><input type="radio" name="eq" value="Más de 50 personas">Más de 50 personas</label>
+      <small class="err" id="eq1-e" role="alert"></small>
+    </fieldset>
+    <fieldset class="pane" hidden><legend>Revisa y confirma</legend>
+      <dl id="sum"></dl>
+      <label class="check"><input id="tos" type="checkbox" required data-err="Acepta los términos para crear el espacio." aria-describedby="tos-e">Acepto los términos del servicio</label><small class="err" id="tos-e" role="alert"></small>
+    </fieldset>
+    <div class="btns"><button type="button" id="back" hidden>Atrás</button><button type="submit" id="next">Continuar</button></div>
+  </form>
+  <div class="ok" id="done" hidden tabindex="-1"><h3>Espacio creado</h3><p id="msg"></p></div>
+</section>
+<script>
+  const $ = (id) => document.getElementById(id), P = [...document.querySelectorAll('.pane')], L = [...$('steps').children];
+  let n = 0;
+  function go(k, focus) {
+    n = k;
+    P.forEach((p, j) => (p.hidden = j !== n));
+    L.forEach((li, j) => {
+      li.className = j < n ? 'done' : '';
+      j === n ? li.setAttribute('aria-current', 'step') : li.removeAttribute('aria-current');
+      li.firstChild.textContent = j < n ? '✓' : j + 1;
+    });
+    $('back').hidden = !n;
+    $('next').textContent = n === 3 ? 'Crear espacio' : 'Continuar';
+    if (n === 3) {
+      const eq = document.querySelector('[name=eq]:checked').value;
+      $('sum').innerHTML = '';
+      [['Nombre', $('nom').value], ['Correo', $('mail').value], ['Espacio', $('esp').value], ['Dirección', $('url').value + '.nimbus.app'], ['Equipo', eq]]
+        .forEach(([k, v]) => { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = k; dd.textContent = v; $('sum').append(dt, dd); });
+    }
+    if (focus) P[n].querySelector('input').focus();
+  }
+  function valid() {
+    let first = null;
+    P[n].querySelectorAll('[data-err]').forEach((el) => {
+      const ok = el.checkValidity();
+      el.setAttribute('aria-invalid', !ok);
+      $(el.id + '-e').textContent = ok ? '' : el.dataset.err;
+      if (!ok && !first) first = el;
+    });
+    first?.focus();
+    return !first;
+  }
+  $('f').addEventListener('input', (e) => {
+    const el = e.target.name ? document.querySelector(`[name=${e.target.name}][data-err]`) : e.target;
+    if (el.checkValidity()) { el.setAttribute('aria-invalid', 'false'); $(el.id + '-e').textContent = ''; }
+  });
+  $('back').onclick = () => go(n - 1, 1);
+  $('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!valid()) return;
+    if (n < 3) return go(n + 1, 1);
+    $('f').hidden = true; $('done').hidden = false;
+    $('msg').textContent = `Tu espacio ${$('esp').value} está listo en ${$('url').value}.nimbus.app.`;
+    $('done').focus();
+  });
+  go(0);
+</script>
+</body>
+</html>

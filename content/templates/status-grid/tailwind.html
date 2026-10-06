@@ -1,0 +1,28 @@
+<h1 class="m-0 text-lg font-semibold text-slate-900 dark:text-slate-100">Estado de los servicios</h1>
+<p id="b" role="status" class="mb-4 mt-3 flex items-center gap-2.5 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <span id="dot" class="h-2.5 w-2.5 flex-none rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 motion-safe:animate-pulse"></span><span id="bt"></span>
+</p>
+<ul id="g" class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4 p-0 text-sm text-slate-900 dark:text-slate-100"></ul>
+<script>
+  // Días con problema por servicio: 0 = hace 29 días, 29 = hoy. d = degradado, x = incidencia.
+  const S = [['API pública', {}], ['Panel web', { 14: 'd' }], ['Autenticación', {}], ['Pagos', { 6: 'x', 7: 'd' }],
+             ['Notificaciones', { 3: 'd', 28: 'd', 29: 'd' }], ['Almacenamiento', {}], ['Webhooks', { 19: 'd', 20: 'd' }], ['Búsqueda', {}]];
+  const T = { o: 'operativo', d: 'degradado', x: 'con incidencia' };
+  const L = { o: 'Operativo', d: 'Degradado', x: 'Con incidencia' };
+  const BAR = { o: 'bg-emerald-500', d: 'bg-amber-500', x: 'bg-rose-500' };
+  const PILL = { o: 'bg-emerald-50 dark:bg-emerald-500/10', d: 'bg-amber-50 dark:bg-amber-500/10', x: 'bg-rose-50 dark:bg-rose-500/10' };
+  const fecha = (i) => new Date(2026, 9, 6 - (29 - i)).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
+  const n = (a, c) => a.filter((x) => x === c).length;
+  let alerta = 0;
+  document.getElementById('g').innerHTML = S.map(([name, bad]) => {
+    const d = Array.from({ length: 30 }, (_, i) => bad[i] || 'o'), x = n(d, 'x'), w = n(d, 'd'), hoy = d[29];
+    if (hoy !== 'o') alerta++;
+    return `<li class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div class="mb-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1"><h3 class="m-0 text-sm font-semibold">${name}</h3>
+        <span class="inline-flex items-center gap-1.5 rounded-full px-2 text-xs font-semibold ${PILL[hoy]}"><i class="h-2 w-2 rounded-full ${BAR[hoy]}"></i>${L[hoy]}</span></div>
+      <div class="flex h-7 gap-0.5" role="img" aria-label="${name}, últimos 30 días: ${30 - x - w} operativos, ${w} degradados, ${x} con incidencia">${d.map((c, i) => `<i class="min-w-0 flex-1 rounded-sm ${BAR[c]}" title="${fecha(i)}: ${T[c]}"></i>`).join('')}</div>
+      <div class="mt-2 flex justify-between text-xs tabular-nums text-slate-500 dark:text-slate-400"><span>Hace 30 días</span><span><b class="font-semibold text-slate-900 dark:text-slate-100">${(100 - x * 0.8 - w * 0.2).toFixed(1).replace('.', ',')} %</b> disponible</span></div></li>`;
+  }).join('');
+  document.getElementById('dot').classList.toggle("!bg-none", alerta > 0); document.getElementById("dot").classList.toggle("!bg-amber-500", alerta > 0);
+  document.getElementById('bt').textContent = alerta ? `Hay ${alerta} ${alerta > 1 ? 'servicios' : 'servicio'} con problemas. Seguimos investigando la causa.` : 'Todos los sistemas funcionan con normalidad.';
+</script>

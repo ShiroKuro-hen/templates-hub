@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  button{font:inherit;color:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn{padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);width:100%;font-weight:600}
+  .primary:hover{background:var(--accent);filter:brightness(1.08)}
+  .drawer{margin:0 0 0 auto;height:100dvh;max-height:none;width:min(400px,100vw);box-sizing:border-box;padding:0;border:0;border-left:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+  .drawer[open]{display:flex;flex-direction:column;animation:in .16s ease-out}
+  .drawer::backdrop{background:rgba(14,23,38,.4)}
+  @keyframes in{from{transform:translateX(24px);opacity:0}}
+  header,footer{padding:16px 20px;border-bottom:1px solid var(--border)}
+  header{display:flex;justify-content:space-between;align-items:center}
+  header h2{margin:0;font-size:16px}
+  .close{border:0;background:none;font-size:20px;line-height:1;padding:4px 8px;border-radius:var(--radius)}
+  .shipbox{padding:12px 20px;border-bottom:1px solid var(--border)}
+  .ship{margin:0;color:var(--muted);font-size:13px}
+  .meter{height:4px;margin-top:6px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
+  .meter i{display:block;height:100%;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+  ul{list-style:none;margin:0;padding:0 20px;flex:1;overflow:auto}
+  li{display:grid;grid-template-columns:48px 1fr auto;gap:12px;padding:16px 0;border-bottom:1px solid var(--border)}
+  .thumb{width:48px;height:48px;border-radius:var(--radius);background:var(--accent-soft);border:1px solid var(--border)}
+  .name{font-weight:600}.var{color:var(--muted);font-size:13px}
+  .qty{display:inline-flex;align-items:center;margin-top:8px;border:1px solid var(--border);border-radius:var(--radius)}
+  .qty button{border:0;background:none;width:28px;height:28px}
+  .qty output{min-width:24px;text-align:center}
+  .sub{text-align:right;font-weight:600}
+  .rm{display:block;margin-top:8px;margin-left:auto;border:0;background:none;color:var(--muted);font-size:13px;text-decoration:underline}
+  .num,output{font-variant-numeric:tabular-nums}
+  footer{border:0;border-top:1px solid var(--border)}
+  .row{display:flex;justify-content:space-between;margin-bottom:12px;font-size:16px;font-weight:600}
+  .empty{padding:40px 20px;text-align:center;color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<button class="btn" id="open" type="button" aria-haspopup="dialog">Ver carrito (<span id="count">3</span>)</button>
+<dialog class="drawer" id="cart" aria-labelledby="cart-title">
+  <header>
+    <h2 id="cart-title">Tu carrito</h2>
+    <button class="close" type="button" aria-label="Cerrar carrito" data-close>&times;</button>
+  </header>
+  <div class="shipbox">
+    <p class="ship" id="ship"></p>
+    <div class="meter" aria-hidden="true"><i id="bar"></i></div>
+  </div>
+  <ul id="lines" aria-live="polite"></ul>
+  <footer>
+    <div class="row"><span>Subtotal</span><span class="num" id="total"></span></div>
+    <button class="btn primary" type="button">Ir al pago</button>
+  </footer>
+</dialog>
+<script>
+  const items = [
+    { id: 1, name: 'Auriculares Nova ANC', variant: 'Grafito', price: 129.9, qty: 1 },
+    { id: 2, name: 'Cable USB-C trenzado', variant: '2 m', price: 14.5, qty: 2 },
+    { id: 3, name: 'Funda de viaje rígida', variant: 'Azul noche', price: 24, qty: 1 },
+  ];
+  const FREE = 200, eur = (n) => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+  const $ = (id) => document.getElementById(id), dlg = $('cart');
+  function render() {
+    const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+    $('lines').innerHTML = items.length ? items.map((i) => `
+      <li data-id="${i.id}"><span class="thumb" aria-hidden="true"></span>
+        <div><div class="name">${i.name}</div><div class="var">${i.variant}</div>
+          <div class="qty" role="group" aria-label="Cantidad de ${i.name}">
+            <button type="button" data-d="-1" aria-label="Quitar una unidad">−</button>
+            <output>${i.qty}</output>
+            <button type="button" data-d="1" aria-label="Añadir una unidad">+</button></div></div>
+        <div><div class="sub num">${eur(i.price * i.qty)}</div><button class="rm" type="button" data-rm>Eliminar</button></div>
+      </li>`).join('') : '<li class="empty" style="display:block">Tu carrito está vacío. Explora el catálogo y añade tu primer producto.</li>';
+    $('total').textContent = eur(total);
+    $('count').textContent = items.reduce((s, i) => s + i.qty, 0);
+    $('ship').textContent = total >= FREE ? 'Tienes envío gratis.' : `Te faltan ${eur(FREE - total)} para el envío gratis.`;
+    $('bar').style.width = Math.min(100, (total / FREE) * 100) + '%';
+  }
+  $('lines').addEventListener('click', (e) => {
+    const li = e.target.closest('li[data-id]'); if (!li) return;
+    const idx = items.findIndex((i) => i.id == li.dataset.id), b = e.target.closest('button');
+    if (!b) return;
+    if (b.hasAttribute('data-rm')) items.splice(idx, 1);
+    else items[idx].qty = Math.max(1, items[idx].qty + Number(b.dataset.d));
+    render();
+    const again = $('lines').querySelector(`li[data-id="${li.dataset.id}"] [data-d="${b.dataset.d}"]`);
+    (again || $('lines').querySelector('button') || dlg.querySelector('[data-close]')).focus();
+  });
+  $('open').onclick = () => dlg.showModal();
+  dlg.addEventListener('click', (e) => { if (e.target === dlg || e.target.closest('[data-close]')) dlg.close(); });
+  render();
+</script>
+</body>
+</html>

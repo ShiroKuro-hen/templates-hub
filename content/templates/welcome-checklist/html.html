@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:560px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 20px 12px}
+  h2{margin:0;font-size:17px;font-weight:600}
+  .sub{margin:2px 0 0;color:var(--muted)}
+  .sub b{color:var(--text);font-variant-numeric:tabular-nums}
+  .pct{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+  progress{display:block;width:calc(100% - 40px);height:6px;margin:0 20px 16px;border:0;border-radius:999px;background:var(--accent-soft);-webkit-appearance:none;appearance:none;overflow:hidden}
+  progress::-webkit-progress-bar{background:var(--accent-soft)}
+  progress::-webkit-progress-value{background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+  progress::-moz-progress-bar{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .tasks{list-style:none;margin:0;padding:0;border-top:1px solid var(--border)}
+  .tasks li{display:flex;gap:12px;align-items:flex-start;padding:12px 20px;border-bottom:1px solid var(--border)}
+  .tasks li:last-child{border-bottom:0}
+  input[type=checkbox]{flex:none;width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent);cursor:pointer}
+  details{flex:1;min-width:0}
+  summary{display:flex;gap:8px;cursor:pointer;font-weight:500;list-style:none;border-radius:4px}
+  summary::-webkit-details-marker{display:none}
+  summary small{margin-left:auto;color:var(--muted);font-size:13px;font-weight:400;font-variant-numeric:tabular-nums}
+  summary::after{content:"";flex:none;width:6px;height:6px;margin:6px 2px 0 4px;border:solid var(--muted);border-width:0 1px 1px 0;transform:rotate(45deg);transition:transform .14s}
+  details[open] summary::after{transform:rotate(-135deg);margin-top:9px}
+  li:has(:checked) summary span{color:var(--muted);text-decoration:line-through}
+  details p{margin:6px 0 0;color:var(--muted)}
+  details a{display:inline-block;margin-top:8px;color:var(--accent);font-weight:500;text-decoration:none;border-radius:4px}
+  details a:hover{text-decoration:underline}
+  .all-done{margin:0;padding:12px 20px;background:var(--ok-soft);border-top:1px solid var(--border)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="ttl">
+  <header class="head">
+    <div>
+      <h2 id="ttl">Configura tu espacio en Nimbus</h2>
+      <p class="sub" aria-live="polite"><b id="done">2</b> de 5 pasos completados</p>
+    </div>
+    <span class="pct" id="pct" aria-hidden="true">40%</span>
+  </header>
+  <progress id="bar" max="5" value="2" aria-label="Progreso de configuración"></progress>
+  <ol class="tasks" id="tasks">
+    <li><input type="checkbox" checked aria-label="Hecho: Crea tu cuenta">
+      <details><summary><span>Crea tu cuenta</span><small>1 min</small></summary>
+        <p>Tu cuenta está verificada con ana.lopez@lumen.es.</p></details></li>
+    <li><input type="checkbox" checked aria-label="Hecho: Invita a tu equipo">
+      <details><summary><span>Invita a tu equipo</span><small>2 min</small></summary>
+        <p>Tres personas ya tienen acceso. Puedes invitar a más desde Miembros.</p></details></li>
+    <li><input type="checkbox" aria-label="Hecho: Conecta una fuente de datos">
+      <details open><summary><span>Conecta una fuente de datos</span><small>5 min</small></summary>
+        <p>Importa un CSV o conecta tu base de datos PostgreSQL para ver métricas reales.</p>
+        <a href="#fuentes">Conectar fuente</a></details></li>
+    <li><input type="checkbox" aria-label="Hecho: Crea tu primer panel">
+      <details><summary><span>Crea tu primer panel</span><small>4 min</small></summary>
+        <p>Parte de la plantilla de ventas o empieza con un panel en blanco.</p>
+        <a href="#paneles">Crear panel</a></details></li>
+    <li><input type="checkbox" aria-label="Hecho: Configura las alertas">
+      <details><summary><span>Configura las alertas</span><small>3 min</small></summary>
+        <p>Recibe un aviso cuando una métrica cambie más de un 10 % en un día.</p>
+        <a href="#alertas">Configurar alertas</a></details></li>
+  </ol>
+  <p class="all-done" id="ok" hidden>Todo listo. Comparte tu primer panel con el equipo.</p>
+</section>
+<script>
+  const list = document.getElementById('tasks'), bar = document.getElementById('bar');
+  list.addEventListener('change', () => {
+    const n = list.querySelectorAll(':checked').length;
+    bar.value = n;
+    document.getElementById('done').textContent = n;
+    document.getElementById('pct').textContent = Math.round((n / bar.max) * 100) + '%';
+    document.getElementById('ok').hidden = n < bar.max;
+  });
+</script>
+</body>
+</html>

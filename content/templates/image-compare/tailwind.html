@@ -1,0 +1,31 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mx-auto max-w-2xl">
+    <h2 class="m-0 text-base font-semibold">Retoque de color</h2>
+    <p class="mt-0.5 text-slate-500 dark:text-slate-400">Fotografía de montaña antes y después de la edición.</p>
+    <div id="cmp" role="group" aria-label="Comparación antes y después" class="group relative my-4 aspect-[16/10] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm [--p:50%] dark:border-slate-700 dark:bg-slate-900">
+      <svg width="0" height="0" class="absolute" aria-hidden="true">
+        <symbol id="sc" viewBox="0 0 160 100">
+          <rect class="fill-amber-100 dark:fill-amber-950" width="160" height="100"/><path class="fill-amber-500" d="M99 30a13 13 0 1 0 26 0a13 13 0 1 0-26 0"/>
+          <path class="fill-blue-600" d="M0 78 30 44l22 24 26-34 34 40 20-18 28 22V100H0z"/>
+          <path class="fill-emerald-600" d="M0 90q30-22 60-6t60-4t40 6V100H0z"/><path class="fill-cyan-600" d="M0 96q40-8 80 0t80 0V100H0z"/>
+        </symbol>
+      </svg>
+      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Versión original, sin retoque" class="absolute inset-0 size-full contrast-75 grayscale"><use href="#sc"/></svg>
+      <svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Versión retocada, con color" class="absolute inset-0 size-full [clip-path:inset(0_0_0_var(--p))]"><use href="#sc"/></svg>
+      <span aria-hidden="true" class="absolute left-2.5 top-2.5 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-900">Antes</span>
+      <span aria-hidden="true" class="absolute right-2.5 top-2.5 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-900">Después</span>
+      <span aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-[var(--p)] -ml-px w-0.5 bg-gradient-to-br from-cyan-400 to-blue-600"></span>
+      <span aria-hidden="true" class="pointer-events-none absolute left-[var(--p)] top-1/2 -ml-[18px] -mt-[18px] grid size-9 place-items-center rounded-full border border-slate-200 bg-white text-blue-600 shadow-sm group-has-[:focus-visible]:outline-2 group-has-[:focus-visible]:outline-offset-2 group-has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-blue-400"><svg class="size-5 fill-current" viewBox="0 0 24 24"><path d="M8 7 3 12l5 5zm8 0v10l5-5z"/></svg></span>
+      <input id="r" type="range" min="0" max="100" step="1" value="50" aria-label="Divisor entre antes y después" class="absolute inset-0 m-0 size-full cursor-ew-resize opacity-0">
+    </div>
+    <p class="m-0 text-xs text-slate-500 dark:text-slate-400">Arrastra el divisor o usa las flechas, Inicio y Fin.</p>
+  </div>
+</div>
+<script>
+  const cmp = document.getElementById('cmp'), r = document.getElementById('r');
+  r.oninput = () => {
+    cmp.style.setProperty('--p', r.value + '%');
+    r.setAttribute('aria-valuetext', `Antes ${r.value} %, después ${100 - r.value} %`);
+  };
+  r.oninput();
+</script>

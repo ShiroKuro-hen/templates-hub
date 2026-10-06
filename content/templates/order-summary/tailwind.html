@@ -1,0 +1,49 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="t" class="max-w-sm rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <h2 id="t" class="mb-3 text-base font-semibold">Resumen del pedido</h2>
+    <ul class="mb-4 [&>li]:flex [&>li]:justify-between [&>li]:gap-3 [&>li]:border-b [&>li]:border-slate-200 [&>li]:py-2 dark:[&>li]:border-slate-700 [&_small]:block [&_small]:text-slate-500 dark:[&_small]:text-slate-400">
+      <li><span>Zapatillas Aero Run<small>Talla 42, 1 unidad</small></span><span class="tabular-nums">89,90 €</span></li>
+      <li><span>Calcetines técnicos<small>Pack de 3, 2 unidades</small></span><span class="tabular-nums">25,80 €</span></li>
+      <li><span>Mochila Urban 20 L<small>Gris, 1 unidad</small></span><span class="tabular-nums">39,00 €</span></li>
+    </ul>
+    <form id="cf" novalidate>
+      <label for="code" class="block font-medium">Código de descuento</label>
+      <div class="mt-1 flex gap-2">
+        <input id="code" autocomplete="off" aria-describedby="msg" class="min-w-0 flex-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-[invalid=true]:border-red-600 dark:border-slate-700 dark:bg-slate-900">
+        <button type="submit" class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Aplicar</button>
+      </div>
+      <p id="msg" role="status" class="mb-3 mt-1 min-h-5 text-[13px] text-slate-500 dark:text-slate-400"></p>
+    </form>
+    <dl id="dl" class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 tabular-nums [&_dd]:m-0 [&_dd]:text-right [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400"></dl>
+    <div class="mt-4 flex items-baseline justify-between border-t border-slate-200 pt-3 text-lg font-semibold dark:border-slate-700"><span>Total</span><output id="total" class="tabular-nums"></output></div>
+    <div class="mt-3 h-[3px] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" aria-hidden="true"></div>
+  </section>
+</div>
+<script>
+  const ITEMS = [8990, 2580, 3900], FREE_FROM = 15000, SHIP = 690;
+  const CODES = { ION10: { label: '10 %', off: (s) => Math.round(s * 0.1) }, BIENVENIDA: { label: '15 €', off: () => 1500 } };
+  const $ = (id) => document.getElementById(id), eur = (c) => (c / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+  const OK = 'text-emerald-600 dark:text-emerald-400';
+  let code = null;
+  function render() {
+    const sub = ITEMS.reduce((a, b) => a + b, 0), off = code ? CODES[code].off(sub) : 0;
+    const ship = sub - off >= FREE_FROM ? 0 : SHIP, total = sub - off + ship;
+    $('dl').innerHTML = `<dt>Subtotal</dt><dd>${eur(sub)}</dd>`
+      + (off ? `<dt class="${OK}">Descuento ${code} <button type="button" data-rm class="px-1.5 text-blue-600 underline focus-visible:outline-2 focus-visible:outline-blue-600 dark:text-blue-400">Quitar</button></dt><dd class="${OK}">−${eur(off)}</dd>` : '')
+      + `<dt>Envío</dt><dd>${ship ? eur(ship) : 'Gratis'}</dd><dt>IVA incluido</dt><dd>${eur(Math.round(total * 21 / 121))}</dd>`;
+    $('total').textContent = eur(total);
+  }
+  function say(t, err) { $('msg').textContent = t; $('code').setAttribute('aria-invalid', !!err); }
+  $('cf').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = $('code').value.trim().toUpperCase();
+    if (!v) return say('Escribe un código. Por ejemplo, ION10.', true);
+    if (!CODES[v]) return say(`El código ${v} no existe o ha caducado. Revisa que esté bien escrito.`, true);
+    code = v; say(`Código aplicado: ${CODES[v].label} de descuento.`); render();
+  });
+  $('dl').addEventListener('click', (e) => {
+    if (!e.target.closest('[data-rm]')) return;
+    code = null; $('code').value = ''; say('Código eliminado.'); render(); $('code').focus();
+  });
+  render();
+</script>

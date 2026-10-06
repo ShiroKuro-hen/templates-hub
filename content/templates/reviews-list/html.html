@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .reviews{max-width:680px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .summary{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;padding:20px}
+  @media (max-width:480px){.summary{grid-template-columns:1fr;gap:16px}}
+  .score{text-align:center}
+  .score b{display:block;font-size:44px;line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
+  .score>span:not(.stars){color:var(--muted)}
+  .stars{color:var(--warn);letter-spacing:1px;white-space:nowrap}
+  .stars .off{color:var(--border)}
+  .dist{display:grid;gap:2px}
+  .dist button{display:grid;grid-template-columns:44px 1fr 28px;gap:10px;align-items:center;padding:3px 6px;font:inherit;color:var(--text);text-align:left;background:none;border:1px solid transparent;border-radius:var(--radius);cursor:pointer;transition:background .14s}
+  .dist button:hover:not(:disabled){background:var(--accent-soft)}
+  .dist button[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft)}
+  .dist button:disabled{color:var(--muted);cursor:default}
+  .track{height:6px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
+  .dist button[aria-pressed=true] .track{background:var(--surface)}
+  .track i{display:block;height:100%;width:calc(var(--p) * 1%);background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .num{font-variant-numeric:tabular-nums;text-align:right;color:var(--muted)}
+  .bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;margin:16px 0 8px}
+  .bar select{margin-left:6px;padding:6px 8px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .link{padding:0 4px;font:inherit;color:var(--accent);background:none;border:0;text-decoration:underline;cursor:pointer}
+  ol{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  article{padding:16px 20px}
+  article header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px}
+  article h3{margin:6px 0 4px;font-size:15px}
+  article p{margin:0;max-width:62ch}
+  .who{color:var(--muted)}
+  .ok{margin-left:8px;padding:1px 8px;font-size:12px;color:var(--ok);background:var(--ok-soft);border-radius:999px}
+  .help{display:inline-flex;gap:6px;margin-top:10px;padding:4px 10px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .14s}
+  .help:hover{background:var(--accent-soft)}
+  .help[aria-pressed=true]{color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="reviews" aria-labelledby="t">
+  <h2 id="t" hidden>Reseñas de clientes</h2>
+  <div class="card summary">
+    <div class="score" role="img"><b id="avg"></b><span class="stars" id="avgs" aria-hidden="true"></span><br><span id="cnt"></span></div>
+    <div class="dist" id="dist" role="group" aria-label="Filtrar por valoración"></div>
+  </div>
+  <div class="bar">
+    <span id="shown" role="status"></span>
+    <label>Ordenar por<select id="sort"><option value="new">Más recientes</option><option value="high">Mejor valoradas</option><option value="low">Menos valoradas</option><option value="help">Más útiles</option></select></label>
+  </div>
+  <ol id="list"></ol>
+</section>
+<script>
+  const R = [
+    [5,'2026-09-28','Laura M.','Justo lo que buscaba','Llegó en dos días y la batería dura toda la semana. La app es clara y el ajuste de la correa es muy cómodo.',1,14],
+    [4,'2026-09-15','Carlos R.','Muy buena relación calidad-precio','Pantalla nítida y buen GPS. Echo en falta más esferas gratuitas.',1,9],
+    [5,'2026-09-02','Marta S.','Perfecto para correr','Mide el ritmo con precisión y se sincroniza sin fallos con el móvil.',1,6],
+    [3,'2026-08-21','Javier P.','Cumple, sin más','Funciona bien, pero las notificaciones tardan unos segundos en aparecer.',0,3],
+    [2,'2026-08-10','Elena T.','La correa se despegó','A los dos meses la correa empezó a soltarse. El soporte la cambió, pero tardó diez días.',1,11],
+    [5,'2026-07-30','Pablo G.','Muy recomendable','Compré dos, uno para mi pareja. Los dos funcionan igual de bien.',1,2],
+    [4,'2026-07-12','Nuria V.','Mejor de lo esperado','El sueño se registra con detalle. La carga completa tarda 90 minutos.',0,5],
+    [5,'2026-06-25','Íñigo L.','Batería excelente','Con uso normal llego a nueve días sin cargar.',1,4],
+    [1,'2026-06-03','Rosa D.','No encendía','Llegó sin carga y no respondía al cargador. Pedí la devolución.',1,1],
+    [4,'2026-05-18','Sergio B.','Sólido','Resistente al agua de verdad: lo uso en la piscina cada día.',1,7],
+  ].map(([r, d, a, t, x, v, h], id) => ({ id, r, d, a, t, x, v, h, on: false }));
+  const $ = (id) => document.getElementById(id), stars = (n) => '★'.repeat(n) + `<span class="off">${'★'.repeat(5 - n)}</span>`;
+  const fmt = (d) => new Date(d).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+  const cmp = { new: (a, b) => b.d.localeCompare(a.d), high: (a, b) => b.r - a.r, low: (a, b) => a.r - b.r, help: (a, b) => b.h + b.on - a.h - a.on };
+  let filter = 0;
+  const avg = R.reduce((s, x) => s + x.r, 0) / R.length;
+  $('avg').textContent = avg.toFixed(1).replace('.', ','); $('avgs').innerHTML = stars(Math.round(avg));
+  $('avgs').parentElement.setAttribute('aria-label', `Valoración media ${avg.toFixed(1)} de 5, ${R.length} reseñas`);
+  $('cnt').textContent = `${R.length} reseñas`;
+  $('dist').innerHTML = [5, 4, 3, 2, 1].map((n) => {
+    const c = R.filter((x) => x.r === n).length;
+    return `<button type="button" data-n="${n}" aria-pressed="false" ${c ? '' : 'disabled'} aria-label="${n} estrellas, ${c} reseñas"><span aria-hidden="true">${n} ★</span><span class="track" aria-hidden="true"><i style="--p:${(c / R.length) * 100}"></i></span><span class="num" aria-hidden="true">${c}</span></button>`;
+  }).join('');
+  function render() {
+    const rows = R.filter((x) => !filter || x.r === filter).sort(cmp[$('sort').value]);
+    $('list').innerHTML = rows.map((x) => `<li><article class="card"><header><span class="stars" role="img" aria-label="${x.r} de 5 estrellas">${stars(x.r)}</span><time class="who" datetime="${x.d}">${fmt(x.d)}</time></header>
+      <h3>${x.t}</h3><p>${x.x}</p><div class="who" style="margin-top:6px">${x.a}${x.v ? '<span class="ok">Compra verificada</span>' : ''}</div>
+      <button class="help" type="button" data-id="${x.id}" aria-pressed="${x.on}">Me resulta útil <span class="num">${x.h + x.on}</span></button></article></li>`).join('');
+    $('shown').innerHTML = `Mostrando ${rows.length} de ${R.length}` + (filter ? ` <button class="link" type="button" data-clear>Quitar filtro</button>` : '');
+    $('dist').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', +b.dataset.n === filter));
+  }
+  $('dist').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { filter = filter === +b.dataset.n ? 0 : +b.dataset.n; render(); } });
+  $('shown').addEventListener('click', (e) => { if (e.target.closest('[data-clear]')) { filter = 0; render(); $('dist').querySelector('button:not(:disabled)').focus(); } });
+  $('list').addEventListener('click', (e) => {
+    const b = e.target.closest('.help'); if (!b) return;
+    const x = R[b.dataset.id]; x.on = !x.on; render(); $('list').querySelector(`[data-id="${x.id}"]`)?.focus();
+  });
+  $('sort').addEventListener('change', render);
+  render();
+</script>
+</body>
+</html>

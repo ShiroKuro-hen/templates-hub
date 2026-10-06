@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);font:inherit;font-weight:500;cursor:pointer;transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.main:hover{filter:brightness(.94)}
+  .pill{padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600}
+  #st{margin:12px 0 0;color:var(--muted)}
+  dialog{width:min(440px,calc(100vw - 32px));padding:0;overflow:hidden;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  dialog[open]{animation:in .16s ease-out}
+  dialog::backdrop{background:color-mix(in srgb,var(--text) 45%,transparent)}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}}
+  figure{margin:0;border-bottom:1px solid var(--border)}
+  figure svg{display:block;width:100%;height:auto}
+  .x{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:32px;height:32px;padding:0;background:var(--surface);color:var(--muted);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer}
+  .x:hover{color:var(--text)}
+  .body{padding:20px}
+  .body .pill{display:inline-block}
+  h2{margin:8px 0 4px;font-size:18px;font-weight:600}
+  .body p{margin:0;color:var(--muted)}
+  ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  li{display:flex;gap:8px;align-items:flex-start}
+  li svg{flex:none;margin-top:3px;color:var(--ok)}
+  form{display:flex;justify-content:flex-end;gap:8px;padding:0 20px 20px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<button type="button" class="btn" id="open">Ver novedades <span class="pill">Nuevo</span></button>
+<p id="st" role="status"></p>
+<dialog id="dlg" aria-labelledby="ttl" aria-describedby="desc">
+  <figure>
+    <svg viewBox="0 0 440 150" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+      <rect width="440" height="150" style="fill:var(--accent-soft)"/>
+      <g transform="translate(56 24)">
+        <rect width="170" height="104" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+        <rect x="14" y="14" width="64" height="6" rx="3" style="fill:var(--border)"/>
+        <rect x="18" y="58" width="22" height="30" rx="3" style="fill:var(--accent-soft)"/>
+        <rect x="50" y="42" width="22" height="46" rx="3" style="fill:var(--accent-soft)"/>
+        <rect x="82" y="26" width="22" height="62" rx="3" fill="url(#g)"/>
+        <rect x="114" y="48" width="22" height="40" rx="3" style="fill:var(--accent-soft)"/>
+      </g>
+      <path d="M226 76h24" style="stroke:var(--accent);stroke-dasharray:3 3" fill="none"/>
+      <g transform="translate(250 44)">
+        <rect width="134" height="64" rx="8" style="fill:var(--surface);stroke:var(--border)"/>
+        <circle cx="26" cy="32" r="12" fill="url(#g)"/>
+        <rect x="46" y="22" width="68" height="6" rx="3" style="fill:var(--muted)"/>
+        <text x="46" y="48" font-size="11" font-family="system-ui,sans-serif" style="fill:var(--muted)">Lunes, 08:00</text>
+      </g>
+    </svg>
+  </figure>
+  <button type="button" class="x" id="close" aria-label="Cerrar">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+  </button>
+  <div class="body">
+    <span class="pill">Novedad</span>
+    <h2 id="ttl">Informes programados</h2>
+    <p id="desc">Recibe tus paneles por correo sin abrir la aplicación.</p>
+    <ul>
+      <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7"/></svg>Elige día y hora de envío.</li>
+      <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7"/></svg>Añade a quien quieras como destinatario.</li>
+      <li><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7"/></svg>Exporta en PDF o CSV.</li>
+    </ul>
+  </div>
+  <form method="dialog">
+    <button class="btn" value="later">Más tarde</button>
+    <button class="btn main" value="try" autofocus>Probar ahora</button>
+  </form>
+</dialog>
+<script>
+  const dlg = document.getElementById('dlg'), st = document.getElementById('st');
+  document.getElementById('open').onclick = () => dlg.showModal();
+  document.getElementById('close').onclick = () => dlg.close();
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('close', () => { st.textContent = dlg.returnValue === 'try' ? 'Abriendo informes programados.' : ''; dlg.returnValue = ''; });
+  dlg.showModal();
+</script>
+</body>
+</html>

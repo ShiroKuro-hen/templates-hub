@@ -1,0 +1,61 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <form id="f" novalidate class="grid max-w-4xl items-start gap-5 md:grid-cols-[minmax(0,1fr)_300px]">
+    <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 [&_fieldset]:mb-5 [&_fieldset]:min-w-0 [&_fieldset:disabled]:hidden [&_label]:block [&_label]:font-medium [&_legend]:mb-3 [&_legend]:text-base [&_legend]:font-semibold [&_input]:mt-1 [&_input]:w-full [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-2.5 [&_input]:py-2 [&_input]:font-normal [&_input]:focus-visible:outline-2 [&_input]:focus-visible:outline-offset-2 [&_input]:focus-visible:outline-blue-600 [&_input]:user-invalid:border-red-600 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 [&_.hint]:mt-1 [&_.hint]:block [&_.hint]:text-xs [&_.hint]:font-normal [&_.hint]:text-slate-500 dark:[&_.hint]:text-slate-400">
+      <fieldset>
+        <legend>Contacto</legend>
+        <label>Correo electrónico<input type="email" name="email" autocomplete="email" required><span class="hint">Te enviaremos aquí la confirmación del pedido.</span></label>
+      </fieldset>
+      <fieldset>
+        <legend>Dirección de envío</legend>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <label>Nombre completo<input name="name" autocomplete="name" required></label>
+          <label>Teléfono<input type="tel" name="tel" autocomplete="tel" required></label>
+          <label class="sm:col-span-2">Dirección<input name="address" autocomplete="street-address" required></label>
+          <label>Código postal<input name="zip" autocomplete="postal-code" inputmode="numeric" pattern="\d{5}" required><span class="hint">5 dígitos, por ejemplo 28013.</span></label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Método de pago</legend>
+        <div id="methods" class="grid grid-cols-3 gap-2 [&_label]:flex [&_label]:cursor-pointer [&_label]:items-center [&_label]:gap-2 [&_label]:rounded-lg [&_label]:border [&_label]:border-slate-200 [&_label]:p-2.5 dark:[&_label]:border-slate-700 [&_label:has(:checked)]:border-blue-600 [&_label:has(:checked)]:bg-blue-50 dark:[&_label:has(:checked)]:bg-slate-800 [&_input]:m-0 [&_input]:w-auto [&_input]:accent-blue-600">
+          <label><input type="radio" name="method" value="card" checked> Tarjeta</label>
+          <label><input type="radio" name="method" value="paypal"> PayPal</label>
+          <label><input type="radio" name="method" value="bizum"> Bizum</label>
+        </div>
+      </fieldset>
+      <fieldset id="cardFields" class="!mb-0">
+        <legend>Datos de la tarjeta</legend>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <label class="sm:col-span-2">Número de tarjeta<input name="cc" autocomplete="cc-number" inputmode="numeric" pattern="[\d ]{15,19}" required><span class="hint">Entre 15 y 16 dígitos, sin guiones.</span></label>
+          <label>Caducidad<input name="exp" autocomplete="cc-exp" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/\d{2}" required></label>
+          <label>CVC<input name="cvc" autocomplete="cc-csc" inputmode="numeric" pattern="\d{3,4}" required></label>
+        </div>
+      </fieldset>
+    </div>
+    <aside aria-labelledby="sum-title" class="sticky top-5 overflow-hidden rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div class="-mx-5 -mt-5 mb-4 h-[3px] bg-gradient-to-br from-cyan-400 to-blue-600"></div>
+      <h2 id="sum-title" class="mb-3 text-base font-semibold">Resumen</h2>
+      <dl class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-2 tabular-nums [&_dd]:m-0 [&_dd]:text-right [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400">
+        <dt>Subtotal (3 artículos)</dt><dd>182,90 €</dd>
+        <dt>Envío estándar</dt><dd>4,95 €</dd>
+        <dt>IVA incluido</dt><dd>31,74 €</dd>
+        <dt class="border-t border-slate-200 pt-3 text-base font-semibold !text-slate-900 dark:border-slate-700 dark:!text-slate-100">Total</dt><dd class="border-t border-slate-200 pt-3 text-base font-semibold dark:border-slate-700">187,85 €</dd>
+      </dl>
+      <button type="submit" class="mt-4 w-full rounded-lg bg-blue-600 px-3.5 py-2.5 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-500 dark:text-slate-950">Pagar 187,85 €</button>
+      <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">Pago cifrado. Puedes cancelar el pedido durante 24 horas.</p>
+      <p id="status" role="status" hidden class="mt-3 rounded-lg px-3 py-2"></p>
+    </aside>
+  </form>
+</div>
+<script>
+  const f = document.getElementById('f'), status = document.getElementById('status');
+  document.getElementById('methods').addEventListener('change', (e) => { document.getElementById('cardFields').disabled = e.target.value !== 'card'; });
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const bad = [...f.elements].filter((el) => el.willValidate && !el.checkValidity());
+    status.hidden = false;
+    status.className = 'mt-3 rounded-lg px-3 py-2 ' + (bad.length ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300' : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300');
+    status.textContent = bad.length ? `Revisa ${bad.length} campo${bad.length > 1 ? 's' : ''} marcado${bad.length > 1 ? 's' : ''} en rojo para completar el pago.` : 'Pedido confirmado. Te hemos enviado el recibo por correo.';
+    if (bad.length) { bad.forEach((el) => el.classList.add('border-red-600')); bad[0].focus(); }
+  });
+  f.addEventListener('input', (e) => { if (e.target.checkValidity()) e.target.classList.remove('border-red-600'); });
+</script>

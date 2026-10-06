@@ -1,0 +1,49 @@
+<section aria-label="Chat con Lucía Ortega" class="mx-auto flex h-[460px] max-w-xl flex-col overflow-hidden rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <header class="flex items-center gap-2.5 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+    <span aria-hidden="true" class="grid size-9 place-items-center rounded-full bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">LO</span>
+    <div>
+      <strong class="block">Lucía Ortega</strong>
+      <small class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400"><i class="size-2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i>En línea</small>
+    </div>
+  </header>
+  <div id="log" role="log" aria-live="polite" tabindex="0" class="flex flex-1 flex-col gap-3.5 overflow-y-auto bg-slate-50 p-4 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600 dark:bg-slate-950">
+    <p class="self-center text-xs text-slate-500 dark:text-slate-400">Hoy</p>
+    <div class="flex max-w-[80%] gap-2">
+      <span aria-hidden="true" class="grid size-7 shrink-0 place-items-center self-end rounded-full bg-blue-50 text-[11px] font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">LO</span>
+      <div class="flex flex-col items-start gap-0.5">
+        <p class="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900">Hola, ya subí el informe de incidencias de septiembre.</p>
+        <p class="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900">¿Puedes revisar la sección de tiempos de respuesta antes del comité?</p>
+        <time class="text-[11px] tabular-nums text-slate-500 dark:text-slate-400">09:41</time>
+      </div>
+    </div>
+    <div data-me class="flex max-w-[80%] gap-2 self-end">
+      <div class="flex flex-col items-end gap-0.5">
+        <p class="whitespace-pre-wrap break-words rounded-lg bg-blue-600 px-3 py-2 text-white dark:bg-blue-400 dark:text-slate-950">Claro, lo reviso esta mañana.</p>
+        <time class="text-[11px] tabular-nums text-slate-500 dark:text-slate-400">09:44</time>
+      </div>
+    </div>
+  </div>
+  <form id="f" class="flex gap-2 border-t border-slate-200 px-3 pb-1 pt-3 dark:border-slate-700">
+    <label for="txt" class="sr-only">Mensaje para Lucía Ortega</label>
+    <textarea id="txt" rows="1" placeholder="Escribe un mensaje" aria-describedby="hint" class="min-w-0 flex-1 resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900"></textarea>
+    <button class="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-400 dark:text-slate-950">Enviar</button>
+  </form>
+  <p id="hint" class="px-3 pb-2.5 text-xs text-slate-500 dark:text-slate-400">Enter envía. Mayús + Enter añade una línea.</p>
+</section>
+<script>
+  const log = document.getElementById('log'), f = document.getElementById('f'), txt = document.getElementById('txt');
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = txt.value.trim(); if (!v) return;
+    let g = log.lastElementChild;
+    if (!g.hasAttribute('data-me')) { // nuevo grupo si el último no es tuyo
+      g = log.querySelector('[data-me]').cloneNode(true);
+      g.querySelectorAll('p').forEach((p) => p.remove()); log.append(g);
+    }
+    const st = g.firstElementChild, time = st.querySelector('time'), p = log.querySelector('[data-me] p').cloneNode();
+    p.textContent = v; st.insertBefore(p, time);
+    time.textContent = new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
+    txt.value = ''; log.scrollTop = log.scrollHeight;
+  });
+  txt.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); f.requestSubmit(); } });
+</script>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .comp{max-width:600px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .comp::before{content:"";display:block;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  [role=toolbar]{display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid var(--border)}
+  button,.attach{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;box-sizing:border-box;padding:0 10px;font:inherit;color:var(--muted);background:none;border:1px solid transparent;border-radius:var(--radius);cursor:pointer;transition:background .14s,color .14s}
+  button:hover,.attach:hover{background:var(--accent-soft);color:var(--accent)}
+  button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  button.send{margin-left:auto;font-weight:600;background:var(--accent);color:var(--accent-ink)}
+  button.send:hover:not(:disabled){filter:brightness(1.08);background:var(--accent);color:var(--accent-ink)}
+  button.send:disabled{background:none;border-color:var(--border);color:var(--muted);cursor:not-allowed}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .attach:has(:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  textarea{display:block;width:100%;box-sizing:border-box;min-height:96px;resize:vertical;padding:12px;font:inherit;color:inherit;background:var(--surface);border:0}
+  textarea:focus-visible{outline-offset:-2px}
+  .files{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0 12px;list-style:none}
+  .files li{display:flex;align-items:center;gap:4px;padding:2px 4px 2px 10px;border:1px solid var(--border);border-radius:999px;background:var(--accent-soft);font-size:13px}
+  .files button{min-width:24px;height:24px;padding:0;border-radius:999px}
+  .err{margin:6px 12px 0;color:var(--err)}
+  .foot{display:flex;align-items:center;gap:6px;padding:8px}
+  .foot small{color:var(--muted)}
+  .sent{max-width:600px;margin:16px auto 0;padding:0;list-style:none}
+  .sent li{margin-bottom:8px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .sent p,.sent ul{margin:0}
+  .sent code{padding:0 4px;border-radius:4px;background:var(--accent-soft);font:13px ui-monospace,"Cascadia Code",Menlo,monospace}
+  .sent small{display:block;margin-top:4px;color:var(--muted)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form class="comp" id="f">
+  <div role="toolbar" aria-label="Formato del texto" id="tb">
+    <button type="button" data-f="b" aria-label="Negrita (Ctrl+B)" title="Negrita" tabindex="0"><b>B</b></button>
+    <button type="button" data-f="i" aria-label="Cursiva (Ctrl+I)" title="Cursiva" tabindex="-1"><i>I</i></button>
+    <button type="button" data-f="c" aria-label="Código" title="Código" tabindex="-1"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4L2 8l3.5 4M10.5 4L14 8l-3.5 4"/></svg></button>
+    <button type="button" data-f="l" aria-label="Lista" title="Lista" tabindex="-1"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4h8M6 8h8M6 12h8M2 4h.01M2 8h.01M2 12h.01"/></svg></button>
+  </div>
+  <label class="sr" for="t">Mensaje</label>
+  <textarea id="t" placeholder="Escribe tu mensaje"></textarea>
+  <ul class="files" id="files" aria-label="Archivos adjuntos"></ul>
+  <p class="err" id="err" role="alert" hidden></p>
+  <div class="foot">
+    <label class="attach"><input type="file" id="file" class="sr" multiple>Adjuntar</label>
+    <small>Hasta 5 MB por archivo. Ctrl + Enter envía.</small>
+    <button type="submit" class="send" id="send" disabled>Enviar</button>
+  </div>
+</form>
+<ol class="sent" id="sent" aria-label="Mensajes enviados"></ol>
+<script>
+  const t = document.getElementById('t'), f = document.getElementById('f'), tb = document.getElementById('tb'), list = document.getElementById('files');
+  const err = document.getElementById('err'), send = document.getElementById('send'), sent = document.getElementById('sent'), pick = document.getElementById('file');
+  const btns = [...tb.querySelectorAll('button')]; let files = [];
+  const mb = (n) => (n / 1048576).toFixed(1).replace('.', ',') + ' MB';
+  const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+  const upd = () => (send.disabled = !t.value.trim() && !files.length);
+  function wrap(l, r) {
+    const s = t.selectionStart, e = t.selectionEnd, v = t.value.slice(s, e) || 'texto';
+    t.setRangeText(l + v + r, s, e, 'end'); t.setSelectionRange(s + l.length, s + l.length + v.length); t.focus(); upd();
+  }
+  function bullets() {
+    const s = t.value.lastIndexOf('\n', t.selectionStart - 1) + 1;
+    t.setRangeText(t.value.slice(s, t.selectionEnd).split('\n').map((x) => '- ' + x).join('\n'), s, t.selectionEnd, 'end'); t.focus(); upd();
+  }
+  const FMT = { b: () => wrap('**', '**'), i: () => wrap('_', '_'), c: () => wrap('`', '`'), l: bullets };
+  tb.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) FMT[b.dataset.f](); });
+  tb.addEventListener('focusin', (e) => btns.forEach((b) => (b.tabIndex = b === e.target ? 0 : -1)));
+  tb.addEventListener('keydown', (e) => {
+    const i = btns.indexOf(document.activeElement); if (i < 0 || !/^Arrow(Left|Right)$/.test(e.key)) return;
+    e.preventDefault(); btns[(i + (e.key === 'ArrowRight' ? 1 : -1) + btns.length) % btns.length].focus();
+  });
+  function paint() {
+    list.innerHTML = '';
+    files.forEach((x, i) => {
+      const li = document.createElement('li'); li.textContent = x.name + ' (' + mb(x.size) + ')';
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'Quitar ' + x.name);
+      b.onclick = () => { files.splice(i, 1); paint(); upd(); t.focus(); }; li.append(b); list.append(li);
+    });
+    upd();
+  }
+  pick.addEventListener('change', () => {
+    const big = [...pick.files].filter((x) => x.size > 5242880);
+    files.push(...[...pick.files].filter((x) => x.size <= 5242880)); pick.value = '';
+    err.hidden = !big.length; err.textContent = big.length ? big[0].name + ' supera los 5 MB. Comprime el archivo o elige uno más pequeño.' : '';
+    paint();
+  });
+  t.addEventListener('input', upd);
+  t.addEventListener('keydown', (e) => {
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && k === 'enter') { e.preventDefault(); f.requestSubmit(); }
+    else if ((e.ctrlKey || e.metaKey) && (k === 'b' || k === 'i')) { e.preventDefault(); FMT[k](); }
+  });
+  f.addEventListener('submit', (e) => {
+    e.preventDefault(); if (send.disabled) return;
+    const html = esc(t.value).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/_([^_]+)_/g, '<i>$1</i>')
+      .split('\n').map((l) => (l.startsWith('- ') ? '<li>' + l.slice(2) + '</li>' : '<p>' + l + '</p>')).join('').replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+    const li = document.createElement('li'); li.innerHTML = html;
+    const m = document.createElement('small');
+    m.textContent = (files.length ? files.length + (files.length === 1 ? ' adjunto: ' : ' adjuntos: ') + files.map((x) => x.name).join(', ') + '. ' : '') + 'Enviado ' + new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
+    li.append(m); sent.prepend(li); t.value = ''; files = []; err.hidden = true; paint(); t.focus();
+  });
+</script>
+</body>
+</html>

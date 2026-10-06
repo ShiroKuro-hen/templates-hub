@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:420px;margin:0 auto;padding:28px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 24px;padding:0;list-style:none}
+  .steps li{height:4px;border-radius:999px;background:var(--border);transition:background .14s}
+  .steps li.on{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  h1{margin:0 0 4px;font-size:20px;line-height:1.3}
+  h1:focus{outline:none}
+  .sub{margin:0 0 20px;color:var(--muted)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  label{display:block;font-weight:600;margin-bottom:6px}
+  .field{box-sizing:border-box;width:100%;height:40px;margin-bottom:12px;padding:0 12px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .field:focus-visible{border-color:var(--accent)}
+  .field[aria-invalid=true]{border-color:var(--err)}
+  .hint{margin:-6px 0 12px;font-size:13px;color:var(--muted)}
+  .chk{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-weight:400}
+  .chk input{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+  .msg{margin:-4px 0 12px;font-size:13px;color:var(--err)}
+  .msg:empty{display:none}
+  .btn{font:inherit;font-weight:600;display:block;width:100%;height:40px;padding:0 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s,border-color .14s}
+  .btn:hover{background:var(--accent-soft);border-color:var(--accent)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.primary:hover{background:var(--accent);filter:brightness(1.08)}
+  .link{all:unset;color:var(--accent);text-decoration:underline;cursor:pointer}
+  .link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+  a{color:var(--accent)}
+  .help{margin:16px 0 0;font-size:13px;color:var(--muted)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card">
+  <ol class="steps" aria-label="Progreso de recuperación">
+    <li class="on" aria-current="step"><span class="sr">Paso 1 de 3: pedir enlace</span></li>
+    <li><span class="sr">Paso 2 de 3: revisar correo</span></li>
+    <li><span class="sr">Paso 3 de 3: crear contraseña</span></li>
+  </ol>
+  <section>
+    <h1 tabindex="-1">¿Olvidaste tu contraseña?</h1>
+    <p class="sub">Escribe el correo de tu cuenta y te enviamos un enlace para crear una nueva.</p>
+    <form id="f0" novalidate>
+      <label for="email">Correo de la cuenta</label>
+      <input class="field" id="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required aria-describedby="m0">
+      <p id="m0" class="msg" aria-live="polite"></p>
+      <button class="btn primary" type="submit">Enviar enlace</button>
+    </form>
+    <p class="help"><a href="#">Volver a iniciar sesión</a></p>
+  </section>
+  <section hidden>
+    <h1 tabindex="-1">Revisa tu correo</h1>
+    <p class="sub">Si hay una cuenta con <strong id="to"></strong>, recibirás un enlace en unos minutos. Revisa también la carpeta de spam.</p>
+    <button id="open" class="btn primary" type="button">Abrir enlace de ejemplo</button>
+    <p class="help">¿Correo equivocado? <button id="back" class="link" type="button">Usar otro correo</button></p>
+  </section>
+  <section hidden>
+    <h1 tabindex="-1">Crea una contraseña nueva</h1>
+    <p class="sub">Elige una que no uses en otros servicios.</p>
+    <form id="f2" novalidate>
+      <label for="p1">Contraseña nueva</label>
+      <input class="field" id="p1" type="password" autocomplete="new-password" required aria-describedby="hint">
+      <p id="hint" class="hint">Usa al menos 12 caracteres.</p>
+      <label for="p2">Repite la contraseña</label>
+      <input class="field" id="p2" type="password" autocomplete="new-password" required aria-describedby="m2">
+      <label class="chk"><input id="show" type="checkbox"> Mostrar contraseñas</label>
+      <p id="m2" class="msg" aria-live="polite"></p>
+      <button class="btn primary" type="submit">Guardar contraseña</button>
+    </form>
+  </section>
+  <section hidden>
+    <h1 tabindex="-1">Contraseña actualizada</h1>
+    <p class="sub">Ya puedes iniciar sesión con tu contraseña nueva.</p>
+    <button class="btn primary" type="button">Iniciar sesión</button>
+  </section>
+</main>
+<script>
+  const $ = (i) => document.getElementById(i);
+  const secs = [...document.querySelectorAll('section')], dots = [...document.querySelectorAll('.steps li')];
+  function go(n) {
+    const d = Math.min(n, 2);
+    secs.forEach((s, i) => (s.hidden = i !== n));
+    dots.forEach((el, i) => { el.classList.toggle('on', i <= d); i === d ? el.setAttribute('aria-current', 'step') : el.removeAttribute('aria-current'); });
+    secs[n].querySelector('h1').focus();
+  }
+  $('f0').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const i = $('email'), ok = i.checkValidity();
+    i.setAttribute('aria-invalid', String(!ok));
+    $('m0').textContent = ok ? '' : 'Escribe un correo válido, por ejemplo nombre@empresa.com.';
+    if (ok) { $('to').textContent = i.value; go(1); }
+  });
+  $('open').addEventListener('click', () => go(2));
+  $('back').addEventListener('click', () => go(0));
+  $('show').addEventListener('change', (e) => ['p1', 'p2'].forEach((id) => ($(id).type = e.target.checked ? 'text' : 'password')));
+  $('f2').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const a = $('p1').value, m = a.length < 12 ? `Usa al menos 12 caracteres. Ahora tienes ${a.length}.`
+      : a !== $('p2').value ? 'Las contraseñas no coinciden. Vuelve a escribirlas.' : '';
+    ['p1', 'p2'].forEach((id) => $(id).setAttribute('aria-invalid', String(!!m)));
+    $('m2').textContent = m;
+    if (!m) go(3);
+  });
+</script>
+</body>
+</html>

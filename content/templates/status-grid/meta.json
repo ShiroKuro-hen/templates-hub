@@ -1,0 +1,1 @@
+{ "title": "Cuadrícula de estado de servicios", "category": "dashboards", "description": "Estado actual de cada servicio con barras de 30 días y porcentaje de disponibilidad.", "tags": ["dashboard", "status", "uptime", "monitoring"] }

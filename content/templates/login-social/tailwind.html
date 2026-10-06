@@ -1,0 +1,21 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <main class="mx-auto max-w-[440px] rounded-lg border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900" aria-labelledby="t">
+    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600" aria-hidden="true"></div>
+    <h1 id="t" class="mb-1 mt-4 text-xl font-semibold">Accede a Norte Cloud</h1>
+    <p class="mb-5 text-slate-500 dark:text-slate-400">Usa la cuenta de tu empresa. No publicamos nada en tu nombre.</p>
+    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 [&>button]:flex [&>button]:h-10 [&>button]:items-center [&>button]:justify-center [&>button]:gap-2 [&>button]:rounded-lg [&>button]:border [&>button]:border-slate-200 [&>button]:font-semibold [&>button]:transition-colors hover:[&>button]:border-blue-600 hover:[&>button]:bg-blue-50 focus-visible:[&>button]:outline-2 focus-visible:[&>button]:outline-offset-2 focus-visible:[&>button]:outline-blue-600 dark:[&>button]:border-slate-700 dark:hover:[&>button]:bg-slate-800" role="group" aria-label="Acceder con un proveedor">
+      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7M20 12h-8"/></svg>Google</button>
+      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8" opacity=".7"/><rect x="3" y="13" width="8" height="8" opacity=".7"/><rect x="13" y="13" width="8" height="8" opacity=".45"/></svg>Microsoft</button>
+      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 6"/></svg>GitHub</button>
+      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg>SSO empresarial</button>
+    </div>
+    <p class="my-5 flex items-center gap-3 text-slate-500 before:flex-1 before:border-t before:border-slate-200 before:content-[''] after:flex-1 after:border-t after:border-slate-200 after:content-[''] dark:text-slate-400 dark:before:border-slate-700 dark:after:border-slate-700">o con tu correo</p>
+    <form>
+      <label for="email" class="mb-1.5 block font-semibold">Correo de trabajo</label>
+      <input id="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required
+             class="peer mb-3 h-10 w-full rounded-lg border border-slate-200 bg-white px-3 focus-visible:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900">
+      <button type="submit" class="h-10 w-full rounded-lg bg-blue-600 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-400 dark:text-slate-950">Continuar con correo</button>
+    </form>
+    <p class="mt-4 text-xs text-slate-500 dark:text-slate-400">Al continuar aceptas los <a href="#" class="text-blue-600 underline dark:text-blue-400">Términos del servicio</a> y la <a href="#" class="text-blue-600 underline dark:text-blue-400">Política de privacidad</a>.</p>
+  </main>
+</div>

@@ -1,0 +1,42 @@
+<section aria-labelledby="ttl" class="mx-auto max-w-xl overflow-hidden rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <header class="flex items-start justify-between gap-3 px-5 pb-3 pt-5">
+    <div>
+      <h2 id="ttl" class="text-base font-semibold">Configura tu espacio en Nimbus</h2>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400" aria-live="polite"><b id="done" class="tabular-nums text-slate-900 dark:text-slate-100">2</b> de 5 pasos completados</p>
+    </div>
+    <span id="pct" aria-hidden="true" class="text-2xl font-semibold tabular-nums">40%</span>
+  </header>
+  <progress id="bar" max="5" value="2" aria-label="Progreso de configuración"
+    class="mx-5 mb-4 block h-1.5 w-[calc(100%-2.5rem)] appearance-none overflow-hidden rounded-full [&::-webkit-progress-bar]:bg-blue-100 dark:[&::-webkit-progress-bar]:bg-slate-800 [&::-webkit-progress-value]:bg-gradient-to-br [&::-webkit-progress-value]:from-cyan-400 [&::-webkit-progress-value]:to-blue-600 [&::-moz-progress-bar]:bg-blue-600"></progress>
+  <ol id="tasks" class="divide-y divide-slate-200 border-t border-slate-200 dark:divide-slate-700 dark:border-slate-700 [&_a]:mt-2 [&_a]:inline-block [&_a]:font-medium [&_a]:text-blue-600 hover:[&_a]:underline dark:[&_a]:text-blue-400 [&_input]:mt-0.5 [&_input]:size-[18px] [&_input]:shrink-0 [&_input]:accent-blue-600 [&_li]:flex [&_li]:gap-3 [&_li]:px-5 [&_li]:py-3 [&_p]:mt-1.5 [&_p]:text-slate-500 dark:[&_p]:text-slate-400 [&_summary]:flex [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:gap-2 [&_summary]:font-medium [&_small]:ml-auto [&_small]:font-normal [&_small]:tabular-nums [&_small]:text-slate-500 [&_details]:flex-1 [&_li:has(:checked)_span]:text-slate-500 [&_li:has(:checked)_span]:line-through [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600">
+    <li><input type="checkbox" checked aria-label="Hecho: Crea tu cuenta">
+      <details><summary><span>Crea tu cuenta</span><small>1 min</small></summary>
+        <p>Tu cuenta está verificada con ana.lopez@lumen.es.</p></details></li>
+    <li><input type="checkbox" checked aria-label="Hecho: Invita a tu equipo">
+      <details><summary><span>Invita a tu equipo</span><small>2 min</small></summary>
+        <p>Tres personas ya tienen acceso. Puedes invitar a más desde Miembros.</p></details></li>
+    <li><input type="checkbox" aria-label="Hecho: Conecta una fuente de datos">
+      <details open><summary><span>Conecta una fuente de datos</span><small>5 min</small></summary>
+        <p>Importa un CSV o conecta tu base de datos PostgreSQL para ver métricas reales.</p>
+        <a href="#fuentes">Conectar fuente</a></details></li>
+    <li><input type="checkbox" aria-label="Hecho: Crea tu primer panel">
+      <details><summary><span>Crea tu primer panel</span><small>4 min</small></summary>
+        <p>Parte de la plantilla de ventas o empieza con un panel en blanco.</p>
+        <a href="#paneles">Crear panel</a></details></li>
+    <li><input type="checkbox" aria-label="Hecho: Configura las alertas">
+      <details><summary><span>Configura las alertas</span><small>3 min</small></summary>
+        <p>Recibe un aviso cuando una métrica cambie más de un 10 % en un día.</p>
+        <a href="#alertas">Configurar alertas</a></details></li>
+  </ol>
+  <p id="ok" hidden class="border-t border-slate-200 bg-emerald-50 px-5 py-3 dark:border-slate-700 dark:bg-emerald-950">Todo listo. Comparte tu primer panel con el equipo.</p>
+</section>
+<script>
+  const list = document.getElementById('tasks'), bar = document.getElementById('bar');
+  list.addEventListener('change', () => {
+    const n = list.querySelectorAll(':checked').length;
+    bar.value = n;
+    document.getElementById('done').textContent = n;
+    document.getElementById('pct').textContent = Math.round((n / bar.max) * 100) + '%';
+    document.getElementById('ok').hidden = n < bar.max;
+  });
+</script>

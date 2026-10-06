@@ -1,0 +1,70 @@
+<form id="f" class="mx-auto max-w-xl overflow-hidden rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm before:block before:h-px before:bg-gradient-to-r before:from-cyan-400 before:to-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 [&_button]:inline-flex [&_button]:h-8 [&_button]:min-w-8 [&_button]:items-center [&_button]:justify-center [&_button]:rounded-lg [&_button]:px-2.5 [&_button]:text-slate-500 [&_button:hover]:bg-blue-50 [&_button:hover]:text-blue-600 dark:[&_button]:text-slate-400 dark:[&_button:hover]:bg-slate-800 [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-blue-600">
+  <div id="tb" role="toolbar" aria-label="Formato del texto" class="flex gap-0.5 border-b border-slate-200 px-2 py-1.5 dark:border-slate-700">
+    <button type="button" data-f="b" aria-label="Negrita (Ctrl+B)" title="Negrita" tabindex="0"><b>B</b></button>
+    <button type="button" data-f="i" aria-label="Cursiva (Ctrl+I)" title="Cursiva" tabindex="-1"><i>I</i></button>
+    <button type="button" data-f="c" aria-label="Código" title="Código" tabindex="-1">&lt;/&gt;</button>
+    <button type="button" data-f="l" aria-label="Lista" title="Lista" tabindex="-1">&bull;</button>
+  </div>
+  <label class="sr-only" for="t">Mensaje</label>
+  <textarea id="t" placeholder="Escribe tu mensaje" class="block min-h-24 w-full resize-y border-0 bg-white p-3 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600 dark:bg-slate-900"></textarea>
+  <ul id="files" aria-label="Archivos adjuntos" class="flex list-none flex-wrap gap-1.5 px-3 [&>li]:flex [&>li]:items-center [&>li]:gap-1 [&>li]:rounded-full [&>li]:border [&>li]:border-slate-200 [&>li]:bg-blue-50 [&>li]:py-0.5 [&>li]:pl-2.5 [&>li]:pr-1 [&>li]:text-[13px] dark:[&>li]:border-slate-700 dark:[&>li]:bg-slate-800 [&_button]:!size-6 [&_button]:!min-w-6 [&_button]:!rounded-full [&_button]:!px-0"></ul>
+  <p id="err" role="alert" hidden class="mx-3 mt-1.5 text-red-600 dark:text-red-400"></p>
+  <div class="flex items-center gap-1.5 p-2">
+    <label class="inline-flex h-8 cursor-pointer items-center rounded-lg px-2.5 text-slate-500 hover:bg-blue-50 hover:text-blue-600 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-600 dark:text-slate-400 dark:hover:bg-slate-800"><input type="file" id="file" class="sr-only" multiple>Adjuntar</label>
+    <small class="text-slate-500 dark:text-slate-400">Hasta 5 MB por archivo. Ctrl + Enter envía.</small>
+    <button id="send" type="submit" disabled class="ml-auto font-semibold !bg-blue-600 !text-white hover:!bg-blue-700 disabled:cursor-not-allowed disabled:!bg-transparent disabled:!text-slate-500 disabled:ring-1 disabled:ring-slate-200 dark:!bg-blue-400 dark:!text-slate-950 dark:disabled:!bg-transparent dark:disabled:!text-slate-400 dark:disabled:ring-slate-700">Enviar</button>
+  </div>
+</form>
+<ol id="sent" aria-label="Mensajes enviados" class="mx-auto mt-4 max-w-xl list-none p-0 text-sm text-slate-900 dark:text-slate-100 [&>li]:mb-2 [&>li]:rounded-lg [&>li]:border [&>li]:border-slate-200 [&>li]:bg-white [&>li]:px-3.5 [&>li]:py-2.5 dark:[&>li]:border-slate-700 dark:[&>li]:bg-slate-900 [&_p]:m-0 [&_ul]:m-0 [&_code]:rounded [&_code]:bg-blue-50 [&_code]:px-1 [&_code]:font-mono [&_code]:text-[13px] dark:[&_code]:bg-slate-800"></ol>
+<script>
+  const t = document.getElementById('t'), f = document.getElementById('f'), tb = document.getElementById('tb'), list = document.getElementById('files');
+  const err = document.getElementById('err'), send = document.getElementById('send'), sent = document.getElementById('sent'), pick = document.getElementById('file');
+  const btns = [...tb.querySelectorAll('button')]; let files = [];
+  const mb = (n) => (n / 1048576).toFixed(1).replace('.', ',') + ' MB';
+  const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+  const upd = () => (send.disabled = !t.value.trim() && !files.length);
+  function wrap(l, r) {
+    const s = t.selectionStart, e = t.selectionEnd, v = t.value.slice(s, e) || 'texto';
+    t.setRangeText(l + v + r, s, e, 'end'); t.setSelectionRange(s + l.length, s + l.length + v.length); t.focus(); upd();
+  }
+  function bullets() {
+    const s = t.value.lastIndexOf('\n', t.selectionStart - 1) + 1;
+    t.setRangeText(t.value.slice(s, t.selectionEnd).split('\n').map((x) => '- ' + x).join('\n'), s, t.selectionEnd, 'end'); t.focus(); upd();
+  }
+  const FMT = { b: () => wrap('**', '**'), i: () => wrap('_', '_'), c: () => wrap('`', '`'), l: bullets };
+  tb.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) FMT[b.dataset.f](); });
+  tb.addEventListener('focusin', (e) => btns.forEach((b) => (b.tabIndex = b === e.target ? 0 : -1)));
+  tb.addEventListener('keydown', (e) => {
+    const i = btns.indexOf(document.activeElement); if (i < 0 || !/^Arrow(Left|Right)$/.test(e.key)) return;
+    e.preventDefault(); btns[(i + (e.key === 'ArrowRight' ? 1 : -1) + btns.length) % btns.length].focus();
+  });
+  function paint() {
+    list.innerHTML = '';
+    files.forEach((x, i) => {
+      const li = document.createElement('li'), b = document.createElement('button');
+      li.textContent = x.name + ' (' + mb(x.size) + ')'; b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'Quitar ' + x.name);
+      b.onclick = () => { files.splice(i, 1); paint(); t.focus(); }; li.append(b); list.append(li);
+    });
+    upd();
+  }
+  pick.addEventListener('change', () => {
+    const big = [...pick.files].filter((x) => x.size > 5242880);
+    files.push(...[...pick.files].filter((x) => x.size <= 5242880)); pick.value = '';
+    err.hidden = !big.length; err.textContent = big.length ? big[0].name + ' supera los 5 MB. Comprime el archivo o elige uno más pequeño.' : '';
+    paint();
+  });
+  t.addEventListener('input', upd);
+  t.addEventListener('keydown', (e) => {
+    const k = e.key.toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && k === 'enter') { e.preventDefault(); f.requestSubmit(); }
+    else if ((e.ctrlKey || e.metaKey) && (k === 'b' || k === 'i')) { e.preventDefault(); FMT[k](); }
+  });
+  f.addEventListener('submit', (e) => {
+    e.preventDefault(); if (send.disabled) return;
+    const html = esc(t.value).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>').replace(/_([^_]+)_/g, '<i>$1</i>')
+      .split('\n').map((l) => (l.startsWith('- ') ? '<li>' + l.slice(2) + '</li>' : '<p>' + l + '</p>')).join('').replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+    const li = document.createElement('li'), m = document.createElement('small'); li.innerHTML = html; m.className = 'mt-1 block text-slate-500 dark:text-slate-400';
+    m.textContent = (files.length ? files.length + (files.length === 1 ? ' adjunto: ' : ' adjuntos: ') + files.map((x) => x.name).join(', ') + '. ' : '') + 'Enviado ' + new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' });
+    li.append(m); sent.prepend(li); t.value = ''; files = []; err.hidden = true; paint(); t.focus();
+  });
+</script>

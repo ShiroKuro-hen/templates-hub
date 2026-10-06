@@ -1,0 +1,1 @@
+{ "title": "Recuperar contraseña", "category": "autenticacion", "description": "Flujo en tres estados: pedir enlace, revisar correo y crear una contraseña nueva.", "tags": ["password", "recuperacion", "formulario", "a11y"] }

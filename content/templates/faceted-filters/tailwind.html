@@ -1,0 +1,40 @@
+<div class="grid max-w-4xl items-start gap-4 bg-slate-50 p-5 text-sm text-slate-900 sm:grid-cols-[220px_1fr] dark:bg-slate-950 dark:text-slate-100">
+  <aside aria-label="Filtros" class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <form id="f" class="space-y-4 [&_label]:flex [&_label]:cursor-pointer [&_label]:items-center [&_label]:gap-2 [&_label]:rounded-md [&_label]:px-1.5 [&_label]:py-1 [&_label:hover]:bg-blue-50 dark:[&_label:hover]:bg-slate-800 [&_legend]:mb-1.5 [&_legend]:font-semibold [&_small]:ml-auto [&_small]:tabular-nums [&_small]:text-slate-500 [&_input]:accent-blue-600"></form>
+  </aside>
+  <section aria-labelledby="h" class="min-w-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <p id="h" aria-live="polite" class="mb-2.5 flex items-center gap-2 font-semibold before:size-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 before:content-['']"><span id="n" class="tabular-nums">0</span> servidores</p>
+    <ul id="list" class="divide-y divide-slate-200 border-t border-slate-200 dark:divide-slate-700 dark:border-slate-700 [&_li]:flex [&_li]:justify-between [&_li]:gap-3 [&_li]:py-2.5 [&_small]:text-slate-500 dark:[&_small]:text-slate-400"></ul>
+  </section>
+</div>
+<script>
+  const items = [
+    { nombre: 'api-lima-01', region: 'Lima', tipo: 'Cómputo', estado: 'Activo' },
+    { nombre: 'db-lima-02', region: 'Lima', tipo: 'Base de datos', estado: 'Activo' },
+    { nombre: 'cache-scl-01', region: 'Santiago', tipo: 'Caché', estado: 'Detenido' },
+    { nombre: 'api-scl-03', region: 'Santiago', tipo: 'Cómputo', estado: 'Activo' },
+    { nombre: 'db-bog-01', region: 'Bogotá', tipo: 'Base de datos', estado: 'Mantenimiento' },
+    { nombre: 'api-bog-02', region: 'Bogotá', tipo: 'Cómputo', estado: 'Detenido' },
+  ];
+  const facets = { region: 'Región', tipo: 'Tipo', estado: 'Estado' };
+  const f = document.getElementById('f'), list = document.getElementById('list');
+  f.innerHTML = Object.entries(facets).map(([k, t]) =>
+    `<fieldset><legend>${t}</legend>${[...new Set(items.map((i) => i[k]))].map((v) =>
+      `<label><input type="checkbox" name="${k}" value="${v}"> ${v} <small></small></label>`).join('')}</fieldset>`).join('');
+  const sel = () => Object.fromEntries(Object.keys(facets).map((k) => [k, new FormData(f).getAll(k)]));
+  const match = (i, s, skip) => Object.keys(s).every((k) => k === skip || !s[k].length || s[k].includes(i[k]));
+  function render() {
+    const s = sel(), hits = items.filter((i) => match(i, s));
+    f.querySelectorAll('input').forEach((c) => {
+      const n = items.filter((i) => match(i, s, c.name) && i[c.name] === c.value).length;
+      c.nextElementSibling.textContent = n; c.disabled = !n && !c.checked;
+    });
+    document.getElementById('n').textContent = hits.length;
+    list.innerHTML = hits.length
+      ? hits.map((i) => `<li><span>${i.nombre}</span><small>${i.region}, ${i.tipo}, ${i.estado}</small></li>`).join('')
+      : '<li class="!block py-6 text-center text-slate-500">Ningún servidor cumple estos filtros. <button type="button" id="clr" class="rounded-lg border border-slate-200 px-3 py-1.5 hover:border-blue-600 hover:text-blue-600 dark:border-slate-700">Quitar filtros</button></li>';
+  }
+  f.addEventListener('change', render);
+  list.addEventListener('click', (e) => { if (e.target.id === 'clr') { f.reset(); render(); } });
+  render();
+</script>
