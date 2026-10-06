@@ -42,4 +42,4 @@ export function ToastProvider({ children, ms = 5000, max = 4 }: { children: Reac
 }
 
 // Uso: const toast = useToast(); toast('ok', 'Cambios guardados', 'Tu perfil ya está actualizado.');
-// CSS: copia las reglas .toasts / .toast / .toast.ok / .warn / .err / .toast span / .toast b / .toast small / .toast button de la pestaña HTML + CSS.
+// CSS: copia las reglas .toasts / .toast (y ::before) / .toast.ok / .warn / .err / .toast span / .toast b / .toast small / .toast button de la pestaña HTML + CSS.

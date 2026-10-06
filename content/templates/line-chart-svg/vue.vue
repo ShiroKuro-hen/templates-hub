@@ -41,28 +41,30 @@ function onMove(e: PointerEvent) {
         <g class="axis"><text v-for="(d, i) in data" :key="d.x" :x="X(i)" :y="H - 8" text-anchor="middle">{{ d.x }}</text></g>
         <path class="area" :d="`M${X(0)},${Y(0)} L${pts.join(' L')} L${X(data.length - 1)},${Y(0)}Z`" />
         <path class="line" :d="`M${pts.join(' L')}`" pathLength="1" />
-        <line v-if="cur !== null" class="guide on" :x1="X(cur)" :x2="X(cur)" :y1="T" :y2="Y(0)" />
-        <circle v-for="(d, i) in data" :key="d.x" class="pt" :class="{ on: cur === i }" :cx="X(i)" :cy="Y(d.y)" r="4.5" tabindex="0" role="img"
+        <line v-if="cur !== null" class="guide" :x1="X(cur)" :x2="X(cur)" :y1="T" :y2="Y(0)" />
+        <circle v-for="(d, i) in data" :key="d.x" class="pt" :class="{ on: cur === i }" :cx="X(i)" :cy="Y(d.y)" r="4" tabindex="0" role="img"
           :aria-label="`${d.x}: ${d.y} ${unit}`" @focus="cur = i" @blur="cur = null" />
       </svg>
-      <div v-if="tip" class="tip on" role="status" :style="tip">{{ data[cur!].x }}<b>{{ data[cur!].y }} {{ unit }}</b></div>
+      <div v-if="tip" class="tip" role="status" :style="tip">{{ data[cur!].x }}<b>{{ data[cur!].y }} {{ unit }}</b></div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.card { max-width: 620px; margin: 0 auto; padding: 16px 16px 10px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; color: #17130f; font: 14px/1.4 system-ui, sans-serif; box-shadow: 4px 4px 0 #17130f; }
-h2 { margin: 0 0 6px; font-size: 1.05rem; letter-spacing: -.02em; }
-.plot { position: relative; }
-svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
-.grid line { stroke: #17130f; stroke-opacity: .15; }
-.axis text { fill: #6b6258; font: 10px ui-monospace, monospace; }
-.area { fill: #ffd84d; fill-opacity: .55; }
-.line { fill: none; stroke: #17130f; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; }
-.pt { fill: #fffdf8; stroke: #17130f; stroke-width: 2.5; cursor: pointer; }
-.pt.on { fill: #ff5a36; r: 6.5; }
-.pt:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-.guide { stroke: #17130f; stroke-width: 1.5; stroke-dasharray: 4 3; }
-.tip { position: absolute; pointer-events: none; padding: 6px 10px; border: 2px solid #17130f; border-radius: 8px; background: #17130f; color: #fffdf8; font-size: .8rem; line-height: 1.25; white-space: nowrap; }
-.tip b { display: block; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.card{max-width:620px;margin:0 auto;padding:20px 20px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:var(--shadow)}
+h2{margin:0 0 8px;font-size:16px;font-weight:600}
+.plot{position:relative}
+svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.grid line{stroke:var(--border)}
+.axis text{fill:var(--muted);font:10px system-ui,-apple-system,"Segoe UI",sans-serif}
+.area{fill:var(--accent);fill-opacity:.1}
+.line{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.pt{fill:var(--surface);stroke:var(--accent);stroke-width:2;cursor:pointer;transition:r .12s}
+.pt.on{fill:var(--accent);r:6}
+.pt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.guide{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 3}
+.tip{position:absolute;pointer-events:none;padding:6px 10px;border-radius:var(--radius);background:var(--text);color:var(--surface);font-size:12px;line-height:1.25;white-space:nowrap;box-shadow:var(--shadow)}
+.tip b{display:block;font-size:14px;font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.pt{transition:none}}
+/* Tokens: ver pestaña HTML + CSS */
 </style>

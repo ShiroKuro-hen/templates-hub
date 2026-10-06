@@ -1,0 +1,39 @@
+<div class="min-h-[420px] bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="flex items-center justify-between rounded-lg border border-slate-200 bg-white py-2 pl-4 pr-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <strong>Consola</strong>
+    <div id="nc" class="relative">
+      <button id="bell" type="button" aria-expanded="true" aria-controls="panel" aria-label="Notificaciones, 3 sin leer"
+              class="relative grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition-colors hover:bg-blue-50 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-expanded:bg-blue-50 aria-expanded:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:aria-expanded:bg-slate-800 dark:aria-expanded:text-slate-100">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <span id="count" aria-hidden="true" class="absolute right-0 top-0.5 h-4 min-w-4 rounded-full bg-blue-600 px-1 text-[10px] font-semibold leading-4 tabular-nums text-white dark:bg-blue-400 dark:text-slate-950">3</span>
+      </button>
+      <section id="panel" aria-labelledby="nc-title" class="absolute right-0 top-full z-10 mt-2 w-[min(360px,calc(100vw-40px))] rounded-lg border border-slate-200 bg-white shadow-md dark:border-slate-700 dark:bg-slate-900">
+        <header class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+          <h2 id="nc-title" class="text-[15px] font-semibold">Notificaciones</h2>
+          <button id="all" type="button" class="rounded px-1 font-medium text-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:text-slate-500 dark:text-blue-400">Marcar todo como leído</button>
+        </header>
+        <ul id="list" class="max-h-72 overflow-auto py-1 [&_button]:grid [&_button]:w-full [&_button]:grid-cols-[8px_1fr] [&_button]:gap-x-3 [&_button]:px-4 [&_button]:py-2.5 [&_button]:text-left [&_button:hover]:bg-blue-50 dark:[&_button:hover]:bg-slate-800 [&_small]:text-xs [&_small]:text-slate-500 dark:[&_small]:text-slate-400">
+          <li><button type="button" data-unread class="group focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="row-span-2 mt-[7px] h-2 w-2 rounded-full group-data-[unread]:bg-gradient-to-br group-data-[unread]:from-cyan-400 group-data-[unread]:to-blue-600"></span><strong class="font-normal group-data-[unread]:font-semibold">Despliegue completado en producción</strong><small>Hace 5 min</small></button></li>
+          <li><button type="button" data-unread class="group focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="row-span-2 mt-[7px] h-2 w-2 rounded-full group-data-[unread]:bg-gradient-to-br group-data-[unread]:from-cyan-400 group-data-[unread]:to-blue-600"></span><strong class="font-normal group-data-[unread]:font-semibold">Marta Ruiz te asignó la incidencia #482</strong><small>Hace 32 min</small></button></li>
+          <li><button type="button" data-unread class="group focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="row-span-2 mt-[7px] h-2 w-2 rounded-full group-data-[unread]:bg-gradient-to-br group-data-[unread]:from-cyan-400 group-data-[unread]:to-blue-600"></span><strong class="font-normal group-data-[unread]:font-semibold">Tu factura de septiembre está disponible</strong><small>Hace 2 h</small></button></li>
+          <li><button type="button" class="group focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-600"><span class="row-span-2 mt-[7px] h-2 w-2 rounded-full group-data-[unread]:bg-gradient-to-br group-data-[unread]:from-cyan-400 group-data-[unread]:to-blue-600"></span><strong class="font-normal group-data-[unread]:font-semibold">Se renovó el certificado SSL de api.ion.dev</strong><small>Ayer</small></button></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const bell = $('bell'), panel = $('panel'), list = $('list'), all = $('all'), count = $('count');
+  function sync() {
+    const n = list.querySelectorAll('[data-unread]').length;
+    count.textContent = n; count.hidden = !n; all.disabled = !n;
+    bell.setAttribute('aria-label', n ? `Notificaciones, ${n} sin leer` : 'Notificaciones, todo leído');
+  }
+  function toggle(open) { panel.hidden = !open; bell.setAttribute('aria-expanded', open); }
+  bell.onclick = () => toggle(panel.hidden);
+  list.onclick = (e) => { const b = e.target.closest('button'); if (b) { b.removeAttribute('data-unread'); sync(); } };
+  all.onclick = () => { list.querySelectorAll('[data-unread]').forEach((b) => b.removeAttribute('data-unread')); sync(); };
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) { toggle(false); bell.focus(); } });
+  document.addEventListener('click', (e) => { if (!e.target.closest('#nc')) toggle(false); });
+</script>

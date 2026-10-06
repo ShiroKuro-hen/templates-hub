@@ -1,0 +1,43 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <article class="relative mx-auto flex max-w-lg flex-wrap items-center gap-x-5 gap-y-3 overflow-hidden rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <span aria-hidden="true" class="absolute inset-x-0 top-0 h-px bg-gradient-to-br from-cyan-400 to-blue-600"></span>
+    <div class="min-w-40 flex-1">
+      <h3 id="name" class="text-[15px] font-semibold">Auriculares inalámbricos</h3>
+      <p class="mt-0.5 tabular-nums text-slate-500 dark:text-slate-400">$89.00 por unidad</p>
+    </div>
+    <div role="group" aria-labelledby="name" class="inline-flex rounded-lg border border-slate-200 dark:border-slate-700
+      [&>button]:size-9 [&>button]:text-lg [&>button]:transition-colors [&>button:hover:not(:disabled)]:bg-blue-50 [&>button:hover:not(:disabled)]:text-blue-600 dark:[&>button:hover:not(:disabled)]:bg-slate-800
+      [&>button:disabled]:cursor-not-allowed [&>button:disabled]:text-slate-300 dark:[&>button:disabled]:text-slate-600
+      [&>*:focus-visible]:relative [&>*:focus-visible]:outline-2 [&>*:focus-visible]:outline-offset-2 [&>*:focus-visible]:outline-blue-500">
+      <button type="button" id="dec" aria-label="Quitar una unidad" aria-controls="qty" class="rounded-l-lg">−</button>
+      <input type="number" id="qty" value="1" min="1" max="10" inputmode="numeric" aria-label="Cantidad" aria-describedby="note"
+             class="w-12 appearance-none border-x border-slate-200 bg-transparent text-center text-[15px] font-semibold tabular-nums [-moz-appearance:textfield] dark:border-slate-700 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none">
+      <button type="button" id="inc" aria-label="Añadir una unidad" aria-controls="qty" class="rounded-r-lg">+</button>
+    </div>
+    <output id="total" for="qty" aria-live="polite" class="min-w-[88px] text-right font-semibold tabular-nums">$89.00</output>
+    <p id="note" class="basis-full text-[13px] text-slate-500 dark:text-slate-400">Máximo 10 unidades por pedido.</p>
+  </article>
+</div>
+<script>
+  const PRICE = 89, qty = document.getElementById('qty'), dec = document.getElementById('dec'), inc = document.getElementById('inc');
+  const note = document.getElementById('note'), total = document.getElementById('total');
+  const min = +qty.min, max = +qty.max;
+
+  function set(n, fromTyping) {
+    const v = Math.min(max, Math.max(min, Math.round(n) || min));
+    if (!fromTyping) qty.value = v;
+    dec.disabled = v <= min;
+    inc.disabled = v >= max;
+    if (document.activeElement.disabled) qty.focus();
+    total.value = '$' + (v * PRICE).toFixed(2);
+    const clamped = !fromTyping && n !== v;
+    note.textContent = clamped ? `Ajustamos la cantidad a ${v}. Puedes pedir entre ${min} y ${max} unidades.` : `Máximo ${max} unidades por pedido.`;
+    note.classList.toggle('!text-amber-700', clamped);
+    note.classList.toggle('dark:!text-amber-400', clamped);
+  }
+  dec.addEventListener('click', () => set(+qty.value - 1));
+  inc.addEventListener('click', () => set(+qty.value + 1));
+  qty.addEventListener('input', () => set(+qty.value, true));
+  qty.addEventListener('change', () => set(qty.value === '' ? NaN : +qty.value));
+  set(+qty.value);
+</script>

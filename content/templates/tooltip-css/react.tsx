@@ -19,6 +19,6 @@ export function TipButton({ tip, below = false, children, className = 'btn', ...
   );
 }
 
-// Uso: <TipButton tip="Copia el enlace al portapapeles">Copiar</TipButton>
-//      <TipButton tip="Archivar oculta el proyecto" below className="btn help" aria-label="Ayuda">?</TipButton>
-// CSS: copia las reglas .btn / .help / .tip / .tip [role="tooltip"] (y sus ::before / ::after) / .tip.below / .tip:hover / .tip:has(:focus-visible) de la pestaña HTML + CSS.
+// Uso: <TipButton tip="Copia el enlace al portapapeles">Copiar enlace</TipButton>
+//      <TipButton tip="Archivar oculta el proyecto" below className="btn help" aria-label="Ayuda sobre archivar">?</TipButton>
+// CSS: copia las reglas .btn / .help / :focus-visible / .tip / .tip [role="tooltip"] (y sus ::before / ::after) / .tip.below / .tip:hover / .tip:has(:focus-visible) y los tokens :root de la pestaña HTML + CSS.

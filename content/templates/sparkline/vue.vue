@@ -36,7 +36,7 @@ const cards = computed(() =>
           <rect v-for="(r, i) in c.rects" :key="i" class="bar" :x="r.x" :y="r.y" :width="r.w" :height="r.h" rx="1.5" />
         </template>
         <template v-else>
-          <path class="area" :d="c.area" /><path class="line" :d="c.line" /><circle class="end" :cx="c.endX" :cy="c.endY" r="3.5" />
+          <path class="area" :d="c.area" /><path class="line" :d="c.line" /><circle class="end" :cx="c.endX" :cy="c.endY" r="3" />
         </template>
       </svg>
     </article>
@@ -44,16 +44,16 @@ const cards = computed(() =>
 </template>
 
 <style scoped>
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 14px; max-width: 760px; margin: 0 auto; font: 14px/1.4 system-ui, sans-serif; color: #17130f; }
-.kpi { display: flex; flex-direction: column; gap: 2px; padding: 14px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
-.kpi small { color: #6b6258; font-weight: 600; }
-.kpi strong { font-size: 1.7rem; line-height: 1.15; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
-.delta { font: 700 .8rem ui-monospace, monospace; }
-.good .delta { color: #1a7f47; } .bad .delta { color: #d6293e; }
-.spark { display: block; width: 100%; height: auto; margin-top: 8px; overflow: visible; }
-.line { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-.area { opacity: .18; }
-.end { stroke: #17130f; stroke-width: 2; fill: #fffdf8; }
-.good .line { stroke: #1f9d55; } .good .area, .good .bar { fill: #1f9d55; }
-.bad .line { stroke: #d6293e; } .bad .area, .bad .bar { fill: #d6293e; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; max-width: 900px; margin: 0 auto; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+.kpi { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.kpi small { color: var(--muted); font-size: .8125rem; }
+.kpi strong { font-size: 1.6rem; font-weight: 600; line-height: 1.2; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.good { --tone: var(--ok); --tone-soft: var(--ok-soft); } .bad { --tone: var(--err); --tone-soft: var(--err-soft); }
+.delta { padding: 1px 8px; border-radius: 999px; font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--tone); background: var(--tone-soft); }
+.spark { display: block; width: 100%; height: auto; margin-top: 10px; overflow: visible; color: var(--tone); }
+.line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.area { fill: currentColor; opacity: .12; }
+.bar { fill: currentColor; opacity: .85; }
+.end { fill: var(--surface); stroke: currentColor; stroke-width: 2; }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

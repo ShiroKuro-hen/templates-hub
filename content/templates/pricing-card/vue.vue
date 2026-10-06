@@ -34,21 +34,23 @@ function toggle() {
 </template>
 
 <style scoped>
-.plan { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 16px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; font: 14px/1.4 system-ui, sans-serif; color: #17130f; }
-.plan.hot { background: #ffd84d; }
-.badge { position: absolute; top: -12px; right: 12px; padding: 1px 10px; border: 2px solid #17130f; border-radius: 99px; background: #ff5a36; font: 700 .72rem ui-monospace, monospace; }
-h2 { margin: 0; font-size: 1.1rem; letter-spacing: -.02em; }
-.price { margin: 0; font-size: 2.4rem; font-weight: 800; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
-.price small { font: 600 .8rem ui-monospace, monospace; color: #4d453c; letter-spacing: 0; }
-ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; flex: 1; }
-li::before { content: "✓"; margin-right: 8px; font-weight: 800; }
-li.no { color: #4d453c; text-decoration: line-through; } li.no::before { content: "✕"; color: #d6293e; }
-button { font: 700 .9rem system-ui, sans-serif; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; padding: 8px 14px; box-shadow: 4px 4px 0 #17130f; cursor: pointer; }
-.hot button { background: #ff5a36; }
-button[aria-pressed="true"] { background: #17130f; color: #fffdf8; }
-button:hover, button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-button:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-.hot button:focus-visible { outline-color: #17130f; }
-.sr { position: absolute; left: -9999px; }
-@media (prefers-reduced-motion: no-preference) { button { transition: transform .1s, box-shadow .1s; } }
+.plan { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+.plan.hot { border-color: var(--accent); }
+.plan.hot::before { content: ""; position: absolute; inset: -1px -1px auto; height: 3px; border-radius: var(--radius) var(--radius) 0 0; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.badge { position: absolute; top: -11px; right: 16px; padding: 2px 10px; border: 1px solid var(--accent); border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; }
+h2 { margin: 0; font-size: 1rem; font-weight: 600; }
+.price { margin: 0; font-size: 2.25rem; font-weight: 700; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.price small { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+ul { margin: 0; padding: 12px 0 0; border-top: 1px solid var(--border); list-style: none; display: grid; gap: 6px; flex: 1; }
+li::before { content: "✓"; display: inline-block; width: 16px; margin-right: 6px; font-weight: 700; color: var(--ok); }
+li.no { color: var(--muted); text-decoration: line-through; } li.no::before { content: "✕"; color: var(--muted); }
+button { font: 600 14px system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 9px 14px; cursor: pointer; transition: border-color 140ms, background 140ms, filter 140ms; }
+button:hover { border-color: var(--accent); }
+.hot button { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.hot button:hover { filter: brightness(1.08); }
+button[aria-pressed="true"], .hot button[aria-pressed="true"] { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

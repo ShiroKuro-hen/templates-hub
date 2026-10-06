@@ -41,9 +41,9 @@ export function Demo() {
   return (
     <>
       <Segmented label="Periodo del informe" options={periodos} value={p} onChange={setP} />
-      <p aria-live="polite">Mostrando: {p}</p>
+      <p className="out" aria-live="polite">Mostrando: {p}</p>
       <Toggles label="Formato de texto" options={['Negrita', 'Cursiva', 'Subrayado']} />
     </>
   );
 }
-// CSS: copia las reglas .seg / .seg button de la pestaña HTML + CSS.
+// CSS: copia las reglas .seg / .seg button / .out de la pestaña HTML + CSS.

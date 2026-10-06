@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const WORDS = ['', 'Muy malo', 'Regular', 'Bien', 'Muy bien', 'Excelente'];
+const WORDS = ['', 'muy malo', 'regular', 'bien', 'muy bien', 'excelente'];
 
 withDefaults(defineProps<{ legend?: string; name?: string }>(), {
   legend: '¿Qué tal estuvo el servicio?',
@@ -23,24 +23,25 @@ const model = defineModel<number>({ default: 0 });
       </template>
     </div>
     <output aria-live="polite">
-      {{ model ? `Tu valoración: ${model} de 5 · ${WORDS[model]}` : 'Elige de 1 a 5 estrellas' }}
+      {{ model ? `Tu valoración: ${model} de 5, ${WORDS[model]}` : 'Elige de 1 a 5 estrellas' }}
     </output>
   </fieldset>
 </template>
 
 <style scoped>
-fieldset { margin: 0; padding: 0; border: 0; font: 14px/1.4 system-ui, sans-serif; color: #17130f; }
-legend { padding: 0; margin-bottom: 8px; font-weight: 700; letter-spacing: -.01em; }
+fieldset { margin: 0; padding: 0; border: 0; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+legend { padding: 0; margin-bottom: 8px; font-weight: 600; }
 .rate { display: flex; gap: 2px; }
 .rate input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.rate label { display: block; padding: 2px; border-radius: 8px; cursor: pointer; }
-.star { display: block; width: 34px; height: 34px; fill: #fffdf8; stroke: #17130f; stroke-width: 2; stroke-linejoin: round; transition: transform .12s; }
-.rate input:checked + label .star, .rate label:has(~ input:checked) .star { fill: #ffd84d; }
-.rate:has(label:hover) label .star { fill: #fffdf8; }
-.rate label:hover .star, .rate label:has(~ label:hover) .star { fill: #ffd84d !important; }
-.rate label:hover .star { transform: scale(1.12); }
-.rate input:focus-visible + label { outline: 3px solid #ff5a36; outline-offset: 1px; }
+.rate label { display: block; padding: 2px; border-radius: var(--radius); cursor: pointer; }
+.star { display: block; width: 32px; height: 32px; fill: var(--surface); stroke: var(--warn); stroke-width: 1.5; stroke-linejoin: round; transition: transform 140ms, fill 140ms; }
+.rate input:checked + label .star, .rate label:has(~ input:checked) .star { fill: var(--warn); }
+.rate:has(label:hover) label .star { fill: var(--surface); }
+.rate label:hover .star, .rate label:has(~ label:hover) .star { fill: var(--warn) !important; }
+.rate label:hover .star { transform: scale(1.1); }
+.rate input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-output { display: block; min-height: 1.4em; margin-top: 8px; color: #6b6258; font: 13px ui-monospace, monospace; }
+output { display: block; min-height: 1.5em; margin-top: 8px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .star { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

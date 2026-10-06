@@ -36,4 +36,4 @@ export function FeatureGrid({
     </section>
   );
 }
-// CSS: copia las reglas .features / .head / .grid / .card / .ico de la pestaña HTML + CSS.
+// CSS: copia las reglas .features / .head (y .head::before) / .grid / .card / .ico de la pestaña HTML + CSS, junto con los tokens :root.

@@ -30,16 +30,17 @@ watch(band, (b) => {
 </template>
 
 <style scoped>
-label { display: block; margin-bottom: 6px; font-weight: 700; letter-spacing: -.01em; }
-textarea { display: block; width: 100%; height: 130px; padding: 10px 12px; resize: vertical; font: inherit; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; box-sizing: border-box; }
-textarea:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-.meta { display: flex; align-items: center; gap: 10px; margin-top: 14px; font: 12px ui-monospace, monospace; }
-progress { flex: 1; height: 12px; appearance: none; border: 2px solid #17130f; border-radius: 6px; background: #fffdf8; overflow: hidden; }
-progress::-webkit-progress-bar { background: #fffdf8; }
-progress::-webkit-progress-value, progress::-moz-progress-bar { background: #1f9d55; }
-.warn progress::-webkit-progress-value, .warn progress::-moz-progress-bar { background: #e0a800; }
-.full progress::-webkit-progress-value, .full progress::-moz-progress-bar { background: #d6293e; }
-#left { min-width: 130px; text-align: right; color: #6b6258; }
-.warn #left { color: #17130f; font-weight: 700; } .full #left { color: #d6293e; font-weight: 700; }
+label { display: block; margin-bottom: 6px; font-weight: 600; color: var(--text); }
+textarea { display: block; width: 100%; height: 130px; padding: 10px 12px; resize: vertical; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); box-sizing: border-box; }
+textarea:focus-visible { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 2px; }
+.meta { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text); }
+progress { flex: 1; height: 6px; appearance: none; border: 0; border-radius: 999px; background: var(--border); overflow: hidden; }
+progress::-webkit-progress-bar { background: var(--border); }
+progress::-webkit-progress-value, progress::-moz-progress-bar { background: linear-gradient(90deg, #22d3ee, #2f5bff); border-radius: 999px; }
+.warn progress::-webkit-progress-value, .warn progress::-moz-progress-bar { background: var(--warn); }
+.full progress::-webkit-progress-value, .full progress::-moz-progress-bar { background: var(--err); }
+#left { min-width: 120px; text-align: right; color: var(--muted); }
+.warn #left { color: var(--text); font-weight: 600; } .full #left { color: var(--err); font-weight: 600; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

@@ -17,11 +17,11 @@ export function CodeBlock({ filename, code }: Props) {
   }
 
   return (
-    <figure className="code" style={{ marginInline: 0 }}>
+    <figure className="code">
       <figcaption className="bar">
         <span>{filename}</span>
         <button type="button" className="copy" data-ok={ok ? '' : undefined} onClick={copy} aria-live="polite">
-          {ok ? '¡Copiado!' : 'Copiar'}
+          {ok ? 'Copiado' : 'Copiar'}
         </button>
       </figcaption>
       <pre tabIndex={0} aria-label={`Código de ${filename}`}>
@@ -36,4 +36,4 @@ export function CodeBlock({ filename, code }: Props) {
 }
 
 // Uso: <CodeBlock filename="saludar.ts" code={"export const hola = () => 'Hola';\nhola();"} />
-// CSS: copia las reglas .code / .bar / .copy / pre / code / .l (y .k .s .f .c si resaltas sintaxis) de la pestaña HTML + CSS.
+// CSS: copia las reglas .code / .bar / .copy / pre / code / .l (y .k .s .f .n .c si resaltas sintaxis) de la pestaña HTML + CSS, junto con los tokens :root.

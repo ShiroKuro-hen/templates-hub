@@ -1,0 +1,1 @@
+{ "title": "Botón flotante con acciones rápidas", "category": "botones", "description": "FAB que despliega un menú de acciones; se cierra con Esc o al hacer clic fuera.", "tags": ["fab", "menu", "a11y"] }

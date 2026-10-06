@@ -1,6 +1,6 @@
 import { Fragment, useId, useState } from 'react';
 
-const WORDS = ['', 'Muy malo', 'Regular', 'Bien', 'Muy bien', 'Excelente'];
+const WORDS = ['', 'muy malo', 'regular', 'bien', 'muy bien', 'excelente'];
 
 type Props = {
   legend?: string;
@@ -35,9 +35,9 @@ export function RatingStars({ legend = '¿Qué tal estuvo el servicio?', value, 
         ))}
       </div>
       <output aria-live="polite">
-        {current ? `Tu valoración: ${current} de 5 · ${WORDS[current]}` : 'Elige de 1 a 5 estrellas'}
+        {current ? `Tu valoración: ${current} de 5, ${WORDS[current]}` : 'Elige de 1 a 5 estrellas'}
       </output>
     </fieldset>
   );
 }
-// CSS: copia las reglas .rate / .rate input / .rate label / .star / .sr / output de la pestaña HTML + CSS.
+// CSS: copia las reglas .rate / .rate input / .rate label / .star / .sr / output y los tokens :root de la pestaña HTML + CSS.

@@ -27,7 +27,7 @@ export function Demo() {
       lead="Una jerarquía clara ayuda a leer, a escanear y a navegar con lector de pantalla."
     >
       <h2>Estructura de la página</h2>
-      <p>Un solo h1 por página; no saltes niveles.</p>
+      <p>Usa un solo h1 por página y no saltes niveles.</p>
       <h3>Secciones principales</h3>
       <h4>Subsecciones</h4>
       <h5>Detalle de apoyo</h5>
@@ -35,4 +35,4 @@ export function Demo() {
     </HeadingStyles>
   );
 }
-// CSS: copia las reglas .doc / .eyebrow / .lead y los estilos h1–h6 de la pestaña HTML + CSS.
+// CSS: copia las reglas .doc / .eyebrow / .lead y los estilos h1–h6 de la pestaña HTML + CSS, junto con los tokens :root.

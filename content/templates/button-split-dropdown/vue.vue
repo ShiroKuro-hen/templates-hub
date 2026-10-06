@@ -14,7 +14,7 @@ const items = () => [...(menu.value?.querySelectorAll('button') ?? [])];
 
 function place() {
   const r = wrap.value!.getBoundingClientRect();
-  Object.assign(menu.value!.style, { left: `${r.left}px`, top: `${r.bottom + 10}px` });
+  Object.assign(menu.value!.style, { left: `${r.left}px`, top: `${r.bottom + 8}px` });
 }
 function onToggle(e: Event) {
   open.value = (e as ToggleEvent).newState === 'open';
@@ -48,17 +48,20 @@ function pick(l: string) {
 </template>
 
 <style scoped>
-.split { display: inline-flex; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; }
-.split:has(button:active) { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-.split button { font: 600 14px system-ui, sans-serif; padding: 9px 16px; border: 2px solid #17130f; background: #ff5a36; color: #17130f; cursor: pointer; }
-.split button:hover { background: #ff7d5e; }
-.split button:focus-visible { outline: 3px solid #ff5a36; outline-offset: 3px; }
-#main { border-radius: 10px 0 0 10px; }
-#caret { border-radius: 0 10px 10px 0; margin-left: -2px; padding: 9px 12px; }
-#menu { position: fixed; inset: auto; margin: 0; min-width: 230px; padding: 6px; border: 2px solid #17130f; border-radius: 10px;
-  background: #fffdf8; color: #17130f; box-shadow: 4px 4px 0 #17130f; }
+.split { display: inline-flex; border-radius: var(--radius); box-shadow: var(--shadow); }
+.split button { font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 8px 16px; border: 0; background: var(--accent);
+  color: var(--accent-ink); cursor: pointer; transition: filter .14s; }
+.split button:hover { filter: brightness(1.1); }
+.split button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#main { border-radius: var(--radius) 0 0 var(--radius); }
+#caret { border-radius: 0 var(--radius) var(--radius) 0; padding: 8px 10px; border-left: 1px solid color-mix(in srgb, var(--accent-ink) 35%, transparent); }
+#menu { position: fixed; inset: auto; margin: 0; min-width: 230px; padding: 4px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
 #menu button { display: block; width: 100%; text-align: left; padding: 8px 10px; border: 0; border-radius: 6px;
-  background: none; font: 600 14px system-ui, sans-serif; color: inherit; cursor: pointer; }
-#menu button:hover, #menu button:focus-visible { background: #ffd84d; outline: 3px solid #ff5a36; outline-offset: -3px; }
-#menu small { display: block; font-weight: 400; color: #6b6258; }
+  background: none; font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; color: inherit; cursor: pointer; }
+#menu button:hover, #menu button:focus-visible { background: var(--accent-soft); }
+#menu button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+#menu small { display: block; font-weight: 400; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .split button { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

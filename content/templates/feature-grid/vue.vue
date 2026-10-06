@@ -32,17 +32,18 @@ withDefaults(defineProps<{ title?: string; intro?: string; features?: Feature[] 
 </template>
 
 <style scoped>
-.features { max-width: 1040px; margin: 0 auto; padding: 36px 20px; color: #17130f; font: 15px/1.5 system-ui, sans-serif; }
-.head { max-width: 34rem; margin: 0 0 28px; }
-.head h2 { margin: 0 0 8px; font-size: clamp(1.6rem, 4.5vw, 2.4rem); line-height: 1.1; letter-spacing: -.03em; }
-.head p { margin: 0; color: #6b6258; }
-.grid { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+.features { max-width: 1040px; margin: 0 auto; padding: 24px 0; color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.head { max-width: 36rem; margin: 0 0 36px; }
+.head::before { content: ""; display: block; width: 40px; height: 3px; margin-bottom: 16px; border-radius: 3px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.head h2 { margin: 0 0 10px; font-size: clamp(1.6rem, 4.5vw, 2.4rem); font-weight: 700; line-height: 1.1; letter-spacing: -.025em; text-wrap: balance; }
+.head p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 1px; margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--radius); background: var(--border); box-shadow: var(--shadow); overflow: hidden; }
+@media (min-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 860px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-.card { padding: 20px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
-.ico { display: grid; place-items: center; width: 44px; height: 44px; margin-bottom: 14px; border: 2px solid #17130f; border-radius: 10px; background: #ffd84d; }
-.card:nth-child(3n + 2) .ico { background: #ff5a36; }
-.card:nth-child(3n) .ico { background: #c9d3ff; }
-.ico svg { width: 24px; height: 24px; fill: none; stroke: #17130f; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.card h3 { margin: 0 0 6px; font-size: 1.1rem; letter-spacing: -.02em; }
-.card p { margin: 0; color: #6b6258; font-size: .95rem; }
+.card { padding: 28px 24px; background: var(--surface); }
+.ico { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 16px; border-radius: var(--radius); background: var(--accent-soft); }
+.ico svg { width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.card h3 { margin: 0 0 6px; font-size: 1.05rem; font-weight: 600; letter-spacing: -.01em; }
+.card p { margin: 0; color: var(--muted); }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

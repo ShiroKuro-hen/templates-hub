@@ -4,19 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body { margin:0; padding:20px; font:14px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  .row { display:grid; grid-template-columns:110px 1fr 48px; align-items:center; gap:12px; margin-bottom:14px; font-weight:600; }
-  .row output { text-align:right; font-variant-numeric:tabular-nums; }
-  progress { appearance:none; width:100%; height:18px; border:2px solid #17130f; border-radius:999px; background:#fffdf8; overflow:hidden; }
-  progress::-webkit-progress-bar { background:#fffdf8; }
-  progress::-webkit-progress-value { background:var(--c); }
-  progress::-moz-progress-bar { background:var(--c); }
-  .lo { --c:#d6293e; } .mid { --c:#e0a800; } .hi { --c:#1f9d55; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .row{display:grid;grid-template-columns:110px 1fr 48px;align-items:center;gap:12px;margin-bottom:16px}
+  .row:last-child{margin-bottom:0}
+  .row label{font-weight:500}
+  .row output{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+  progress{appearance:none;width:100%;height:8px;border:0;border-radius:999px;background:var(--border);overflow:hidden}
+  progress::-webkit-progress-bar{background:var(--border)}
+  progress::-webkit-progress-value{background:var(--c);border-radius:999px}
+  progress::-moz-progress-bar{background:var(--c);border-radius:999px}
+  .lo{--c:var(--err)} .mid{--c:var(--warn)} .hi{--c:var(--ok)}
 </style>
 </head>
 <body>
-  <div class="row"><label for="a">Diseño</label><progress id="a" class="hi" max="100" value="88"></progress><output>88%</output></div>
-  <div class="row"><label for="b">Backend</label><progress id="b" class="mid" max="100" value="60"></progress><output>60%</output></div>
-  <div class="row"><label for="c">Pruebas</label><progress id="c" class="lo" max="100" value="25"></progress><output>25%</output></div>
+  <div class="card">
+    <div class="row"><label for="a">Diseño</label><progress id="a" class="hi" max="100" value="88"></progress><output for="a">88%</output></div>
+    <div class="row"><label for="b">Backend</label><progress id="b" class="mid" max="100" value="60"></progress><output for="b">60%</output></div>
+    <div class="row"><label for="c">Pruebas</label><progress id="c" class="lo" max="100" value="25"></progress><output for="c">25%</output></div>
+  </div>
 </body>
 </html>

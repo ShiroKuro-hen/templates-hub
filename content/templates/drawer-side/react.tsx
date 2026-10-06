@@ -35,7 +35,7 @@ export function Drawer({ open, title, onClose, onApply, children }: Props) {
         <div className="body">{children}</div>
         <footer>
           <button type="reset" className="btn">Limpiar</button>
-          <button className="btn main">Aplicar</button>
+          <button className="btn main">Aplicar filtros</button>
         </footer>
       </form>
     </dialog>
@@ -45,4 +45,4 @@ export function Drawer({ open, title, onClose, onApply, children }: Props) {
 // Uso: <Drawer open={open} title="Filtros" onClose={() => setOpen(false)} onApply={(d) => console.log(d.getAll('estado'))}>
 //        <fieldset><legend>Estado</legend><label><input type="checkbox" name="estado" value="Enviado" /> Enviado</label></fieldset>
 //      </Drawer>
-// CSS: copia las reglas .btn / .btn.main / dialog / dialog::backdrop / header / footer / h2 / .x / .body / fieldset / legend / label / input y @keyframes slide de la pestaña HTML + CSS.
+// CSS: copia las reglas .btn / .btn.main / dialog / dialog::backdrop / header (y ::after) / footer / h2 / .x / .body / fieldset / legend / label / input y @keyframes slide de la pestaña HTML + CSS.

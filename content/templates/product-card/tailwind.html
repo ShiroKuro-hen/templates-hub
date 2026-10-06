@@ -1,0 +1,36 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <article aria-labelledby="p-title" class="max-w-[300px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="relative grid aspect-[4/3] place-items-center border-b border-slate-200 bg-blue-50 text-blue-600 dark:border-slate-700 dark:bg-slate-800 dark:text-blue-400">
+      <span class="absolute left-3 top-3 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-medium dark:border-slate-700 dark:bg-slate-900">Nuevo</span>
+      <svg viewBox="0 0 120 120" role="img" aria-label="Auriculares inalámbricos" class="w-[46%]">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="[stop-color:theme(colors.cyan.400)]"/><stop offset="1" class="[stop-color:theme(colors.blue.600)]"/></linearGradient></defs>
+        <path d="M22 70V60a38 38 0 0 1 76 0v10" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round"/>
+        <rect x="14" y="64" width="22" height="36" rx="8" fill="currentColor"/>
+        <rect x="84" y="64" width="22" height="36" rx="8" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="p-4">
+      <h3 id="p-title" class="mb-1 text-base font-semibold leading-snug">Auriculares Aura 2</h3>
+      <p class="mb-2.5 text-slate-500 dark:text-slate-400">Cancelación de ruido, 40 h de batería</p>
+      <div class="mb-3.5 flex items-center gap-1.5 tabular-nums text-slate-500 dark:text-slate-400">
+        <span role="img" aria-label="Valoración: 4,5 de 5" class="relative inline-block text-base leading-none tracking-tight text-slate-300 dark:text-slate-600">★★★★★
+          <span aria-hidden="true" class="absolute inset-0 w-[90%] overflow-hidden text-amber-500">★★★★★</span></span>
+        <span aria-hidden="true">4,5</span><span>(1.284 reseñas)</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <p class="text-xl font-bold tabular-nums">149 €<s class="ml-1.5 text-[13px] font-normal text-slate-500 dark:text-slate-400" aria-label="Precio anterior 189 €">189 €</s></p>
+        <button type="button" id="add" class="rounded-lg border border-blue-600 bg-blue-600 px-3.5 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 data-[n]:border-emerald-600 data-[n]:bg-emerald-50 data-[n]:text-slate-900 dark:data-[n]:bg-emerald-950 dark:data-[n]:text-slate-100">Añadir al carrito</button>
+      </div>
+      <p id="live" role="status" class="sr-only"></p>
+    </div>
+  </article>
+</div>
+<script>
+  const b = document.getElementById('add');
+  let n = 0;
+  b.addEventListener('click', () => {
+    b.dataset.n = ++n;
+    b.textContent = `Añadir otro (${n} en carrito)`;
+    document.getElementById('live').textContent = `Añadido al carrito. Tienes ${n}.`;
+  });
+</script>

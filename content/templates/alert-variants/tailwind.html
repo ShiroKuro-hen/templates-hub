@@ -1,21 +1,34 @@
-<ul class="m-0 flex list-none flex-col gap-2.5 p-4 font-sans text-sm text-[#17130f]">
-  <li role="status" class="flex items-start gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#e6eaff] px-2.5 py-2 shadow-[4px_4px_0_#17130f]">
-    <i aria-hidden="true" class="grid h-6 w-6 flex-none place-items-center rounded-full border-2 border-[#17130f] bg-[#3b5bfd] font-mono text-[13px] font-bold not-italic text-white">i</i>
-    <div class="min-w-0 flex-1"><b class="block tracking-tight">Nueva versión disponible</b><span class="text-[13px] text-[#6b6258]">La 2.4 llega el viernes con mejoras de velocidad.</span></div>
-    <button type="button" data-dismiss aria-label="Descartar aviso: nueva versión" class="h-7 w-7 flex-none rounded-lg border-2 border-transparent text-lg leading-none hover:border-[#17130f] hover:bg-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
-  </li>
-  <li role="status" class="flex items-start gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#dff3e7] px-2.5 py-2 shadow-[4px_4px_0_#17130f]">
-    <i aria-hidden="true" class="grid h-6 w-6 flex-none place-items-center rounded-full border-2 border-[#17130f] bg-[#1f9d55] font-mono text-[13px] font-bold not-italic text-white">✓</i>
-    <div class="min-w-0 flex-1"><b class="block tracking-tight">Pago recibido</b><span class="text-[13px] text-[#6b6258]">Tu suscripción se renovó hasta el 5 de enero.</span></div>
-    <button type="button" data-dismiss aria-label="Descartar aviso: pago recibido" class="h-7 w-7 flex-none rounded-lg border-2 border-transparent text-lg leading-none hover:border-[#17130f] hover:bg-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
-  </li>
-  <li role="alert" class="flex items-start gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#fbe1e5] px-2.5 py-2 shadow-[4px_4px_0_#17130f]">
-    <i aria-hidden="true" class="grid h-6 w-6 flex-none place-items-center rounded-full border-2 border-[#17130f] bg-[#d6293e] font-mono text-[13px] font-bold not-italic text-white">✕</i>
-    <div class="min-w-0 flex-1"><b class="block tracking-tight">No se pudo enviar el formulario</b><span class="text-[13px] text-[#6b6258]">Falta el correo electrónico. Complétalo e inténtalo otra vez.</span></div>
-    <button type="button" data-dismiss aria-label="Descartar aviso: error de formulario" class="h-7 w-7 flex-none rounded-lg border-2 border-transparent text-lg leading-none hover:border-[#17130f] hover:bg-[#fffdf8] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
-  </li>
-</ul>
+<ul id="list" class="mx-auto flex max-w-3xl list-none flex-col gap-2.5 p-0 text-sm text-slate-900 dark:text-slate-100"></ul>
+<button type="button" id="reset" hidden class="mx-auto mt-2.5 block rounded-lg border border-slate-200 bg-white px-3.5 py-2 font-semibold shadow-sm hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">Mostrar avisos otra vez</button>
 <script>
-  document.querySelectorAll('[data-dismiss]').forEach((b) =>
-    b.addEventListener('click', () => b.closest('li').remove()));
+  // Clases completas por tipo (Tailwind necesita verlas enteras).
+  const KIND = {
+    info: ['bg-cyan-50 before:bg-cyan-600 dark:bg-cyan-950', 'bg-cyan-600', 'i', 'status', 'nueva versión'],
+    ok: ['bg-emerald-50 before:bg-emerald-600 dark:bg-emerald-950', 'bg-emerald-600', '✓', 'status', 'pago recibido'],
+    warn: ['bg-amber-50 before:bg-amber-600 dark:bg-amber-950', 'bg-amber-600', '!', 'status', 'plan por vencer'],
+    err: ['bg-red-50 before:bg-red-600 dark:bg-red-950', 'bg-red-600', '✕', 'alert', 'error de formulario'],
+  };
+  const DATA = [
+    ['info', 'Nueva versión disponible', 'La 2.4 llega el viernes con mejoras de velocidad.'],
+    ['ok', 'Pago recibido', 'Tu suscripción se renovó hasta el 5 de enero.'],
+    ['warn', 'Tu plan vence en 3 días', 'Renueva para no perder el acceso a tus informes.'],
+    ['err', 'No se pudo enviar el formulario', 'Falta el correo electrónico. Complétalo e inténtalo otra vez.'],
+  ];
+  const list = document.getElementById('list'), reset = document.getElementById('reset');
+  function fill() {
+    list.innerHTML = DATA.map(([k, t, d]) => `
+      <li role="${KIND[k][3]}" class="relative flex items-start gap-3 overflow-hidden rounded-lg border border-slate-200 py-3 pr-3 pl-4 shadow-sm before:absolute before:inset-y-0 before:left-0 before:w-[3px] dark:border-slate-700 ${KIND[k][0]}">
+        <i aria-hidden="true" class="grid h-[22px] w-[22px] flex-none place-items-center rounded-full text-xs font-semibold text-white not-italic ${KIND[k][1]}">${KIND[k][2]}</i>
+        <div class="min-w-0 flex-1"><b class="block font-semibold">${t}</b><span class="text-[13px] text-slate-500 dark:text-slate-400">${d}</span></div>
+        <button type="button" aria-label="Descartar aviso: ${KIND[k][4]}" class="h-7 w-7 flex-none rounded-lg text-lg leading-none text-slate-500 hover:bg-white hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100">×</button>
+      </li>`).join('');
+  }
+  list.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    b.closest('li').remove();
+    reset.hidden = list.children.length > 0;
+    (reset.hidden ? list.querySelector('button') : reset).focus();
+  });
+  reset.addEventListener('click', () => { fill(); reset.hidden = true; list.querySelector('button').focus(); });
+  fill();
 </script>

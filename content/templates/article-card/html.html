@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .article{position:relative;max-width:360px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:border-color .14s}
+  .article:hover{border-color:var(--accent)}
+  .article:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .cover{display:block;width:100%;height:auto;aspect-ratio:16/8;background:var(--accent-soft);border-bottom:1px solid var(--border);color:var(--accent)}
+  .body{padding:16px}
+  .tag{display:inline-block;margin-bottom:8px;padding:1px 10px;border-radius:999px;background:var(--info-soft);color:var(--text);font-size:12px;font-weight:500}
+  h3{margin:0 0 6px;font-size:17px;line-height:1.3}
+  h3 a{color:inherit;text-decoration:none;outline:0}
+  h3 a::after{content:"";position:absolute;inset:0}
+  .article:hover h3 a{text-decoration:underline;text-underline-offset:3px}
+  .excerpt{margin:0 0 14px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+  .avatar{width:28px;height:28px;display:grid;place-items:center;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600}
+  .author{color:var(--text);font-weight:500}
+  .read{margin-left:auto;font-variant-numeric:tabular-nums}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<article class="article">
+  <svg class="cover" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs><linearGradient id="ln" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+    <g fill="none" stroke="currentColor" stroke-opacity=".25">
+      <path d="M0 40h320M0 80h320M0 120h320M80 0v160M160 0v160M240 0v160"/>
+    </g>
+    <path d="M0 130 C60 120 90 60 150 70 S250 30 320 20" fill="none" stroke="url(#ln)" stroke-width="3"/>
+    <circle cx="150" cy="70" r="5" fill="currentColor"/>
+  </svg>
+  <div class="body">
+    <span class="tag">Ingeniería</span>
+    <h3><a href="#">Cómo redujimos la latencia de la API un 40 %</a></h3>
+    <p class="excerpt">Medimos cada salto de red, movimos la caché al borde y eliminamos consultas duplicadas. Esto es lo que aprendimos.</p>
+    <div class="meta">
+      <span class="avatar" aria-hidden="true">LM</span>
+      <span class="author">Lucía Martín</span>
+      <time datetime="2026-09-28">28 sep 2026</time>
+      <span class="read">6 min de lectura</span>
+    </div>
+  </div>
+</article>
+</body>
+</html>

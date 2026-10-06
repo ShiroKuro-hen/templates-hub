@@ -27,11 +27,13 @@ withDefaults(defineProps<{ title?: string; items?: Feature[] }>(), {
 </template>
 
 <style scoped>
-h1 { margin: 0 0 12px; font-size: 1.1rem; letter-spacing: -.02em; }
-ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-li { display: flex; align-items: center; gap: 12px; }
-.ico { flex: none; display: grid; place-items: center; width: 38px; height: 38px; background: #ffd84d; border: 2px solid #17130f; border-radius: 10px; box-shadow: 3px 3px 0 #17130f; }
-.ico svg { width: 20px; height: 20px; fill: none; stroke: #17130f; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-strong { display: block; letter-spacing: -.01em; }
-p { margin: 0; font-size: 13px; color: #6b6258; }
+section { font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+h1 { margin: 0 0 16px; font-size: 1.15rem; font-weight: 600; letter-spacing: -.01em; }
+ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; max-width: 460px; }
+li { display: flex; align-items: flex-start; gap: 12px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.ico { flex: none; display: grid; place-items: center; width: 36px; height: 36px; color: var(--accent); background: var(--accent-soft); border-radius: var(--radius); }
+.ico svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+strong { display: block; font-weight: 600; }
+p { margin: 2px 0 0; color: var(--muted); }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

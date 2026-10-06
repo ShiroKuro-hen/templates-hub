@@ -4,7 +4,7 @@ import { ref } from 'vue';
 type Item = { id: string; label: string; icon: string }; // icon = atributo "d" de un path 24x24
 type Section = { title: string; items: Item[] };
 withDefaults(defineProps<{ sections?: Section[]; brand?: string }>(), {
-  brand: 'Tinta&Co',
+  brand: 'Nexo',
   sections: () => [
     { title: 'Trabajo', items: [
       { id: 'panel', label: 'Panel', icon: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z' },
@@ -48,23 +48,26 @@ const current = ref('panel');
 </template>
 
 <style scoped>
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-.side { position:relative; width:224px; padding:8px; overflow:hidden; font:14px/1.5 system-ui, sans-serif; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; transition:width .2s; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.side { position:relative; width:224px; padding:8px; overflow:hidden; font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); transition:width .16s; }
 .side.collapsed { width:64px; }
 .head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:0 4px 8px; }
-.brand { font-weight:800; font-size:1.1rem; letter-spacing:-.02em; white-space:nowrap; }
-.toggle { flex:none; display:grid; place-items:center; width:34px; height:34px; color:inherit; background:#ffd84d; border:2px solid #17130f; border-radius:8px; cursor:pointer; }
-.toggle svg { transition:transform .2s; }
+.brand { font-weight:700; font-size:1.1rem; letter-spacing:-.01em; white-space:nowrap; }
+.toggle { flex:none; display:grid; place-items:center; width:32px; height:32px; color:var(--muted); background:transparent; border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:color .14s, border-color .14s; }
+.toggle:hover { color:var(--accent); border-color:var(--accent); }
+.toggle svg { transition:transform .16s; }
 .collapsed .toggle svg { transform:rotate(180deg); }
 .collapsed .head { justify-content:center; padding-inline:0; }
-.grp + .grp { margin-top:8px; padding-top:6px; border-top:2px solid #17130f1f; }
-.sec { margin:4px 8px; font:600 11px ui-monospace, monospace; color:#6b6258; }
+.grp + .grp { margin-top:8px; padding-top:6px; border-top:1px solid var(--border); }
+.sec { margin:4px 10px; font-size:12px; font-weight:600; color:var(--muted); }
 ul { display:grid; gap:2px; margin:0; padding:0; list-style:none; }
-a { display:flex; align-items:center; gap:10px; height:32px; padding:0 10px; color:inherit; font-weight:600; white-space:nowrap; text-decoration:none; border-radius:8px; }
-a:hover { background:#ffd84d; }
-a[aria-current] { background:#17130f; color:#fffdf8; }
+a { position:relative; display:flex; align-items:center; gap:10px; height:34px; padding:0 10px; color:var(--muted); font-weight:500; white-space:nowrap; text-decoration:none; border-radius:var(--radius); transition:background .14s, color .14s; }
+a:hover { color:var(--text); background:var(--bg); }
+a[aria-current] { color:var(--accent); background:var(--accent-soft); }
+a[aria-current]::before { content:""; position:absolute; left:0; top:8px; bottom:8px; width:2px; border-radius:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
 .ic { flex:none; width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .collapsed a { justify-content:center; padding:0; }
 .collapsed .lbl, .collapsed .sec, .collapsed .brand { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-@media (prefers-reduced-motion:reduce) { .side, .toggle svg { transition:none; } }
+@media (prefers-reduced-motion:reduce) { .side, .toggle svg, a, .toggle { transition:none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

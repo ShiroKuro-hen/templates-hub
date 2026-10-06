@@ -4,20 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body { margin:0; padding:20px; font:14px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:16px; }
-  .stat { border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; padding:16px; }
-  .stat small { color:#6b6258; font-weight:600; text-transform:uppercase; letter-spacing:.05em; }
-  .stat strong { display:block; font-size:2rem; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
-  .up { color:#1f9d55; } .down { color:#d6293e; }
-  .up::before { content:"▲ "; } .down::before { content:"▼ "; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+  .stat{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .stat:first-child::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .stat small{color:var(--muted);font-size:.8125rem;font-weight:500}
+  .stat strong{font-size:2rem;font-weight:700;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .up,.down{align-self:flex-start;padding:2px 8px;border-radius:999px;font-size:.75rem;font-weight:600;font-variant-numeric:tabular-nums}
+  .up{background:var(--ok-soft);color:var(--ok)} .down{background:var(--err-soft);color:var(--err)}
+  .up::before{content:"▲ "} .down::before{content:"▼ "}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style>
 </head>
 <body>
   <div class="stats">
-    <div class="stat"><small>Ingresos</small><strong>$48.2k</strong><span class="up">12.4%</span></div>
-    <div class="stat"><small>Usuarios</small><strong>3,120</strong><span class="up">4.1%</span></div>
-    <div class="stat"><small>Cancelaciones</small><strong>87</strong><span class="down">2.3%</span></div>
+    <div class="stat"><small>Ingresos</small><strong>$48.2k</strong><span class="up"><span class="sr-only">Sube </span>12.4%</span></div>
+    <div class="stat"><small>Usuarios</small><strong>3,120</strong><span class="up"><span class="sr-only">Sube </span>4.1%</span></div>
+    <div class="stat"><small>Cancelaciones</small><strong>87</strong><span class="down"><span class="sr-only">Baja </span>2.3%</span></div>
   </div>
 </body>
 </html>

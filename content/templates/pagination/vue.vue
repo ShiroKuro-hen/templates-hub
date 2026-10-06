@@ -30,7 +30,7 @@ const go = (p: number) => (page.value = Math.min(props.total, Math.max(1, p)));
   </p>
   <nav class="pager" aria-label="Paginación">
     <button class="pg" type="button" aria-label="Página anterior" :aria-disabled="page === 1" @click="go(page - 1)">
-      ← <span class="txt">Anterior</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg><span class="txt">Anterior</span>
     </button>
     <ul>
       <template v-for="(n, i) in pages" :key="n === '…' ? `gap-${i}` : n">
@@ -43,26 +43,28 @@ const go = (p: number) => (page.value = Math.min(props.total, Math.max(1, p)));
       </template>
     </ul>
     <button class="pg" type="button" aria-label="Página siguiente" :aria-disabled="page === total" @click="go(page + 1)">
-      <span class="txt">Siguiente</span> →
+      <span class="txt">Siguiente</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
     </button>
   </nav>
 </template>
 
 <style scoped>
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-.status { margin:0 0 18px; font:13px ui-monospace, monospace; color:#6b6258; }
-.pager { display:flex; align-items:center; justify-content:center; gap:8px; font:14px/1.5 system-ui, sans-serif; color:#17130f; }
-.pager ul { display:flex; align-items:center; gap:6px; margin:0; padding:0; list-style:none; }
-.pg { min-width:40px; height:40px; padding:0 12px; font:inherit; font-weight:700; color:inherit; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
-.pg:hover { background:#ffd84d; transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
-.pg[aria-current] { background:#17130f; color:#fffdf8; }
-.pg[aria-disabled="true"] { opacity:.45; box-shadow:none; transform:none; background:#fffdf8; cursor:not-allowed; }
-.gap { min-width:20px; text-align:center; color:#6b6258; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.status { margin:0 0 16px; text-align:center; color:var(--muted); font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; font-variant-numeric:tabular-nums; }
+.pager { display:flex; align-items:center; justify-content:center; gap:8px; font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); }
+.pager ul { display:flex; align-items:center; gap:4px; margin:0; padding:0; list-style:none; }
+.pg { display:inline-flex; align-items:center; justify-content:center; gap:4px; min-width:36px; height:36px; padding:0 12px; font:inherit; font-weight:500; font-variant-numeric:tabular-nums; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:background .14s, border-color .14s, color .14s; }
+.pg svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.pg:hover { border-color:var(--accent); color:var(--accent); }
+.pg[aria-current] { background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+.pg[aria-disabled="true"] { opacity:.45; background:var(--surface); border-color:var(--border); color:var(--text); cursor:not-allowed; }
+.gap { min-width:20px; text-align:center; color:var(--muted); }
 @media (max-width:520px) {
-  .pager, .pager ul { gap:3px; }
-  .pg { min-width:30px; height:36px; padding:0 4px; box-shadow:3px 3px 0 #17130f; }
+  .pager, .pager ul { gap:2px; }
+  .pg { min-width:30px; height:36px; padding:0 4px; }
   .txt { display:none; }
   .gap { min-width:14px; }
 }
-@media (prefers-reduced-motion:reduce) { .pg { transform:none !important; } }
+@media (prefers-reduced-motion:reduce) { .pg { transition:none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

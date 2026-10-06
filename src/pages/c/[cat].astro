@@ -1,21 +1,31 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { CATEGORIES, templates, url } from '../../lib/data';
+import { CATEGORIES, GROUPS, LANGS, groupOf, templates, url } from '../../lib/data';
 export const getStaticPaths = () => Object.keys(CATEGORIES).map((cat) => ({ params: { cat } }));
 const { cat } = Astro.params;
 const c = CATEGORIES[cat!];
 const list = templates.filter((t) => t.category === cat);
 ---
 <Base title={`${c.label} · Templates Hub`} description={c.blurb}>
-  <p class="crumbs"><a href={url('/')}>inicio</a> / {cat}</p>
-  <section class="tpl-head"><h1>{c.icon} {c.label}</h1><p>{c.blurb}</p></section>
-  <div class="grid">
+  <nav class="crumbs" aria-label="Ruta">
+    <a href={url('/')}>Inicio</a><span aria-hidden="true">/</span><span>{groupOf(cat!).label}</span>
+  </nav>
+  <h1>{c.label}</h1>
+  <p class="lead">{c.blurb} {list.length} {list.length === 1 ? 'componente' : 'componentes'}.</p>
+
+  <div class="cards">
     {list.map((t) => (
       <a class="card" href={url(`/t/${t.slug}/`)}>
-        <h3>{t.title}</h3><p>{t.description}</p>
-        <div class="meta">{Object.keys(t.code).map((l) => <span class="chip">{l}</span>)}</div>
+        <div class="thumb">
+          {t.code.html && <iframe data-preview src={url(`/preview/${t.slug}.html`)} title="" tabindex="-1" aria-hidden="true" sandbox="allow-scripts" loading="lazy"></iframe>}
+        </div>
+        <div class="body">
+          <h3>{t.title}</h3>
+          <p>{t.description}</p>
+          <div class="pills">{Object.keys(t.code).filter((l) => LANGS[l]).map((l) => <span class="pill">{LANGS[l].label}</span>)}</div>
+        </div>
       </a>
     ))}
   </div>
-  {list.length === 0 && <p>Pronto habrá plantillas aquí.</p>}
+  {list.length === 0 && <p class="lead">Aún no hay componentes aquí.</p>}
 </Base>

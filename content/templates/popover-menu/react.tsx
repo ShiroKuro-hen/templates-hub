@@ -43,4 +43,4 @@ export function PopoverMenu({ label, actions }: { label: string; actions: MenuAc
 }
 
 // Requiere @types/react >= 19 (atributos popover). Uso: <PopoverMenu label="Opciones" actions={[{ label: 'Duplicar', onSelect }]} />
-// CSS: copia las reglas .btn / [popover] / [role="menuitem"] / .danger de la pestaña HTML + CSS.
+// CSS: copia los tokens :root y las reglas .btn / [popover] / [role="menuitem"] / .danger de la pestaña HTML + CSS.

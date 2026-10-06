@@ -20,7 +20,7 @@ export function Timeline({ items = ITEMS }: { items?: Milestone[] }) {
         <li key={m.date} className={m.status} aria-current={m.status === 'now' ? 'step' : undefined}>
           <time dateTime={m.date}>{m.label}</time>
           <h2>
-            {m.title} {m.status === 'now' && <span className="state">· en curso</span>}
+            {m.title} {m.status === 'now' && <span className="state">En curso</span>}
           </h2>
           <p>{m.text}</p>
         </li>
@@ -28,4 +28,4 @@ export function Timeline({ items = ITEMS }: { items?: Milestone[] }) {
     </ol>
   );
 }
-// CSS: copia las reglas .tl / .tl li / .done / .now / .next / time / .tl h2 / .tl p / .state de la pestaña HTML + CSS.
+// CSS: copia las reglas .tl / .tl li / .done / .now / .next / time / .tl h2 / .tl p / .state y los tokens :root de la pestaña HTML + CSS.

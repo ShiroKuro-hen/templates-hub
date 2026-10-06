@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crear cuenta en Nimbo</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .page{min-height:calc(100vh - 40px);display:grid;place-items:center;align-content:center;gap:20px}
+  .card{width:100%;max-width:460px;box-sizing:border-box;padding:32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;margin-bottom:24px}
+  .logo{width:28px;height:28px;border-radius:7px;background:var(--accent);display:grid;place-items:center}
+  h1{font-size:22px;line-height:1.25;margin:0 0 4px}
+  .sub{margin:0 0 20px;color:var(--muted)}
+  .steps{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:13px;color:var(--muted)}
+  .steps li{display:flex;align-items:center;gap:8px}
+  .steps b{width:22px;height:22px;flex:none;border-radius:999px;border:1px solid var(--border);display:grid;place-items:center;font-weight:600;font-variant-numeric:tabular-nums}
+  .steps .done b,.steps [aria-current] b{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .steps [aria-current]{color:var(--text);font-weight:600}
+  .track{height:4px;border-radius:999px;background:var(--accent-soft);margin-bottom:24px;overflow:hidden}
+  .track span{display:block;height:100%;width:calc(var(--p) * 1%);background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+  fieldset{border:0;margin:0;padding:0;display:grid;gap:16px}
+  fieldset[hidden]{display:none}
+  legend{font-weight:600;font-size:16px;margin-bottom:16px;padding:0}
+  label{display:grid;gap:6px;font-weight:600}
+  small{font-weight:400;color:var(--muted);font-size:13px}
+  input:not([type=checkbox]),select{font:inherit;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px}
+  input:user-invalid,select:user-invalid{border-color:var(--err)}
+  label:has(:user-invalid) small{color:var(--err)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .terms{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+  .terms input{accent-color:var(--accent);width:16px;height:16px;margin:2px 0 0;flex:none}
+  .summary{margin:0;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);display:grid;grid-template-columns:auto 1fr;gap:4px 16px}
+  .summary dt{color:var(--muted)}
+  .summary dd{margin:0;overflow-wrap:anywhere}
+  a{color:var(--accent);font-weight:500}
+  .actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+  .btn{font:inherit;font-weight:600;border-radius:var(--radius);padding:10px 16px;cursor:pointer;transition:background .14s;border:1px solid var(--border);background:var(--surface);color:var(--text)}
+  .btn:hover{background:var(--accent-soft)}
+  .primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);margin-left:auto}
+  .primary:hover{background:var(--accent);filter:brightness(1.06)}
+  .status{margin:16px 0 0;padding:10px 12px;border-radius:var(--radius);background:var(--ok-soft);border:1px solid var(--ok)}
+  .foot{color:var(--muted);margin:0}
+  @media (max-width:440px){.card{padding:24px 20px}.steps li{flex-direction:column;gap:4px;text-align:center}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="card" aria-labelledby="title">
+    <div class="brand"><span class="logo" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent-ink)"><path d="M3 13V3l10 10V3"/></svg></span>Nimbo</div>
+    <h1 id="title">Crea tu cuenta</h1>
+    <p class="sub">Prueba gratis durante 14 días. Sin tarjeta.</p>
+    <ol class="steps" id="steps" aria-label="Progreso del registro">
+      <li aria-current="step"><b>1</b><span>Tu cuenta</span></li>
+      <li><b>2</b><span>Tu equipo</span></li>
+      <li><b>3</b><span>Confirmar</span></li>
+    </ol>
+    <div class="track" aria-hidden="true"><span id="bar" style="--p:33"></span></div>
+
+    <form id="f" novalidate>
+      <fieldset>
+        <legend>Datos de acceso</legend>
+        <label>Nombre completo <input name="name" autocomplete="name" required></label>
+        <label>Correo de trabajo <input type="email" name="email" autocomplete="email" required placeholder="nombre@empresa.com"></label>
+        <label>Contraseña <input type="password" name="password" autocomplete="new-password" required minlength="8"><small>Mínimo 8 caracteres.</small></label>
+      </fieldset>
+      <fieldset hidden>
+        <legend>Sobre tu equipo</legend>
+        <label>Nombre de la empresa <input name="company" autocomplete="organization" required></label>
+        <label>Tamaño del equipo
+          <select name="size" required><option value="">Elige una opción</option><option>1–10</option><option>11–50</option><option>51–200</option><option>Más de 200</option></select>
+        </label>
+      </fieldset>
+      <fieldset hidden>
+        <legend>Revisa y confirma</legend>
+        <dl class="summary" id="summary"></dl>
+        <label class="terms"><input type="checkbox" name="terms" required><span>Acepto los <a href="#terminos">Términos del servicio</a> y la <a href="#privacidad">Política de privacidad</a>.</span></label>
+      </fieldset>
+      <div class="actions">
+        <button class="btn" type="button" id="back" hidden>Atrás</button>
+        <button class="btn primary" type="submit" id="next">Continuar</button>
+      </div>
+      <p class="status" id="status" role="status" hidden>Cuenta creada. Te enviamos un correo para verificarla.</p>
+    </form>
+  </section>
+  <p class="foot">¿Ya tienes cuenta? <a href="#login">Inicia sesión</a></p>
+</main>
+<script>
+  const form = document.getElementById('f'), sets = [...form.querySelectorAll('fieldset')];
+  const steps = [...document.querySelectorAll('#steps li')], back = document.getElementById('back'), next = document.getElementById('next');
+  let i = 0;
+  function show(n) {
+    i = n;
+    sets.forEach((s, k) => (s.hidden = k !== i));
+    steps.forEach((s, k) => { s.classList.toggle('done', k < i); k === i ? s.setAttribute('aria-current', 'step') : s.removeAttribute('aria-current'); });
+    document.getElementById('bar').style.setProperty('--p', (i + 1) * 33.34);
+    back.hidden = i === 0;
+    next.textContent = i === 2 ? 'Crear cuenta' : 'Continuar';
+    if (i === 2) {
+      const d = new FormData(form), dl = document.getElementById('summary');
+      dl.replaceChildren(...[['Nombre', 'name'], ['Correo', 'email'], ['Empresa', 'company'], ['Equipo', 'size']].flatMap(([t, k]) =>
+        [Object.assign(document.createElement('dt'), { textContent: t }), Object.assign(document.createElement('dd'), { textContent: d.get(k) })]));
+    }
+    sets[i].querySelector('input,select').focus();
+  }
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fields = [...sets[i].querySelectorAll('input,select')];
+    if (!fields.every((el) => el.reportValidity())) return; // valida solo el paso visible
+    if (i < 2) show(i + 1); else document.getElementById('status').hidden = false;
+  });
+  back.addEventListener('click', () => show(i - 1));
+</script>
+</body>
+</html>

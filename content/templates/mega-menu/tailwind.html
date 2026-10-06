@@ -1,0 +1,48 @@
+<div class="min-h-[420px] bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <nav id="nav" aria-label="Principal" class="relative flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900
+    [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-blue-500 [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-blue-500">
+    <span class="mr-3 font-bold">Ion Cloud</span>
+    <ul class="flex flex-wrap gap-1">
+      <li>
+        <button type="button" id="btn" aria-expanded="false" aria-controls="panel" class="group flex items-center gap-1.5 rounded-md px-3 py-2 font-medium transition-colors hover:bg-blue-50 hover:text-blue-600 aria-expanded:bg-blue-50 aria-expanded:text-blue-600 dark:hover:bg-slate-800 dark:hover:text-blue-400 dark:aria-expanded:bg-slate-800 dark:aria-expanded:text-blue-400">
+          Productos
+          <svg class="transition-transform group-aria-expanded:rotate-180 motion-reduce:transition-none" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg>
+        </button>
+        <div id="panel" hidden class="absolute inset-x-0 top-[calc(100%+8px)] z-10 grid grid-cols-1 gap-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm min-[481px]:grid-cols-2 min-[761px]:grid-cols-[1fr_1fr_1fr_1.2fr] dark:border-slate-700 dark:bg-slate-900 [&[hidden]]:hidden
+          [&_h3]:mb-2 [&_h3]:text-xs [&_h3]:font-semibold [&_h3]:text-slate-500 dark:[&_h3]:text-slate-400
+          [&_li>a]:-mx-2 [&_li>a]:block [&_li>a]:rounded-md [&_li>a]:p-2 [&_li>a:hover]:bg-blue-50 dark:[&_li>a:hover]:bg-slate-800
+          [&_li>a>span]:block [&_li>a>span]:text-[13px] [&_li>a>span]:text-slate-500 dark:[&_li>a>span]:text-slate-400">
+          <div><h3 id="c1">Cómputo</h3><ul aria-labelledby="c1" class="grid gap-0.5">
+            <li><a href="#">Servidores virtuales<span>Instancias que escalan en segundos</span></a></li>
+            <li><a href="#">Contenedores<span>Kubernetes gestionado</span></a></li>
+            <li><a href="#">Funciones<span>Código sin servidores</span></a></li></ul></div>
+          <div><h3 id="c2">Datos</h3><ul aria-labelledby="c2" class="grid gap-0.5">
+            <li><a href="#">Bases de datos<span>SQL y NoSQL con copias diarias</span></a></li>
+            <li><a href="#">Almacenamiento<span>Objetos y bloques cifrados</span></a></li>
+            <li><a href="#">Analítica<span>Consultas sobre datos en vivo</span></a></li></ul></div>
+          <div><h3 id="c3">Seguridad</h3><ul aria-labelledby="c3" class="grid gap-0.5">
+            <li><a href="#">Identidad y acceso<span>Roles y permisos por equipo</span></a></li>
+            <li><a href="#">Firewall<span>Reglas por red y región</span></a></li>
+            <li><a href="#">Auditoría<span>Registro de cada cambio</span></a></li></ul></div>
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950">
+            <div aria-hidden="true" class="mb-3 h-0.5 w-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></div>
+            <strong>Nuevo: Ion Analytics 2.0</strong>
+            <p class="mb-3 mt-1 text-slate-500 dark:text-slate-400">Paneles en tiempo real con un 40% menos de latencia.</p>
+            <a href="#" class="inline-block rounded-lg bg-blue-600 px-3 py-1.5 font-semibold text-white">Ver novedades</a>
+          </div>
+        </div>
+      </li>
+      <li><a href="#" class="block rounded-md px-3 py-2 font-medium hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-slate-800 dark:hover:text-blue-400">Precios</a></li>
+      <li><a href="#" class="block rounded-md px-3 py-2 font-medium hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-slate-800 dark:hover:text-blue-400">Documentación</a></li>
+    </ul>
+  </nav>
+</div>
+<script>
+  const nav = document.getElementById('nav'), btn = document.getElementById('btn'), panel = document.getElementById('panel');
+  const set = (open) => { btn.setAttribute('aria-expanded', open); panel.hidden = !open; };
+  btn.addEventListener('click', () => set(panel.hidden));
+  btn.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown') { e.preventDefault(); set(true); panel.querySelector('a').focus(); } });
+  nav.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); } });
+  nav.addEventListener('focusout', (e) => { const t = e.relatedTarget; if (t && t !== btn && !panel.contains(t)) set(false); });
+  document.addEventListener('click', (e) => { if (!nav.contains(e.target)) set(false); });
+</script>

@@ -1,59 +1,131 @@
 ---
 import { Code } from 'astro:components';
 import Base from '../../layouts/Base.astro';
-import { LANGS, templates, url } from '../../lib/data';
+import { CATEGORIES, LANGS, groupOf, ordered, templates, url } from '../../lib/data';
 export const getStaticPaths = () => templates.map((t) => ({ params: { slug: t.slug }, props: { t } }));
 const { t } = Astro.props;
 const langs = Object.keys(t.code).filter((l) => LANGS[l]);
+const cat = CATEGORIES[t.category];
+const group = groupOf(t.category);
+const i = ordered.findIndex((x) => x.slug === t.slug);
+const prev = ordered[i - 1];
+const next = ordered[i + 1];
+// {{variable}} del prompt resaltada.
+const parts = t.prompt.split(/(\{\{[^}]+\}\})/);
+const preview = url(`/preview/${t.slug}.html`);
 ---
-<Base title={`${t.title} · Templates Hub`} description={t.description}>
-  <p class="crumbs"><a href={url('/')}>inicio</a> / <a href={url(`/c/${t.category}/`)}>{t.category}</a></p>
-  <section class="tpl-head"><h1>{t.title}</h1><p>{t.description}</p>
-    <div class="meta">{t.tags.map((x) => <span class="chip">#{x}</span>)}</div>
-  </section>
+<Base title={`${t.title} · Templates Hub`} description={t.description} current={t.slug}>
+  <nav class="crumbs" aria-label="Ruta">
+    <a href={url('/')}>Inicio</a><span aria-hidden="true">/</span>
+    <span>{group.label}</span><span aria-hidden="true">/</span>
+    <a href={url(`/c/${t.category}/`)}>{cat.label}</a>
+  </nav>
+  <h1>{t.title}</h1>
+  <p class="lead">{t.description}</p>
+  <div class="pills">
+    {langs.map((l) => <span class="pill lang">{LANGS[l].label}</span>)}
+    {t.tags.map((x) => <span class="pill">{x}</span>)}
+  </div>
 
   {t.code.html && (
-    <section class="panel preview">
-      <div class="bar">Vista previa</div>
-      <iframe srcdoc={t.code.html} title={`Vista previa de ${t.title}`} loading="lazy" sandbox="allow-scripts"></iframe>
+    <section class="sec" id="ejemplo">
+      <h2>Ejemplo</h2>
+      <p>Interactivo. Cambia el ancho para probar la respuesta; el tema sigue al del sitio.</p>
+      <div class="canvas" id="canvas">
+        <div class="bar">
+          <div class="seg" role="group" aria-label="Ancho de la vista previa">
+            <button type="button" data-w="375" aria-pressed="false">Móvil</button>
+            <button type="button" data-w="768" aria-pressed="false">Tablet</button>
+            <button type="button" data-w="" aria-pressed="true">Completo</button>
+          </div>
+          <a class="btn" href={preview} target="_blank" rel="noopener">Abrir en pestaña</a>
+          <output class="ruler" id="ruler">—</output>
+        </div>
+        <div class="stage">
+          <div class="frame" id="frame">
+            <iframe data-preview src={preview} title={`Vista previa de ${t.title}`} sandbox="allow-scripts allow-popups" allow="clipboard-write" loading="lazy"></iframe>
+          </div>
+        </div>
+      </div>
     </section>
   )}
 
-  <section class="panel prompt">
-    <div class="bar">Prompt <button class="btn sm" data-copy={t.prompt}>Copiar prompt</button></div>
-    <pre>{t.prompt}</pre>
+  <section class="sec" id="prompt">
+    <h2>Prompt</h2>
+    <p>Pídele este componente a tu IA. Reemplaza lo que va entre llaves dobles.</p>
+    <div class="prompt">
+      <div class="bar"><span class="pill">Español</span><button class="btn primary" type="button" data-copy={t.prompt}>Copiar prompt</button></div>
+      <pre>{parts.map((p) => (p.startsWith('{{') ? <mark>{p}</mark> : p))}</pre>
+    </div>
   </section>
 
-  <section class="panel" id="code">
-    <div class="tabs" role="tablist">
-      {langs.map((l, i) => <button role="tab" aria-selected={i === 0} data-tab={l}>{LANGS[l].label}</button>)}
-    </div>
-    {langs.map((l, i) => (
-      <div class="codewrap" data-panel={l} hidden={i !== 0}>
-        <div class="bar"><span>{l}.{LANGS[l].ext}</span><button class="btn sm" data-copy={t.code[l]}>Copiar código</button></div>
-        <Code code={t.code[l]} lang={LANGS[l].shiki as any} theme="github-dark" />
+  <section class="sec" id="codigo">
+    <h2>Código</h2>
+    <p>Elige tu lenguaje. Cada versión es independiente y no usa librerías.</p>
+    <div class="codebox">
+      <div class="tabs" role="tablist" aria-label="Lenguaje">
+        {langs.map((l, n) => <button role="tab" id={`tab-${l}`} aria-controls={`panel-${l}`} aria-selected={n === 0} tabindex={n === 0 ? 0 : -1} data-tab={l}>{LANGS[l].label}</button>)}
+        <button class="btn" type="button" id="copy-code">Copiar código</button>
       </div>
-    ))}
+      {langs.map((l, n) => (
+        <div role="tabpanel" id={`panel-${l}`} aria-labelledby={`tab-${l}`} data-panel={l} data-code={t.code[l]} hidden={n !== 0}>
+          <div class="file">{l}.{LANGS[l].ext}</div>
+          <Code code={t.code[l]} lang={LANGS[l].shiki as any} themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+        </div>
+      ))}
+    </div>
   </section>
+
+  <nav class="pn" aria-label="Componentes vecinos">
+    {prev ? <a href={url(`/t/${prev.slug}/`)}><small>Anterior</small>{prev.title}</a> : <span></span>}
+    {next ? <a href={url(`/t/${next.slug}/`)}><small>Siguiente</small>{next.title}</a> : <span></span>}
+  </nav>
 </Base>
 
 <script>
-  // Tabs por lenguaje (recuerda la última elección) + botones Copiar.
-  const tabs = [...document.querySelectorAll<HTMLElement>('[data-tab]')];
+  const $ = <T extends Element>(s: string) => [...document.querySelectorAll<T>(s)];
+  const flash = (b: HTMLElement, msg = 'Copiado') => {
+    const old = b.textContent;
+    b.textContent = msg;
+    setTimeout(() => (b.textContent = old), 1200);
+  };
+  const copy = async (b: HTMLElement, text: string) => {
+    try { await navigator.clipboard.writeText(text); flash(b); } catch { flash(b, 'No se pudo copiar'); }
+  };
+
+  // Pestañas por lenguaje (flechas, Home/End) + recuerda la última elección.
+  const tabs = $<HTMLElement>('[data-tab]');
   const show = (l: string) => {
-    tabs.forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === l)));
-    document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== l));
+    tabs.forEach((b) => { const on = b.dataset.tab === l; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+    $<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== l));
     try { localStorage.setItem('lang', l); } catch {}
   };
-  tabs.forEach((b) => b.addEventListener('click', () => show(b.dataset.tab!)));
+  tabs.forEach((b, i) => {
+    b.addEventListener('click', () => show(b.dataset.tab!));
+    b.addEventListener('keydown', (e) => {
+      const k = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (k === undefined) return;
+      e.preventDefault();
+      const t = tabs[(k + tabs.length) % tabs.length];
+      t.focus(); show(t.dataset.tab!);
+    });
+  });
   try { const s = localStorage.getItem('lang'); if (s && tabs.some((b) => b.dataset.tab === s)) show(s); } catch {}
 
-  document.querySelectorAll<HTMLElement>('[data-copy]').forEach((b) =>
-    b.addEventListener('click', async () => {
-      await navigator.clipboard.writeText(b.dataset.copy!);
-      const old = b.textContent;
-      b.textContent = '¡Copiado!';
-      setTimeout(() => (b.textContent = old), 1200);
-    }),
-  );
+  document.getElementById('copy-code')?.addEventListener('click', (e) =>
+    copy(e.currentTarget as HTMLElement, $<HTMLElement>('[data-panel]:not([hidden])')[0].dataset.code!));
+  $<HTMLElement>('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b, b.dataset.copy!)));
+
+  // Lienzo: ancho predefinido + regla en vivo (el marco también se redimensiona a mano).
+  const frame = document.getElementById('frame');
+  if (frame) {
+    const ruler = document.getElementById('ruler')!;
+    new ResizeObserver(() => (ruler.textContent = `${Math.round(frame.clientWidth)} × ${Math.round(frame.clientHeight)} px`)).observe(frame);
+    $<HTMLElement>('[data-w]').forEach((b) =>
+      b.addEventListener('click', () => {
+        frame.style.width = b.dataset.w ? `${b.dataset.w}px` : '';
+        $<HTMLElement>('[data-w]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      }),
+    );
+  }
 </script>

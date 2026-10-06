@@ -3,26 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banner de llamada a la acción</title>
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   *{box-sizing:border-box}
-  body{margin:0;padding:36px 20px;font:16px/1.5 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
-  :focus-visible{outline:3px solid #17130f;outline-offset:3px}
-  .cta{position:relative;overflow:hidden;display:grid;gap:22px;align-items:center;max-width:1040px;margin:0 auto;padding:32px 24px;border:2px solid #17130f;border-radius:10px;background:#ff5a36;box-shadow:6px 6px 0 #17130f}
-  @media(min-width:720px){.cta{grid-template-columns:1fr auto;padding:40px}}
-  .deco{position:absolute;right:-30px;top:-30px;width:160px;height:160px;opacity:.9;pointer-events:none}
-  .txt{position:relative;max-width:34rem}
-  h2{margin:0 0 8px;font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.05;letter-spacing:-.03em}
-  p{margin:0;font-size:1.02rem}
-  .row{position:relative;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-  .btn{padding:13px 22px;border:2px solid #17130f;border-radius:10px;background:#17130f;color:#fffdf8;font:700 1rem system-ui,sans-serif;text-decoration:none;box-shadow:4px 4px 0 #ffd84d;transition:transform .12s,box-shadow .12s}
-  .btn:hover,.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #ffd84d}
-  .link{color:#17130f;font-weight:700}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .cta{position:relative;overflow:hidden;display:grid;gap:24px;align-items:center;max-width:1040px;margin:24px auto;padding:36px 24px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+  @media(min-width:720px){.cta{grid-template-columns:1fr auto;padding:48px}}
+  /* detalle memorable: retícula sutil que se desvanece desde la esquina */
+  .cta::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--border) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/32px 32px;-webkit-mask-image:radial-gradient(ellipse at 100% 0,#000,transparent 70%);mask-image:radial-gradient(ellipse at 100% 0,#000,transparent 70%);pointer-events:none}
+  .txt,.row{position:relative}
+  .txt{max-width:34rem}
+  h2{margin:0 0 8px;font-size:clamp(1.6rem,4.5vw,2.4rem);font-weight:700;line-height:1.1;letter-spacing:-.025em;text-wrap:balance}
+  p{margin:0;color:var(--muted);font-size:1.02rem}
+  .row{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+  .btn{padding:11px 20px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font:600 1rem system-ui,sans-serif;text-decoration:none;box-shadow:var(--shadow);transition:filter .14s,transform .14s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:active{transform:translateY(1px)}
+  .link{color:var(--text);font-weight:600;text-underline-offset:4px}
+  .link:hover{color:var(--accent)}
   @media(prefers-reduced-motion:reduce){.btn{transition:none}}
 </style>
 </head>
 <body>
   <section class="cta" aria-labelledby="c">
-    <svg class="deco" viewBox="0 0 160 160" aria-hidden="true"><circle cx="100" cy="60" r="56" fill="#ffd84d" stroke="#17130f" stroke-width="3"/><circle cx="100" cy="60" r="30" fill="none" stroke="#17130f" stroke-width="3"/></svg>
     <div class="txt">
       <h2 id="c">Empieza hoy con tu primer proyecto.</h2>
       <p>Crea tu espacio en dos minutos e invita a tu equipo. Gratis hasta 5 personas.</p>

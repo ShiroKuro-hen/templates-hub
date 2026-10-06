@@ -1,3 +1,3 @@
 Crea una línea de tiempo vertical con los hitos de {{proyecto}} usando una lista ordenada (ol).
-Cada hito tiene una fecha en <time>, un título y una breve descripción; marcador circular sobre una línea gruesa, con estados hecho (verde), en curso (naranja, aria-current) y próximo (borde punteado).
-Línea y marcadores solo con CSS (::before), estilo papel y tinta, sin librerías.
+Cada hito tiene una fecha en <time>, un título y una breve descripción; marcador circular sobre una línea fina, con estados hecho (verde), en curso (acento azul, aria-current) y próximo (borde punteado).
+Línea y marcadores solo con CSS (::before), sin librerías. Estilo sobrio y profesional: bordes finos de 1px, radio 8px, sombras suaves, acento azul, tokens CSS con tema claro y oscuro.

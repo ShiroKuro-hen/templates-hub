@@ -6,6 +6,7 @@ const DATA: Row[] = [
   { nombre: 'Luis Gómez', plan: 'Free', ventas: 310 },
   { nombre: 'Marta Ruiz', plan: 'Pro', ventas: 2890 },
 ];
+const COLS = [['nombre', 'Nombre'], ['plan', 'Plan'], ['ventas', 'Ventas']] as const;
 
 export function DataTable({ rows = DATA }: { rows?: Row[] }) {
   const [key, setKey] = useState<keyof Row>('nombre');
@@ -16,24 +17,29 @@ export function DataTable({ rows = DATA }: { rows?: Row[] }) {
     [rows, key, asc],
   );
   const sort = (k: keyof Row) => (k === key ? setAsc(!asc) : (setKey(k), setAsc(true)));
-  const arrow = (k: keyof Row) => (k === key ? (asc ? ' ▲' : ' ▼') : '');
 
   return (
-    <table>
-      <thead>
-        <tr>
-          {(['nombre', 'plan', 'ventas'] as const).map((k) => (
-            <th key={k} scope="col" onClick={() => sort(k)} aria-sort={k === key ? (asc ? 'ascending' : 'descending') : 'none'}>
-              {k}{arrow(k)}
-            </th>
+    <div className="wrap">
+      <table>
+        <caption hidden>Ventas por persona. Usa los encabezados para ordenar.</caption>
+        <thead>
+          <tr>
+            {COLS.map(([k, label]) => (
+              <th key={k} scope="col" className={k === 'ventas' ? 'num' : undefined}
+                  aria-sort={k === key ? (asc ? 'ascending' : 'descending') : 'none'}>
+                <button type="button" onClick={() => sort(k)}>{label}</button>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((r) => (
+            <tr key={r.nombre}><td>{r.nombre}</td><td>{r.plan}</td><td className="num">{r.ventas}</td></tr>
           ))}
-        </tr>
-      </thead>
-      <tbody>
-        {sorted.map((r) => (
-          <tr key={r.nombre}><td>{r.nombre}</td><td>{r.plan}</td><td>{r.ventas}</td></tr>
-        ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   );
 }
+
+// CSS: copia las reglas .wrap, table, th, td y .num de la pestaña HTML + CSS.

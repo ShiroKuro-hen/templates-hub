@@ -1,0 +1,72 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <button type="button" id="open" aria-haspopup="dialog" class="flex w-full max-w-sm items-center gap-2.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-500 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <span class="flex-1 text-left">Buscar comandos</span>
+    <kbd class="rounded border border-slate-200 bg-slate-50 px-1.5 font-mono text-xs dark:border-slate-700 dark:bg-slate-950">Ctrl K</kbd>
+  </button>
+  <p id="out" role="status" class="mt-3 text-slate-500 dark:text-slate-400"></p>
+</div>
+<dialog id="cmd" aria-label="Paleta de comandos" class="mx-auto mt-[12vh] w-[min(560px,calc(100vw-32px))] rounded-lg border border-slate-200 bg-white p-0 text-sm text-slate-900 shadow-lg backdrop:bg-slate-50/70 backdrop:backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:backdrop:bg-slate-950/70
+  [&_kbd]:rounded [&_kbd]:border [&_kbd]:border-slate-200 [&_kbd]:bg-slate-50 [&_kbd]:px-1.5 [&_kbd]:font-mono [&_kbd]:text-xs [&_kbd]:text-slate-500 dark:[&_kbd]:border-slate-700 dark:[&_kbd]:bg-slate-950 dark:[&_kbd]:text-slate-400">
+  <div class="flex items-center gap-2.5 border-b border-slate-200 px-3.5 text-slate-500 dark:border-slate-700">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="q" role="combobox" aria-expanded="true" aria-controls="list" aria-autocomplete="list" autocomplete="off" placeholder="Escribe un comando o busca"
+           class="min-w-0 flex-1 bg-transparent py-3.5 text-[15px] text-slate-900 outline-none dark:text-slate-100">
+  </div>
+  <ul id="list" role="listbox" aria-label="Comandos" class="max-h-80 overflow-auto p-1.5 [&_[hidden]]:!hidden
+    [&_[role=option]]:relative [&_[role=option]]:flex [&_[role=option]]:cursor-pointer [&_[role=option]]:items-center [&_[role=option]]:justify-between [&_[role=option]]:rounded-md [&_[role=option]]:px-2.5 [&_[role=option]]:py-2
+    [&_[aria-selected=true]]:bg-blue-50 dark:[&_[aria-selected=true]]:bg-slate-800
+    [&_[aria-selected=true]]:before:absolute [&_[aria-selected=true]]:before:inset-y-2 [&_[aria-selected=true]]:before:left-0 [&_[aria-selected=true]]:before:w-0.5 [&_[aria-selected=true]]:before:rounded-full [&_[aria-selected=true]]:before:bg-gradient-to-br [&_[aria-selected=true]]:before:from-cyan-400 [&_[aria-selected=true]]:before:to-blue-600 [&_[aria-selected=true]]:before:content-['']">
+    <li role="presentation" class="group-item"><div id="g1" class="px-2.5 pb-1 pt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">Navegación</div>
+      <ul role="group" aria-labelledby="g1">
+        <li role="option" id="o1" data-label="Ir al panel">Ir al panel <kbd>G P</kbd></li>
+        <li role="option" id="o2" data-label="Ir a proyectos">Ir a proyectos <kbd>G R</kbd></li>
+        <li role="option" id="o3" data-label="Ir a facturación">Ir a facturación</li>
+      </ul></li>
+    <li role="presentation" class="group-item"><div id="g2" class="px-2.5 pb-1 pt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">Acciones</div>
+      <ul role="group" aria-labelledby="g2">
+        <li role="option" id="o4" data-label="Crear proyecto">Crear proyecto <kbd>C</kbd></li>
+        <li role="option" id="o5" data-label="Invitar a un miembro">Invitar a un miembro</li>
+        <li role="option" id="o6" data-label="Cambiar tema">Cambiar tema</li>
+      </ul></li>
+  </ul>
+  <p id="empty" hidden class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">Sin resultados para «<b></b>». Prueba con otra palabra.</p>
+  <div aria-hidden="true" class="flex gap-3.5 border-t border-slate-200 px-3.5 py-2 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
+    <span><kbd>↑</kbd> <kbd>↓</kbd> moverse</span><span><kbd>Enter</kbd> ejecutar</span><span><kbd>Esc</kbd> cerrar</span>
+  </div>
+</dialog>
+<script>
+  const dlg = document.getElementById('cmd'), q = document.getElementById('q'), empty = document.getElementById('empty');
+  const opts = [...dlg.querySelectorAll('[role=option]')];
+  const norm = (s) => s.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
+  const visible = () => opts.filter((o) => !o.hidden);
+  let active = 0;
+  function select(i) {
+    const v = visible();
+    active = v.length ? (i + v.length) % v.length : -1;
+    opts.forEach((o) => o.setAttribute('aria-selected', o === v[active]));
+    if (v[active]) { q.setAttribute('aria-activedescendant', v[active].id); v[active].scrollIntoView({ block: 'nearest' }); }
+    else q.removeAttribute('aria-activedescendant');
+  }
+  function filter() {
+    const s = norm(q.value.trim());
+    opts.forEach((o) => (o.hidden = !norm(o.dataset.label).includes(s)));
+    dlg.querySelectorAll('.group-item').forEach((g) => (g.hidden = !g.querySelector('[role=option]:not([hidden])')));
+    empty.hidden = visible().length > 0;
+    empty.querySelector('b').textContent = q.value;
+    select(0);
+  }
+  function open() { q.value = ''; filter(); dlg.showModal(); }
+  function run(o) { dlg.close(); document.getElementById('out').textContent = 'Ejecutado: ' + o.dataset.label; }
+  document.getElementById('open').addEventListener('click', open);
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); dlg.open ? dlg.close() : open(); }
+  });
+  q.addEventListener('input', filter);
+  q.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); select(active + (e.key === 'ArrowDown' ? 1 : -1)); }
+    if (e.key === 'Enter' && visible()[active]) { e.preventDefault(); run(visible()[active]); }
+  });
+  dlg.addEventListener('click', (e) => { const o = e.target.closest('[role=option]'); if (o) run(o); else if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('mousemove', (e) => { const o = e.target.closest('[role=option]'); if (o) select(visible().indexOf(o)); });
+</script>

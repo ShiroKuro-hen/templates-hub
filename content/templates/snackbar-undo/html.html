@@ -5,28 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Snackbar con deshacer</title>
 <style>
-  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; min-height:100vh; padding:16px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
-  h1 { margin:0 0 10px; font-size:18px; letter-spacing:-.02em; }
-  ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
-  li { display:flex; align-items:center; gap:10px; padding:8px 10px; background:var(--surface); border:2px solid var(--ink); border-radius:10px; }
+  body { margin:0; min-height:100vh; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  h1 { max-width:640px; margin:0 auto 12px; font-size:18px; font-weight:600; letter-spacing:-.01em; }
+  ul { max-width:640px; margin:0 auto; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; }
+  li { display:flex; align-items:center; gap:12px; padding:8px 12px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
   li span { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  li small { font:12px ui-monospace, monospace; color:var(--muted); }
-  .del { font:inherit; font-weight:600; padding:4px 10px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:8px; cursor:pointer; }
-  .del:hover { background:var(--hl); }
-  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-  .empty { margin:0; color:var(--muted); }
-  .snack { position:fixed; left:12px; right:12px; bottom:12px; max-width:420px; margin:0 auto; overflow:hidden; display:flex; align-items:center; gap:12px; padding:12px 12px 15px 14px; background:var(--ink); color:var(--bg); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--accent); animation:up .2s ease-out; }
+  li small { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .del { font:inherit; font-weight:600; padding:4px 12px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:border-color .14s, color .14s; }
+  .del:hover { color:var(--err); border-color:var(--err); }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .empty { max-width:640px; margin:0 auto; color:var(--muted); }
+  .snack { position:fixed; left:12px; right:12px; bottom:12px; max-width:420px; margin:0 auto; overflow:hidden; display:flex; align-items:center; gap:12px; padding:12px 12px 15px 16px; background:var(--text); color:var(--bg); border-radius:var(--radius); box-shadow:var(--shadow); animation:up .16s ease-out; }
   .snack[hidden] { display:none; }
   .snack p { flex:1; margin:0; }
-  .snack button { font:inherit; font-weight:700; padding:5px 10px; color:var(--ink); background:var(--hl); border:2px solid var(--hl); border-radius:8px; cursor:pointer; }
-  .snack button:hover { background:#fff; }
-  .snack button:focus-visible { outline-color:var(--bg); }
-  .snack::after { content:""; position:absolute; left:0; bottom:0; height:5px; width:100%; background:var(--accent); transform-origin:left; animation:drain var(--ms) linear forwards; }
+  .snack button { font:inherit; font-weight:600; padding:5px 12px; color:var(--bg); background:transparent; border:1px solid var(--bg); border-radius:var(--radius); cursor:pointer; transition:background .14s, color .14s; font-variant-numeric:tabular-nums; }
+  .snack button:hover { background:var(--bg); color:var(--text); }
+  .snack button:focus-visible { outline-color:var(--accent); }
+  .snack::after { content:""; position:absolute; left:0; bottom:0; height:3px; width:100%; background:linear-gradient(135deg,#22d3ee,#2f5bff); transform-origin:left; animation:drain var(--ms) linear forwards; }
   @keyframes up { from { transform:translateY(16px); opacity:0; } }
   @keyframes drain { to { transform:scaleX(0); } }
-  @media (prefers-reduced-motion:reduce) { .snack { animation:none; } .snack::after { animation:none; display:none; } }
+  @media (prefers-reduced-motion:reduce) { .snack { animation:none; } .snack::after { animation:none; display:none; } * { transition:none !important; } }
 </style>
 </head>
 <body>
@@ -36,7 +37,7 @@
   <li><span>logo-final.svg</span><small>18 KB</small><button class="del" type="button">Eliminar</button></li>
   <li><span>presupuesto-q4.xlsx</span><small>96 KB</small><button class="del" type="button">Eliminar</button></li>
 </ul>
-<p class="empty" id="empty" hidden>No quedan archivos.</p>
+<p class="empty" id="empty" hidden>No quedan archivos. Sube uno nuevo para empezar.</p>
 <div class="snack" id="snack" role="status" hidden>
   <p id="msg"></p>
   <button type="button" id="undo">Deshacer (<span id="sec">6</span>)</button>

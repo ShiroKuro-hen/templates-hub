@@ -5,20 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Grupo de avatares</title>
 <style>
-  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
-  h1 { margin:0 0 14px; font-size:20px; letter-spacing:-.02em; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  h1 { margin:0 0 16px; font-size:1.25rem; letter-spacing:-.01em; }
   .row { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
-  .row small { color:var(--muted); }
+  .row small { color:var(--muted); font-size:.8125rem; }
   .avatars { display:flex; padding-left:10px; margin:0; list-style:none; }
-  .avatar { --size:40px; display:grid; place-items:center; width:var(--size); height:var(--size); margin-left:-10px; font:700 calc(var(--size) * .36) ui-monospace, monospace; color:var(--ink); background:var(--c); border:2px solid var(--ink); border-radius:50%; position:relative; transition:transform .15s; }
-  .avatar:hover, .avatar:focus-visible { transform:translateY(-4px); z-index:1; }
-  .avatar:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .avatar { --size:40px; display:grid; place-items:center; width:var(--size); height:var(--size); margin-left:-10px; font-size:calc(var(--size) * .36); font-weight:600; color:var(--f); background:var(--c); box-shadow:0 0 0 2px var(--bg); border-radius:50%; position:relative; transition:transform 140ms; }
+  .avatar:hover, .avatar:focus-visible { transform:translateY(-3px); z-index:1; }
+  .avatar:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
   .avatars.sm .avatar { --size:28px; margin-left:-8px; }
   .avatars.lg .avatar { --size:56px; margin-left:-14px; }
-  .avatar.more { --c:var(--ink); color:var(--bg); }
-  .c1 { --c:#ffd84d; } .c2 { --c:#ff8a6e; } .c3 { --c:#9db4ff; } .c4 { --c:#8fdcaa; }
+  .avatar.more { --c:var(--border); --f:var(--text); font-variant-numeric:tabular-nums; }
+  .c1 { --c:var(--accent-soft); --f:var(--accent); } .c2 { --c:var(--info-soft); --f:var(--info); } .c3 { --c:var(--ok-soft); --f:var(--ok); } .c4 { --c:var(--warn-soft); --f:var(--warn); }
+  .c1.lead { background:linear-gradient(135deg,#22d3ee,#2f5bff); color:#fff; }
   @media (prefers-reduced-motion:reduce) { .avatar { transition:none; } }
 </style>
 </head>
@@ -26,7 +28,7 @@
   <h1>Equipo del proyecto</h1>
   <div class="row">
     <ul class="avatars lg" aria-label="Miembros del equipo: Ana Pérez, Luis Gómez, Marta Ruiz, Diego Vega y 3 más">
-      <li class="avatar c1" tabindex="0" role="img" aria-label="Ana Pérez" title="Ana Pérez">AP</li>
+      <li class="avatar c1 lead" tabindex="0" role="img" aria-label="Ana Pérez" title="Ana Pérez">AP</li>
       <li class="avatar c2" tabindex="0" role="img" aria-label="Luis Gómez" title="Luis Gómez">LG</li>
       <li class="avatar c3" tabindex="0" role="img" aria-label="Marta Ruiz" title="Marta Ruiz">MR</li>
       <li class="avatar c4" tabindex="0" role="img" aria-label="Diego Vega" title="Diego Vega">DV</li>

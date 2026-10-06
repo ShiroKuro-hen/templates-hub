@@ -11,7 +11,7 @@ export function Button({ variant = 'secondary', className = '', type = 'button',
 // Ejemplo de uso
 export function Demo() {
   return (
-    <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+    <div className="grid">
       <Button variant="primary">Guardar cambios</Button>
       <Button>Cancelar</Button>
       <Button variant="ghost">Omitir por ahora</Button>
@@ -20,4 +20,4 @@ export function Demo() {
     </div>
   );
 }
-// CSS: copia las reglas .btn / .btn--primary / .btn--danger / .btn--ghost / .btn--link de la pestaña HTML + CSS.
+// CSS: copia las reglas .grid / .btn / .btn--primary / .btn--danger / .btn--ghost / .btn--link de la pestaña HTML + CSS.

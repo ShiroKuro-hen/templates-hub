@@ -15,24 +15,24 @@ withDefaults(defineProps<{ items?: Milestone[] }>(), {
   <ol class="tl">
     <li v-for="m in items" :key="m.date" :class="m.status" :aria-current="m.status === 'now' ? 'step' : undefined">
       <time :datetime="m.date">{{ m.label }}</time>
-      <h2>{{ m.title }} <span v-if="m.status === 'now'" class="state">· en curso</span></h2>
+      <h2>{{ m.title }} <span v-if="m.status === 'now'" class="state">En curso</span></h2>
       <p>{{ m.text }}</p>
     </li>
   </ol>
 </template>
 
 <style scoped>
-.tl { position: relative; margin: 0; padding: 0; list-style: none; font: 14px/1.5 system-ui, sans-serif; color: #17130f; }
-.tl::before { content: ""; position: absolute; left: 11px; top: 6px; bottom: 6px; width: 4px; background: #17130f; border-radius: 2px; }
-li { position: relative; padding: 0 0 18px 40px; }
+.tl { position: relative; margin: 0; padding: 0; list-style: none; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+.tl::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); border-radius: 2px; }
+li { position: relative; padding: 0 0 20px 36px; }
 li:last-child { padding-bottom: 0; }
-li::before { content: ""; position: absolute; left: 2px; top: 2px; width: 22px; height: 22px; background: #fffdf8; border: 2px solid #17130f; border-radius: 50%; }
-.done::before { background: #1f9d55; }
-.now::before { background: #ff5a36; box-shadow: 3px 3px 0 #17130f; }
-.next::before { border-style: dashed; }
-time { display: inline-block; margin-bottom: 4px; padding: 1px 8px; font: 700 12px ui-monospace, monospace; background: #ffd84d; border: 2px solid #17130f; border-radius: 6px; }
-.next time { background: #fffdf8; color: #6b6258; }
-h2 { margin: 0; font-size: 16px; letter-spacing: -.01em; }
-p { margin: 2px 0 0; color: #6b6258; max-width: 52ch; }
-.state { font: 600 12px ui-monospace, monospace; color: #b83a1a; }
+li::before { content: ""; position: absolute; left: 4px; top: 2px; width: 16px; height: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 50%; }
+.done::before { background: var(--ok); border-color: var(--ok); }
+.now::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.next::before { border: 1px dashed var(--muted); }
+time { display: block; margin-bottom: 2px; font-size: 12px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+h2 { margin: 0; font-size: 1rem; font-weight: 600; }
+p { margin: 2px 0 0; color: var(--muted); max-width: 52ch; }
+.state { margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; vertical-align: 2px; }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

@@ -1,0 +1,48 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <label for="pw" class="mb-1.5 block font-semibold">Nueva contraseña</label>
+    <div class="flex rounded-lg border border-slate-200 focus-within:border-blue-600 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-500 dark:border-slate-700">
+      <input id="pw" type="password" autocomplete="new-password" aria-describedby="level reqs" class="min-w-0 flex-1 bg-transparent px-3 py-2 outline-none">
+      <button type="button" id="toggle" aria-pressed="false" aria-controls="pw" class="rounded-r-lg border-l border-slate-200 px-3 font-semibold text-blue-600 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:text-blue-400">Mostrar</button>
+    </div>
+    <div id="meter" aria-hidden="true" class="mt-3 grid grid-cols-4 gap-1 [&>i]:h-1 [&>i]:rounded-full [&>i]:bg-slate-200 [&>i]:transition-colors motion-reduce:[&>i]:transition-none dark:[&>i]:bg-slate-700">
+      <i></i><i></i><i></i><i></i>
+    </div>
+    <p id="level" aria-live="polite" class="mb-3 mt-1.5 text-slate-500 dark:text-slate-400">Fortaleza: <b class="text-slate-900 dark:text-slate-100">sin evaluar</b></p>
+    <ul id="reqs" aria-label="Requisitos" class="grid gap-1.5 [&>li]:flex [&>li]:items-center [&>li]:gap-2 [&>li]:text-slate-500 dark:[&>li]:text-slate-400">
+      <li data-rule=".{8,}"><span class="grid size-4 place-items-center rounded-full border border-slate-300 text-[10px] font-bold text-emerald-600 dark:border-slate-600"></span>Al menos 8 caracteres</li>
+      <li data-rule="(?=.*[a-z])(?=.*[A-Z])"><span class="grid size-4 place-items-center rounded-full border border-slate-300 text-[10px] font-bold text-emerald-600 dark:border-slate-600"></span>Mayúsculas y minúsculas</li>
+      <li data-rule="\d"><span class="grid size-4 place-items-center rounded-full border border-slate-300 text-[10px] font-bold text-emerald-600 dark:border-slate-600"></span>Un número</li>
+      <li data-rule="[^A-Za-z0-9]"><span class="grid size-4 place-items-center rounded-full border border-slate-300 text-[10px] font-bold text-emerald-600 dark:border-slate-600"></span>Un símbolo, como ! o #</li>
+    </ul>
+  </div>
+</div>
+<script>
+  const pw = document.getElementById('pw'), toggle = document.getElementById('toggle');
+  const segs = [...document.querySelectorAll('#meter i')], level = document.querySelector('#level b');
+  const rules = [...document.querySelectorAll('#reqs li')];
+  const NAMES = ['muy débil', 'débil', 'aceptable', 'buena', 'fuerte'];
+  const COLORS = ['', '!bg-red-600', '!bg-amber-600', '!bg-blue-600', 'bg-gradient-to-br from-cyan-400 to-blue-600'];
+
+  pw.addEventListener('input', () => {
+    let score = 0;
+    rules.forEach((li) => {
+      const ok = new RegExp(li.dataset.rule).test(pw.value);
+      const dot = li.firstElementChild;
+      dot.textContent = ok ? '✓' : '';
+      dot.classList.toggle('!border-emerald-600', ok);
+      dot.classList.toggle('!bg-emerald-50', ok);
+      li.classList.toggle('!text-slate-900', ok);
+      li.classList.toggle('dark:!text-slate-100', ok);
+      score += ok;
+    });
+    segs.forEach((s, i) => (s.className = i < score ? COLORS[score] : ''));
+    level.textContent = pw.value ? NAMES[score] : 'sin evaluar';
+  });
+  toggle.addEventListener('click', () => {
+    const show = pw.type === 'password';
+    pw.type = show ? 'text' : 'password';
+    toggle.textContent = show ? 'Ocultar' : 'Mostrar';
+    toggle.setAttribute('aria-pressed', show);
+  });
+</script>

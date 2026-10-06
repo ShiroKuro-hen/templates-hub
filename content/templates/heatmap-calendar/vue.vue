@@ -46,19 +46,23 @@ function onKey(e: KeyboardEvent, i: number) {
 </template>
 
 <style scoped>
-.card { position: relative; max-width: 560px; margin: 0 auto; padding: 16px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; color: #17130f; font: 14px/1.4 system-ui, sans-serif; box-shadow: 4px 4px 0 #17130f; }
-header { display: flex; flex-wrap: wrap; gap: 2px 12px; align-items: baseline; justify-content: space-between; margin-bottom: 12px; }
-h2 { margin: 0; font-size: 1.05rem; letter-spacing: -.02em; }
-.sum { color: #6b6258; font-size: .85rem; }
-.cal { display: grid; grid-template-columns: 28px 1fr; gap: 4px 6px; font: 10px ui-monospace, monospace; color: #6b6258; }
-.months, .heat { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
-.days { display: grid; grid-template-rows: repeat(7, 1fr); gap: 4px; }
-.days span { display: flex; align-items: center; }
-.heat { grid-template-rows: repeat(7, auto); grid-auto-flow: column; margin: 0; padding: 0; list-style: none; }
-.cell { aspect-ratio: 1; border: 1.5px solid #17130f; border-radius: 4px; background: var(--bg); cursor: pointer; }
-.cell:focus-visible { outline: 3px solid #17130f; outline-offset: 2px; }
-.cell[data-l="0"] { --bg: #efe8d8; border-color: rgba(23, 19, 15, .25); }
-.cell[data-l="1"] { --bg: #ffe58a; } .cell[data-l="2"] { --bg: #ffc43d; }
-.cell[data-l="3"] { --bg: #ff8a3d; } .cell[data-l="4"] { --bg: #e0391a; }
-.tip { position: absolute; z-index: 1; padding: 5px 9px; border: 2px solid #17130f; border-radius: 8px; background: #17130f; color: #fffdf8; font-size: .78rem; white-space: nowrap; pointer-events: none; }
+.card{position:relative;max-width:560px;margin:0 auto;padding:20px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;box-shadow:var(--shadow)}
+header{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+h2{margin:0;font-size:16px;font-weight:600}
+.sum{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.cal{display:grid;grid-template-columns:28px 1fr;gap:4px 6px;font-size:11px;color:var(--muted)}
+.months,.heat{display:grid;grid-template-columns:repeat(12,1fr);gap:4px}
+.days{display:grid;grid-template-rows:repeat(7,1fr);gap:4px}
+.days span{display:flex;align-items:center}
+.heat{grid-template-rows:repeat(7,auto);grid-auto-flow:column;margin:0;padding:0;list-style:none}
+.cell{aspect-ratio:1;border-radius:4px;background:var(--bg);cursor:pointer}
+.cell:hover{outline:1px solid var(--text);outline-offset:1px}
+.cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[data-l="0"]{--bg:var(--accent-soft)}
+[data-l="1"]{--bg:color-mix(in srgb,var(--accent) 30%,var(--surface))}
+[data-l="2"]{--bg:color-mix(in srgb,var(--accent) 55%,var(--surface))}
+[data-l="3"]{--bg:color-mix(in srgb,var(--accent) 80%,var(--surface))}
+[data-l="4"]{--bg:var(--accent)}
+.tip{position:absolute;z-index:1;padding:4px 10px;border-radius:var(--radius);background:var(--text);color:var(--surface);font-size:12px;white-space:nowrap;pointer-events:none}
+/* Tokens: ver pestaña HTML + CSS */
 </style>

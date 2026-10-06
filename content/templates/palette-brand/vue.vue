@@ -1,31 +1,45 @@
 <script setup lang="ts">
-const tokens = ['bg', 'surface', 'text', 'muted', 'accent', 'ok', 'warn', 'err'];
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+
+const tokens = [
+  ['bg', 'Fondo'], ['surface', 'Superficie'], ['text', 'Texto'], ['muted', 'Atenuado'], ['border', 'Borde'],
+  ['accent', 'Acento'], ['accent-soft', 'Acento suave'], ['accent-ink', 'Texto sobre acento'],
+  ['ok', 'Ok'], ['warn', 'Aviso'], ['err', 'Error'], ['info', 'Info'],
+  ['ok-soft', 'Ok suave'], ['warn-soft', 'Aviso suave'], ['err-soft', 'Error suave'], ['info-soft', 'Info suave'],
+];
+const hex = ref<Record<string, string>>({});
+const read = () => {
+  const cs = getComputedStyle(document.documentElement);
+  hex.value = Object.fromEntries(tokens.map(([v]) => [v, cs.getPropertyValue(`--${v}`).trim().toUpperCase()]));
+};
+const mo = new MutationObserver(read); // el tema cambia vía data-theme
+onMounted(() => {
+  read();
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+});
+onBeforeUnmount(() => mo.disconnect());
 </script>
 
 <template>
-  <ul class="swatches" aria-label="Paleta de marca">
-    <li v-for="t in tokens" :key="t" class="sw">
-      <i :style="{ background: `var(--${t})` }" aria-hidden="true" />
-      <span>--{{ t }}</span>
+  <ul class="swatches" aria-label="Paleta Ion">
+    <li v-for="[v, nombre] in tokens" :key="v" class="sw">
+      <i :style="{ background: `var(--${v})` }" aria-hidden="true" />
+      <div>
+        <b>{{ nombre }}</b>
+        <code>--{{ v }}</code>
+        <span>{{ hex[v] }}</span>
+      </div>
     </li>
   </ul>
 </template>
 
 <style scoped>
-.swatches {
-  --bg: #f6f1e7; --surface: #fffdf8; --text: #17130f; --muted: #6b6258;
-  --border: #17130f; --accent: #ff5a36; --ok: #1f9d55; --warn: #e0a800; --err: #d6293e;
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;
-  list-style: none; margin: 0; padding: 20px;
-  background: var(--bg); color: var(--text); font: 14px/1.4 system-ui, sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  .swatches {
-    --bg: #14110f; --surface: #1f1b18; --text: #f6f1e7; --muted: #a39a8e;
-    --border: #f6f1e7; --accent: #ff7a59; --ok: #3ddc84; --warn: #ffd84d; --err: #ff6b7d;
-  }
-}
-.sw { border: 2px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
-.sw i { display: block; height: 64px; border-bottom: 2px solid var(--border); }
-.sw span { display: block; padding: 6px 8px; font: 600 12px ui-monospace, monospace; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+.sw { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+.sw i { display: block; height: 56px; border-bottom: 1px solid var(--border); }
+.sw div { padding: 8px 10px; }
+.sw b { display: block; font-weight: 600; }
+.sw code { display: block; color: var(--muted); font: 12px ui-monospace, "Cascadia Code", Menlo, monospace; }
+.sw span { display: block; font-size: 12px; font-variant-numeric: tabular-nums; }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

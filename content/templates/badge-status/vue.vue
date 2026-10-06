@@ -12,13 +12,15 @@ defineProps<{ status: keyof typeof LABEL }>();
 </template>
 
 <style scoped>
-.badge { --c: #6b6258; --bg: #ebe5d8; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 8px;
-  border: 2px solid #17130f; border-radius: 999px; background: var(--bg); color: #17130f; font: 700 12px system-ui, sans-serif; white-space: nowrap; }
+.badge { --c: var(--muted); --bg: var(--accent-soft); display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px 2px 8px;
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent); border-radius: 999px; background: var(--bg); color: var(--text);
+  font: 500 12px system-ui, -apple-system, "Segoe UI", sans-serif; white-space: nowrap; }
 .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
-.badge--ok { --c: #1f9d55; --bg: #dff3e6; }
-.badge--warn { --c: #e0a800; --bg: #fff1bf; }
-.badge--err { --c: #d6293e; --bg: #fbdde1; }
+.badge--ok { --c: var(--ok); --bg: var(--ok-soft); }
+.badge--warn { --c: var(--warn); --bg: var(--warn-soft); }
+.badge--err { --c: var(--err); --bg: var(--err-soft); }
 .badge--ok::before { animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 50% { opacity: .35; } }
 @media (prefers-reduced-motion: reduce) { .badge--ok::before { animation: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

@@ -1,0 +1,1 @@
+{ "title": "Diálogo de confirmación destructiva", "category": "modales", "description": "Dialog nativo que solo habilita Eliminar cuando escribes ELIMINAR; Esc cancela.", "tags": ["dialog", "confirm", "a11y"] }

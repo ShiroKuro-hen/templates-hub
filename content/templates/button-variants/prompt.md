@@ -1,4 +1,4 @@
 Crea un sistema de botones para {{producto}} con cinco variantes: primario, secundario, ghost, peligro y enlace.
-Estilo de bordes gruesos de 2px, radio 10px y sombra dura que se "hunde" al pasar el mouse o pulsar.
+Estilo sobrio y profesional: bordes finos de 1px, radio 8px, sombras suaves, acento azul, tokens CSS con tema claro y oscuro.
 Usa una clase base `.btn` y modificadores `.btn--primary`, `.btn--danger`, etc.
-Foco visible con outline de 3px, contraste AA y textos de ejemplo en {{idioma}}. Sin librerías.
+Foco visible con outline de 2px, contraste AA y textos de ejemplo en {{idioma}}. Sin librerías.

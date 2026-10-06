@@ -1,0 +1,61 @@
+<main class="grid min-h-screen place-items-center content-center gap-5 bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="title" class="w-full max-w-[460px] rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8 dark:border-slate-700 dark:bg-slate-900">
+    <div class="mb-6 flex items-center gap-2.5 text-base font-bold"><span aria-hidden="true" class="size-7 rounded-md bg-blue-600"></span>Nimbo</div>
+    <h1 class="mb-1 text-[22px] font-bold leading-tight">Crea tu cuenta</h1>
+    <p class="mb-5 text-slate-500 dark:text-slate-400">Prueba gratis durante 14 días. Sin tarjeta.</p>
+    <ol id="steps" aria-label="Progreso del registro" class="mb-2 grid grid-cols-3 gap-2 text-[13px] text-slate-500 dark:text-slate-400 [&>li]:flex [&>li]:flex-col [&>li]:items-center [&>li]:gap-1 sm:[&>li]:flex-row [&>li[aria-current]]:font-semibold [&>li[aria-current]]:text-slate-900 dark:[&>li[aria-current]]:text-slate-100 [&_b]:grid [&_b]:size-[22px] [&_b]:place-items-center [&_b]:rounded-full [&_b]:border [&_b]:border-slate-300 dark:[&_b]:border-slate-600 [&>li.done_b]:border-blue-600 [&>li.done_b]:bg-blue-600 [&>li.done_b]:text-white [&>li[aria-current]_b]:border-blue-600 [&>li[aria-current]_b]:bg-blue-600 [&>li[aria-current]_b]:text-white">
+      <li aria-current="step"><b>1</b>Tu cuenta</li><li><b>2</b>Tu equipo</li><li><b>3</b>Confirmar</li>
+    </ol>
+    <div aria-hidden="true" class="mb-6 h-1 overflow-hidden rounded-full bg-blue-50 dark:bg-slate-800"><span id="bar" class="block h-full w-1/3 bg-gradient-to-br from-cyan-400 to-blue-600 transition-all motion-reduce:transition-none"></span></div>
+
+    <form id="f" novalidate class="[&_fieldset]:grid [&_fieldset[hidden]]:hidden [&_fieldset]:gap-4 [&_label]:grid [&_label]:gap-1.5 [&_label]:font-semibold [&_legend]:mb-4 [&_legend]:text-base [&_legend]:font-semibold [&_input:not([type=checkbox])]:rounded-lg [&_input:not([type=checkbox])]:border [&_input:not([type=checkbox])]:border-slate-200 [&_input:not([type=checkbox])]:bg-transparent [&_input:not([type=checkbox])]:px-3 [&_input:not([type=checkbox])]:py-2 [&_input:not([type=checkbox])]:font-normal [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-transparent [&_select]:px-3 [&_select]:py-2 [&_select]:font-normal dark:[&_input]:border-slate-700 dark:[&_select]:border-slate-700 [&_:user-invalid]:border-red-600 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600">
+      <fieldset>
+        <legend>Datos de acceso</legend>
+        <label>Nombre completo <input name="name" autocomplete="name" required></label>
+        <label>Correo de trabajo <input type="email" name="email" autocomplete="email" required placeholder="nombre@empresa.com"></label>
+        <label>Contraseña <input type="password" name="password" autocomplete="new-password" required minlength="8"><small class="text-[13px] font-normal text-slate-500 dark:text-slate-400">Mínimo 8 caracteres.</small></label>
+      </fieldset>
+      <fieldset hidden>
+        <legend>Sobre tu equipo</legend>
+        <label>Nombre de la empresa <input name="company" autocomplete="organization" required></label>
+        <label>Tamaño del equipo <select name="size" required class="dark:bg-slate-900"><option value="">Elige una opción</option><option>1–10</option><option>11–50</option><option>51–200</option><option>Más de 200</option></select></label>
+      </fieldset>
+      <fieldset hidden>
+        <legend>Revisa y confirma</legend>
+        <dl id="summary" class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-950 [&_dt]:text-slate-500 [&_dd]:break-all"></dl>
+        <label class="!flex items-start gap-2.5 !font-normal"><input type="checkbox" name="terms" required class="mt-0.5 size-4 accent-blue-600"><span>Acepto los <a href="#terminos" class="font-medium text-blue-600 underline dark:text-blue-400">Términos del servicio</a> y la <a href="#privacidad" class="font-medium text-blue-600 underline dark:text-blue-400">Política de privacidad</a>.</span></label>
+      </fieldset>
+      <div class="mt-6 flex justify-between gap-3">
+        <button type="button" id="back" hidden class="rounded-lg border border-slate-200 px-4 py-2.5 font-semibold hover:bg-blue-50 dark:border-slate-700 dark:hover:bg-slate-800">Atrás</button>
+        <button type="submit" id="next" class="ml-auto rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:text-slate-950">Continuar</button>
+      </div>
+      <p id="status" role="status" hidden class="mt-4 rounded-lg border border-emerald-600 bg-emerald-50 px-3 py-2.5 dark:bg-emerald-950">Cuenta creada. Te enviamos un correo para verificarla.</p>
+    </form>
+  </section>
+  <p class="text-slate-500 dark:text-slate-400">¿Ya tienes cuenta? <a href="#login" class="font-medium text-blue-600 dark:text-blue-400">Inicia sesión</a></p>
+</main>
+<script>
+  const form = document.getElementById('f'), sets = [...form.querySelectorAll('fieldset')];
+  const steps = [...document.querySelectorAll('#steps li')], back = document.getElementById('back'), next = document.getElementById('next');
+  let i = 0;
+  function show(n) {
+    i = n;
+    sets.forEach((s, k) => (s.hidden = k !== i));
+    steps.forEach((s, k) => { s.classList.toggle('done', k < i); k === i ? s.setAttribute('aria-current', 'step') : s.removeAttribute('aria-current'); });
+    document.getElementById('bar').style.width = (i + 1) * 33.34 + '%';
+    back.hidden = i === 0;
+    next.textContent = i === 2 ? 'Crear cuenta' : 'Continuar';
+    if (i === 2) {
+      const d = new FormData(form), dl = document.getElementById('summary');
+      dl.replaceChildren(...[['Nombre', 'name'], ['Correo', 'email'], ['Empresa', 'company'], ['Equipo', 'size']].flatMap(([t, k]) =>
+        [Object.assign(document.createElement('dt'), { textContent: t }), Object.assign(document.createElement('dd'), { textContent: d.get(k) })]));
+    }
+    sets[i].querySelector('input,select').focus();
+  }
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (![...sets[i].querySelectorAll('input,select')].every((el) => el.reportValidity())) return;
+    if (i < 2) show(i + 1); else document.getElementById('status').hidden = false;
+  });
+  back.addEventListener('click', () => show(i - 1));
+</script>

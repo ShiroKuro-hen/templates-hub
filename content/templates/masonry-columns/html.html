@@ -4,26 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:16px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  h1 { margin:0 0 12px; font-size:1.2rem; letter-spacing:-.02em; }
-  .masonry { list-style:none; margin:0; padding:0 4px 0 0; columns:2 150px; column-gap:16px; }
-  .masonry li { break-inside:avoid; margin:0 0 16px; padding:12px 14px; border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; }
-  .masonry h2 { margin:0 0 4px; font-size:.95rem; letter-spacing:-.02em; }
-  .masonry p { margin:0; }
-  .masonry .tag { display:block; margin-top:8px; color:#4d453c; font:600 .72rem ui-monospace, monospace; }
-  .masonry li.y { background:#ffd84d; } .masonry li.b { background:#cfd8ff; } .masonry li.g { background:#c9efd8; } .masonry li.o { background:#ffc4b5; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  h1 { margin:0 0 16px; font-size:1.25rem; letter-spacing:-.01em; }
+  .masonry { list-style:none; margin:0; padding:0; columns:2 150px; column-gap:16px; }
+  .masonry li { break-inside:avoid; margin:0 0 16px; padding:14px 16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); }
+  .masonry h2 { margin:0 0 4px; font-size:.9375rem; font-weight:600; }
+  .masonry p { margin:0; color:var(--muted); }
+  .masonry .tag { display:inline-block; margin-top:10px; padding:2px 10px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-size:.75rem; font-weight:600; }
+  .masonry li.warn .tag { background:var(--warn-soft); color:var(--warn); }
+  .masonry li.info .tag { background:var(--info-soft); color:var(--info); }
+  .masonry li.ok .tag { background:var(--ok-soft); color:var(--ok); }
+  .masonry li.err .tag { background:var(--err-soft); color:var(--err); }
 </style>
 </head>
 <body>
 <h1>Tablero de ideas</h1>
 <ul class="masonry">
-  <li class="y"><h2>Lanzamiento</h2><p>Publicar la versión 2.0 el 14 de noviembre.</p><span class="tag">Producto</span></li>
+  <li class="warn"><h2>Lanzamiento</h2><p>Publicar la versión 2.0 el 14 de noviembre.</p><span class="tag">Producto</span></li>
   <li><h2>Entrevistas</h2><p>Hablar con cinco clientes sobre cómo usan los informes, qué les falta y qué dejarían de lado. Resumir las respuestas en una página.</p><span class="tag">Investigación</span></li>
-  <li class="b"><h2>Atajos</h2><p>Añadir atajos de teclado.</p><span class="tag">Mejora</span></li>
-  <li class="g"><h2>Blog</h2><p>Escribir el artículo sobre la nueva exportación a PDF, con capturas y un ejemplo paso a paso.</p><span class="tag">Contenido</span></li>
+  <li class="info"><h2>Atajos</h2><p>Añadir atajos de teclado.</p><span class="tag">Mejora</span></li>
+  <li class="ok"><h2>Blog</h2><p>Escribir el artículo sobre la nueva exportación a PDF, con capturas y un ejemplo paso a paso.</p><span class="tag">Contenido</span></li>
   <li><h2>Precios</h2><p>Revisar el plan Pro.</p><span class="tag">Negocio</span></li>
-  <li class="o"><h2>Errores</h2><p>Corregir el fallo al subir imágenes de más de 5 MB: el botón se queda cargando y no avisa de ningún error.</p><span class="tag">Soporte</span></li>
+  <li class="err"><h2>Errores</h2><p>Corregir el fallo al subir imágenes de más de 5 MB: el botón se queda cargando y no avisa de ningún error.</p><span class="tag">Soporte</span></li>
 </ul>
 </body>
 </html>

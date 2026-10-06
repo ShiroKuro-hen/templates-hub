@@ -1,2 +1,2 @@
 Crea una tarjeta de {{contenido}} (por ejemplo, un artículo) con una imagen placeholder dibujada en SVG inline (sin archivos externos), título, línea de meta (fecha y tiempo de lectura) y dos botones: acción principal y "Guardar" con aria-pressed.
-Estilo "papel y tinta": bordes gruesos, sombra dura, imagen con borde inferior, foco visible. La imagen es decorativa (aria-hidden). Sin librerías.
+Estilo sobrio y profesional: bordes finos de 1px, radio 8px, sombras suaves, acento azul, tokens CSS con tema claro y oscuro (el SVG también usa los tokens o currentColor). Imagen con borde inferior fino, foco visible. La imagen es decorativa (aria-hidden). Sin librerías.

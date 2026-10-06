@@ -1,0 +1,48 @@
+<figure class="m-0 rounded-lg border border-slate-200 bg-white px-5 py-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <defs><linearGradient id="ion-tw" x1="0" y1="1" x2="1" y2="0"><stop offset="0" class="text-cyan-400" stop-color="currentColor"/><stop offset="1" class="text-blue-600" stop-color="currentColor"/></linearGradient></defs>
+  </svg>
+  <figcaption><strong class="block text-[15px] font-semibold">Uso de recursos</strong><span class="text-slate-500 dark:text-slate-400">Clúster de producción, últimos 5 minutos</span></figcaption>
+  <div class="my-4 grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4
+              [&_svg]:mx-auto [&_svg]:block [&_svg]:w-full [&_svg]:max-w-60 [&_path]:fill-none [&_text]:fill-current [&_text]:text-[30px] [&_text]:font-semibold [&_text]:tabular-nums
+              [&_p]:mt-1 [&_p]:flex [&_p]:items-center [&_p]:justify-center [&_p]:gap-2 [&_p]:font-medium">
+    <div>
+      <svg viewBox="0 0 200 112" role="img" aria-label="CPU: 64 %, estado normal">
+        <path d="M8 100A92 92 0 0 1 154.1 25.6" stroke-width="3" class="stroke-emerald-600 dark:stroke-emerald-400"/>
+        <path d="M154.1 25.6A92 92 0 0 1 187.5 71.6" stroke-width="3" class="stroke-amber-600 dark:stroke-amber-400"/>
+        <path d="M187.5 71.6A92 92 0 0 1 192 100" stroke-width="3" class="stroke-rose-600 dark:stroke-rose-400"/>
+        <path d="M24 100A76 76 0 0 1 176 100" stroke-width="12" stroke-linecap="round" class="stroke-slate-200 dark:stroke-slate-700"/>
+        <path d="M24 100A76 76 0 0 1 132.4 31.2" stroke-width="12" stroke-linecap="round" stroke="url(#ion-tw)"/>
+        <text x="100" y="98" text-anchor="middle">64%</text>
+      </svg>
+      <p>CPU <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 text-xs font-semibold dark:bg-emerald-950"><i class="h-1.5 w-1.5 rounded-full bg-emerald-600 dark:bg-emerald-400"></i>Normal</span></p>
+    </div>
+    <div>
+      <svg viewBox="0 0 200 112" role="img" aria-label="Memoria: 78 %, estado atención">
+        <path d="M8 100A92 92 0 0 1 154.1 25.6" stroke-width="3" class="stroke-emerald-600 dark:stroke-emerald-400"/>
+        <path d="M154.1 25.6A92 92 0 0 1 187.5 71.6" stroke-width="3" class="stroke-amber-600 dark:stroke-amber-400"/>
+        <path d="M187.5 71.6A92 92 0 0 1 192 100" stroke-width="3" class="stroke-rose-600 dark:stroke-rose-400"/>
+        <path d="M24 100A76 76 0 0 1 176 100" stroke-width="12" stroke-linecap="round" class="stroke-slate-200 dark:stroke-slate-700"/>
+        <path d="M24 100A76 76 0 0 1 158.6 51.6" stroke-width="12" stroke-linecap="round" stroke="url(#ion-tw)"/>
+        <text x="100" y="98" text-anchor="middle">78%</text>
+      </svg>
+      <p>Memoria <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2 text-xs font-semibold dark:bg-amber-950"><i class="h-1.5 w-1.5 rounded-full bg-amber-600 dark:bg-amber-400"></i>Atención</span></p>
+    </div>
+    <div>
+      <svg viewBox="0 0 200 112" role="img" aria-label="Disco: 93 %, estado crítico">
+        <path d="M8 100A92 92 0 0 1 154.1 25.6" stroke-width="3" class="stroke-emerald-600 dark:stroke-emerald-400"/>
+        <path d="M154.1 25.6A92 92 0 0 1 187.5 71.6" stroke-width="3" class="stroke-amber-600 dark:stroke-amber-400"/>
+        <path d="M187.5 71.6A92 92 0 0 1 192 100" stroke-width="3" class="stroke-rose-600 dark:stroke-rose-400"/>
+        <path d="M24 100A76 76 0 0 1 176 100" stroke-width="12" stroke-linecap="round" class="stroke-slate-200 dark:stroke-slate-700"/>
+        <path d="M24 100A76 76 0 0 1 174.2 83.4" stroke-width="12" stroke-linecap="round" stroke="url(#ion-tw)"/>
+        <text x="100" y="98" text-anchor="middle">93%</text>
+      </svg>
+      <p>Disco <span class="inline-flex items-center gap-1.5 rounded-full bg-rose-50 px-2 text-xs font-semibold dark:bg-rose-950"><i class="h-1.5 w-1.5 rounded-full bg-rose-600 dark:bg-rose-400"></i>Crítico</span></p>
+    </div>
+  </div>
+  <ul class="flex flex-wrap gap-x-5 gap-y-2 border-t border-slate-200 pt-3 text-[13px] text-slate-500 dark:border-slate-700 dark:text-slate-400 [&_i]:h-[3px] [&_i]:w-3 [&_i]:rounded-sm [&_li]:flex [&_li]:items-center [&_li]:gap-2">
+    <li><i class="bg-emerald-600 dark:bg-emerald-400"></i>Normal, menos de 70 %</li>
+    <li><i class="bg-amber-600 dark:bg-amber-400"></i>Atención, de 70 a 89 %</li>
+    <li><i class="bg-rose-600 dark:bg-rose-400"></i>Crítico, 90 % o más</li>
+  </ul>
+</figure>

@@ -10,13 +10,12 @@ type Props = {
 };
 
 const EmptyBox = () => (
-  <svg viewBox="0 0 160 112" fill="none" stroke="#17130f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <ellipse cx="80" cy="104" rx="46" ry="5" fill="#17130f1f" stroke="none" />
-    <circle cx="80" cy="20" r="10" strokeDasharray="4 6" />
-    <path d="M126 14v14M119 21h14" stroke="#3b5bfd" />
-    <path d="M26 66l12-16h22l6 16zM134 66l-12-16h-22l-6 16z" fill="#ffd84d" />
-    <rect x="26" y="66" width="108" height="34" rx="5" fill="#fffdf8" />
-    <rect x="60" y="76" width="40" height="9" rx="4.5" fill="#ff5a36" />
+  <svg viewBox="0 0 160 112" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="80" cy="20" r="10" strokeDasharray="3 5" />
+    <path className="spark" d="M126 14v14M119 21h14" />
+    <path className="lid" d="M26 66l12-16h22l6 16zM134 66l-12-16h-22l-6 16z" />
+    <rect className="box" x="26" y="66" width="108" height="34" rx="5" />
+    <rect className="slot" x="60" y="77" width="40" height="7" rx="3.5" />
   </svg>
 );
 
@@ -45,4 +44,4 @@ export function EmptyState({
     </section>
   );
 }
-// CSS: copia las reglas .empty / .empty svg / .actions / .btn / .link / .note de la pestaña HTML + CSS.
+// CSS: copia los tokens :root y las reglas .empty / .empty svg (.lid .box .slot .spark) / .actions / .btn / .link / .note de la pestaña HTML + CSS.

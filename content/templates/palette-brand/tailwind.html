@@ -1,16 +1,31 @@
-<!-- tailwind.config: extiende los colores con variables CSS (ver pestaña CSS) -->
+<!-- Los tokens viven en variables CSS (ver pestaña CSS); Tailwind solo las mapea a utilidades. -->
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8}
+</style>
 <script>
   tailwind.config = {
     theme: { extend: { colors: {
-      bg: 'var(--bg)', surface: 'var(--surface)', ink: 'var(--text)', muted: 'var(--muted)',
-      accent: 'var(--accent)', ok: 'var(--ok)', warn: 'var(--warn)', err: 'var(--err)',
+      bg: 'var(--bg)', surface: 'var(--surface)', ink: 'var(--text)', muted: 'var(--muted)', line: 'var(--border)',
+      accent: 'var(--accent)', 'accent-soft': 'var(--accent-soft)',
+      ok: 'var(--ok)', warn: 'var(--warn)', err: 'var(--err)', info: 'var(--info)',
     } } },
   };
 </script>
 
-<div class="grid grid-cols-2 gap-3 bg-bg p-5 text-ink sm:grid-cols-4">
-  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-accent"></div><p class="mt-2 font-mono text-xs">accent</p></div>
-  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-ok"></div><p class="mt-2 font-mono text-xs">ok</p></div>
-  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-warn"></div><p class="mt-2 font-mono text-xs">warn</p></div>
-  <div class="rounded-xl border-2 border-ink bg-surface p-3"><div class="h-14 rounded bg-err"></div><p class="mt-2 font-mono text-xs">err</p></div>
+<div class="bg-bg p-5 text-sm text-ink">
+  <h1 class="m-0 mb-4 text-xl font-semibold tracking-tight">Paleta Ion</h1>
+  <ul class="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4">
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-bg"></div><div class="px-2.5 py-2"><b class="block font-semibold">Fondo</b><code class="text-xs text-muted">bg</code><p class="m-0 text-xs tabular-nums">#F5F7FA / #0A0F1C</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-surface"></div><div class="px-2.5 py-2"><b class="block font-semibold">Superficie</b><code class="text-xs text-muted">surface</code><p class="m-0 text-xs tabular-nums">#FFFFFF / #111A2E</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-ink"></div><div class="px-2.5 py-2"><b class="block font-semibold">Texto</b><code class="text-xs text-muted">ink</code><p class="m-0 text-xs tabular-nums">#0E1726 / #E6ECF8</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-muted"></div><div class="px-2.5 py-2"><b class="block font-semibold">Atenuado</b><code class="text-xs text-muted">muted</code><p class="m-0 text-xs tabular-nums">#5B6B82 / #8EA0BC</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-line"></div><div class="px-2.5 py-2"><b class="block font-semibold">Borde</b><code class="text-xs text-muted">line</code><p class="m-0 text-xs tabular-nums">#D8DFEA / #223052</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-accent"></div><div class="px-2.5 py-2"><b class="block font-semibold">Acento</b><code class="text-xs text-muted">accent</code><p class="m-0 text-xs tabular-nums">#2F5BFF / #6C8CFF</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-accent-soft"></div><div class="px-2.5 py-2"><b class="block font-semibold">Acento suave</b><code class="text-xs text-muted">accent-soft</code><p class="m-0 text-xs tabular-nums">#E8EEFF / #16213F</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-ok"></div><div class="px-2.5 py-2"><b class="block font-semibold">Ok</b><code class="text-xs text-muted">ok</code><p class="m-0 text-xs tabular-nums">#0E9F6E / #34D399</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-warn"></div><div class="px-2.5 py-2"><b class="block font-semibold">Aviso</b><code class="text-xs text-muted">warn</code><p class="m-0 text-xs tabular-nums">#B7791F / #F5B84B</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-err"></div><div class="px-2.5 py-2"><b class="block font-semibold">Error</b><code class="text-xs text-muted">err</code><p class="m-0 text-xs tabular-nums">#D92D4A / #FF6B81</p></div></li>
+    <li class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm"><div class="h-14 border-b border-line bg-info"></div><div class="px-2.5 py-2"><b class="block font-semibold">Info</b><code class="text-xs text-muted">info</code><p class="m-0 text-xs tabular-nums">#0891B2 / #38BDF8</p></div></li>
+  </ul>
 </div>

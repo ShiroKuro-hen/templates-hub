@@ -1,0 +1,70 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="title" class="max-w-[340px] rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <header class="mb-2 flex items-center justify-between gap-2">
+      <h2 id="title" aria-live="polite" class="text-[15px] font-semibold"></h2>
+      <div class="flex gap-1 [&>button]:grid [&>button]:h-8 [&>button]:w-8 [&>button]:place-items-center [&>button]:rounded-lg [&>button]:border [&>button]:border-slate-200 hover:[&>button]:border-slate-400 dark:[&>button]:border-slate-700">
+        <button type="button" id="prev" aria-label="Mes anterior" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+        <button type="button" id="next" aria-label="Mes siguiente" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+      </div>
+    </header>
+    <table aria-labelledby="title" class="w-full table-fixed border-collapse">
+      <thead><tr class="[&>th]:py-1 [&>th]:text-xs [&>th]:font-medium [&>th]:text-slate-500 dark:[&>th]:text-slate-400">
+        <th scope="col" abbr="lunes">L</th><th scope="col" abbr="martes">M</th><th scope="col" abbr="miércoles">X</th><th scope="col" abbr="jueves">J</th>
+        <th scope="col" abbr="viernes">V</th><th scope="col" abbr="sábado">S</th><th scope="col" abbr="domingo">D</th>
+      </tr></thead>
+      <tbody id="days" class="[&_td]:p-0.5 [&_td]:text-center"></tbody>
+    </table>
+    <footer class="mt-3 flex items-center justify-between gap-3 border-t border-slate-200 pt-3 dark:border-slate-700">
+      <p id="out" role="status" class="text-[13px] text-slate-500 dark:text-slate-400">Selecciona una fecha para continuar.</p>
+      <button type="button" id="today" class="flex-none rounded-md px-2 py-1 font-medium text-blue-600 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-blue-400 dark:hover:bg-slate-800">Hoy</button>
+    </footer>
+  </section>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const DAY = 'relative aspect-square w-full max-w-10 rounded-lg border border-transparent tabular-nums transition-colors hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:hover:bg-slate-800';
+  const TODAY = ' border-slate-200 font-semibold text-blue-600 dark:border-slate-700 dark:text-blue-400';
+  const SEL = ' !border-blue-600 !bg-blue-600 !text-white dark:!border-blue-400 dark:!bg-blue-400 dark:!text-slate-950';
+  const DOT = '<span class="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></span>';
+  const fmtM = new Intl.DateTimeFormat('es', { month: 'long', year: 'numeric' });
+  const fmtL = new Intl.DateTimeFormat('es', { dateStyle: 'full' });
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const same = (a, b) => !!a && !!b && a.toDateString() === b.toDateString();
+  let cursor = new Date(today), sel = null;
+  function render(focus) {
+    const y = cursor.getFullYear(), m = cursor.getMonth(), t = fmtM.format(cursor);
+    $('title').textContent = t[0].toUpperCase() + t.slice(1);
+    const offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    let html = '';
+    for (let d = 1 - offset; d <= days;) {
+      html += '<tr>';
+      for (let i = 0; i < 7; i++, d++) {
+        if (d < 1 || d > days) { html += '<td></td>'; continue; }
+        const dt = new Date(y, m, d), isToday = same(dt, today), isSel = same(dt, sel);
+        html += `<td><button type="button" data-d="${d}" tabindex="${d === cursor.getDate() ? 0 : -1}" aria-label="${fmtL.format(dt)}"${isToday ? ' aria-current="date"' : ''}`
+          + ` aria-pressed="${isSel}" class="${DAY}${isToday ? TODAY : ''}${isSel ? SEL : ''}">${d}${isToday ? DOT : ''}</button></td>`;
+      }
+      html += '</tr>';
+    }
+    $('days').innerHTML = html;
+    if (focus) $('days').querySelector('[tabindex="0"]').focus();
+  }
+  const shift = (n) => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() + n, 1); render(false); };
+  $('prev').onclick = () => shift(-1);
+  $('next').onclick = () => shift(1);
+  $('today').onclick = () => { cursor = new Date(today); render(true); };
+  $('days').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    cursor = sel = new Date(cursor.getFullYear(), cursor.getMonth(), +b.dataset.d);
+    render(true); $('out').textContent = 'Fecha seleccionada: ' + fmtL.format(sel) + '.';
+  });
+  $('days').addEventListener('keydown', (e) => {
+    const y = cursor.getFullYear(), m = cursor.getMonth(), d = cursor.getDate(), dow = (cursor.getDay() + 6) % 7;
+    const delta = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7, Home: -dow, End: 6 - dow }[e.key];
+    if (delta !== undefined) cursor = new Date(y, m, d + delta);
+    else if (e.key === 'PageUp' || e.key === 'PageDown') { const nm = m + (e.key === 'PageUp' ? -1 : 1); cursor = new Date(y, nm, Math.min(d, new Date(y, nm + 1, 0).getDate())); }
+    else return;
+    e.preventDefault(); render(true);
+  });
+  render(false);
+</script>

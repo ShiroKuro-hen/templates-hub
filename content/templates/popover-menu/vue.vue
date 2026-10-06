@@ -34,16 +34,18 @@ function onKeydown(e: KeyboardEvent) {
 </template>
 
 <style scoped>
-.btn { font:600 14px system-ui, sans-serif; padding:8px 14px; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
-.btn:hover, .btn:active, .btn[aria-expanded="true"] { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-[popover] { position:fixed; inset:auto; margin:0; min-width:190px; padding:6px; font:14px/1.45 system-ui, sans-serif; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
-[popover]:popover-open { animation:in .12s ease-out; }
-[role="menuitem"] { display:block; width:100%; padding:7px 10px; font:inherit; text-align:left; color:#17130f; background:none; border:0; border-radius:6px; cursor:pointer; }
-[role="menuitem"]:hover, [role="menuitem"]:focus-visible { background:#ffd84d; outline:none; }
-[role="menuitem"]:focus-visible { box-shadow:inset 0 0 0 3px #ff5a36; }
-[role="menuitem"].danger { color:#d6293e; font-weight:600; }
-[role="menuitem"].danger:hover, [role="menuitem"].danger:focus-visible { color:#17130f; }
-@keyframes in { from { opacity:0; transform:translateY(-4px); } }
-@media (prefers-reduced-motion:reduce) { [popover]:popover-open { animation:none; } }
+.btn { font: 600 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 8px 14px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: 0 1px 2px rgba(14,23,38,.06); cursor: pointer; transition: border-color 140ms, background 140ms; }
+.btn:hover { border-color: var(--accent); }
+.btn[aria-expanded="true"] { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+[popover] { position: fixed; inset: auto; margin: 0; min-width: 200px; padding: 4px; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+[popover]:popover-open { animation: in 140ms ease-out; }
+[role="menuitem"] { display: block; width: 100%; padding: 7px 10px; font: inherit; text-align: left; color: var(--text); background: none; border: 0; border-radius: 6px; cursor: pointer; }
+[role="menuitem"]:hover, [role="menuitem"]:focus-visible { background: var(--accent-soft); }
+[role="menuitem"]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+[role="menuitem"].danger { color: var(--err); }
+[role="menuitem"].danger:hover, [role="menuitem"].danger:focus-visible { background: var(--err-soft); outline-color: var(--err); }
+@keyframes in { from { opacity: 0; transform: translateY(-4px); } }
+@media (prefers-reduced-motion: reduce) { [popover]:popover-open { animation: none; } .btn { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

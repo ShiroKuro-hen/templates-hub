@@ -2,7 +2,7 @@ type Item = { id: string; pregunta: string; respuesta: string };
 
 const ITEMS: Item[] = [
   { id: 'plan', pregunta: '¿Puedo cambiar de plan en cualquier momento?', respuesta: 'Sí. El cambio se aplica al instante y cobramos solo la diferencia prorrateada.' },
-  { id: 'baja', pregunta: '¿Cómo cancelo mi suscripción?', respuesta: 'Desde Ajustes → Facturación. Conservas el acceso hasta el final del período pagado.' },
+  { id: 'baja', pregunta: '¿Cómo cancelo mi suscripción?', respuesta: 'Abre Ajustes y entra en Facturación. Conservas el acceso hasta el final del período pagado.' },
   { id: 'ruc', pregunta: '¿Ofrecen facturas con RUC?', respuesta: 'Claro: añade tus datos fiscales en Facturación y las emitiremos cada mes.' },
 ];
 
@@ -24,4 +24,4 @@ export function Accordion({ items = ITEMS, name = 'faq', defaultOpenId = items[0
     </div>
   );
 }
-// CSS: copia las reglas .acc / .acc details / .acc summary / .acc p y ::details-content de la pestaña HTML + CSS.
+// CSS: copia las reglas .acc / .acc details / .acc summary / .acc p, ::details-content y los tokens :root de la pestaña HTML + CSS.

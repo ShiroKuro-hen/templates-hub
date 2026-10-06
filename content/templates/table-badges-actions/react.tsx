@@ -55,8 +55,8 @@ export function OrdersTable({ initial = DATA }: { initial?: Pedido[] }) {
           </tbody>
         </table>
       </div>
-      <p role="status">{msg}</p>
+      <p id="msg" role="status">{msg}</p>
     </>
   );
 }
-// CSS: copia las reglas .wrap / table / .num / .badge (.ok .warn .err .info) / .acts / button / .del de la pestaña HTML + CSS.
+// CSS: copia las reglas .wrap / table / .num / .badge (.ok .warn .err .info) / .acts / button / .del / #msg de la pestaña HTML + CSS.

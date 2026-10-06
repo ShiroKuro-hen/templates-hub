@@ -3,26 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sparklines en tarjetas KPI</title>
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;padding:18px;font:14px/1.4 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
-  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:14px;max-width:760px;margin:0 auto}
-  .kpi{display:flex;flex-direction:column;gap:2px;padding:14px;border:2px solid #17130f;border-radius:10px;background:#fffdf8;box-shadow:4px 4px 0 #17130f}
-  .kpi small{color:#6b6258;font-weight:600}
-  .kpi strong{font-size:1.7rem;line-height:1.15;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .delta{font:700 .8rem ui-monospace,monospace}
-  .good{color:#1a7f47}.bad{color:#d6293e}
-  .spark{display:block;width:100%;height:auto;margin-top:8px;overflow:visible}
-  .spark .line{fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-  .spark .area{opacity:.18}
-  .spark .end{stroke:#17130f;stroke-width:2;fill:#fffdf8}
-  .good .line,.good .bar{stroke:#1f9d55;fill:#1f9d55}.good .area{fill:#1f9d55}
-  .bad .line,.bad .bar{stroke:#d6293e;fill:#d6293e}.bad .area{fill:#d6293e}
-  .spark .line{fill:none}
-  .spark .bar{stroke:none}
-  @media(prefers-reduced-motion:no-preference){.spark .line{stroke-dasharray:1;stroke-dashoffset:1;animation:draw .9s ease-out forwards}.spark .bar{transform-box:fill-box;transform-origin:bottom;animation:grow .6s ease-out both}}
-  @keyframes draw{to{stroke-dashoffset:0}}
-  @keyframes grow{from{transform:scaleY(0)}}
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:16px; max-width:900px; margin:0 auto; }
+  .kpi { display:flex; flex-direction:column; align-items:flex-start; gap:4px; padding:16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .kpi small { color:var(--muted); font-size:.8125rem; }
+  .kpi strong { font-size:1.6rem; font-weight:600; line-height:1.2; letter-spacing:-.01em; font-variant-numeric:tabular-nums; }
+  .delta { padding:1px 8px; border-radius:999px; font-size:.75rem; font-weight:600; font-variant-numeric:tabular-nums; }
+  .good { --tone:var(--ok); --tone-soft:var(--ok-soft); } .bad { --tone:var(--err); --tone-soft:var(--err-soft); }
+  .delta { color:var(--tone); background:var(--tone-soft); }
+  .spark { display:block; width:100%; height:auto; margin-top:10px; overflow:visible; color:var(--tone); }
+  .spark .line { fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .spark .area { fill:currentColor; opacity:.12; }
+  .spark .bar { fill:currentColor; opacity:.85; }
+  .spark .end { fill:var(--surface); stroke:currentColor; stroke-width:2; }
+  @media (prefers-reduced-motion:no-preference) {
+    .spark .line { stroke-dasharray:1; stroke-dashoffset:1; animation:draw .9s ease-out forwards; }
+    .spark .bar { transform-box:fill-box; transform-origin:bottom; animation:grow .6s ease-out both; }
+  }
+  @keyframes draw { to { stroke-dashoffset:0; } }
+  @keyframes grow { from { transform:scaleY(0); } }
 </style>
 </head>
 <body>
@@ -34,7 +38,7 @@
     { label: 'Cancelaciones', fmt: v => v, data: [14,15,13,16,12,13,11,12,10,11,9,8], goodWhenUp: false },
     { label: 'Tickets abiertos', fmt: v => v, data: [22,18,25,21,30,24,19,28,33,29,35,38], goodWhenUp: false, bars: true },
   ];
-  const NS = 'http://www.w3.org/2000/svg', W = 120, H = 36, P = 4;
+  const W = 120, H = 36, P = 4;
   const root = document.getElementById('kpis');
   kpis.forEach(k => {
     const d = k.data, min = Math.min(...d), max = Math.max(...d), last = d[d.length - 1], first = d[0];
@@ -47,7 +51,7 @@
       g = d.map((v, i) => `<rect class="bar" x="${P + i * bw + 1}" y="${Yb(v)}" width="${bw - 2}" height="${H - P - Yb(v)}" rx="1.5"/>`).join('');
     } else {
       const pts = d.map((v, i) => `${X(i)},${Y(v)}`).join(' L');
-      g = `<path class="area" d="M${X(0)},${H} L${pts} L${X(d.length - 1)},${H}Z"/><path class="line" pathLength="1" d="M${pts}"/><circle class="end" cx="${X(d.length - 1)}" cy="${Y(last)}" r="3.5"/>`;
+      g = `<path class="area" d="M${X(0)},${H} L${pts} L${X(d.length - 1)},${H}Z"/><path class="line" pathLength="1" d="M${pts}"/><circle class="end" cx="${X(d.length - 1)}" cy="${Y(last)}" r="3"/>`;
     }
     const el = document.createElement('article');
     el.className = 'kpi ' + (good ? 'good' : 'bad');

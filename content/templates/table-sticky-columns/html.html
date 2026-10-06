@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{max-height:280px;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .wrap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  table{border-collapse:separate;border-spacing:0;min-width:100%}
+  th,td{padding:10px 16px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--border);background:var(--surface)}
+  tbody tr:last-child>*{border-bottom:0}
+  thead th{position:sticky;top:0;z-index:1;font-weight:600;color:var(--muted)}
+  th[scope=row]{font-weight:600}
+  .fix{position:sticky;left:0;z-index:2}
+  thead .fix{z-index:3}
+  .fix::after{content:"";position:absolute;top:0;right:0;bottom:0;width:1px;background:linear-gradient(180deg,#22d3ee,#2f5bff)}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  tbody tr:hover>*{background:var(--accent-soft)}
+  tbody tr>*{transition:background .14s}
+  .hint{margin:8px 0 0;color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" tabindex="0" role="region" aria-labelledby="cap">
+<table>
+  <caption id="cap" hidden>Ingresos mensuales por región en miles de euros</caption>
+  <thead><tr>
+    <th scope="col" class="fix">Región</th>
+    <th scope="col" class="num">Ene</th><th scope="col" class="num">Feb</th><th scope="col" class="num">Mar</th>
+    <th scope="col" class="num">Abr</th><th scope="col" class="num">May</th><th scope="col" class="num">Jun</th>
+    <th scope="col" class="num">Jul</th><th scope="col" class="num">Ago</th><th scope="col" class="num">Total</th>
+  </tr></thead>
+  <tbody>
+    <tr><th scope="row" class="fix">Norte</th><td class="num">124</td><td class="num">131</td><td class="num">140</td><td class="num">138</td><td class="num">152</td><td class="num">160</td><td class="num">149</td><td class="num">171</td><td class="num">1.165</td></tr>
+    <tr><th scope="row" class="fix">Centro</th><td class="num">210</td><td class="num">198</td><td class="num">225</td><td class="num">231</td><td class="num">240</td><td class="num">236</td><td class="num">219</td><td class="num">250</td><td class="num">1.809</td></tr>
+    <tr><th scope="row" class="fix">Sur</th><td class="num">96</td><td class="num">104</td><td class="num">99</td><td class="num">112</td><td class="num">118</td><td class="num">125</td><td class="num">130</td><td class="num">121</td><td class="num">905</td></tr>
+    <tr><th scope="row" class="fix">Este</th><td class="num">143</td><td class="num">150</td><td class="num">147</td><td class="num">155</td><td class="num">162</td><td class="num">158</td><td class="num">166</td><td class="num">174</td><td class="num">1.255</td></tr>
+    <tr><th scope="row" class="fix">Oeste</th><td class="num">88</td><td class="num">91</td><td class="num">97</td><td class="num">94</td><td class="num">102</td><td class="num">109</td><td class="num">113</td><td class="num">117</td><td class="num">811</td></tr>
+    <tr><th scope="row" class="fix">Islas</th><td class="num">57</td><td class="num">61</td><td class="num">66</td><td class="num">74</td><td class="num">89</td><td class="num">112</td><td class="num">128</td><td class="num">131</td><td class="num">718</td></tr>
+  </tbody>
+</table>
+</div>
+<p class="hint">Desplaza la tabla en horizontal; la región y la cabecera se quedan fijas.</p>
+</body>
+</html>

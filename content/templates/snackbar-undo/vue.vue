@@ -38,7 +38,7 @@ onBeforeUnmount(stop);
       <button type="button" class="del" @click="remove(i)">Eliminar</button>
     </li>
   </ul>
-  <p v-if="!items.length && !pending" class="empty">No quedan archivos.</p>
+  <p v-if="!items.length && !pending" class="empty">No quedan archivos. Sube uno nuevo para empezar.</p>
   <!-- :key reinicia la barra de cuenta atrás en cada eliminación -->
   <div v-if="pending" :key="pending.item.id" class="snack" role="status" :style="{ '--ms': MS + 'ms' }" @keydown.esc="stop">
     <p>«{{ pending.item.name }}» eliminado</p>
@@ -47,21 +47,22 @@ onBeforeUnmount(stop);
 </template>
 
 <style scoped>
-ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font:14px/1.4 system-ui, sans-serif; color:#17130f; }
-li { display:flex; align-items:center; gap:10px; padding:8px 10px; background:#fffdf8; border:2px solid #17130f; border-radius:10px; }
+ul { margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px; font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--text); }
+li { display:flex; align-items:center; gap:12px; padding:8px 12px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
 li span { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-li small { font:12px ui-monospace, monospace; color:#6b6258; }
-.del { font:inherit; font-weight:600; padding:4px 10px; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:8px; cursor:pointer; }
-.del:hover { background:#ffd84d; }
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-.empty { color:#6b6258; }
-.snack { position:fixed; left:12px; right:12px; bottom:12px; max-width:420px; margin:0 auto; overflow:hidden; display:flex; align-items:center; gap:12px; padding:12px 12px 15px 14px; background:#17130f; color:#f6f1e7; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #ff5a36; animation:up .2s ease-out; }
+li small { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.del { font:inherit; font-weight:600; padding:4px 12px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:border-color .14s, color .14s; }
+.del:hover { color:var(--err); border-color:var(--err); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.empty { color:var(--muted); }
+.snack { position:fixed; left:12px; right:12px; bottom:12px; max-width:420px; margin:0 auto; overflow:hidden; display:flex; align-items:center; gap:12px; padding:12px 12px 15px 16px; background:var(--text); color:var(--bg); border-radius:var(--radius); box-shadow:var(--shadow); animation:up .16s ease-out; font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
 .snack p { flex:1; margin:0; }
-.snack button { font:inherit; font-weight:700; padding:5px 10px; color:#17130f; background:#ffd84d; border:2px solid #ffd84d; border-radius:8px; cursor:pointer; }
-.snack button:hover { background:#fff; }
-.snack button:focus-visible { outline-color:#f6f1e7; }
-.snack::after { content:""; position:absolute; left:0; bottom:0; height:5px; width:100%; background:#ff5a36; transform-origin:left; animation:drain var(--ms) linear forwards; }
+.snack button { font:inherit; font-weight:600; padding:5px 12px; color:var(--bg); background:transparent; border:1px solid var(--bg); border-radius:var(--radius); cursor:pointer; transition:background .14s, color .14s; font-variant-numeric:tabular-nums; }
+.snack button:hover { background:var(--bg); color:var(--text); }
+.snack button:focus-visible { outline-color:var(--accent); }
+.snack::after { content:""; position:absolute; left:0; bottom:0; height:3px; width:100%; background:linear-gradient(135deg,#22d3ee,#2f5bff); transform-origin:left; animation:drain var(--ms) linear forwards; }
 @keyframes up { from { transform:translateY(16px); opacity:0; } }
 @keyframes drain { to { transform:scaleX(0); } }
-@media (prefers-reduced-motion:reduce) { .snack { animation:none; } .snack::after { display:none; } }
+@media (prefers-reduced-motion:reduce) { .snack { animation:none; } .snack::after { display:none; } * { transition:none !important; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

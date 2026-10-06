@@ -30,7 +30,7 @@ export function Pagination({ total = 12, perPage = 10, count = 120, initial = 4,
       </p>
       <nav className="pager" aria-label="Paginación">
         <button className="pg" type="button" aria-label="Página anterior" aria-disabled={page === 1} onClick={() => go(page - 1)}>
-          ← <span className="txt">Anterior</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg><span className="txt">Anterior</span>
         </button>
         <ul>
           {pageList(page, total).map((n, i) =>
@@ -46,11 +46,11 @@ export function Pagination({ total = 12, perPage = 10, count = 120, initial = 4,
           )}
         </ul>
         <button className="pg" type="button" aria-label="Página siguiente" aria-disabled={page === total} onClick={() => go(page + 1)}>
-          <span className="txt">Siguiente</span> →
+          <span className="txt">Siguiente</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
         </button>
       </nav>
     </>
   );
 }
-// CSS: copia las reglas .status / .pager / .pg / .gap / .txt (y su @media max-width:520px) de la pestaña HTML + CSS.
+// CSS: copia las reglas .status / .pager / .pg (y .pg svg) / .gap / .txt (y su @media max-width:520px) y los tokens de la pestaña HTML + CSS.
 // Nota: al pulsar un número se re-renderiza la lista; si quieres conservar el foco usa key estable por página (ya lo hace aquí).

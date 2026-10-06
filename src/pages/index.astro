@@ -1,110 +1,40 @@
 ---
 import Base from '../layouts/Base.astro';
 import { CATEGORIES, GROUPS, LANGS, templates, url } from '../lib/data';
-const inCat = (c: string) => templates.filter((t) => t.category === c);
-const langs = Object.keys(LANGS);
+const count = (c: string) => templates.filter((t) => t.category === c).length;
+const first = templates[0];
 ---
-<Base>
+<Base title="Templates Hub · Biblioteca de componentes" description="Componentes de interfaz con vista previa en vivo, código en HTML, Tailwind, React y Vue, y el prompt para generarlos con IA.">
   <section class="hero">
-    <h1>Prompt + código, <mark>listos para copiar</mark>.</h1>
-    <p>{templates.length} plantillas de interfaz con su prompt para IA y el código en HTML, Tailwind, React y Vue.</p>
+    <div>
+      <h1>Componentes de interfaz listos para copiar</h1>
+      <p class="lead">{templates.length} componentes con vista previa en vivo, código en {Object.values(LANGS).map((l) => l.label).slice(0, 4).join(', ')} y el prompt para pedirlos a tu IA. Gratis.</p>
+      <div class="actions">
+        <a class="btn primary" href={url('/t/button-variants/')}>Ver un componente</a>
+        <a class="btn" href={url('/c/paleta-de-color/')}>Empezar por el color</a>
+      </div>
+    </div>
+    <div class="canvas">
+      <div class="stage">
+        <div class="frame"><iframe data-preview src={url('/preview/stat-cards.html')} title="Ejemplo: tarjetas de métricas" sandbox="allow-scripts"></iframe></div>
+      </div>
+    </div>
   </section>
 
-  <div class="filters" id="filters">
-    <label class="search">
-      <span class="sr">Buscar plantillas</span>
-      <input id="q" type="search" placeholder="Buscar: tabla, modal, botón, grid…  ( / )" autocomplete="off" />
-    </label>
-    <div class="row" role="group" aria-label="Filtrar por grupo">
-      <button class="chip" data-group="" aria-pressed="true">Todo</button>
-      {GROUPS.map((g, i) => <button class="chip" data-group={i} aria-pressed="false">{g.label}</button>)}
-    </div>
-    <div class="row" role="group" aria-label="Filtrar por lenguaje">
-      <button class="chip" data-lang="" aria-pressed="true">Cualquier lenguaje</button>
-      {langs.map((l) => <button class="chip" data-lang={l} aria-pressed="false">{LANGS[l].label}</button>)}
-      <output id="count" class="count" aria-live="polite"></output>
-    </div>
-  </div>
-
-  {GROUPS.map((g, gi) => (
-    <section class="group" data-group={gi}>
-      <h2 id={`g${gi}`}>{g.label} <small>{g.blurb}</small></h2>
-      {g.cats.map((c) => (
-        <div class="cat" data-cat={c}>
-          <h3><a href={url(`/c/${c}/`)}>{CATEGORIES[c].icon} {CATEGORIES[c].label}</a></h3>
-          <div class="grid">
-            {inCat(c).map((t) => (
-              <a class="card" href={url(`/t/${t.slug}/`)} data-langs={Object.keys(t.code).join(' ')}
-                 data-q={`${t.title} ${t.description} ${t.tags.join(' ')} ${CATEGORIES[c].label}`.toLowerCase()}>
-                <h3>{t.title}</h3>
-                <p>{t.description}</p>
-                <div class="meta">{Object.keys(t.code).map((l) => <span class="chip">{l}</span>)}</div>
-              </a>
+  <section class="sec" aria-labelledby="catalogo">
+    <h2 id="catalogo">Catálogo</h2>
+    <div class="groups">
+      {GROUPS.map((g) => (
+        <div class="group">
+          <h3>{g.label}</h3>
+          <p>{g.blurb}</p>
+          <ul>
+            {g.cats.map((c) => (
+              <li><a href={url(`/c/${c}/`)}>{CATEGORIES[c].label}<span>{count(c)}</span></a></li>
             ))}
-          </div>
+          </ul>
         </div>
       ))}
-    </section>
-  ))}
-  <p id="empty" class="empty" hidden>Sin resultados. Prueba otra palabra o quita filtros.</p>
+    </div>
+  </section>
 </Base>
-
-<style>
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .filters { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 0; border-bottom: var(--b); display: grid; gap: 10px; }
-  .search input { width: 100%; font: 600 1rem var(--sans); padding: 12px 16px; border: var(--b); border-radius: var(--r); background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .filters .chip { cursor: pointer; font-size: .8rem; padding: 3px 12px; color: var(--ink); }
-  .filters .chip[aria-pressed="true"] { background: var(--accent); color: #17130f; }
-  .count { margin-left: auto; font: .8rem var(--mono); color: var(--muted); }
-  .group h2 small { display: block; font: 400 .95rem var(--sans); color: var(--muted); letter-spacing: 0; }
-  .cat > h3 { margin: 24px 0 12px; font: 700 .85rem var(--mono); text-transform: uppercase; letter-spacing: .06em; }
-  .cat > h3 a { text-decoration: none; border-bottom: 2px solid var(--accent); }
-  .empty { text-align: center; padding: 60px 0; color: var(--muted); }
-</style>
-
-<script>
-  const $ = <T extends Element>(s: string) => [...document.querySelectorAll<T>(s)];
-  const input = document.getElementById('q') as HTMLInputElement;
-  const state = { group: '', lang: '' };
-
-  function apply() {
-    const words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
-    let shown = 0;
-    const cards = $<HTMLElement>('.card[data-q]');
-    cards.forEach((c) => {
-      const g = c.closest<HTMLElement>('.group')!.dataset.group;
-      const ok =
-        words.every((w) => c.dataset.q!.includes(w)) &&
-        (!state.lang || c.dataset.langs!.split(' ').includes(state.lang)) &&
-        (state.group === '' || g === state.group);
-      c.hidden = !ok;
-      if (ok) shown++;
-    });
-    $<HTMLElement>('.cat').forEach((e) => (e.hidden = !e.querySelector('.card:not([hidden])')));
-    $<HTMLElement>('.group').forEach((e) => (e.hidden = !e.querySelector('.card:not([hidden])')));
-    document.getElementById('empty')!.hidden = shown > 0;
-    document.getElementById('count')!.textContent = `${shown} de ${cards.length}`;
-    const p = new URLSearchParams();
-    if (input.value) p.set('q', input.value);
-    history.replaceState(null, '', p.size ? `?${p}` : location.pathname);
-  }
-
-  function chips(attr: 'group' | 'lang') {
-    $<HTMLElement>(`.filters [data-${attr}]`).forEach((b) =>
-      b.addEventListener('click', () => {
-        state[attr] = b.dataset[attr]!;
-        $<HTMLElement>(`.filters [data-${attr}]`).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-        apply();
-      }),
-    );
-  }
-  chips('group');
-  chips('lang');
-  input.addEventListener('input', apply);
-  input.value = new URLSearchParams(location.search).get('q') ?? '';
-  document.addEventListener('keydown', (e) => {
-    if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); }
-  });
-  apply();
-</script>

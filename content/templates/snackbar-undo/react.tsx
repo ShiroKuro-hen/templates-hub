@@ -45,7 +45,7 @@ export function FileListUndo({ initial = INITIAL, ms = 6000 }: { initial?: Item[
           </li>
         ))}
       </ul>
-      {items.length === 0 && !pending && <p className="empty">No quedan archivos.</p>}
+      {items.length === 0 && !pending && <p className="empty">No quedan archivos. Sube uno nuevo para empezar.</p>}
       {pending && (
         <div className="snack" role="status" style={{ '--ms': `${ms}ms` } as CSSProperties}>
           <p>«{pending.item.name}» eliminado</p>

@@ -3,28 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skeleton con shimmer</title>
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:16px 20px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  :focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
   .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-  .btn { margin-bottom:14px; padding:7px 14px; font:inherit; font-weight:700; color:inherit; background:#ffd84d; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
-  .btn:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:16px; align-items:start; }
-  .box { overflow:hidden; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
-  .pad { padding:12px; }
-  .sk { display:block; background:linear-gradient(100deg, #e9e2d3 30%, #fffdf8 50%, #e9e2d3 70%) 0 0 / 200% 100%; border-radius:6px; animation:shimmer 1.4s linear infinite; }
+  .btn { margin-bottom:16px; padding:7px 16px; font:inherit; font-weight:600; color:var(--accent-ink); background:var(--accent); border:1px solid var(--accent); border-radius:var(--radius); cursor:pointer; transition:filter 140ms; }
+  .btn:hover { filter:brightness(1.08); }
+  .btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; align-items:start; max-width:720px; }
+  .box { margin:0; padding:0; list-style:none; overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .pad { padding:14px; }
+  .sk { display:block; background:linear-gradient(100deg, var(--border) 30%, var(--bg) 50%, var(--border) 70%) 0 0 / 200% 100%; border-radius:6px; animation:shimmer 1.4s linear infinite; }
   @keyframes shimmer { to { background-position:-200% 0; } }
-  .media { height:84px; border-radius:0; border-bottom:2px solid #17130f; }
-  .line { height:12px; margin-top:8px; } .w60 { width:60%; } .w40 { width:40%; } .title { height:16px; width:75%; }
-  .row { display:flex; align-items:center; gap:10px; padding:10px 12px; }
-  .row + .row { border-top:1px solid #17130f33; }
-  .row div { flex:1; } .row .line { margin:0; } .row .line + .line { margin-top:6px; }
+  .media { height:84px; border-radius:0; }
+  .line { height:10px; margin-top:10px; } .w60 { width:60%; } .w40 { width:40%; } .title { height:14px; width:75%; }
+  .row { display:flex; align-items:center; gap:12px; padding:12px 14px; }
+  .row + .row { border-top:1px solid var(--border); }
+  .row > div { flex:1; } .row .line { margin:0; } .row .line + .line { margin-top:8px; }
   .avatar { flex:none; width:34px; height:34px; border-radius:50%; }
-  .real .media { background:#ffd84d; }
-  .real h3 { margin:0; font-size:1rem; letter-spacing:-.02em; } .real p { margin:2px 0 0; color:#6b6258; }
-  .real .avatar { display:grid; place-items:center; background:#ff5a36; border:2px solid #17130f; font-weight:700; }
-  @media (prefers-reduced-motion:reduce) { .sk { animation:none; } }
+  .real .media { background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+  .real h3 { margin:0; font-size:1rem; font-weight:600; } .real p { margin:2px 0 0; color:var(--muted); }
+  .real .avatar { display:grid; place-items:center; color:var(--accent); background:var(--accent-soft); font-weight:600; }
+  @media (prefers-reduced-motion:reduce) { .sk { animation:none; } .btn { transition:none; } }
 </style>
 </head>
 <body>

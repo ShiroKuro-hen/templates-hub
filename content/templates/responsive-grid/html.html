@@ -4,10 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body { margin:0; padding:20px; font:14px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
   .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:16px; }
-  .item { border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; padding:16px; min-height:90px; font-weight:700; }
-  .item.wide { grid-column:span 2; background:#ffd84d; }
+  .item { position:relative; overflow:hidden; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); padding:16px; min-height:90px; font-weight:600; }
+  .item.wide { grid-column:span 2; background:var(--accent-soft); }
+  .item.wide::before { content:""; position:absolute; inset:0 0 auto; height:3px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
 </style>
 </head>
 <body>

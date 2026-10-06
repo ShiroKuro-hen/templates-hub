@@ -3,39 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nube de logos de clientes</title>
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   *{box-sizing:border-box}
-  body{margin:0;font:15px/1.5 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
-  .logos{max-width:1040px;margin:0 auto;padding:36px 20px;text-align:center}
-  h2{margin:0 0 22px;color:#6b6258;font-size:1rem;font-weight:600}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);margin:0;padding:0;list-style:none;border:2px solid #17130f;border-radius:10px;background:#fffdf8;box-shadow:4px 4px 0 #17130f;overflow:hidden}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .logos{max-width:1040px;margin:0 auto;padding:24px 0;text-align:center}
+  h2{margin:0 0 28px;color:var(--muted);font-size:1rem;font-weight:500}
+  h2 b{color:var(--text);font-weight:600;font-variant-numeric:tabular-nums}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin:0;padding:0;list-style:none;border:1px solid var(--border);border-radius:var(--radius);background:var(--border);box-shadow:var(--shadow);overflow:hidden}
   @media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}}
-  li{display:flex;gap:8px;align-items:center;justify-content:center;min-height:76px;padding:12px;border:solid #17130f;border-width:0 2px 2px 0;font-size:1.15rem;color:#17130f;transition:background .15s}
-  li:hover{background:#ffd84d}
+  /* detalle memorable: los logos son monocromos y se encienden al pasar el cursor */
+  li{display:flex;gap:8px;align-items:center;justify-content:center;min-height:84px;padding:12px;background:var(--surface);color:var(--muted);font-size:1.1rem;transition:color .14s,background .14s}
+  li:hover{color:var(--text);background:var(--accent-soft)}
   li svg{flex:none;width:26px;height:26px}
+  li:hover svg .hi{color:var(--accent)}
   .f-serif{font-family:Georgia,serif;font-weight:700;letter-spacing:-.02em}
-  .f-mono{font-family:ui-monospace,monospace;font-weight:700}
-  .f-black{font-weight:900;letter-spacing:-.04em;text-transform:lowercase}
+  .f-mono{font-family:ui-monospace,"Cascadia Code",Menlo,monospace;font-weight:700}
+  .f-black{font-weight:900;letter-spacing:-.04em}
   .f-ital{font-family:Georgia,serif;font-style:italic}
-  .f-wide{font-weight:600;letter-spacing:.14em;font-size:.95rem}
+  .f-wide{font-weight:600;letter-spacing:.06em;font-size:1rem}
   .f-round{font-weight:800;letter-spacing:-.02em}
-  @media(max-width:639px){li:nth-child(2n){border-right:0}li:nth-child(n+7){border-bottom:0}}
-  @media(min-width:640px){li:nth-child(4n){border-right:0}li:nth-child(n+5){border-bottom:0}}
   @media(prefers-reduced-motion:reduce){li{transition:none}}
 </style>
 </head>
 <body>
   <section class="logos" aria-labelledby="l">
-    <h2 id="l">Más de 2.400 equipos confían en Nimbo</h2>
+    <h2 id="l">Más de <b>2.400</b> equipos confían en Nimbo</h2>
     <ul class="grid">
-      <li class="f-serif"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="10" fill="#ff5a36" stroke="#17130f" stroke-width="2.5"/></svg>Finca Norte</li>
-      <li class="f-mono"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 3l10 18H3z" fill="#17130f"/></svg>orbita.labs</li>
-      <li class="f-black"><svg viewBox="0 0 26 26" aria-hidden="true"><rect x="3" y="3" width="20" height="20" rx="4" fill="#3b5bfd" stroke="#17130f" stroke-width="2.5"/></svg>kiwipay</li>
-      <li class="f-ital"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M3 18c4-12 8-12 10 0s6 12 10 0" fill="none" stroke="#17130f" stroke-width="3" stroke-linecap="round"/></svg>Marea</li>
-      <li class="f-wide"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 2l11 11-11 11L2 13z" fill="#ffd84d" stroke="#17130f" stroke-width="2.5" stroke-linejoin="round"/></svg>VÉRTICE</li>
-      <li class="f-round"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="9" cy="13" r="7" fill="#17130f"/><circle cx="17" cy="13" r="7" fill="#1f9d55" fill-opacity=".85"/></svg>Lumen</li>
-      <li class="f-serif"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M4 22V4h4v18zM11 22V10h4v12zM18 22V15h4v7z" fill="#17130f"/></svg>Estudio Tramo</li>
-      <li class="f-mono"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 3a10 10 0 100 20V3z" fill="#ff5a36" stroke="#17130f" stroke-width="2.5" stroke-linejoin="round"/></svg>cobalto</li>
+      <li class="f-serif"><svg viewBox="0 0 26 26" aria-hidden="true"><circle class="hi" cx="13" cy="13" r="10" fill="currentColor"/></svg>Finca Norte</li>
+      <li class="f-mono"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 3l10 18H3z" fill="currentColor"/></svg>orbita.labs</li>
+      <li class="f-black"><svg viewBox="0 0 26 26" aria-hidden="true"><rect class="hi" x="3" y="3" width="20" height="20" rx="4" fill="currentColor"/></svg>kiwipay</li>
+      <li class="f-ital"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M3 18c4-12 8-12 10 0s6 12 10 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>Marea</li>
+      <li class="f-wide"><svg viewBox="0 0 26 26" aria-hidden="true"><path class="hi" d="M13 2l11 11-11 11L2 13z" fill="currentColor"/></svg>Vértice</li>
+      <li class="f-round"><svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="9" cy="13" r="7" fill="currentColor"/><circle class="hi" cx="17" cy="13" r="7" fill="currentColor" fill-opacity=".6"/></svg>Lumen</li>
+      <li class="f-serif"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M4 22V4h4v18zM11 22V10h4v12zM18 22V15h4v7z" fill="currentColor"/></svg>Estudio Tramo</li>
+      <li class="f-mono"><svg viewBox="0 0 26 26" aria-hidden="true"><path class="hi" d="M13 3a10 10 0 100 20V3z" fill="currentColor"/></svg>cobalto</li>
     </ul>
   </section>
 </body>

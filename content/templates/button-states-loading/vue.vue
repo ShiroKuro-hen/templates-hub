@@ -26,16 +26,20 @@ onBeforeUnmount(() => clearTimeout(timer));
 </template>
 
 <style scoped>
-.btn { display: inline-flex; align-items: center; gap: 8px; font: 600 14px system-ui, sans-serif; padding: 9px 16px;
-  border: 2px solid #17130f; border-radius: 10px; background: #ff5a36; color: #17130f; box-shadow: 4px 4px 0 #17130f;
-  cursor: pointer; transition: transform .1s, box-shadow .1s; }
-.btn:hover, .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-.btn:active { background: #ffd84d; }
-.btn:focus-visible { outline: 3px solid #ff5a36; outline-offset: 3px; }
-.btn[aria-busy="true"] { cursor: progress; transform: none; box-shadow: 4px 4px 0 #17130f; background: #ff5a36; }
+.btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 8px 16px;
+  border: 1px solid transparent; border-radius: var(--radius); background: var(--accent); color: var(--accent-ink);
+  cursor: pointer; transition: filter .14s, box-shadow .14s; }
+.btn:hover { filter: brightness(1.1); box-shadow: var(--shadow); }
+.btn:active { filter: brightness(.92); box-shadow: none; }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn[aria-busy="true"] { cursor: progress; filter: none; box-shadow: none; }
+.btn[aria-busy="true"]::after { content: ""; position: absolute; left: 0; bottom: 0; width: 40%; height: 2px;
+  background: linear-gradient(135deg, #22d3ee, #2f5bff); animation: slide 1.1s ease-in-out infinite; }
 .spin { width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
   animation: spin .7s linear infinite; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 @keyframes spin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .spin { animation: none; } }
+@keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .spin, .btn[aria-busy="true"]::after { animation: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

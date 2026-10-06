@@ -3,32 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tarjeta con imagen</title>
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:16px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:16px; }
-  .media { display:flex; flex-direction:column; overflow:hidden; border:2px solid #17130f; border-radius:10px; background:#fffdf8; box-shadow:4px 4px 0 #17130f; }
-  .media svg { display:block; width:100%; height:auto; aspect-ratio:16/9; border-bottom:2px solid #17130f; }
-  .body { display:flex; flex-direction:column; gap:6px; padding:12px 14px 14px; flex:1; }
-  .media h2 { margin:0; font-size:1.05rem; letter-spacing:-.02em; }
-  .meta { display:flex; flex-wrap:wrap; gap:2px 12px; margin:0; font:600 .75rem ui-monospace, monospace; color:#4d453c; }
-  .acts { display:flex; gap:8px; margin-top:auto; padding-top:6px; }
-  button { font:600 .85rem system-ui, sans-serif; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; padding:6px 14px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
-  .main { background:#ff5a36; }
-  button[aria-pressed="true"] { background:#17130f; color:#fffdf8; }
-  button:hover, button:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
-  button:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-  @media (prefers-reduced-motion:no-preference) { button { transition:transform .1s, box-shadow .1s; } }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:16px; max-width:760px; }
+  .media { display:flex; flex-direction:column; overflow:hidden; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); }
+  .media svg { display:block; width:100%; height:auto; aspect-ratio:16/9; border-bottom:1px solid var(--border); color:var(--muted); }
+  .media svg .sky { fill:var(--accent-soft); }
+  .media svg .sun { fill:var(--accent); }
+  .media svg .far { fill:currentColor; opacity:.35; }
+  .media svg .near { fill:currentColor; opacity:.7; }
+  .media svg .tile { fill:var(--surface); stroke:var(--border); }
+  .body { display:flex; flex-direction:column; gap:4px; padding:14px 16px 16px; flex:1; }
+  .media h2 { margin:0; font-size:1rem; font-weight:600; letter-spacing:-.01em; }
+  .meta { display:flex; flex-wrap:wrap; gap:2px 12px; margin:0; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .acts { display:flex; gap:8px; margin-top:auto; padding-top:12px; }
+  button { font:600 13px system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:7px 14px; cursor:pointer; transition:background 140ms, border-color 140ms, filter 140ms; }
+  button:hover { border-color:var(--accent); }
+  .main { color:var(--accent-ink); background:var(--accent); border-color:var(--accent); }
+  .main:hover { filter:brightness(1.08); }
+  button[aria-pressed="true"] { color:var(--accent); background:var(--accent-soft); border-color:var(--accent); }
+  button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  @media (prefers-reduced-motion:reduce) { button { transition:none; } }
 </style>
 </head>
 <body>
 <div class="cards">
   <article class="media" aria-labelledby="t1">
     <svg viewBox="0 0 160 90" aria-hidden="true" focusable="false">
-      <rect width="160" height="90" fill="#ffd84d"/>
-      <circle cx="118" cy="30" r="14" fill="#ff5a36" stroke="#17130f" stroke-width="2"/>
-      <path d="M0 90V62l34-26 30 28 28-18 68 36z" fill="#17130f"/>
-      <path d="M0 90V74l30-14 34 16 40-12 56 26z" fill="#1f9d55" stroke="#17130f" stroke-width="2"/>
+      <rect class="sky" width="160" height="90"/>
+      <circle class="sun" cx="118" cy="30" r="12"/>
+      <path class="far" d="M0 90V62l34-26 30 28 28-18 68 36z"/>
+      <path class="near" d="M0 90V74l30-14 34 16 40-12 56 26z"/>
     </svg>
     <div class="body">
       <h2 id="t1">Cinco rutas para un fin de semana</h2>
@@ -41,9 +50,9 @@
   </article>
   <article class="media" aria-labelledby="t2">
     <svg viewBox="0 0 160 90" aria-hidden="true" focusable="false">
-      <rect width="160" height="90" fill="#cfd8ff"/>
-      <g fill="#fffdf8" stroke="#17130f" stroke-width="2"><rect x="20" y="22" width="50" height="46" rx="6"/><rect x="82" y="22" width="58" height="20" rx="6"/><rect x="82" y="48" width="58" height="20" rx="6"/></g>
-      <circle cx="45" cy="45" r="10" fill="#3b5bfd" stroke="#17130f" stroke-width="2"/>
+      <rect class="sky" width="160" height="90"/>
+      <g class="tile"><rect x="20" y="22" width="50" height="46" rx="6"/><rect x="82" y="22" width="58" height="20" rx="6"/><rect x="82" y="48" width="58" height="20" rx="6"/></g>
+      <circle class="sun" cx="45" cy="45" r="10"/>
     </svg>
     <div class="body">
       <h2 id="t2">Guía rápida de tu primer panel</h2>

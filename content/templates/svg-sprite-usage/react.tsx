@@ -36,11 +36,11 @@ export function Demo() {
   return (
     <>
       <Sprite />
-      <div style={{ color: '#ff5a36' }}>
+      <div style={{ color: 'var(--accent)' }}>
         <Icon name="heart" size={32} label="Favorito" />
         <Icon name="bell" />
       </div>
     </>
   );
 }
-// CSS: copia la regla .i (fill:none; stroke:currentColor; stroke-width:2; ...) y .tile de la pestaña HTML + CSS.
+// CSS: copia la regla .i (fill:none; stroke:currentColor; stroke-width:2; ...), .tile y los tokens de la pestaña HTML + CSS.

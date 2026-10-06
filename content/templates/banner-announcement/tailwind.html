@@ -1,14 +1,14 @@
 <section id="banner" aria-label="Anuncio"
-         class="grid grid-rows-[1fr] border-b-2 border-[#17130f] bg-[#ffd84d] font-sans text-sm text-[#17130f] transition-[grid-template-rows] duration-200 motion-reduce:transition-none [&.off]:grid-rows-[0fr] [&.off]:border-b-0">
+         class="grid grid-rows-[1fr] border-b border-slate-200 bg-blue-50 text-sm text-slate-900 transition-[grid-template-rows] duration-150 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 [&.off]:grid-rows-[0fr] [&.off]:border-b-0">
   <div class="min-h-0 overflow-hidden [.off_&]:invisible">
-    <div class="flex items-center gap-2.5 px-3 py-2">
+    <div class="flex items-center gap-3 bg-gradient-to-r from-cyan-400 to-blue-600 bg-[length:100%_2px] bg-bottom bg-no-repeat px-4 pt-2.5 pb-3">
       <p class="m-0 flex-1">
-        <span class="mr-1.5 rounded-md bg-[#17130f] px-1.5 py-0.5 font-mono text-xs font-bold text-[#ffd84d]">Nuevo</span>
+        <span class="mr-2 inline-block rounded-full bg-blue-600 px-2.5 py-px text-xs font-semibold text-white dark:bg-blue-500">Nuevo</span>
         Ya puedes exportar tus informes a PDF.
-        <a href="#novedades" class="whitespace-nowrap font-bold underline underline-offset-4 focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Ver novedades</a>
+        <a href="#novedades" class="whitespace-nowrap font-semibold text-blue-600 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-blue-400">Ver novedades</a>
       </p>
       <button type="button" id="close" aria-label="Cerrar anuncio"
-              class="h-[30px] w-[30px] flex-none rounded-lg border-2 border-transparent text-xl leading-none hover:border-[#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">×</button>
+              class="h-[30px] w-[30px] flex-none rounded-lg text-xl leading-none text-slate-500 hover:bg-white hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-slate-100">×</button>
     </div>
   </div>
 </section>

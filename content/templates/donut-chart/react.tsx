@@ -3,11 +3,11 @@ import { useState } from 'react';
 type Slice = { label: string; value: number; color: string };
 
 const DATA: Slice[] = [
-  { label: 'Directo', value: 38, color: '#ff5a36' },
-  { label: 'Orgánico', value: 27, color: '#17130f' },
-  { label: 'Referidos', value: 18, color: '#ffd84d' },
-  { label: 'Social', value: 12, color: '#3b5bfd' },
-  { label: 'Otros', value: 5, color: '#1f9d55' },
+  { label: 'Directo', value: 38, color: 'var(--accent)' },
+  { label: 'Orgánico', value: 27, color: 'var(--info)' },
+  { label: 'Referidos', value: 18, color: 'var(--ok)' },
+  { label: 'Social', value: 12, color: 'var(--warn)' },
+  { label: 'Otros', value: 5, color: 'var(--err)' },
 ];
 const R = 100 / (2 * Math.PI); // circunferencia = 100 → dasharray en porcentajes
 const GAP = 0.8;
@@ -32,7 +32,7 @@ export function DonutChart({ data = DATA, title = 'Visitas por canal', total = '
         <svg viewBox="0 0 42 42" role="img" aria-label={`Gráfico de donut: ${title}`}>
           {segs.map((s, i) => (
             <circle key={data[i].label} className={`seg${active === i ? ' on' : ''}`} cx="21" cy="21" r={R}
-              stroke={data[i].color} strokeDasharray={`${s.len} ${100 - s.len}`} strokeDashoffset={s.offset}
+              style={{ stroke: data[i].color }} strokeDasharray={`${s.len} ${100 - s.len}`} strokeDashoffset={s.offset}
               onMouseEnter={() => setActive(i)} onMouseLeave={() => setActive(null)} />
           ))}
         </svg>

@@ -38,17 +38,23 @@ function clear() { value.value = ''; input.value?.focus(); }
 </template>
 
 <style scoped>
-.box { position: relative; margin-right: 4px; }
-.box > svg { position: absolute; left: 12px; top: 50%; width: 20px; height: 20px; transform: translateY(-50%); fill: none; stroke: #17130f; stroke-width: 2; stroke-linecap: round; pointer-events: none; }
-input { width: 100%; height: 44px; padding: 0 44px 0 40px; font: inherit; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; appearance: none; }
+.box { position: relative; }
+.box::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px; border-radius: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); opacity: 0; transition: opacity .14s; pointer-events: none; }
+.box:focus-within::after { opacity: 1; }
+.box > svg { position: absolute; left: 12px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+input { width: 100%; height: 42px; padding: 0 44px 0 40px; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); appearance: none; }
 input::-webkit-search-cancel-button { display: none; }
-input:focus-visible, .clear:focus-visible, ul:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-.clear { position: absolute; right: 6px; top: 50%; display: grid; place-items: center; width: 30px; height: 30px; padding: 0; transform: translateY(-50%); background: #ffd84d; border: 2px solid #17130f; border-radius: 8px; cursor: pointer; }
-.clear svg { width: 14px; height: 14px; fill: none; stroke: #17130f; stroke-width: 3; stroke-linecap: round; }
-#n { margin: 8px 0; font: 12px ui-monospace, monospace; color: #6b6258; }
-ul { margin: 0; padding: 0; max-height: 220px; overflow: auto; list-style: none; border-top: 2px solid #17130f; }
-li { display: flex; justify-content: space-between; gap: 8px; padding: 7px 2px; border-bottom: 1px solid #d9d0bd; }
-li span { color: #6b6258; font-size: 13px; }
-:deep(mark) { color: inherit; background: #ffd84d; border-radius: 3px; }
-.empty { padding: 12px 2px; color: #6b6258; }
+input::placeholder { color: var(--muted); }
+input:focus-visible, .clear:focus-visible, ul:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.clear { position: absolute; right: 6px; top: 50%; display: grid; place-items: center; width: 28px; height: 28px; padding: 0; transform: translateY(-50%); color: var(--muted); background: var(--accent-soft); border: 0; border-radius: var(--radius); cursor: pointer; }
+.clear svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; }
+#n { margin: 8px 0; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+ul { margin: 0; padding: 0; max-height: 220px; overflow: auto; list-style: none; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+li { display: flex; justify-content: space-between; gap: 8px; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+li:last-child { border-bottom: 0; }
+li span { color: var(--muted); font-size: 13px; }
+:deep(mark) { color: var(--accent); background: var(--accent-soft); font-weight: 600; border-radius: 3px; }
+.empty { display: block; padding: 16px 14px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

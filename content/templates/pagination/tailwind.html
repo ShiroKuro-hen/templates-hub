@@ -1,22 +1,26 @@
-<div class="p-5 text-sm">
-  <p id="status" aria-live="polite" class="mb-4 font-mono text-[13px] text-[#6b6258]"></p>
+<div class="p-5 text-sm text-slate-900 dark:text-slate-100">
+  <p id="status" aria-live="polite" class="mb-4 text-center tabular-nums text-slate-500 dark:text-slate-400"></p>
   <nav aria-label="Paginación" class="flex items-center justify-center gap-0.5 sm:gap-2">
-    <button id="prev" type="button" aria-label="Página anterior" class="pg">← <span class="max-sm:hidden">Anterior</span></button>
-    <ul id="pages" class="m-0 flex list-none items-center gap-1 p-0 sm:gap-1.5"></ul>
-    <button id="next" type="button" aria-label="Página siguiente" class="pg"><span class="max-sm:hidden">Siguiente</span> →</button>
+    <button id="prev" type="button" aria-label="Página anterior">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M15 6l-6 6 6 6"/></svg><span class="max-sm:hidden">Anterior</span>
+    </button>
+    <ul id="pages" class="m-0 flex list-none items-center gap-0.5 p-0 sm:gap-1"></ul>
+    <button id="next" type="button" aria-label="Página siguiente">
+      <span class="max-sm:hidden">Siguiente</span><svg viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
   </nav>
 </div>
 
 <script>
   // Clases Tailwind repetidas (cópialas a @apply .pg si prefieres)
-  const BTN = 'h-9 min-w-[30px] rounded-[10px] border-2 border-[#17130f] px-1 font-bold shadow-[3px_3px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] sm:h-10 sm:min-w-10 sm:px-3 sm:shadow-[4px_4px_0_#17130f]';
-  const OFF = 'bg-[#fffdf8] hover:translate-x-0.5 hover:translate-y-0.5 hover:bg-[#ffd84d] hover:shadow-[2px_2px_0_#17130f]';
-  const ON = 'bg-[#17130f] text-[#fffdf8]';
+  const BTN = 'inline-flex h-9 min-w-[30px] items-center justify-center gap-1 rounded-lg border px-1 font-medium tabular-nums transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 sm:min-w-9 sm:px-3';
+  const OFF = 'border-slate-200 bg-white text-slate-900 shadow-sm hover:border-blue-600 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-blue-500 dark:hover:text-blue-500';
+  const ON = 'border-blue-600 bg-blue-600 text-white dark:border-blue-500 dark:bg-blue-500';
   const TOTAL = 12, PER = 10, COUNT = 120;
   let page = 4;
   const ul = document.getElementById('pages'), prev = document.getElementById('prev'),
         next = document.getElementById('next'), status = document.getElementById('status');
-  [prev, next].forEach((b) => (b.className = `${BTN} ${OFF} aria-disabled:cursor-not-allowed aria-disabled:opacity-[.45] aria-disabled:shadow-none aria-disabled:hover:translate-x-0 aria-disabled:hover:translate-y-0 aria-disabled:hover:bg-[#fffdf8]`));
+  [prev, next].forEach((b) => (b.className = `${BTN} ${OFF} aria-disabled:cursor-not-allowed aria-disabled:opacity-45`));
 
   function pageList(p, total) {
     const nums = [...new Set([1, p - 1, p, p + 1, total])].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
@@ -30,7 +34,7 @@
   }
   function render(focusCurrent) {
     ul.innerHTML = pageList(page, TOTAL).map((n) => n === '…'
-      ? '<li aria-hidden="true" class="min-w-3.5 text-center text-[#6b6258] sm:min-w-5">…</li>'
+      ? '<li aria-hidden="true" class="min-w-3.5 text-center text-slate-500 sm:min-w-5 dark:text-slate-400">…</li>'
       : `<li><button type="button" data-p="${n}" aria-label="Página ${n}"${n === page ? ' aria-current="page"' : ''} class="${BTN} ${n === page ? ON : OFF}">${n}</button></li>`).join('');
     prev.setAttribute('aria-disabled', page === 1);
     next.setAttribute('aria-disabled', page === TOTAL);

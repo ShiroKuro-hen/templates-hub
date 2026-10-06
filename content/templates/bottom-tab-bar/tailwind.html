@@ -1,0 +1,32 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mx-auto flex h-[440px] max-w-[380px] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <main class="flex-1 p-5">
+      <h1 id="title" class="text-lg font-semibold">Inicio</h1>
+      <p class="mt-1 text-slate-500 dark:text-slate-400">Tus pedidos recientes y novedades aparecen aquí.</p>
+    </main>
+    <nav aria-label="Principal">
+      <ul id="tabs" class="grid grid-cols-5 border-t border-slate-200 px-1 pb-[env(safe-area-inset-bottom)] dark:border-slate-700
+        [&_a]:relative [&_a]:flex [&_a]:min-h-14 [&_a]:flex-col [&_a]:items-center [&_a]:gap-0.5 [&_a]:px-0.5 [&_a]:pb-1.5 [&_a]:pt-2 [&_a]:text-[11px] [&_a]:font-medium [&_a]:text-slate-500 [&_a]:transition-colors dark:[&_a]:text-slate-400
+        [&_a:hover]:text-slate-900 dark:[&_a:hover]:text-slate-100 [&_a:focus-visible]:rounded-md [&_a:focus-visible]:outline-2 [&_a:focus-visible]:-outline-offset-2 [&_a:focus-visible]:outline-blue-500
+        [&_[aria-current=page]]:font-semibold [&_[aria-current=page]]:!text-blue-600 dark:[&_[aria-current=page]]:!text-blue-400
+        [&_[aria-current=page]]:before:absolute [&_[aria-current=page]]:before:inset-x-[30%] [&_[aria-current=page]]:before:-top-px [&_[aria-current=page]]:before:h-0.5 [&_[aria-current=page]]:before:rounded-b-full [&_[aria-current=page]]:before:bg-gradient-to-br [&_[aria-current=page]]:before:from-cyan-400 [&_[aria-current=page]]:before:to-blue-600 [&_[aria-current=page]]:before:content-['']">
+        <li><a href="#" aria-current="page"><span class="relative grid size-6 place-items-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5V21h-6v-6H9v6H3z"/></svg></span>Inicio</a></li>
+        <li><a href="#"><span class="relative grid size-6 place-items-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span>Buscar</a></li>
+        <li><a href="#"><span class="relative grid size-6 place-items-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10"/></svg></span>Pedidos</a></li>
+        <li><a href="#"><span class="relative grid size-6 place-items-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>
+          <span aria-hidden="true" class="absolute -top-1 left-3.5 h-4 min-w-4 rounded-full bg-red-600 px-1 text-center text-[10px] font-bold leading-4 tabular-nums text-white ring-2 ring-white dark:ring-slate-900">3</span></span>Mensajes<span class="sr-only">, 3 sin leer</span></a></li>
+        <li><a href="#"><span class="relative grid size-6 place-items-center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span>Perfil</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<script>
+  // Demo: en una app real cada enlace navega a su ruta y el servidor marca aria-current.
+  document.getElementById('tabs').addEventListener('click', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    e.preventDefault();
+    document.querySelectorAll('#tabs a').forEach((t) => t.removeAttribute('aria-current'));
+    a.setAttribute('aria-current', 'page');
+    document.getElementById('title').textContent = a.firstChild.nextSibling.textContent;
+  });
+</script>

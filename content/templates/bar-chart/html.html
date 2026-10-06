@@ -4,24 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body { margin:0; padding:20px; font:13px system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  .chart { display:flex; align-items:flex-end; gap:14px; height:240px; padding:0 8px; border-bottom:2px solid #17130f;
-           background:repeating-linear-gradient(to top, transparent 0 59px, #17130f1a 59px 60px); }
-  .bar { flex:1; height:calc(var(--v) * 1%); background:#17130f; border:2px solid #17130f; border-radius:6px 6px 0 0; position:relative; }
-  .bar.max { background:#ff5a36; }
-  .bar b { position:absolute; top:-22px; left:0; right:0; text-align:center; }
-  .labels { display:flex; gap:14px; padding:6px 8px 0; }
-  .labels span { flex:1; text-align:center; font-weight:600; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  figure{margin:0;padding:20px 20px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .chart{display:flex;align-items:flex-end;gap:16px;height:220px;padding:24px 8px 0;border-bottom:1px solid var(--border);
+         background:repeating-linear-gradient(to top,transparent 0 51px,var(--border) 51px 52px)}
+  .bar{flex:1;height:calc(var(--v) * 1%);background:var(--accent-soft);border:1px solid var(--accent);border-bottom:0;border-radius:4px 4px 0 0;position:relative;transition:filter .14s}
+  .bar:hover{filter:brightness(.96)}
+  .bar.max{background:linear-gradient(135deg,#22d3ee,#2f5bff);border-color:transparent}
+  .bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+  .labels{display:flex;gap:16px;padding:8px 8px 0;color:var(--muted)}
+  .labels span{flex:1;text-align:center}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-  <div class="chart">
+<figure>
+  <div class="chart" role="img" aria-label="Ventas por mes: Ene 40, Feb 65, Mar 92, Abr 55, May 78">
     <div class="bar" style="--v:40"><b>40</b></div>
     <div class="bar" style="--v:65"><b>65</b></div>
     <div class="bar max" style="--v:92"><b>92</b></div>
     <div class="bar" style="--v:55"><b>55</b></div>
     <div class="bar" style="--v:78"><b>78</b></div>
   </div>
-  <div class="labels"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span></div>
+  <div class="labels" aria-hidden="true"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span></div>
+</figure>
 </body>
 </html>

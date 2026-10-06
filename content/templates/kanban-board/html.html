@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .board{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .col{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:12px}
+  .col h2{display:flex;align-items:center;gap:8px;margin:0 0 12px;padding-bottom:10px;font-size:14px;border-bottom:1px solid var(--border)}
+  .col[data-i="1"] h2{border-image:linear-gradient(90deg,#22d3ee,#2f5bff) 1}
+  .n{margin-left:auto;padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-variant-numeric:tabular-nums}
+  ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .card{padding:10px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .card p{margin:0 0 8px;font-weight:500}
+  .row{display:flex;align-items:center;gap:6px}
+  .tag{padding:1px 8px;border-radius:999px;font-size:12px;background:var(--info-soft);color:var(--info)}
+  .tag.bug{background:var(--err-soft)}
+  .row button{width:28px;height:28px;display:grid;place-items:center;padding:0;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);cursor:pointer;transition:border-color .14s,color .14s}
+  .row button:first-of-type{margin-left:auto}
+  .row button:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
+  .row button:disabled{opacity:.35;cursor:not-allowed}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .empty{padding:16px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:var(--radius)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="board" id="board"></div>
+<p class="sr" role="status" id="live"></p>
+<script>
+  const COLS = ['Por hacer', 'En curso', 'Hecho'];
+  const cards = [
+    { id: 1, t: 'Revisar contrato de Atlas', tag: 'Legal', c: 0 },
+    { id: 2, t: 'Corregir error de login', tag: 'Bug', c: 0 },
+    { id: 3, t: 'Diseñar panel de informes', tag: 'Diseño', c: 1 },
+    { id: 4, t: 'Migrar base de datos', tag: 'Infra', c: 2 },
+  ];
+  const icon = (d) => `<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+  const board = document.getElementById('board'), live = document.getElementById('live');
+  const esc = (s) => s.replace(/[&<>"]/g, (m) => `&#${m.charCodeAt(0)};`);
+  function render() {
+    board.innerHTML = COLS.map((name, i) => {
+      const list = cards.filter((k) => k.c === i);
+      return `<section class="col" data-i="${i}" aria-labelledby="h${i}">
+        <h2 id="h${i}">${name}<span class="n" aria-label="${list.length} tarjetas">${list.length}</span></h2>
+        <ul>${list.map((k) => `<li class="card"><p>${esc(k.t)}</p><div class="row">
+          <span class="tag${k.tag === 'Bug' ? ' bug' : ''}">${k.tag}</span>
+          <button type="button" data-id="${k.id}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Mover ${esc(k.t)} a ${COLS[i - 1] || ''}">${icon('M10 3 5 8l5 5')}</button>
+          <button type="button" data-id="${k.id}" data-d="1" ${i === 2 ? 'disabled' : ''} aria-label="Mover ${esc(k.t)} a ${COLS[i + 1] || ''}">${icon('M6 3l5 5-5 5')}</button>
+        </div></li>`).join('') || '<li class="empty">Sin tarjetas. Mueve una aquí.</li>'}</ul></section>`;
+    }).join('');
+  }
+  board.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-id]'); if (!b) return;
+    const k = cards.find((x) => x.id === +b.dataset.id), d = +b.dataset.d;
+    k.c += d; render();
+    live.textContent = `${k.t} movida a ${COLS[k.c]}.`;
+    const next = board.querySelector(`button[data-id="${k.id}"][data-d="${d}"]:not(:disabled)`) ||
+                 board.querySelector(`button[data-id="${k.id}"]:not(:disabled)`);
+    next.focus();
+  });
+  render();
+</script>
+</body>
+</html>

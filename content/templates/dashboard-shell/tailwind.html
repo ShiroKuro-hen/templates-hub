@@ -1,0 +1,57 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="grid min-h-[calc(100vh-40px)] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm md:grid-cols-[220px_1fr] dark:border-slate-700 dark:bg-slate-900">
+    <nav aria-label="Principal" class="flex items-center gap-5 overflow-x-auto border-b border-slate-200 px-3 py-2.5 md:flex-col md:items-stretch md:border-b-0 md:border-r md:py-4 dark:border-slate-700">
+      <div class="flex items-center gap-2.5 px-2 text-base font-bold"><span aria-hidden="true" class="size-[26px] flex-none rounded-md bg-gradient-to-br from-cyan-400 to-blue-600"></span>Nimbo</div>
+      <ul class="flex gap-0.5 md:grid [&_a]:flex [&_a]:items-center [&_a]:gap-2.5 [&_a]:whitespace-nowrap [&_a]:rounded-md [&_a]:p-2 [&_a]:font-medium [&_a]:text-slate-500 [&_a:hover]:bg-slate-50 [&_a:hover]:text-slate-900 dark:[&_a]:text-slate-400 dark:[&_a:hover]:bg-slate-800 dark:[&_a:hover]:text-slate-100 [&_a[aria-current]]:bg-blue-50 [&_a[aria-current]]:text-blue-600 dark:[&_a[aria-current]]:bg-blue-500/15 dark:[&_a[aria-current]]:text-blue-400 [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-blue-600">
+        <li><a href="#" aria-current="page"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>Resumen</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>Proyectos</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Informes</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>Equipo</a></li>
+        <li><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Ajustes</a></li>
+      </ul>
+    </nav>
+    <div class="flex min-w-0 flex-col">
+      <header class="flex items-center gap-3 border-b border-slate-200 px-4 py-3 md:px-6 dark:border-slate-700">
+        <div role="search" class="relative max-w-[420px] flex-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          <input id="q" type="search" placeholder="Buscar clientes o pedidos" aria-label="Buscar clientes o pedidos" class="w-full rounded-lg border border-slate-200 bg-slate-50 py-1.5 pl-8 pr-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-950">
+        </div>
+        <button type="button" aria-label="Notificaciones, 3 sin leer" class="ml-auto grid size-[34px] flex-none place-items-center rounded-lg border border-slate-200 text-slate-500 dark:border-slate-700"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></svg></button>
+        <button type="button" aria-label="Cuenta de Laura Méndez" class="size-[34px] flex-none rounded-full bg-blue-50 text-[13px] font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">LM</button>
+      </header>
+      <main class="grid gap-6 p-4 md:p-6">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div><h1 class="text-[22px] font-bold leading-tight">Resumen</h1><p class="mt-0.5 text-slate-500 dark:text-slate-400">Datos de los últimos 30 días.</p></div>
+          <button type="button" class="rounded-lg bg-blue-600 px-3.5 py-2 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:text-slate-950">Nuevo proyecto</button>
+        </div>
+        <dl class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-3 [&>div]:rounded-lg [&>div]:border [&>div]:border-slate-200 [&>div]:p-4 dark:[&>div]:border-slate-700 [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400 [&_dd]:mt-1 [&_dd]:flex [&_dd]:flex-wrap [&_dd]:items-baseline [&_dd]:gap-2 [&_strong]:text-2xl [&_strong]:font-semibold [&_strong]:tabular-nums">
+          <div><dt>Ingresos mensuales</dt><dd><strong>48 250 €</strong><span class="rounded-full bg-emerald-50 px-2 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">+12,4 %</span></dd></div>
+          <div><dt>Usuarios activos</dt><dd><strong>3 812</strong><span class="rounded-full bg-emerald-50 px-2 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">+5,1 %</span></dd></div>
+          <div><dt>Conversión</dt><dd><strong>4,7 %</strong><span class="rounded-full bg-red-50 px-2 text-xs font-semibold text-red-700 dark:bg-red-950 dark:text-red-400">−0,3 %</span></dd></div>
+          <div><dt>Incidencias abiertas</dt><dd><strong>17</strong><span class="rounded-full bg-emerald-50 px-2 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">−6</span></dd></div>
+        </dl>
+        <section aria-labelledby="recent" class="overflow-auto rounded-lg border border-slate-200 dark:border-slate-700">
+          <h2 id="recent" class="border-b border-slate-200 px-4 py-3.5 text-[15px] font-bold dark:border-slate-700">Actividad reciente</h2>
+          <table class="w-full whitespace-nowrap [&_td]:border-b [&_td]:border-slate-200 [&_td]:px-4 [&_td]:py-2.5 [&_th]:border-b [&_th]:border-slate-200 [&_th]:px-4 [&_th]:py-2.5 [&_th]:text-left [&_th]:font-semibold [&_th]:text-slate-500 dark:[&_td]:border-slate-700 dark:[&_th]:border-slate-700 [&_tr:last-child_td]:border-0">
+            <thead><tr><th scope="col">Cliente</th><th scope="col">Pedido</th><th scope="col">Estado</th><th scope="col" class="!text-right">Importe</th></tr></thead>
+            <tbody id="rows" class="[&_span]:rounded-full [&_span]:px-2 [&_span]:py-0.5 [&_span]:text-xs [&_span]:font-semibold">
+              <tr><td>Altamira Logística</td><td>#10482</td><td><span class="bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">Pagado</span></td><td class="text-right tabular-nums">1 240,00 €</td></tr>
+              <tr><td>Grupo Sendero</td><td>#10481</td><td><span class="bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400">Pendiente</span></td><td class="text-right tabular-nums">890,50 €</td></tr>
+              <tr><td>Estudio Faro</td><td>#10479</td><td><span class="bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-400">En revisión</span></td><td class="text-right tabular-nums">2 310,00 €</td></tr>
+              <tr><td>Clínica Ribera</td><td>#10475</td><td><span class="bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">Pagado</span></td><td class="text-right tabular-nums">460,00 €</td></tr>
+              <tr class="empty" hidden><td colspan="4" class="!py-6 text-center text-slate-500">No hay resultados. Prueba con otro nombre o número de pedido.</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+</div>
+<script>
+  const rows = [...document.querySelectorAll('#rows tr:not(.empty)')], empty = document.querySelector('.empty');
+  document.getElementById('q').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    rows.forEach((r) => (r.hidden = !r.textContent.toLowerCase().includes(q)));
+    empty.hidden = rows.some((r) => !r.hidden);
+  });
+</script>

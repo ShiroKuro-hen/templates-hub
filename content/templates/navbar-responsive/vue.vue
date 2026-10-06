@@ -3,7 +3,7 @@ import { onMounted, onUnmounted, ref } from 'vue';
 
 type NavLink = { label: string; href: string };
 withDefaults(defineProps<{ brand?: string; links?: NavLink[]; cta?: NavLink }>(), {
-  brand: 'Tinta&Co',
+  brand: 'Nexo',
   links: () => [
     { label: 'Inicio', href: '#inicio' },
     { label: 'Productos', href: '#productos' },
@@ -44,30 +44,33 @@ onUnmounted(() => removeEventListener('keydown', onKey));
 </template>
 
 <style scoped>
-.nav { position:relative; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; font:14px/1.5 system-ui, sans-serif; color:#17130f; }
+.nav { position:relative; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:8px 14px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); }
 a, button { font:inherit; color:inherit; }
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-.brand { font-weight:800; font-size:1.15rem; letter-spacing:-.02em; text-decoration:none; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.brand { font-weight:700; font-size:1.1rem; letter-spacing:-.01em; text-decoration:none; }
 .menu { display:flex; align-items:center; gap:14px; }
 .menu ul { display:flex; gap:4px; margin:0; padding:0; list-style:none; }
-.menu a:not(.btn) { display:block; padding:6px 10px; border-radius:8px; font-weight:600; text-decoration:none; }
-.menu a:not([aria-current]):not(.btn):hover { background:#ffd84d; }
-.menu a[aria-current] { background:#17130f; color:#fffdf8; }
-.btn { padding:8px 14px; border:2px solid #17130f; border-radius:10px; background:#ff5a36; font-weight:700; text-decoration:none; box-shadow:2px 2px 0 #17130f; }
-.burger { display:none; position:relative; width:44px; height:44px; border:2px solid #17130f; border-radius:10px; background:#ffd84d; cursor:pointer; }
-.burger span, .burger span::before, .burger span::after { position:absolute; left:0; right:0; height:2px; background:#17130f; content:""; transition:transform .2s; }
-.burger span { top:50%; left:9px; right:9px; margin-top:-1px; }
-.burger span::before { transform:translateY(-7px); }
-.burger span::after { transform:translateY(7px); }
+.menu a:not(.btn) { position:relative; display:block; padding:6px 10px; border-radius:var(--radius); color:var(--muted); font-weight:500; text-decoration:none; transition:background .14s, color .14s; }
+.menu a:not([aria-current]):not(.btn):hover { color:var(--text); background:var(--bg); }
+.menu a[aria-current] { color:var(--accent); background:var(--accent-soft); }
+.menu a[aria-current]::after { content:""; position:absolute; left:10px; right:10px; bottom:2px; height:2px; border-radius:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+.btn { padding:7px 14px; border-radius:var(--radius); background:var(--accent); color:var(--accent-ink); font-weight:600; text-decoration:none; transition:filter .14s; }
+.btn:hover { filter:brightness(1.1); }
+.burger { display:none; position:relative; width:40px; height:40px; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); cursor:pointer; }
+.burger span, .burger span::before, .burger span::after { position:absolute; left:0; right:0; height:2px; border-radius:2px; background:var(--text); content:""; transition:transform .14s; }
+.burger span { top:50%; left:11px; right:11px; margin-top:-1px; }
+.burger span::before { transform:translateY(-6px); }
+.burger span::after { transform:translateY(6px); }
 .burger[aria-expanded="true"] span { background:transparent; }
 .burger[aria-expanded="true"] span::before { transform:rotate(45deg); }
 .burger[aria-expanded="true"] span::after { transform:rotate(-45deg); }
 @media (max-width:560px) {
   .burger { display:block; }
-  .menu { display:none; position:absolute; top:calc(100% + 8px); left:0; right:0; z-index:2; flex-direction:column; align-items:stretch; padding:10px; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+  .menu { display:none; position:absolute; top:calc(100% + 8px); left:0; right:0; z-index:2; flex-direction:column; align-items:stretch; padding:10px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
   .menu.open { display:flex; }
   .menu ul { flex-direction:column; }
   .btn { text-align:center; }
 }
 @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

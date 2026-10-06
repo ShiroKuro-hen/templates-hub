@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  form{max-width:400px;margin:0 auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  fieldset{margin:0;padding:0;border:0}
+  legend{padding:0;font-size:16px;font-weight:600}
+  .hint{margin:4px 0 16px;color:var(--muted)}
+  .otp{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .otp input{width:100%;min-width:0;aspect-ratio:1/1.15;box-sizing:border-box;padding:0;text-align:center;font:600 20px/1 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,background .14s}
+  .otp input:not(:placeholder-shown){border-color:var(--accent);background:var(--accent-soft)}
+  .otp input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .bar{height:2px;margin-top:12px;border-radius:999px;background:var(--border);overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(135deg,#22d3ee,#2f5bff);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .16s}
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;flex-wrap:wrap}
+  button{font:inherit;font-weight:600;padding:8px 16px;border-radius:var(--radius);cursor:pointer;transition:opacity .14s}
+  button[type=submit]{color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent)}
+  button[type=submit]:disabled{opacity:.45;cursor:not-allowed}
+  .ghost{color:var(--accent);background:none;border:1px solid transparent}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  #status{margin:12px 0 0;color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form id="form" novalidate>
+  <fieldset>
+    <legend>Introduce el código de verificación</legend>
+    <p class="hint" id="hint">Lo enviamos por SMS al +51 ••• ••• 482.</p>
+    <div class="otp" id="otp" aria-describedby="hint">
+      <input inputmode="numeric" autocomplete="one-time-code" placeholder=" " aria-label="Dígito 1 de 6">
+      <input inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Dígito 2 de 6">
+      <input inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Dígito 3 de 6">
+      <input inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Dígito 4 de 6">
+      <input inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Dígito 5 de 6">
+      <input inputmode="numeric" autocomplete="off" placeholder=" " aria-label="Dígito 6 de 6">
+    </div>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  </fieldset>
+  <div class="actions">
+    <button type="button" class="ghost">Reenviar código</button>
+    <button type="submit" id="go" disabled>Verificar código</button>
+  </div>
+  <p id="status" role="status"></p>
+</form>
+<script>
+  const boxes = [...document.querySelectorAll('#otp input')];
+  const bar = document.getElementById('bar'), go = document.getElementById('go'), status = document.getElementById('status');
+  const code = () => boxes.map((b) => b.value).join('');
+
+  function sync() {
+    const n = code().length;
+    bar.style.setProperty('--p', n / 6);
+    go.disabled = n < 6;
+  }
+  function fill(i, digits) {
+    [...digits.slice(0, 6 - i)].forEach((d, j) => (boxes[i + j].value = d));
+    boxes[Math.min(i + digits.length, 5)].focus();
+    sync();
+  }
+  boxes.forEach((b, i) => {
+    b.addEventListener('input', () => {
+      const d = b.value.replace(/\D/g, '');
+      if (d.length > 1) return fill(i, d); // autocompletado del SO
+      b.value = d;
+      if (d && i < 5) boxes[i + 1].focus();
+      sync();
+    });
+    b.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !b.value && i > 0) { e.preventDefault(); boxes[i - 1].value = ''; boxes[i - 1].focus(); sync(); }
+      if (e.key === 'ArrowLeft' && i > 0) { e.preventDefault(); boxes[i - 1].focus(); }
+      if (e.key === 'ArrowRight' && i < 5) { e.preventDefault(); boxes[i + 1].focus(); }
+    });
+    b.addEventListener('paste', (e) => {
+      e.preventDefault();
+      fill(i, e.clipboardData.getData('text').replace(/\D/g, ''));
+    });
+    b.addEventListener('focus', () => b.select());
+  });
+  document.getElementById('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    status.textContent = `Código ${code()} enviado. Verificando…`;
+  });
+</script>
+</body>
+</html>

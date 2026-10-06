@@ -1,0 +1,38 @@
+<section aria-labelledby="nl-title" class="grid max-w-4xl grid-cols-[repeat(auto-fit,minmax(240px,1fr))] items-center gap-x-8 gap-y-5 rounded-lg border border-slate-200 bg-white p-7 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <div>
+    <h2 id="nl-title" class="text-[22px] font-semibold leading-tight">Recibe las novedades del producto</h2>
+    <p class="mt-1.5 max-w-prose text-slate-500 dark:text-slate-400">Un correo al mes con lanzamientos, guías y cambios importantes. Te das de baja con un clic.</p>
+  </div>
+  <div>
+    <form id="nl" novalidate>
+      <label for="nl-email" class="mb-1.5 block font-medium">Correo de trabajo</label>
+      <div class="flex flex-wrap gap-2">
+        <input id="nl-email" type="email" name="email" autocomplete="email" placeholder="nombre@empresa.com" required pattern=".+@.+\..+" aria-describedby="nl-err nl-note"
+               class="min-w-0 flex-[1_1_200px] rounded-lg border border-slate-200 bg-transparent px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-[invalid=true]:border-red-600 dark:border-slate-700 dark:aria-[invalid=true]:border-red-400">
+        <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-blue-400 dark:text-slate-950">Suscribirme</button>
+      </div>
+      <p id="nl-err" hidden class="mt-1.5 text-[13px] text-red-600 dark:text-red-400"></p>
+      <p id="nl-note" class="mt-2 text-[13px] text-slate-500 dark:text-slate-400">Usamos tu correo solo para este boletín.</p>
+    </form>
+    <p id="nl-ok" role="status" tabindex="-1" class="flex items-start gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500
+       [&:not(:empty)]:before:grid [&:not(:empty)]:before:h-8 [&:not(:empty)]:before:w-8 [&:not(:empty)]:before:flex-none [&:not(:empty)]:before:place-items-center [&:not(:empty)]:before:rounded-full [&:not(:empty)]:before:bg-gradient-to-br [&:not(:empty)]:before:from-cyan-400 [&:not(:empty)]:before:to-blue-600 [&:not(:empty)]:before:font-bold [&:not(:empty)]:before:text-white [&:not(:empty)]:before:content-['✓']"></p>
+  </div>
+</section>
+<script>
+  const form = document.getElementById('nl'), email = document.getElementById('nl-email'),
+        err = document.getElementById('nl-err'), ok = document.getElementById('nl-ok');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = email.validity;
+    const msg = v.valueMissing ? 'Escribe tu correo para suscribirte.'
+      : v.typeMismatch || v.patternMismatch ? 'Revisa el correo: necesita @ y un dominio, por ejemplo ana@empresa.com.' : '';
+    err.textContent = msg; err.hidden = !msg; email.setAttribute('aria-invalid', !!msg);
+    if (msg) return email.focus();
+    form.hidden = true;
+    ok.textContent = `Listo. Te enviamos un enlace a ${email.value} para confirmar la suscripción.`;
+    ok.focus();
+  });
+  email.addEventListener('input', () => {
+    if (!err.hidden && email.checkValidity()) { err.hidden = true; email.setAttribute('aria-invalid', 'false'); }
+  });
+</script>

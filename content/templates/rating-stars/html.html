@@ -5,27 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Valoración con estrellas</title>
 <style>
-  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
-  .card { max-width:360px; padding:16px; border:2px solid var(--ink); border-radius:10px; background:var(--surface); box-shadow:4px 4px 0 var(--ink); }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card { max-width:360px; padding:16px; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); }
   fieldset { margin:0; padding:0; border:0; }
-  legend { padding:0; margin-bottom:8px; font-weight:700; letter-spacing:-.01em; }
+  legend { padding:0; margin-bottom:8px; font-weight:600; }
   .rate { display:flex; gap:2px; }
   .rate input { position:absolute; opacity:0; width:1px; height:1px; }
-  .rate label { display:block; padding:2px; border-radius:8px; cursor:pointer; }
-  .star { display:block; width:34px; height:34px; fill:var(--surface); stroke:var(--ink); stroke-width:2; stroke-linejoin:round; transition:transform .12s; }
+  .rate label { display:block; padding:2px; border-radius:var(--radius); cursor:pointer; }
+  .star { display:block; width:32px; height:32px; fill:var(--surface); stroke:var(--warn); stroke-width:1.5; stroke-linejoin:round; transition:transform 140ms, fill 140ms; }
   /* rellena la estrella marcada y todas las anteriores */
-  .rate input:checked + label .star, .rate label:has(~ input:checked) .star { fill:var(--hl); }
+  .rate input:checked + label .star, .rate label:has(~ input:checked) .star { fill:var(--warn); }
   /* vista previa al pasar el cursor */
   .rate:has(label:hover) label .star { fill:var(--surface); }
-  .rate label:hover .star, .rate label:has(~ label:hover) .star { fill:var(--hl) !important; }
-  .rate label:hover .star { transform:scale(1.12); }
-  .rate input:focus-visible + label { outline:3px solid var(--accent); outline-offset:1px; }
+  .rate label:hover .star, .rate label:has(~ label:hover) .star { fill:var(--warn) !important; }
+  .rate label:hover .star { transform:scale(1.1); }
+  .rate input:focus-visible + label { outline:2px solid var(--accent); outline-offset:2px; }
   .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-  output { display:block; min-height:1.4em; margin-top:8px; color:var(--muted); font:13px ui-monospace, monospace; }
-  .ro { display:flex; align-items:center; gap:8px; margin-top:14px; padding-top:12px; border-top:2px solid var(--ink); }
-  .ro .star { width:18px; height:18px; fill:var(--hl); }
+  output { display:block; min-height:1.5em; margin-top:8px; color:var(--muted); }
+  .ro { display:flex; align-items:center; gap:8px; margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-variant-numeric:tabular-nums; }
+  .ro .star { width:18px; height:18px; fill:var(--warn); }
   .ro .off .star { fill:var(--surface); }
   .ro .stars { display:flex; }
   @media (prefers-reduced-motion:reduce) { .star { transition:none; } }
@@ -53,13 +54,13 @@
       <span class="stars" aria-hidden="true">
         <svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><span class="off"><svg class="star"><use href="#i-star"/></svg></span>
       </span>
-      <span>4,0 · 128 opiniones</span>
+      <span>4,0 de 5 (128 opiniones)</span>
     </div>
   </div>
 <script>
-  const words = ['', 'Muy malo', 'Regular', 'Bien', 'Muy bien', 'Excelente'];
+  const words = ['', 'muy malo', 'regular', 'bien', 'muy bien', 'excelente'];
   document.querySelectorAll('.rate input').forEach((r) =>
-    r.addEventListener('change', () => { out.textContent = `Tu valoración: ${r.value} de 5 · ${words[r.value]}`; }));
+    r.addEventListener('change', () => { out.textContent = `Tu valoración: ${r.value} de 5, ${words[r.value]}`; }));
 </script>
 </body>
 </html>

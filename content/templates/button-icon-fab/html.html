@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .stage{position:relative;min-height:320px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .stage h2{margin:0 0 4px;font-size:16px}
+  .stage p{margin:0;color:var(--muted)}
+  .stage .status{margin-top:12px;min-height:1.5em;color:var(--text)}
+  .fab-wrap{position:absolute;right:20px;bottom:20px;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:12px}
+  .fab{display:grid;place-items:center;width:56px;height:56px;padding:0;border:1px solid transparent;border-radius:50%;cursor:pointer;color:var(--accent-ink);
+       background:linear-gradient(var(--accent),var(--accent)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box;box-shadow:var(--shadow);transition:filter .14s}
+  .fab:hover{filter:brightness(1.08)}
+  .fab svg{transition:transform .16s}
+  .fab[aria-expanded=true] svg{transform:rotate(45deg)}
+  .actions{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+  .actions button{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;font:inherit;font-weight:500;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);cursor:pointer;transition:background .14s}
+  .actions button:hover{background:var(--accent-soft)}
+  .actions svg{color:var(--accent)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="stage" aria-labelledby="fab-title">
+  <h2 id="fab-title">Proyecto Atlas</h2>
+  <p>Usa el botón Crear para añadir contenido sin salir de la página.</p>
+  <p class="status" role="status" id="fab-status"></p>
+  <div class="fab-wrap">
+    <button class="fab" type="button" aria-label="Crear" aria-expanded="false" aria-controls="fab-actions">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+    </button>
+    <ul class="actions" id="fab-actions" hidden>
+      <li><button type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8M20 12v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h11"/></svg>Nueva tarea</button></li>
+      <li><button type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>Subir archivo</button></li>
+      <li><button type="button"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8a4 4 0 1 0 8 0a4 4 0 1 0-8 0M2 21a7 7 0 0 1 14 0M19 8v6M16 11h6"/></svg>Invitar persona</button></li>
+    </ul>
+  </div>
+</section>
+<script>
+  const fab = document.querySelector('.fab'), menu = document.getElementById('fab-actions'), out = document.getElementById('fab-status');
+  function toggle(open) {
+    fab.setAttribute('aria-expanded', open);
+    menu.hidden = !open;
+    if (open) menu.querySelector('button').focus();
+  }
+  fab.addEventListener('click', () => toggle(menu.hidden));
+  menu.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    out.textContent = `Elegiste: ${b.textContent.trim()}.`;
+    toggle(false); fab.focus();
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { toggle(false); fab.focus(); } });
+  document.addEventListener('click', (e) => { if (!menu.hidden && !e.target.closest('.fab-wrap')) toggle(false); });
+</script>
+</body>
+</html>

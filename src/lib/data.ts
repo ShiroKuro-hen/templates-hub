@@ -17,6 +17,7 @@ export const CATEGORIES: Record<string, { label: string; blurb: string; icon: st
   elementos: { label: 'Elementos UI', blurb: 'Acordeones, avatares, ratings, steppers y timelines.', icon: '❖' },
   secciones: { label: 'Secciones de landing', blurb: 'Hero, features, testimonios, FAQ y footer.', icon: '▭' },
   graficos: { label: 'Gráficos', blurb: 'Donut, líneas, sparklines y heatmaps en SVG.', icon: '◔' },
+  paginas: { label: 'Páginas completas', blurb: 'Login, dashboard, ajustes y precios listos para adaptar.', icon: '▣' },
 };
 
 // Agrupación estilo design-system de gran empresa (orden de la home).
@@ -26,7 +27,7 @@ export const GROUPS: { label: string; blurb: string; cats: string[] }[] = [
   { label: 'Feedback', blurb: 'Comunicar estados al usuario.', cats: ['notificaciones', 'modales', 'cargando'] },
   { label: 'Navegación', blurb: 'Moverse por la aplicación.', cats: ['navegacion'] },
   { label: 'Datos', blurb: 'Mostrar y visualizar información.', cats: ['tablas', 'barras', 'graficos'] },
-  { label: 'Layout y páginas', blurb: 'Estructura y secciones completas.', cats: ['grids', 'secciones'] },
+  { label: 'Layout y páginas', blurb: 'Estructura y secciones completas.', cats: ['grids', 'secciones', 'paginas'] },
 ];
 
 // shiki = lenguaje de resaltado, ext = extensión del archivo en content/templates/<slug>/
@@ -61,7 +62,12 @@ for (const [path, raw] of Object.entries(files)) {
 
 export const templates: Template[] = Object.entries(bySlug)
   .map(([slug, t]) => ({ slug, tags: [], prompt: '', description: '', ...t }) as Template)
+  .filter((t) => t.title && CATEGORIES[t.category]) // carpeta sin meta válido = aún no publicada
   .sort((a, b) => a.title.localeCompare(b.title));
+
+// Orden de lectura del sidebar: grupo → categoría → título.
+export const ordered: Template[] = GROUPS.flatMap((g) => g.cats.flatMap((c) => templates.filter((t) => t.category === c)));
+export const groupOf = (cat: string) => GROUPS.find((g) => g.cats.includes(cat))!;
 
 // Prefix with the Pages base path (e.g. /templates-hub).
 export const url = (p: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + p;

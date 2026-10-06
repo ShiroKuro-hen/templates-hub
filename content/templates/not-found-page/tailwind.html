@@ -1,0 +1,40 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600">
+  <header class="mx-auto flex max-w-[960px] items-center justify-between gap-3">
+    <a href="#" class="flex items-center gap-2.5 text-base font-bold"><span aria-hidden="true" class="size-[26px] rounded-md bg-blue-600 dark:bg-blue-500"></span>Nimbo</a>
+    <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-400">Ir al panel</a>
+  </header>
+  <main class="mx-auto max-w-[640px] pb-6 pt-12">
+    <p aria-hidden="true" class="w-max bg-gradient-to-br from-cyan-400 to-blue-600 bg-clip-text text-7xl font-extrabold leading-none tracking-tighter text-transparent tabular-nums sm:text-8xl">404</p>
+    <h1 class="mb-2 mt-4 text-2xl font-bold leading-tight sm:text-[28px]">No encontramos esta página</h1>
+    <p class="mb-6 max-w-[56ch] text-slate-500 dark:text-slate-400">Puede que el enlace esté mal escrito o que la página se haya movido. Busca lo que necesitas o elige uno de estos accesos.</p>
+    <form role="search" id="f" class="flex flex-wrap gap-2">
+      <div class="relative flex-[1_1_240px]">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="q" type="search" aria-label="Buscar en Nimbo" placeholder="Buscar proyectos, informes o ayuda" autocomplete="off" class="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-[38px] pr-3 dark:border-slate-700 dark:bg-slate-900">
+      </div>
+      <button type="submit" class="rounded-lg bg-blue-600 px-4 py-2.5 font-semibold text-white hover:bg-blue-700 dark:bg-blue-500 dark:text-slate-950">Buscar</button>
+    </form>
+
+    <h2 id="links-title" class="mb-2 mt-8 text-[15px] font-semibold text-slate-500 dark:text-slate-400">Enlaces útiles</h2>
+    <ul id="links" aria-labelledby="links-title" class="divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900 [&_a]:flex [&_a]:items-center [&_a]:gap-3.5 [&_a]:px-4 [&_a]:py-3.5 [&_a:hover]:bg-blue-50 dark:[&_a:hover]:bg-slate-800 [&_a:focus-visible]:-outline-offset-2 [&_.ico]:grid [&_.ico]:size-[34px] [&_.ico]:flex-none [&_.ico]:place-items-center [&_.ico]:rounded-lg [&_.ico]:bg-blue-50 [&_.ico]:text-blue-600 dark:[&_.ico]:bg-blue-500/15 dark:[&_.ico]:text-blue-400 [&_strong]:block [&_strong]:font-semibold [&_small]:text-sm [&_small]:text-slate-500 dark:[&_small]:text-slate-400">
+      <li><a href="#"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg></span><span><strong>Panel de inicio</strong><small>Vuelve a tus proyectos recientes.</small></span></a></li>
+      <li><a href="#"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/></svg></span><span><strong>Centro de ayuda</strong><small>Guías paso a paso y respuestas rápidas.</small></span></a></li>
+      <li><a href="#"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><span><strong>Estado del servicio</strong><small>Comprueba si hay incidencias activas.</small></span></a></li>
+      <li><a href="#"><span class="ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v10H8l-4 4z"/></svg></span><span><strong>Contactar con soporte</strong><small>Respondemos en menos de 24 horas.</small></span></a></li>
+      <li id="empty" role="status" hidden class="p-4 text-slate-500 dark:text-slate-400">Ningún acceso coincide. Pulsa Buscar para consultar todo el centro de ayuda.</li>
+    </ul>
+    <p class="mt-6 text-[13px] text-slate-500 dark:text-slate-400">Código de error 404. Si llegaste aquí desde un enlace de Nimbo, avísanos para corregirlo.</p>
+  </main>
+</div>
+<script>
+  const q = document.getElementById('q'), items = [...document.querySelectorAll('#links li:not(#empty)')];
+  q.addEventListener('input', () => {
+    const t = q.value.trim().toLowerCase();
+    items.forEach((li) => (li.hidden = !li.textContent.toLowerCase().includes(t)));
+    document.getElementById('empty').hidden = items.some((li) => !li.hidden);
+  });
+  document.getElementById('f').addEventListener('submit', (e) => {
+    e.preventDefault(); // en producción, envía a tu página de resultados (/buscar?q=...)
+    if (!q.value.trim()) q.focus();
+  });
+</script>

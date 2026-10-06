@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precios de Nimbo</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{max-width:1040px;margin:0 auto;display:grid;gap:32px}
+  header{text-align:center;display:grid;justify-items:center;gap:8px;padding-top:12px}
+  h1{font-size:clamp(24px,4vw,32px);line-height:1.2;margin:0;letter-spacing:-.01em}
+  header p{margin:0;color:var(--muted);max-width:52ch}
+  .billing{display:inline-flex;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:3px;margin:12px 0 0}
+  .billing legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .billing label{padding:6px 14px;border-radius:6px;cursor:pointer;font-weight:500;color:var(--muted);transition:background .14s,color .14s}
+  .billing input{position:absolute;opacity:0;pointer-events:none}
+  .billing label:has(:checked){background:var(--accent-soft);color:var(--accent)}
+  .billing label:has(:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .save{font-size:12px;font-weight:600;color:var(--ok);margin-left:4px}
+  .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;align-items:start}
+  .plan{position:relative;display:grid;gap:16px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .plan.featured{border-color:var(--accent)}
+  .plan.featured::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .plan h2{font-size:16px;margin:0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+  .plan > p:not(.price){margin:-8px 0 0;color:var(--muted)}
+  .price{margin:0;display:flex;align-items:baseline;gap:6px}
+  .price strong{font-size:36px;line-height:1;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .price span{color:var(--muted)}
+  .wrap:has(#anual:checked) .m,.wrap:has(#mensual:checked) .a{display:none}
+  .btn{display:block;text-align:center;text-decoration:none;font-weight:600;border-radius:var(--radius);padding:10px 16px;border:1px solid var(--border);color:var(--text);background:var(--surface);transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .primary:hover{background:var(--accent);filter:brightness(1.06)}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ul{list-style:none;margin:0;padding:16px 0 0;border-top:1px solid var(--border);display:grid;gap:8px}
+  li{display:flex;gap:10px;align-items:flex-start}
+  li svg{flex:none;margin-top:3px;color:var(--ok)}
+  .faq{max-width:720px;width:100%;margin:0 auto}
+  .faq h2{font-size:20px;margin:0 0 12px}
+  details{border-bottom:1px solid var(--border)}
+  details:first-of-type{border-top:1px solid var(--border)}
+  summary{padding:14px 4px;cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px;border-radius:4px}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--muted);font-weight:400;font-size:18px;line-height:1}
+  details[open] summary::after{content:"−"}
+  details p{margin:0;padding:0 4px 16px;color:var(--muted);max-width:65ch}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <h1>Planes que crecen con tu equipo</h1>
+    <p>Empieza gratis y cambia de plan cuando lo necesites. Todos incluyen soporte por correo y copias de seguridad diarias.</p>
+    <fieldset class="billing">
+      <legend>Periodo de facturación</legend>
+      <label><input type="radio" name="billing" id="mensual" checked>Mensual</label>
+      <label><input type="radio" name="billing" id="anual">Anual<span class="save">Ahorra un 20 %</span></label>
+    </fieldset>
+  </header>
+
+  <section class="plans" aria-label="Planes">
+    <article class="plan">
+      <h2>Básico</h2>
+      <p>Para probar Nimbo con un equipo pequeño.</p>
+      <p class="price"><strong>0 €</strong><span>siempre gratis</span></p>
+      <a class="btn" href="#registro">Empezar gratis</a>
+      <ul>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Hasta 3 personas</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>5 proyectos activos</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>2 GB de almacenamiento</li>
+      </ul>
+    </article>
+    <article class="plan featured">
+      <h2>Equipo <span class="tag">Más elegido</span></h2>
+      <p>Para equipos que trabajan a diario en Nimbo.</p>
+      <p class="price"><strong class="m">12 €</strong><strong class="a">9,60 €</strong><span>por persona y mes<span class="a">, facturado al año</span></span></p>
+      <a class="btn primary" href="#registro">Probar 14 días gratis</a>
+      <ul>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Personas ilimitadas</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Proyectos ilimitados</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>100 GB y permisos por rol</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Informes y automatizaciones</li>
+      </ul>
+    </article>
+    <article class="plan">
+      <h2>Empresa</h2>
+      <p>Para organizaciones con requisitos de seguridad.</p>
+      <p class="price"><strong class="m">29 €</strong><strong class="a">23,20 €</strong><span>por persona y mes<span class="a">, facturado al año</span></span></p>
+      <a class="btn" href="#ventas">Hablar con ventas</a>
+      <ul>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Todo lo del plan Equipo</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>SSO y registro de auditoría</li>
+        <li><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 8.5l3 3 7-7"/></svg>Disponibilidad garantizada del 99,9 %</li>
+      </ul>
+    </article>
+  </section>
+
+  <section class="faq" aria-labelledby="faq">
+    <h2 id="faq">Preguntas frecuentes</h2>
+    <details name="faq" open><summary>¿Puedo cambiar de plan más adelante?</summary><p>Sí. El cambio se aplica al momento y prorrateamos el importe en tu siguiente factura.</p></details>
+    <details name="faq"><summary>¿Qué pasa al terminar la prueba gratis?</summary><p>Tu espacio pasa al plan Básico. No perderás datos y puedes contratar cuando quieras.</p></details>
+    <details name="faq"><summary>¿Qué formas de pago aceptáis?</summary><p>Tarjeta de crédito o débito y, en planes anuales, transferencia bancaria.</p></details>
+  </section>
+</main>
+</body>
+</html>

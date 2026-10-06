@@ -28,20 +28,23 @@ const stateOf = (i: number) => (i < cur.value ? 'done' : i === cur.value ? 'curr
 </template>
 
 <style scoped>
-.steps { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0 0 20px; padding: 0; list-style: none; font: 14px/1.4 system-ui, sans-serif; }
-.step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; font-weight: 600; color: #6b6258; }
-.step::before { content: ""; position: absolute; top: 17px; right: 50%; width: 100%; height: 4px; background: #17130f; }
+.steps { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0 0 20px; padding: 0; list-style: none; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; font-weight: 500; color: var(--muted); }
+.step::before { content: ""; position: absolute; top: 17px; right: 50%; width: 100%; height: 2px; background: linear-gradient(90deg, #22d3ee, #2f5bff); }
 .step:first-child::before { display: none; }
-.dot { position: relative; z-index: 1; display: grid; place-items: center; width: 38px; height: 38px; font: 700 15px ui-monospace, monospace; background: #fffdf8; color: #17130f; border: 2px solid #17130f; border-radius: 50%; }
-.step[data-state="done"], .step[data-state="current"] { color: #17130f; }
-.step[data-state="done"] .dot { background: #1f9d55; color: #fff; }
-.step[data-state="current"] .dot { background: #ff5a36; box-shadow: 3px 3px 0 #17130f; }
-.step[data-state="pending"]::before { background: repeating-linear-gradient(90deg, #17130f 0 6px, transparent 6px 12px); }
+.dot { position: relative; z-index: 1; display: grid; place-items: center; width: 36px; height: 36px; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: 50%; }
+.step[data-state="done"], .step[data-state="current"] { color: var(--text); }
+.step[data-state="done"] .dot { background: var(--ok); border-color: var(--ok); color: var(--accent-ink); }
+.step[data-state="current"] .dot { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); box-shadow: 0 0 0 4px var(--accent-soft); }
+.step[data-state="pending"]::before { background: repeating-linear-gradient(90deg, var(--border) 0 6px, transparent 6px 12px); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .nav { display: flex; gap: 10px; }
-.btn { font: 600 14px system-ui; padding: 8px 14px; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; cursor: pointer; }
-.btn.primary { background: #ffd84d; }
-.btn:hover:not(:disabled) { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-.btn:disabled { opacity: .45; box-shadow: none; cursor: not-allowed; }
-:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
+.btn { font: 600 14px system-ui; padding: 8px 16px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: background 140ms, border-color 140ms; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:hover:not(:disabled) { background: var(--accent-soft); border-color: var(--accent); }
+.btn.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.1); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

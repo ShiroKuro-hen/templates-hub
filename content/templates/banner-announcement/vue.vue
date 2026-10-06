@@ -27,16 +27,17 @@ function close() { off.value = true; emit('close'); }
 </template>
 
 <style scoped>
-.banner { display:grid; grid-template-rows:1fr; transition:grid-template-rows .25s ease; background:#ffd84d; border-bottom:2px solid #17130f; font:14px/1.45 system-ui, sans-serif; color:#17130f; }
+.banner { display:grid; grid-template-rows:1fr; transition:grid-template-rows .16s ease; background:var(--accent-soft); border-bottom:1px solid var(--border); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--text); }
 .banner > div { overflow:hidden; min-height:0; }
 .banner.off { grid-template-rows:0fr; border-bottom-width:0; }
-.banner.off > div { visibility:hidden; transition:visibility 0s .25s; }
-.inner { display:flex; align-items:center; gap:10px; padding:9px 12px; }
+.banner.off > div { visibility:hidden; transition:visibility 0s .16s; }
+.inner { display:flex; align-items:center; gap:12px; padding:10px 16px 12px; background:linear-gradient(135deg,#22d3ee,#2f5bff) bottom/100% 2px no-repeat; }
 .inner p { flex:1; margin:0; }
-.inner a { color:#17130f; font-weight:700; text-underline-offset:3px; margin-left:4px; white-space:nowrap; }
-.tag { font:700 12px ui-monospace, monospace; padding:2px 7px; margin-right:6px; background:#17130f; color:#ffd84d; border-radius:6px; }
-.x { flex:none; width:30px; height:30px; font-size:20px; line-height:1; color:#17130f; background:none; border:2px solid transparent; border-radius:8px; cursor:pointer; }
-.x:hover { border-color:#17130f; }
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-@media (prefers-reduced-motion:reduce) { .banner, .banner.off > div { transition:none; } }
+.inner a { color:var(--accent); font-weight:600; text-underline-offset:3px; margin-left:4px; white-space:nowrap; }
+.tag { display:inline-block; padding:1px 9px; margin-right:8px; font-size:12px; font-weight:600; background:var(--accent); color:var(--accent-ink); border-radius:999px; }
+.x { flex:none; width:30px; height:30px; font-size:20px; line-height:1; color:var(--muted); background:none; border:0; border-radius:var(--radius); cursor:pointer; transition:background .14s, color .14s; }
+.x:hover { color:var(--text); background:var(--surface); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+@media (prefers-reduced-motion:reduce) { .banner, .banner.off > div, .x { transition:none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

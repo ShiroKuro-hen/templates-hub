@@ -1,22 +1,22 @@
-<nav aria-label="Progreso de la compra" class="p-5">
+<nav aria-label="Progreso de la compra" class="p-5 text-slate-900 dark:text-slate-100">
   <ol class="m-0 grid list-none auto-cols-fr grid-flow-col p-0">
     <!-- completado -->
-    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-semibold text-[#17130f]">
-      <span class="relative z-10 grid size-[38px] place-items-center rounded-full border-2 border-[#17130f] bg-[#1f9d55] font-mono font-bold text-white" aria-hidden="true">✓</span>
+    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full bg-emerald-600 text-sm font-semibold text-white dark:bg-emerald-400 dark:text-slate-950" aria-hidden="true">✓</span>
       Carrito <span class="sr-only">(completado)</span>
     </li>
     <!-- actual -->
-    <li aria-current="step" class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-semibold text-[#17130f] before:absolute before:right-1/2 before:top-[17px] before:h-1 before:w-full before:bg-[#17130f]">
-      <span class="relative z-10 grid size-[38px] place-items-center rounded-full border-2 border-[#17130f] bg-[#ff5a36] font-mono font-bold shadow-[3px_3px_0_#17130f]" aria-hidden="true">2</span>
+    <li aria-current="step" class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-gradient-to-r before:from-cyan-400 before:to-blue-600">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full bg-blue-600 text-sm font-semibold tabular-nums text-white ring-4 ring-blue-50 dark:bg-blue-500 dark:ring-slate-800" aria-hidden="true">2</span>
       Envío <span class="sr-only">(paso actual)</span>
     </li>
     <!-- pendiente: conector punteado -->
-    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-semibold text-[#6b6258] before:absolute before:right-1/2 before:top-[17px] before:h-1 before:w-full before:bg-[repeating-linear-gradient(90deg,#17130f_0_6px,transparent_6px_12px)]">
-      <span class="relative z-10 grid size-[38px] place-items-center rounded-full border-2 border-[#17130f] bg-[#fffdf8] font-mono font-bold text-[#17130f]" aria-hidden="true">3</span>
+    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium text-slate-500 before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.200)_0_6px,transparent_6px_12px)] dark:text-slate-400 dark:before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.700)_0_6px,transparent_6px_12px)]">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full border border-slate-200 bg-white text-sm font-semibold tabular-nums dark:border-slate-700 dark:bg-slate-900" aria-hidden="true">3</span>
       Pago <span class="sr-only">(pendiente)</span>
     </li>
-    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-semibold text-[#6b6258] before:absolute before:right-1/2 before:top-[17px] before:h-1 before:w-full before:bg-[repeating-linear-gradient(90deg,#17130f_0_6px,transparent_6px_12px)]">
-      <span class="relative z-10 grid size-[38px] place-items-center rounded-full border-2 border-[#17130f] bg-[#fffdf8] font-mono font-bold text-[#17130f]" aria-hidden="true">4</span>
+    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium text-slate-500 before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.200)_0_6px,transparent_6px_12px)] dark:text-slate-400 dark:before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.700)_0_6px,transparent_6px_12px)]">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full border border-slate-200 bg-white text-sm font-semibold tabular-nums dark:border-slate-700 dark:bg-slate-900" aria-hidden="true">4</span>
       Listo <span class="sr-only">(pendiente)</span>
     </li>
   </ol>

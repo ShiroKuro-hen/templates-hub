@@ -32,16 +32,18 @@ withDefaults(defineProps<{ steps?: Step[] }>(), {
   --step-3: clamp(1.73rem, 1.45rem + 1.3vw, 2.2rem);
   --step-4: clamp(2.07rem, 1.6rem + 2vw, 2.75rem);
   --step-5: clamp(2.49rem, 1.8rem + 3vw, 3.4rem);
-  margin: 0; padding: 0; list-style: none; font-family: system-ui, sans-serif; color: #17130f;
-  border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f;
+  margin: 0; padding: 0; list-style: none; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); overflow: hidden;
 }
-.scale li { display: grid; grid-template-columns: 5.5rem 1fr; align-items: baseline; gap: 12px; padding: 10px 14px; }
-.scale li + li { border-top: 2px solid #17130f; }
-.tok { font: 12px ui-monospace, monospace; color: #6b6258; }
-.tok b { display: block; color: #17130f; }
+.scale li { display: grid; grid-template-columns: 6rem 1fr; align-items: baseline; gap: 12px; padding: 12px 16px; }
+.scale li + li { border-top: 1px solid var(--border); }
+.tok { font: 12px ui-monospace, "Cascadia Code", Menlo, monospace; color: var(--muted); font-variant-numeric: tabular-nums; }
+.tok b { display: block; font-weight: 600; color: var(--text); }
 .smp { margin: 0; line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; overflow-wrap: anywhere; }
 .s-1 { font-size: var(--step--1); font-weight: 400; letter-spacing: 0; line-height: 1.4; }
 .s0 { font-size: var(--step-0); font-weight: 400; letter-spacing: 0; line-height: 1.4; }
 .s1 { font-size: var(--step-1); } .s2 { font-size: var(--step-2); } .s3 { font-size: var(--step-3); }
-.s4 { font-size: var(--step-4); } .s5 { font-size: var(--step-5); }
+.s4 { font-size: var(--step-4); }
+.s5 { font-size: var(--step-5); width: fit-content; color: var(--accent); background: linear-gradient(135deg, #22d3ee, #2f5bff); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

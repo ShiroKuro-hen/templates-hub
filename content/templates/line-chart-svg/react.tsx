@@ -42,7 +42,7 @@ export function LineChart({ data = DATA, title = 'Pedidos mensuales, 2026', unit
           <path className="line" d={`M${pts.join(' L')}`} pathLength={1} />
           {cur !== null && <line className="guide on" x1={X(cur)} x2={X(cur)} y1={T} y2={Y(0)} />}
           {data.map((d, i) => (
-            <circle key={d.x} className={`pt${cur === i ? ' on' : ''}`} cx={X(i)} cy={Y(d.y)} r={4.5} tabIndex={0} role="img"
+            <circle key={d.x} className={`pt${cur === i ? ' on' : ''}`} cx={X(i)} cy={Y(d.y)} r={4} tabIndex={0} role="img"
               aria-label={`${d.x}: ${d.y} ${unit}`} onFocus={() => setCur(i)} onBlur={() => setCur(null)} />
           ))}
         </svg>

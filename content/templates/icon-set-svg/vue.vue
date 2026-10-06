@@ -44,13 +44,16 @@ async function copy(icon: Icon) {
 </template>
 
 <style scoped>
-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; }
-h1 { margin: 0; font-size: 1.05rem; letter-spacing: -.02em; }
-#st { margin: 0; font: 11px ui-monospace, monospace; color: #6b6258; }
-.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; padding: 0 4px 4px 0; list-style: none; }
-.ico { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 7px 2px 5px; font: 11px ui-monospace, monospace; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; cursor: pointer; }
-.ico:hover, .ico:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-.ico:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-.ico svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-@media (prefers-reduced-motion: no-preference) { .ico { transition: transform .1s, box-shadow .1s; } }
+section { font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
+header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+h1 { margin: 0; font-size: 1.1rem; font-weight: 600; letter-spacing: -.01em; }
+#st { margin: 0; font-size: 12px; color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ico { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 4px 8px; font: 12px system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color .14s, color .14s, box-shadow .14s; }
+.ico:hover { color: var(--accent); border-color: var(--accent); box-shadow: var(--shadow); }
+.ico:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ico svg { width: 24px; height: 24px; color: var(--text); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ico:hover svg { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .ico { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

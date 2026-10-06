@@ -1,0 +1,1 @@
+{ "title": "Banner de estado del servicio", "category": "notificaciones", "description": "Banners de estado operativo, degradado y caído con hora y enlace al incidente.", "tags": ["status", "banner", "incident"] }

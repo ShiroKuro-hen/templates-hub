@@ -1,3 +1,3 @@
 Crea un formulario de registro para {{servicio}} con nombre, correo, contraseña, repetir contraseña y casilla de términos.
-Usa la validación nativa (required, type=email, minlength, pattern) con la Constraint Validation API y muestra mensajes de error en español bajo cada campo, con aria-invalid y aria-describedby.
-Valida al salir del campo y al enviar, enfoca el primer error, y confirma el éxito con un mensaje. Estilo de bordes gruesos, sin librerías.
+Usa la validación nativa (required, type=email, minlength, pattern) con la Constraint Validation API y muestra mensajes de error en español bajo cada campo, con aria-invalid y aria-describedby. Cada error debe decir qué pasó y cómo arreglarlo.
+Valida al salir del campo y al enviar, enfoca el primer error, y confirma el éxito con un mensaje. Estilo sobrio y profesional: bordes finos de 1px, radio 8px, sombras suaves, acento azul, tokens CSS con tema claro y oscuro. Sin librerías.

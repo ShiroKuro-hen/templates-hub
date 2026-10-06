@@ -30,4 +30,4 @@ export function FaqSection({ faqs = FAQS, title = 'Preguntas frecuentes', contac
     </section>
   );
 }
-// CSS: copia las reglas .faq / .intro / .list / details / summary / .plus de la pestaña HTML + CSS.
+// CSS: copia las reglas .faq / .intro / .list / details / summary / .plus de la pestaña HTML + CSS, junto con los tokens :root.

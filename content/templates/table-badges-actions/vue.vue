@@ -53,21 +53,26 @@ function remove(p: Pedido) {
 </template>
 
 <style scoped>
-.wrap { overflow-x: auto; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; font: 14px/1.4 system-ui, sans-serif; color: #17130f; }
-.wrap:focus-visible, button:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-table { width: 100%; min-width: 520px; border-collapse: collapse; }
-caption { position: absolute; left: -9999px; }
-th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #17130f33; white-space: nowrap; }
-thead th { background: #ffd84d; border-bottom: 2px solid #17130f; }
-tbody tr:last-child > * { border-bottom: 0; }
-.num { text-align: right; font-variant-numeric: tabular-nums; }
-.badge { display: inline-block; padding: 2px 10px; border: 2px solid #17130f; border-radius: 99px; font: 600 .75rem ui-monospace, monospace; }
-.ok { background: #c9efd8; } .warn { background: #ffe9a3; } .err { background: #f9c9cf; } .info { background: #cfd8ff; }
-.acts { display: flex; gap: 6px; }
-button { font: 600 .8rem system-ui, sans-serif; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; padding: 4px 10px; box-shadow: 4px 4px 0 #17130f; cursor: pointer; }
-button:hover:not(:disabled), button:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-button:disabled { opacity: .45; box-shadow: none; cursor: not-allowed; }
-.del { background: #f9c9cf; }
-p { color: #6b6258; font: .8rem system-ui, sans-serif; }
-@media (prefers-reduced-motion: no-preference) { button { transition: transform .1s, box-shadow .1s; } }
+.wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text)}
+.wrap:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{width:100%;min-width:520px;border-collapse:collapse}
+caption{position:absolute;left:-9999px}
+th,td{padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+thead th{color:var(--muted);font-weight:600}
+tbody th{font-weight:500}
+tbody tr:last-child>*{border-bottom:0}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.ok{background:var(--ok-soft);color:var(--ok)} .warn{background:var(--warn-soft);color:var(--warn)}
+.err{background:var(--err-soft);color:var(--err)} .info{background:var(--info-soft);color:var(--info)}
+.acts{display:flex;gap:8px}
+button{font:500 13px system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:4px 12px;cursor:pointer;transition:background .14s,border-color .14s}
+button:hover:not(:disabled){background:var(--accent-soft);border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.del{color:var(--err)}
+.del:hover:not(:disabled){background:var(--err-soft);border-color:var(--err)}
+p{margin:12px 0 0;color:var(--muted);font:13px system-ui,-apple-system,"Segoe UI",sans-serif;min-height:1.5em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* Tokens: ver pestaña HTML + CSS */
 </style>

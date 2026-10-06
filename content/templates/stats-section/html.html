@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .stats{position:relative;max-width:1040px;box-sizing:border-box;padding:28px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .stats::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  .stats h2{margin:0;font-size:22px;line-height:1.25}
+  .lead{margin:4px 0 24px;color:var(--muted);max-width:60ch}
+  dl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:0;overflow:hidden;background:var(--border);border:1px solid var(--border);border-radius:var(--radius)}
+  dl > div{display:flex;flex-direction:column;padding:20px;background:var(--surface)}
+  dt{order:2;margin-top:4px;font-weight:500}
+  .value{order:1;margin:0;font-size:32px;font-weight:650;line-height:1.1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+  .ctx{order:3;display:flex;align-items:center;gap:6px;margin:8px 0 0;color:var(--muted);font-size:13px}
+  .ctx svg{flex:none;color:var(--ok)}
+  @media (max-width:800px){dl{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:440px){dl{grid-template-columns:1fr}.stats{padding:20px}}
+</style>
+</head>
+<body>
+<section class="stats" aria-labelledby="stats-title">
+  <h2 id="stats-title">La plataforma en cifras</h2>
+  <p class="lead">Datos de producción a 30 de septiembre de 2026, medidos en todas las regiones.</p>
+  <dl>
+    <div>
+      <dt>Disponibilidad</dt>
+      <dd class="value">99,98&nbsp;%</dd>
+      <dd class="ctx">Últimos 12 meses, sin incidencias graves.</dd>
+    </div>
+    <div>
+      <dt>Solicitudes al día</dt>
+      <dd class="value">2,4&nbsp;M</dd>
+      <dd class="ctx"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>18&nbsp;% más que el trimestre anterior.</dd>
+    </div>
+    <div>
+      <dt>Latencia media</dt>
+      <dd class="value">38&nbsp;ms</dd>
+      <dd class="ctx"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>6&nbsp;ms menos tras migrar a la región UE.</dd>
+    </div>
+    <div>
+      <dt>Equipos activos</dt>
+      <dd class="value">4.200</dd>
+      <dd class="ctx">En 31 países y 9 idiomas.</dd>
+    </div>
+  </dl>
+</section>
+</body>
+</html>

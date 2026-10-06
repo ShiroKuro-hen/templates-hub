@@ -44,13 +44,16 @@ function onKeyDown(e: KeyboardEvent, n: number) {
 </template>
 
 <style scoped>
-.tabs { font:14px/1.5 system-ui, sans-serif; color:#17130f; }
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-[role="tablist"] { position:relative; z-index:1; display:flex; gap:6px; margin-bottom:-2px; }
-[role="tab"] { padding:10px 16px; font:inherit; font-weight:600; color:#6b6258; background:#f6f1e7; border:2px solid #17130f; border-bottom:0; border-radius:10px 10px 0 0; cursor:pointer; }
-[role="tab"]:hover { background:#ffd84d; color:#17130f; }
-[role="tab"][aria-selected="true"] { background:#fffdf8; color:#17130f; box-shadow:inset 0 4px 0 #ff5a36; }
-[role="tab"][aria-selected="true"]:focus-visible { outline-offset:-5px; }
-[role="tabpanel"] { padding:16px 18px; background:#fffdf8; border:2px solid #17130f; border-radius:0 10px 10px 10px; box-shadow:4px 4px 0 #17130f; }
+.tabs { font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+[role="tablist"] { display:flex; gap:4px; margin-bottom:12px; border-bottom:1px solid var(--border); overflow-x:auto; }
+[role="tab"] { position:relative; padding:10px 14px; font:inherit; font-weight:500; color:var(--muted); background:none; border:0; border-radius:var(--radius) var(--radius) 0 0; white-space:nowrap; cursor:pointer; transition:color .14s, background .14s; }
+[role="tab"]:hover { color:var(--text); background:var(--surface); }
+[role="tab"][aria-selected="true"] { color:var(--accent); }
+[role="tab"][aria-selected="true"]::after { content:""; position:absolute; left:8px; right:8px; bottom:-1px; height:2px; border-radius:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+[role="tab"]:focus-visible { outline-offset:-2px; }
+[role="tabpanel"] { padding:16px 18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
 p { margin:0; max-width:52ch; }
+@media (prefers-reduced-motion:reduce) { [role="tab"] { transition:none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

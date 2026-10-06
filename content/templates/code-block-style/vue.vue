@@ -18,7 +18,7 @@ async function copy() {
     <figcaption class="bar">
       <span>{{ filename }}</span>
       <button type="button" class="copy" :data-ok="ok || undefined" aria-live="polite" @click="copy">
-        {{ ok ? '¡Copiado!' : 'Copiar' }}
+        {{ ok ? 'Copiado' : 'Copiar' }}
       </button>
     </figcaption>
     <pre tabindex="0" :aria-label="`Código de ${filename}`"><code><span v-for="(line, i) in code.split('\n')" :key="i" class="l">{{ line || ' ' }}</span></code></pre>
@@ -26,16 +26,19 @@ async function copy() {
 </template>
 
 <style scoped>
-.code { margin: 0; border: 2px solid #17130f; border-radius: 10px; background: #17130f; box-shadow: 4px 4px 0 #17130f; overflow: hidden; }
-.bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px 6px 14px; background: #ffd84d; border-bottom: 2px solid #17130f; }
-.bar span { font: 700 12px ui-monospace, monospace; color: #17130f; }
-.copy { font: 700 12px system-ui; padding: 4px 10px; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 8px; box-shadow: 2px 2px 0 #17130f; cursor: pointer; }
-.copy:hover { transform: translate(1px, 1px); box-shadow: 1px 1px 0 #17130f; }
-.copy[data-ok] { background: #1f9d55; color: #fff; }
-:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-pre { margin: 0; padding: 12px 0; overflow-x: auto; font: 13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; color: #f6f1e7; }
-pre:focus-visible { outline-offset: -3px; }
+.code { position: relative; margin: 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); box-shadow: var(--shadow); overflow: hidden; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+.code::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 10px 8px 16px; border-bottom: 1px solid var(--border); }
+.bar span { font: 600 12px ui-monospace, "Cascadia Code", Menlo, monospace; color: var(--muted); }
+.copy { padding: 4px 12px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); font: 600 12px system-ui, sans-serif; cursor: pointer; transition: background .14s, border-color .14s, color .14s; }
+.copy:hover { background: var(--accent-soft); border-color: var(--accent); }
+.copy[data-ok] { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+pre { margin: 0; padding: 12px 0; overflow-x: auto; font: 13px/1.65 ui-monospace, "Cascadia Code", Menlo, monospace; color: var(--text); tab-size: 2; }
+pre:focus-visible { outline-offset: -2px; }
 code { display: block; counter-reset: line; min-width: max-content; }
-.l { display: block; padding-right: 14px; white-space: pre; }
-.l::before { counter-increment: line; content: counter(line); display: inline-block; width: 2.8em; margin-right: 1em; padding-right: .6em; text-align: right; color: #a39a8d; border-right: 1px solid #4a423a; user-select: none; }
+.l { display: block; padding-right: 16px; white-space: pre; }
+.l::before { counter-increment: line; content: counter(line); display: inline-block; width: 2.8em; margin-right: 1em; padding-right: .6em; text-align: right; color: var(--muted); border-right: 1px solid var(--border); font-variant-numeric: tabular-nums; user-select: none; }
+@media (prefers-reduced-motion: reduce) { .copy { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

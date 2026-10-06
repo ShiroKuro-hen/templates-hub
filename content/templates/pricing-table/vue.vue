@@ -47,18 +47,20 @@ const filas: { caracteristica: string; valores: Valor[] }[] = [
 </template>
 
 <style scoped>
-.wrap { overflow-x: auto; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; font: 14px/1.4 system-ui, sans-serif; color: #17130f; }
-.wrap:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-table { width: 100%; min-width: 440px; border-collapse: collapse; text-align: center; }
-caption, .sr { position: absolute; left: -9999px; }
-th, td { padding: 10px 12px; border-bottom: 1px solid #17130f33; }
-tbody th { text-align: left; font-weight: 500; }
-thead th { border-bottom: 2px solid #17130f; vertical-align: bottom; }
-.plan { display: block; font-size: 1.05rem; font-weight: 700; letter-spacing: -.02em; }
-.price { display: block; font: 600 .8rem ui-monospace, monospace; color: #6b6258; }
-.tag { display: inline-block; margin-bottom: 4px; padding: 1px 8px; border: 2px solid #17130f; border-radius: 99px; background: #ff5a36; font: 700 .7rem ui-monospace, monospace; }
-.hl { background: #ffd84d55; border-left: 2px solid #17130f; border-right: 2px solid #17130f; }
-thead .hl { background: #ffd84d; border-top: 2px solid #17130f; }
-tbody tr:last-child .hl { border-bottom: 2px solid #17130f; }
-.yes { color: #1f9d55; font-weight: 800; } .no { color: #d6293e; font-weight: 800; }
+.wrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+table{width:100%;min-width:440px;border-collapse:collapse;text-align:center;font-variant-numeric:tabular-nums}
+caption,.sr{position:absolute;left:-9999px}
+th,td{padding:12px 16px;border-bottom:1px solid var(--border)}
+tbody tr:last-child>*{border-bottom:0}
+tbody th{text-align:left;font-weight:500}
+thead th{vertical-align:bottom}
+.plan{display:block;font-size:16px;font-weight:600}
+.price{display:block;font-size:13px;font-weight:400;color:var(--muted)}
+.tag{display:inline-block;margin-bottom:6px;padding:1px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:600}
+.hl{background:var(--accent-soft)}
+thead .hl{background:linear-gradient(135deg,#22d3ee,#2f5bff) top/100% 2px no-repeat,var(--accent-soft)}
+.yes{color:var(--ok);font-weight:700}
+.no{color:var(--muted);font-weight:700}
+/* Tokens: ver pestaña HTML + CSS */
 </style>

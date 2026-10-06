@@ -14,9 +14,12 @@ const DEMO: BentoCell[] = [
     area: 'chart',
     titulo: 'Horas por día',
     contenido: (
-      <div className="bars" role="img" aria-label="Horas por día: lunes 6, martes 8, miércoles 5, jueves 9, viernes 7, sábado 4, domingo 3">
-        {[60, 80, 50, 90, 70, 40, 30].map((h, i) => <i key={i} style={{ height: `${h}%` }} />)}
-      </div>
+      <>
+        <div className="bars" role="img" aria-label="Horas por día: lunes 6, martes 8, miércoles 5, jueves 9, viernes 7, sábado 4, domingo 3">
+          {[60, 80, 50, 90, 70, 40, 30].map((h, i) => <i key={i} className={h === 90 ? 'max' : undefined} style={{ height: `${h}%` }} />)}
+        </div>
+        <p>Mejor día: jueves</p>
+      </>
     ),
   },
   { area: 'note', titulo: 'Nota', contenido: <p>Revisar el informe antes del viernes.</p> },
@@ -35,4 +38,4 @@ export function BentoGrid({ cells = DEMO }: { cells?: BentoCell[] }) {
     </main>
   );
 }
-// CSS: copia las reglas .bento / .cell / .big / .hero .kpi .streak .chart .note .tag (grid-area) / .bars / .chip de la pestaña HTML + CSS.
+// CSS: copia las reglas .bento / .cell / .big / .hero .kpi .streak .chart .note .tag (grid-area) / .bars / .chip y los tokens :root de la pestaña HTML + CSS.

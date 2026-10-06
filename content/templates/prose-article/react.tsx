@@ -27,7 +27,7 @@ export function Demo() {
   return (
     <ProseArticle
       title="Por qué el texto largo necesita aire"
-      meta="12 de marzo · 6 min de lectura"
+      meta="12 de marzo, 6 min de lectura"
       quote={{ text: 'Diseñar es decidir qué se queda fuera de la página.', author: 'Marta Ruiz, directora de arte' }}
     >
       <p>
@@ -41,4 +41,4 @@ export function Demo() {
     </ProseArticle>
   );
 }
-// CSS: copia las reglas .prose (y sus hijos: h1, h2, .meta, a, blockquote, ul/ol, code, hr, mark) de la pestaña HTML + CSS.
+// CSS: copia las reglas .prose (y sus hijos: h1, h2, .meta, a, blockquote, ul/ol, code, hr, mark) de la pestaña HTML + CSS, junto con los tokens :root.

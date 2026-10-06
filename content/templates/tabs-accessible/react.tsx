@@ -52,4 +52,4 @@ export function Tabs({ tabs = DEMO, label = 'Detalle del proyecto' }: Props) {
     </div>
   );
 }
-// CSS: copia las reglas [role="tablist"] / [role="tab"] / [role="tabpanel"] (y .tabs) de la pestaña HTML + CSS.
+// CSS: copia las reglas [role="tablist"] / [role="tab"] / [role="tabpanel"] (y .tabs) y los tokens de la pestaña HTML + CSS.

@@ -34,4 +34,4 @@ export function PricingCard({ nombre, precio, ventajas, destacado = false, cta =
     </article>
   );
 }
-// CSS: copia las reglas .plan / .hot / .badge / .price / .plan ul li (✓ y .no con ✕) / button / .sr (visually-hidden) de la pestaña HTML + CSS.
+// CSS: copia los tokens :root y las reglas .plan / .hot (y .hot::before) / .badge / .price / .plan ul li (✓ y .no con ✕) / button / .sr (visually-hidden) de la pestaña HTML + CSS.

@@ -1,0 +1,44 @@
+<div class="text-sm text-slate-900 dark:text-slate-100">
+  <section id="cc" aria-labelledby="cc-title" class="max-w-3xl rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900
+    [&_.btn]:rounded-lg [&_.btn]:border [&_.btn]:border-slate-200 [&_.btn]:px-3.5 [&_.btn]:py-2 [&_.btn]:font-semibold hover:[&_.btn]:bg-slate-50 dark:[&_.btn]:border-slate-700 dark:hover:[&_.btn]:bg-slate-800
+    [&_.opt]:flex [&_.opt]:items-start [&_.opt]:justify-between [&_.opt]:gap-4 [&_.opt]:border-b [&_.opt]:border-slate-200 [&_.opt]:py-3 dark:[&_.opt]:border-slate-700
+    [&_small]:block [&_small]:text-[13px] [&_small]:text-slate-500 dark:[&_small]:text-slate-400 [&_b]:block
+    [&_.switch]:relative [&_.switch]:mt-0.5 [&_.switch]:h-5 [&_.switch]:w-9 [&_.switch]:flex-none [&_.switch]:cursor-pointer [&_.switch]:appearance-none [&_.switch]:rounded-full [&_.switch]:border [&_.switch]:border-slate-200 [&_.switch]:bg-slate-100 dark:[&_.switch]:border-slate-700 dark:[&_.switch]:bg-slate-950
+    [&_.switch]:after:absolute [&_.switch]:after:left-0.5 [&_.switch]:after:top-0.5 [&_.switch]:after:h-3.5 [&_.switch]:after:w-3.5 [&_.switch]:after:rounded-full [&_.switch]:after:bg-slate-400 [&_.switch]:after:transition-transform [&_.switch]:after:content-['']
+    [&_.switch:checked]:border-transparent [&_.switch:checked]:bg-gradient-to-br [&_.switch:checked]:from-cyan-400 [&_.switch:checked]:to-blue-600 [&_.switch:checked]:after:translate-x-4 [&_.switch:checked]:after:bg-white
+    [&_.switch:disabled]:cursor-not-allowed [&_.switch:disabled]:opacity-60
+    [&_:is(button,summary,a,input)]:focus-visible:outline-2 [&_:is(button,summary,a,input)]:focus-visible:outline-offset-2 [&_:is(button,summary,a,input)]:focus-visible:outline-blue-500">
+    <h2 id="cc-title" class="text-base font-semibold">Tu privacidad en este sitio</h2>
+    <p class="mt-1 max-w-prose text-slate-500 dark:text-slate-400">Usamos cookies necesarias para que el sitio funcione. Con tu permiso, también usamos otras para medir el uso y personalizar contenido. Lee la <a href="#" class="text-blue-600 underline dark:text-blue-400">política de cookies</a>.</p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <button id="reject" type="button" class="btn">Rechazar opcionales</button>
+      <button id="accept" type="button" class="btn">Aceptar todas</button>
+    </div>
+    <details class="mt-4 border-t border-slate-200 dark:border-slate-700">
+      <summary class="mt-3 w-fit cursor-pointer rounded px-1 font-semibold text-blue-600 dark:text-blue-400">Configurar preferencias</summary>
+      <form id="prefs">
+        <label class="opt"><span><b>Necesarias</b><small>Permiten iniciar sesión y recordar tu carrito. Siempre activas.</small></span><input class="switch" type="checkbox" role="switch" value="Necesarias" checked disabled></label>
+        <label class="opt"><span><b>Analíticas</b><small>Nos dicen qué páginas se usan para mejorarlas.</small></span><input class="switch" type="checkbox" role="switch" value="Analíticas"></label>
+        <label class="opt"><span><b>Preferencias</b><small>Recuerdan tu idioma y región.</small></span><input class="switch" type="checkbox" role="switch" value="Preferencias"></label>
+        <label class="opt"><span><b>Marketing</b><small>Muestran anuncios según tu actividad en otros sitios.</small></span><input class="switch" type="checkbox" role="switch" value="Marketing"></label>
+        <button type="submit" class="mt-4 rounded-lg bg-blue-600 px-3.5 py-2 font-semibold text-white hover:bg-blue-700 dark:bg-blue-400 dark:text-slate-950">Guardar preferencias</button>
+      </form>
+    </details>
+  </section>
+  <p id="cc-status" role="status" class="mt-3 empty:m-0"></p>
+  <button id="reopen" type="button" hidden class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 font-semibold hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Cambiar preferencias de cookies</button>
+</div>
+<script>
+  const banner = document.getElementById('cc'), form = document.getElementById('prefs'),
+        out = document.getElementById('cc-status'), reopen = document.getElementById('reopen');
+  const optional = [...form.querySelectorAll('.switch:not(:disabled)')];
+  function save() {
+    const on = [...form.querySelectorAll('.switch:checked')].map((i) => i.value);
+    banner.hidden = true; reopen.hidden = false; reopen.focus();
+    out.textContent = `Guardaste tus preferencias: ${on.join(', ')}.`;
+  }
+  document.getElementById('reject').addEventListener('click', () => { optional.forEach((i) => (i.checked = false)); save(); });
+  document.getElementById('accept').addEventListener('click', () => { optional.forEach((i) => (i.checked = true)); save(); });
+  form.addEventListener('submit', (e) => { e.preventDefault(); save(); });
+  reopen.addEventListener('click', () => { banner.hidden = false; reopen.hidden = true; out.textContent = ''; banner.querySelector('button').focus(); });
+</script>

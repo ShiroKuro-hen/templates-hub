@@ -12,7 +12,7 @@ export function SplitButton({ options, onAction }: { options: Option[]; onAction
 
   function place() {
     const r = wrap.current!.getBoundingClientRect();
-    Object.assign(menu.current!.style, { left: `${r.left}px`, top: `${r.bottom + 10}px` });
+    Object.assign(menu.current!.style, { left: `${r.left}px`, top: `${r.bottom + 8}px` });
   }
   function onKey(e: KeyboardEvent) {
     const list = items();

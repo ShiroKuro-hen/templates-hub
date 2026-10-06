@@ -2,8 +2,8 @@
 import { reactive, ref } from 'vue';
 
 const MSG: Record<string, string> = {
-  valueMissing: 'Este campo es obligatorio.',
-  typeMismatch: 'Escribe un correo válido, p. ej. ana@correo.com.',
+  valueMissing: 'Completa este campo.',
+  typeMismatch: 'Escribe un correo válido, por ejemplo ana@correo.com.',
   tooShort: 'Usa al menos 8 caracteres.',
   patternMismatch: 'Incluye al menos un número.',
 };
@@ -15,7 +15,7 @@ const done = ref(false);
 
 function validate(el: HTMLInputElement) {
   const pw = form.value!.elements.namedItem('pw') as HTMLInputElement;
-  if (el.name === 'pw2') errors[el.name] = el.value !== pw.value ? 'Las contraseñas no coinciden.' : '';
+  if (el.name === 'pw2') errors[el.name] = el.value !== pw.value ? 'Las contraseñas no coinciden. Escríbelas de nuevo.' : '';
   else {
     const key = Object.keys(MSG).find((k) => el.validity[k as keyof ValidityState]);
     errors[el.name] = el.validity.valid ? '' : key ? MSG[key] : el.validationMessage;
@@ -49,21 +49,23 @@ function onSubmit() {
       <p id="pw2-e" class="e">{{ errors.pw2 }}</p>
     </div>
     <div class="full"><button type="submit">Crear cuenta</button></div>
-    <p v-if="done" id="done" role="status">¡Cuenta creada! Revisa tu correo para confirmarla.</p>
+    <p v-if="done" id="done" role="status">Cuenta creada. Revisa tu correo para confirmarla.</p>
   </form>
 </template>
 
 <style scoped>
-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 12px; }
-.field { display: flex; flex-direction: column; gap: 3px; }
-label { font-weight: 700; font-size: 13px; }
-input { width: 100%; height: 36px; padding: 0 10px; font: inherit; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; }
-input:focus-visible, button:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-input[aria-invalid=true] { border-color: #d6293e; background: #fff3f4; }
-.e { min-height: 16px; margin: 0; font-size: 12px; color: #d6293e; }
-.e:not(:empty)::before { content: "✕ "; font-weight: 800; }
+form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 16px; padding: 20px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.field { display: flex; flex-direction: column; gap: 4px; }
+label { font-weight: 600; font-size: 13px; }
+input { width: 100%; height: 38px; padding: 0 12px; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .14s; }
+input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input[aria-invalid=true] { border-color: var(--err); }
+.e { min-height: 18px; margin: 0; font-size: 12px; color: var(--err); }
+.e:not(:empty)::before { content: "✕ "; font-weight: 700; }
 .full { grid-column: 1 / -1; }
-button { height: 40px; padding: 0 18px; font: 700 14px system-ui; color: #17130f; background: #ff5a36; border: 2px solid #17130f; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; cursor: pointer; }
-button:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-#done { grid-column: 1 / -1; margin: 0; padding: 8px 12px; font-weight: 700; background: #e3f5ea; border: 2px solid #1f9d55; border-radius: 10px; }
+button { height: 38px; padding: 0 18px; font: 600 14px system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--accent-ink); background: var(--accent); border: 0; border-radius: var(--radius); cursor: pointer; transition: filter .14s; }
+button:hover { filter: brightness(1.08); }
+#done { grid-column: 1 / -1; margin: 0; padding: 10px 12px; font-weight: 600; color: var(--ok); background: var(--ok-soft); border: 1px solid var(--ok); border-radius: var(--radius); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

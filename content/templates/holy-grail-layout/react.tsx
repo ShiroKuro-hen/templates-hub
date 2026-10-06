@@ -41,4 +41,4 @@ export function HolyGrail({ titulo = 'Taller Luna', nav = NAV, actual = '#inicio
     </>
   );
 }
-// CSS: copia las reglas .page (grid-template-areas) / header / nav / main / aside / footer / .skip / .tag de la pestaña HTML + CSS.
+// CSS: copia las reglas .page (grid-template-areas) / header / nav / main / aside / footer / .skip / .tag y los tokens :root de la pestaña HTML + CSS.

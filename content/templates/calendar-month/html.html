@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .cal{max-width:340px;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .cal header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+  h2{margin:0;font-size:15px;font-weight:600}
+  .nav{display:flex;gap:4px}
+  button{font:inherit;color:var(--text);background:none;border:1px solid transparent;cursor:pointer;transition:background .14s,border-color .14s}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .nav button{display:grid;place-items:center;width:32px;height:32px;border-color:var(--border);border-radius:var(--radius)}
+  .nav button:hover{border-color:var(--muted)}
+  table{width:100%;border-collapse:collapse;table-layout:fixed}
+  th{padding:4px 0;font-size:12px;font-weight:500;color:var(--muted)}
+  td{padding:2px;text-align:center}
+  td button{position:relative;width:100%;max-width:40px;aspect-ratio:1;border-radius:var(--radius);font-variant-numeric:tabular-nums}
+  td button:hover{background:var(--accent-soft)}
+  td button[aria-current=date]{font-weight:600;color:var(--accent);border-color:var(--border)}
+  td button[aria-current=date]::after{content:"";position:absolute;left:50%;bottom:4px;width:4px;height:4px;margin-left:-2px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  td button[aria-pressed=true],td button[aria-pressed=true]:hover{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  td button[aria-pressed=true]::after{background:var(--accent-ink)}
+  .cal footer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+  .out{margin:0;color:var(--muted);font-size:13px}
+  .today{flex:none;padding:4px 8px;border-radius:6px;color:var(--accent);font-weight:500}
+  .today:hover{background:var(--accent-soft)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="cal" aria-labelledby="title">
+  <header>
+    <h2 id="title" aria-live="polite"></h2>
+    <div class="nav">
+      <button type="button" id="prev" aria-label="Mes anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg></button>
+      <button type="button" id="next" aria-label="Mes siguiente"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></button>
+    </div>
+  </header>
+  <table aria-labelledby="title" aria-describedby="out">
+    <thead><tr>
+      <th scope="col" abbr="lunes">L</th><th scope="col" abbr="martes">M</th><th scope="col" abbr="miércoles">X</th><th scope="col" abbr="jueves">J</th>
+      <th scope="col" abbr="viernes">V</th><th scope="col" abbr="sábado">S</th><th scope="col" abbr="domingo">D</th>
+    </tr></thead>
+    <tbody id="days"></tbody>
+  </table>
+  <footer>
+    <p class="out" id="out" role="status">Selecciona una fecha para continuar.</p>
+    <button type="button" class="today" id="today">Hoy</button>
+  </footer>
+</section>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const fmtM = new Intl.DateTimeFormat('es', { month: 'long', year: 'numeric' });
+  const fmtL = new Intl.DateTimeFormat('es', { dateStyle: 'full' });
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const same = (a, b) => !!a && !!b && a.toDateString() === b.toDateString();
+  let cursor = new Date(today), sel = null;
+
+  function render(focus) {
+    const y = cursor.getFullYear(), m = cursor.getMonth(), t = fmtM.format(cursor);
+    $('title').textContent = t[0].toUpperCase() + t.slice(1);
+    const offset = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    let html = '';
+    for (let d = 1 - offset; d <= days;) {
+      html += '<tr>';
+      for (let i = 0; i < 7; i++, d++) {
+        if (d < 1 || d > days) { html += '<td></td>'; continue; }
+        const dt = new Date(y, m, d);
+        html += `<td><button type="button" data-d="${d}" tabindex="${d === cursor.getDate() ? 0 : -1}" aria-label="${fmtL.format(dt)}"`
+          + `${same(dt, today) ? ' aria-current="date"' : ''} aria-pressed="${same(dt, sel)}">${d}</button></td>`;
+      }
+      html += '</tr>';
+    }
+    $('days').innerHTML = html;
+    if (focus) $('days').querySelector('[tabindex="0"]').focus();
+  }
+  const shift = (n) => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() + n, 1); render(false); };
+  $('prev').onclick = () => shift(-1);
+  $('next').onclick = () => shift(1);
+  $('today').onclick = () => { cursor = new Date(today); render(true); };
+
+  $('days').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    cursor = sel = new Date(cursor.getFullYear(), cursor.getMonth(), +b.dataset.d);
+    render(true);
+    $('out').textContent = 'Fecha seleccionada: ' + fmtL.format(sel) + '.';
+  });
+  $('days').addEventListener('keydown', (e) => {
+    const y = cursor.getFullYear(), m = cursor.getMonth(), d = cursor.getDate(), dow = (cursor.getDay() + 6) % 7;
+    const delta = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7, Home: -dow, End: 6 - dow }[e.key];
+    if (delta !== undefined) cursor = new Date(y, m, d + delta);
+    else if (e.key === 'PageUp' || e.key === 'PageDown') {
+      const nm = m + (e.key === 'PageUp' ? -1 : 1);
+      cursor = new Date(y, nm, Math.min(d, new Date(y, nm + 1, 0).getDate()));
+    } else return;
+    e.preventDefault(); render(true);
+  });
+  render(false);
+</script>
+</body>
+</html>

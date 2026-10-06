@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .panel{max-width:440px;margin:0 auto;padding:20px;display:grid;gap:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  label,.label{font-weight:600}
+  output{color:var(--muted);font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;display:block;width:100%;height:20px;margin:0;background:transparent;cursor:pointer}
+  input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:999px;background:var(--track)}
+  input[type=range]::-moz-range-track{height:4px;border-radius:999px;background:var(--track)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-7px;border-radius:50%;background:var(--surface);border:1px solid var(--accent);box-shadow:var(--shadow);transition:transform .14s}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--surface);border:1px solid var(--accent);box-shadow:var(--shadow)}
+  input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}
+  input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  .single{--track:linear-gradient(to right,var(--accent) calc(var(--p)*1%),var(--border) 0)}
+  .dual{position:relative;height:20px}
+  .dual::before,.fill{content:"";position:absolute;top:8px;height:4px;border-radius:999px}
+  .dual::before{left:0;right:0;background:var(--border)}
+  .fill{left:calc(var(--a)*1%);right:calc(100% - var(--b)*1%);background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .dual input{position:absolute;inset:0;pointer-events:none;--track:transparent}
+  .dual input::-webkit-slider-thumb{pointer-events:auto}
+  .dual input::-moz-range-thumb{pointer-events:auto}
+  .scale{display:flex;justify-content:space-between;margin-top:6px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form class="panel" aria-label="Filtros">
+  <div>
+    <div class="row"><label for="vol">Volumen</label><output id="volOut" for="vol">60%</output></div>
+    <input type="range" class="single" id="vol" min="0" max="100" value="60" style="--p:60">
+  </div>
+  <div role="group" aria-labelledby="priceLbl">
+    <div class="row"><span class="label" id="priceLbl">Precio</span><output id="price" for="lo hi">$120 – $680</output></div>
+    <div class="dual" id="dual" style="--a:12;--b:68">
+      <span class="fill"></span>
+      <input type="range" id="lo" min="0" max="1000" step="10" value="120" aria-label="Precio mínimo">
+      <input type="range" id="hi" min="0" max="1000" step="10" value="680" aria-label="Precio máximo">
+    </div>
+    <div class="scale" aria-hidden="true"><span>$0</span><span>$1000</span></div>
+  </div>
+</form>
+<script>
+  const vol = document.getElementById('vol');
+  vol.addEventListener('input', () => {
+    vol.style.setProperty('--p', vol.value);
+    document.getElementById('volOut').value = vol.value + '%';
+  });
+
+  const GAP = 50, lo = document.getElementById('lo'), hi = document.getElementById('hi'), dual = document.getElementById('dual');
+  function update(e) {
+    if (+hi.value - +lo.value < GAP) {
+      if (e.target === lo) lo.value = +hi.value - GAP;
+      else hi.value = +lo.value + GAP;
+    }
+    dual.style.setProperty('--a', lo.value / 10);
+    dual.style.setProperty('--b', hi.value / 10);
+    lo.setAttribute('aria-valuetext', '$' + lo.value);
+    hi.setAttribute('aria-valuetext', '$' + hi.value);
+    document.getElementById('price').value = `$${lo.value} – $${hi.value}`;
+  }
+  lo.addEventListener('input', update);
+  hi.addEventListener('input', update);
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<div class="min-h-80 bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="max-w-xs">
+    <label id="lbl" class="mb-1.5 block font-semibold">Región del servidor</label>
+    <div class="relative">
+      <div id="combo" role="combobox" tabindex="0" aria-labelledby="lbl" aria-haspopup="listbox" aria-controls="lb" aria-expanded="false" aria-describedby="hint"
+           class="group flex h-[38px] cursor-pointer select-none items-center justify-between gap-2 rounded-lg border border-slate-200 bg-white px-3 transition-colors hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 aria-expanded:border-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:aria-expanded:border-blue-400">
+        <span id="value">Europa (Madrid)</span>
+        <svg class="text-slate-500 transition-transform group-aria-expanded:rotate-180" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <ul id="lb" role="listbox" aria-labelledby="lbl" tabindex="-1" hidden
+          class="absolute inset-x-0 top-full z-10 mt-1 max-h-56 overflow-auto rounded-lg border border-slate-200 bg-white p-1 shadow-md dark:border-slate-700 dark:bg-slate-900
+                 [&>li]:relative [&>li]:flex [&>li]:cursor-pointer [&>li]:justify-between [&>li]:rounded-md [&>li]:py-2 [&>li]:pl-3 [&>li]:pr-2.5
+                 [&>li:hover]:bg-blue-50 [&>li.active]:bg-blue-50 dark:[&>li:hover]:bg-slate-800 dark:[&>li.active]:bg-slate-800
+                 [&>li.active]:before:absolute [&>li.active]:before:inset-y-2 [&>li.active]:before:left-0 [&>li.active]:before:w-0.5 [&>li.active]:before:rounded [&>li.active]:before:bg-gradient-to-b [&>li.active]:before:from-cyan-400 [&>li.active]:before:to-blue-600
+                 [&>li[aria-selected=true]]:font-semibold [&>li[aria-selected=true]]:after:text-blue-600 [&>li[aria-selected=true]]:after:content-['✓'] dark:[&>li[aria-selected=true]]:after:text-blue-400">
+        <li role="option" id="o1" aria-selected="false">EE. UU. Este (Virginia)</li>
+        <li role="option" id="o2" aria-selected="false">EE. UU. Oeste (Oregón)</li>
+        <li role="option" id="o3" aria-selected="true">Europa (Madrid)</li>
+        <li role="option" id="o4" aria-selected="false">Europa (Fráncfort)</li>
+        <li role="option" id="o5" aria-selected="false">Sudamérica (São Paulo)</li>
+        <li role="option" id="o6" aria-selected="false">Asia Pacífico (Tokio)</li>
+      </ul>
+    </div>
+    <p id="hint" class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Elige la región más cercana a tus usuarios.</p>
+  </div>
+</div>
+<script>
+  const combo = document.getElementById('combo'), lb = document.getElementById('lb'), value = document.getElementById('value');
+  const opts = [...lb.children];
+  let active = opts.findIndex((o) => o.getAttribute('aria-selected') === 'true');
+  const isOpen = () => !lb.hidden;
+  function setActive(i) {
+    active = Math.max(0, Math.min(opts.length - 1, i));
+    opts.forEach((o, j) => o.classList.toggle('active', j === active));
+    combo.setAttribute('aria-activedescendant', opts[active].id);
+    opts[active].scrollIntoView({ block: 'nearest' });
+  }
+  function toggle(open) { lb.hidden = !open; combo.setAttribute('aria-expanded', open); if (open) setActive(active); else combo.removeAttribute('aria-activedescendant'); }
+  function choose(i) { opts.forEach((o, j) => o.setAttribute('aria-selected', j === i)); value.textContent = opts[i].textContent; active = i; toggle(false); }
+  combo.addEventListener('keydown', (e) => {
+    const k = e.key;
+    if (!isOpen()) { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(k)) { e.preventDefault(); toggle(true); } return; }
+    const moves = { ArrowDown: active + 1, ArrowUp: active - 1, Home: 0, End: opts.length - 1 };
+    if (k in moves) { e.preventDefault(); setActive(moves[k]); }
+    else if (k === 'Enter' || k === ' ') { e.preventDefault(); choose(active); }
+    else if (k === 'Escape') toggle(false);
+    else if (k === 'Tab') choose(active);
+    else if (k.length === 1) for (let s = 1; s <= opts.length; s++) { const j = (active + s) % opts.length; if (opts[j].textContent.toLowerCase().startsWith(k.toLowerCase())) { setActive(j); break; } }
+  });
+  combo.addEventListener('click', () => toggle(!isOpen()));
+  combo.addEventListener('blur', () => isOpen() && toggle(false));
+  lb.addEventListener('mousedown', (e) => e.preventDefault());
+  lb.addEventListener('click', (e) => { const o = e.target.closest('[role=option]'); if (o) choose(opts.indexOf(o)); });
+</script>

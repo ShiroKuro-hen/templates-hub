@@ -25,4 +25,4 @@ export function TypeScale({ steps = STEPS }: { steps?: Step[] }) {
     </ol>
   );
 }
-// CSS: copia las variables :root (--step-*) y las reglas .scale / .tok / .smp / .s5…s-1 de la pestaña HTML + CSS.
+// CSS: copia las variables :root (--step-*) y las reglas .scale / .tok / .smp / .s5…s-1 de la pestaña HTML + CSS, junto con los tokens de color.

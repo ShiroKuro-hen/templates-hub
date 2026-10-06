@@ -6,7 +6,7 @@ withDefaults(defineProps<{ items?: Item[]; name?: string; defaultOpenId?: string
   defaultOpenId: 'plan',
   items: () => [
     { id: 'plan', pregunta: '¿Puedo cambiar de plan en cualquier momento?', respuesta: 'Sí. El cambio se aplica al instante y cobramos solo la diferencia prorrateada.' },
-    { id: 'baja', pregunta: '¿Cómo cancelo mi suscripción?', respuesta: 'Desde Ajustes → Facturación. Conservas el acceso hasta el final del período pagado.' },
+    { id: 'baja', pregunta: '¿Cómo cancelo mi suscripción?', respuesta: 'Abre Ajustes y entra en Facturación. Conservas el acceso hasta el final del período pagado.' },
     { id: 'ruc', pregunta: '¿Ofrecen facturas con RUC?', respuesta: 'Claro: añade tus datos fiscales en Facturación y las emitiremos cada mes.' },
   ],
 });
@@ -22,16 +22,17 @@ withDefaults(defineProps<{ items?: Item[]; name?: string; defaultOpenId?: string
 </template>
 
 <style scoped>
-.acc { display: grid; gap: 10px; font: 15px/1.5 system-ui, sans-serif; color: #17130f; interpolate-size: allow-keywords; }
-details { border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
-details[open] { background: #fff; box-shadow: 2px 2px 0 #17130f; transform: translate(2px, 2px); }
-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; font-weight: 700; cursor: pointer; list-style: none; border-radius: 8px; }
+.acc { display: grid; gap: 8px; max-width: 640px; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); interpolate-size: allow-keywords; }
+details { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); transition: border-color 140ms; }
+details[open] { border-color: var(--accent); }
+summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; font-weight: 600; cursor: pointer; list-style: none; border-radius: var(--radius); }
 summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; display: grid; place-items: center; flex: none; width: 24px; height: 24px; font: 700 16px ui-monospace, monospace; background: #ffd84d; border: 2px solid #17130f; border-radius: 50%; transition: transform .2s; }
-details[open] summary::after { content: "−"; transform: rotate(180deg); background: #ff5a36; }
-summary:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-p { margin: 0; padding: 0 14px 14px; color: #6b6258; }
-details::details-content { block-size: 0; overflow: clip; transition: block-size .25s ease, content-visibility .25s allow-discrete; }
+summary::after { content: "+"; display: grid; place-items: center; flex: none; width: 24px; height: 24px; font-size: 16px; line-height: 1; background: var(--accent-soft); color: var(--accent); border-radius: 50%; transition: transform 160ms; }
+details[open] summary::after { content: "−"; transform: rotate(180deg); background: linear-gradient(135deg, #22d3ee, #2f5bff); color: #fff; }
+summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+p { margin: 0; padding: 0 16px 14px; color: var(--muted); }
+details::details-content { block-size: 0; overflow: clip; transition: block-size 160ms ease, content-visibility 160ms allow-discrete; }
 details[open]::details-content { block-size: auto; }
-@media (prefers-reduced-motion: reduce) { details::details-content, summary::after { transition: none; } }
+@media (prefers-reduced-motion: reduce) { details, details::details-content, summary::after { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

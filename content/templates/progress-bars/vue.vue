@@ -6,7 +6,7 @@ const tone = (v: number) => (v >= 75 ? 'hi' : v >= 40 ? 'mid' : 'lo');
 </script>
 
 <template>
-  <div class="bars">
+  <div class="card">
     <div v-for="(it, i) in items" :key="it.label" class="row">
       <label :for="`pb-${i}`">{{ it.label }}</label>
       <progress :id="`pb-${i}`" :class="tone(it.value)" max="100" :value="it.value" />
@@ -16,14 +16,15 @@ const tone = (v: number) => (v >= 75 ? 'hi' : v >= 40 ? 'mid' : 'lo');
 </template>
 
 <style scoped>
-.bars { padding: 20px; background: #f6f1e7; color: #17130f; font: 14px system-ui, sans-serif; }
-.row { display: grid; grid-template-columns: 110px 1fr 48px; align-items: center; gap: 12px; margin-bottom: 14px; font-weight: 600; }
-.row output { text-align: right; font-variant-numeric: tabular-nums; }
-progress { appearance: none; width: 100%; height: 18px; border: 2px solid #17130f; border-radius: 999px; background: #fffdf8; overflow: hidden; }
-progress::-webkit-progress-bar { background: #fffdf8; }
-progress::-webkit-progress-value { background: var(--c); }
-progress::-moz-progress-bar { background: var(--c); }
-.lo { --c: #d6293e; }
-.mid { --c: #e0a800; }
-.hi { --c: #1f9d55; }
+.card{padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.row{display:grid;grid-template-columns:110px 1fr 48px;align-items:center;gap:12px;margin-bottom:16px}
+.row:last-child{margin-bottom:0}
+.row label{font-weight:500}
+.row output{text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+progress{appearance:none;width:100%;height:8px;border:0;border-radius:999px;background:var(--border);overflow:hidden}
+progress::-webkit-progress-bar{background:var(--border)}
+progress::-webkit-progress-value{background:var(--c);border-radius:999px}
+progress::-moz-progress-bar{background:var(--c);border-radius:999px}
+.lo{--c:var(--err)} .mid{--c:var(--warn)} .hi{--c:var(--ok)}
+/* Tokens: ver pestaña HTML + CSS */
 </style>

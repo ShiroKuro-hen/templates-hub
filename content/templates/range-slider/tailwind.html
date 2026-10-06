@@ -1,0 +1,47 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <form aria-label="Filtros" class="mx-auto grid max-w-md gap-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div>
+      <div class="mb-2 flex items-baseline justify-between">
+        <label for="vol" class="font-semibold">Volumen</label>
+        <output id="volOut" for="vol" class="tabular-nums text-slate-500 dark:text-slate-400">60%</output>
+      </div>
+      <!-- accent-color nativo pinta el tramo recorrido sin JS -->
+      <input type="range" id="vol" min="0" max="100" value="60" class="block w-full cursor-pointer accent-blue-600 dark:accent-blue-400 focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">
+    </div>
+    <div role="group" aria-labelledby="priceLbl">
+      <div class="mb-2 flex items-baseline justify-between">
+        <span id="priceLbl" class="font-semibold">Precio</span>
+        <output id="price" for="lo hi" class="tabular-nums text-slate-500 dark:text-slate-400">$120 – $680</output>
+      </div>
+      <div class="relative h-5 [&>input]:pointer-events-none [&>input]:absolute [&>input]:inset-0 [&>input]:h-5 [&>input]:w-full [&>input]:appearance-none [&>input]:bg-transparent
+        [&>input:focus-visible]:rounded [&>input:focus-visible]:outline-2 [&>input:focus-visible]:outline-offset-2 [&>input:focus-visible]:outline-blue-500
+        [&_input::-webkit-slider-thumb]:pointer-events-auto [&_input::-webkit-slider-thumb]:size-[18px] [&_input::-webkit-slider-thumb]:cursor-pointer [&_input::-webkit-slider-thumb]:appearance-none [&_input::-webkit-slider-thumb]:rounded-full [&_input::-webkit-slider-thumb]:border [&_input::-webkit-slider-thumb]:border-blue-600 [&_input::-webkit-slider-thumb]:bg-white [&_input::-webkit-slider-thumb]:shadow-sm dark:[&_input::-webkit-slider-thumb]:bg-slate-900
+        [&_input::-moz-range-thumb]:pointer-events-auto [&_input::-moz-range-thumb]:size-4 [&_input::-moz-range-thumb]:cursor-pointer [&_input::-moz-range-thumb]:rounded-full [&_input::-moz-range-thumb]:border [&_input::-moz-range-thumb]:border-blue-600 [&_input::-moz-range-thumb]:bg-white dark:[&_input::-moz-range-thumb]:bg-slate-900">
+        <span class="absolute inset-x-0 top-2 h-1 rounded-full bg-slate-200 dark:bg-slate-700"></span>
+        <span id="fill" class="absolute top-2 h-1 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" style="left:12%;right:32%"></span>
+        <input type="range" id="lo" min="0" max="1000" step="10" value="120" aria-label="Precio mínimo">
+        <input type="range" id="hi" min="0" max="1000" step="10" value="680" aria-label="Precio máximo">
+      </div>
+      <div aria-hidden="true" class="mt-1.5 flex justify-between text-xs tabular-nums text-slate-500 dark:text-slate-400"><span>$0</span><span>$1000</span></div>
+    </div>
+  </form>
+</div>
+<script>
+  const vol = document.getElementById('vol');
+  vol.addEventListener('input', () => (document.getElementById('volOut').value = vol.value + '%'));
+
+  const GAP = 50, lo = document.getElementById('lo'), hi = document.getElementById('hi'), fill = document.getElementById('fill');
+  function update(e) {
+    if (+hi.value - +lo.value < GAP) {
+      if (e.target === lo) lo.value = +hi.value - GAP;
+      else hi.value = +lo.value + GAP;
+    }
+    fill.style.left = lo.value / 10 + '%';
+    fill.style.right = 100 - hi.value / 10 + '%';
+    lo.setAttribute('aria-valuetext', '$' + lo.value);
+    hi.setAttribute('aria-valuetext', '$' + hi.value);
+    document.getElementById('price').value = `$${lo.value} – $${hi.value}`;
+  }
+  lo.addEventListener('input', update);
+  hi.addEventListener('input', update);
+</script>

@@ -27,7 +27,7 @@ defineExpose({ push });
 <template>
   <div class="row">
     <button type="button" @click="push('ok', 'Cambios guardados', 'Tu perfil ya está actualizado.')">Guardar</button>
-    <button type="button" @click="push('err', 'No se pudo conectar', 'Revisa tu conexión.')">Falla de red</button>
+    <button type="button" @click="push('err', 'No se pudo conectar', 'Revisa tu conexión e inténtalo de nuevo.')">Falla de red</button>
   </div>
   <ul class="toasts" aria-live="polite" aria-label="Notificaciones">
     <li v-for="t in items" :key="t.id" :class="['toast', t.kind]"
@@ -40,17 +40,20 @@ defineExpose({ push });
 </template>
 
 <style scoped>
-.row { display:flex; flex-wrap:wrap; gap:10px; }
-button { font:inherit; font-weight:600; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; padding:8px 14px; box-shadow:4px 4px 0 #17130f; cursor:pointer; }
-button:hover, button:active { transform:translate(2px,2px); box-shadow:2px 2px 0 #17130f; }
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-.toasts { position:fixed; right:12px; bottom:12px; width:min(320px, calc(100% - 24px)); display:flex; flex-direction:column; gap:8px; margin:0; padding:0; list-style:none; }
-.toast { --c:#3b5bfd; display:flex; align-items:center; gap:10px; padding:10px 10px 10px 12px; background:#fffdf8; color:#17130f; border:2px solid #17130f; border-left:8px solid var(--c); border-radius:10px; box-shadow:4px 4px 0 #17130f; animation:in .2s ease-out; }
-.toast.ok { --c:#1f9d55; } .toast.warn { --c:#e0a800; } .toast.err { --c:#d6293e; }
+.row { display:flex; flex-wrap:wrap; gap:10px; font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+button { font:inherit; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:8px 14px; box-shadow:var(--shadow); cursor:pointer; transition:border-color .14s; }
+button:hover { border-color:var(--accent); }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.toasts { position:fixed; right:12px; bottom:12px; width:min(340px, calc(100% - 24px)); display:flex; flex-direction:column; gap:8px; margin:0; padding:0; list-style:none; }
+.toast { --c:var(--accent); position:relative; display:flex; align-items:center; gap:12px; padding:12px 10px 12px 16px; overflow:hidden; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); animation:in .16s ease-out; font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+.toast::before { content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--c); }
+.toast.ok { --c:var(--ok); } .toast.warn { --c:var(--warn); } .toast.err { --c:var(--err); }
 .toast span { flex:1; }
-.toast b { display:block; }
-.toast small { color:#6b6258; }
-.toast button { padding:2px 8px; box-shadow:none; font-size:16px; line-height:1.2; }
+.toast b { display:block; font-weight:600; }
+.toast small { color:var(--muted); font-size:13px; }
+.toast button { padding:0; width:28px; height:28px; border:0; box-shadow:none; background:none; color:var(--muted); font-size:18px; line-height:1; }
+.toast button:hover { background:var(--bg); color:var(--text); }
 @keyframes in { from { opacity:0; transform:translateY(12px); } }
-@media (prefers-reduced-motion:reduce) { .toast { animation:none; } }
+@media (prefers-reduced-motion:reduce) { .toast { animation:none; } * { transition:none !important; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

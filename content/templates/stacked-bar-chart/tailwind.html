@@ -1,0 +1,49 @@
+<!-- Versión estática: el tooltip usa <title> nativo. Para el tooltip propio, usa el script de la pestaña HTML + CSS. -->
+<figure class="m-0 rounded-lg border border-slate-200 bg-white px-5 py-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <figcaption><strong class="block text-[15px] font-semibold">Pedidos por canal</strong><span class="text-slate-500 dark:text-slate-400">Primer semestre de 2026, en miles de pedidos</span></figcaption>
+  <ul class="mb-1 mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[13px] text-slate-500 dark:text-slate-400 [&_i]:h-2.5 [&_i]:w-2.5 [&_i]:rounded-[3px] [&_li]:flex [&_li]:items-center [&_li]:gap-2">
+    <li><i class="bg-blue-600 dark:bg-blue-400"></i>Web</li>
+    <li><i class="bg-cyan-600 dark:bg-sky-400"></i>App móvil</li>
+    <li><i class="bg-emerald-600 dark:bg-emerald-400"></i>Tienda física</li>
+  </ul>
+  <svg width="100%" height="250" role="group" aria-label="Pedidos por canal y mes. Recorre las barras con Tab." class="block overflow-visible
+       [&_rect]:cursor-pointer [&_rect]:stroke-white [&_rect]:transition-opacity hover:[&_rect]:opacity-85 focus-visible:[&_rect]:outline-2 focus-visible:[&_rect]:outline-offset-2 focus-visible:[&_rect]:outline-blue-600 dark:[&_rect]:stroke-slate-900
+       [&_.w]:fill-blue-600 dark:[&_.w]:fill-blue-400 [&_.a]:fill-cyan-600 dark:[&_.a]:fill-sky-400 [&_.t]:fill-emerald-600 dark:[&_.t]:fill-emerald-400
+       [&_line]:stroke-slate-200 dark:[&_line]:stroke-slate-700 [&_text]:text-xs [&_.tot]:fill-current [&_.tot]:font-semibold [&_.tot]:tabular-nums [&_.lab]:fill-slate-500 dark:[&_.lab]:fill-slate-400">
+    <line x1="0" x2="100%" y1="156.7" y2="156.7" stroke-dasharray="2 4"/>
+    <line x1="0" x2="100%" y1="91.3" y2="91.3" stroke-dasharray="2 4"/>
+    <line x1="0" x2="100%" y1="26" y2="26" stroke-dasharray="2 4"/>
+    <g text-anchor="middle">
+      <rect class="w" tabindex="0" role="img" aria-label="Ene, Web: 42 mil" x="4.17%" y="167.1" width="8.33%" height="54.9"><title>Ene, Web: 42 mil</title></rect>
+      <rect class="a" tabindex="0" role="img" aria-label="Ene, App móvil: 28 mil" x="4.17%" y="130.5" width="8.33%" height="36.6"><title>Ene, App móvil: 28 mil</title></rect>
+      <rect class="t" tabindex="0" role="img" aria-label="Ene, Tienda física: 12 mil" x="4.17%" y="114.8" width="8.33%" height="15.7"><title>Ene, Tienda física: 12 mil</title></rect>
+      <text class="tot" x="8.33%" y="108.8">82</text><text class="lab" x="8.33%" y="242">Ene</text>
+
+      <rect class="w" tabindex="0" role="img" aria-label="Feb, Web: 38 mil" x="20.83%" y="172.3" width="8.33%" height="49.7"><title>Feb, Web: 38 mil</title></rect>
+      <rect class="a" tabindex="0" role="img" aria-label="Feb, App móvil: 31 mil" x="20.83%" y="131.8" width="8.33%" height="40.5"><title>Feb, App móvil: 31 mil</title></rect>
+      <rect class="t" tabindex="0" role="img" aria-label="Feb, Tienda física: 14 mil" x="20.83%" y="113.5" width="8.33%" height="18.3"><title>Feb, Tienda física: 14 mil</title></rect>
+      <text class="tot" x="25%" y="107.5">83</text><text class="lab" x="25%" y="242">Feb</text>
+
+      <rect class="w" tabindex="0" role="img" aria-label="Mar, Web: 51 mil" x="37.5%" y="155.4" width="8.33%" height="66.6"><title>Mar, Web: 51 mil</title></rect>
+      <rect class="a" tabindex="0" role="img" aria-label="Mar, App móvil: 35 mil" x="37.5%" y="109.7" width="8.33%" height="45.7"><title>Mar, App móvil: 35 mil</title></rect>
+      <rect class="t" tabindex="0" role="img" aria-label="Mar, Tienda física: 11 mil" x="37.5%" y="95.3" width="8.33%" height="14.4"><title>Mar, Tienda física: 11 mil</title></rect>
+      <text class="tot" x="41.67%" y="89.3">97</text><text class="lab" x="41.67%" y="242">Mar</text>
+
+      <rect class="w" tabindex="0" role="img" aria-label="Abr, Web: 47 mil" x="54.17%" y="160.6" width="8.33%" height="61.4"><title>Abr, Web: 47 mil</title></rect>
+      <rect class="a" tabindex="0" role="img" aria-label="Abr, App móvil: 40 mil" x="54.17%" y="108.3" width="8.33%" height="52.3"><title>Abr, App móvil: 40 mil</title></rect>
+      <rect class="t" tabindex="0" role="img" aria-label="Abr, Tienda física: 15 mil" x="54.17%" y="88.7" width="8.33%" height="19.6"><title>Abr, Tienda física: 15 mil</title></rect>
+      <text class="tot" x="58.33%" y="82.7">102</text><text class="lab" x="58.33%" y="242">Abr</text>
+
+      <rect class="w" tabindex="0" role="img" aria-label="May, Web: 56 mil" x="70.83%" y="148.8" width="8.33%" height="73.2"><title>May, Web: 56 mil</title></rect>
+      <rect class="a" tabindex="0" role="img" aria-label="May, App móvil: 44 mil" x="70.83%" y="91.3" width="8.33%" height="57.5"><title>May, App móvil: 44 mil</title></rect>
+      <rect class="t" tabindex="0" role="img" aria-label="May, Tienda física: 13 mil" x="70.83%" y="74.3" width="8.33%" height="17"><title>May, Tienda física: 13 mil</title></rect>
+      <text class="tot" x="75%" y="68.3">113</text><text class="lab" x="75%" y="242">May</text>
+
+      <rect class="w" tabindex="0" role="img" aria-label="Jun, Web: 61 mil" x="87.5%" y="142.3" width="8.33%" height="79.7"><title>Jun, Web: 61 mil</title></rect>
+      <rect class="a" tabindex="0" role="img" aria-label="Jun, App móvil: 49 mil" x="87.5%" y="78.3" width="8.33%" height="64"><title>Jun, App móvil: 49 mil</title></rect>
+      <rect class="t" tabindex="0" role="img" aria-label="Jun, Tienda física: 16 mil" x="87.5%" y="57.4" width="8.33%" height="20.9"><title>Jun, Tienda física: 16 mil</title></rect>
+      <text class="tot" x="91.67%" y="51.4">126</text><text class="lab" x="91.67%" y="242">Jun</text>
+    </g>
+    <line x1="0" x2="100%" y1="222" y2="222"/>
+  </svg>
+</figure>

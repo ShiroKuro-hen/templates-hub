@@ -1,20 +1,22 @@
-<div class="bg-[#f6f1e7] p-5 text-sm text-[#17130f]">
-  <table id="t" class="w-full border-collapse border-2 border-[#17130f] bg-[#fffdf8]">
-    <caption class="sr-only">Ventas por persona (clic en un encabezado para ordenar)</caption>
-    <thead>
-      <tr class="[&>th]:sticky [&>th]:top-0 [&>th]:border-b-2 [&>th]:border-[#17130f] [&>th]:bg-[#ffd84d] [&>th]:p-0 [&>th]:text-left">
-        <th scope="col" aria-sort="none"><button type="button" class="w-full cursor-pointer px-3 py-2.5 text-left font-bold focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[3px] focus-visible:outline-[#ff5a36]">Nombre</button></th>
-        <th scope="col" aria-sort="none"><button type="button" class="w-full cursor-pointer px-3 py-2.5 text-left font-bold focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[3px] focus-visible:outline-[#ff5a36]">Plan</button></th>
-        <th scope="col" aria-sort="none"><button type="button" class="w-full cursor-pointer px-3 py-2.5 text-right font-bold focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-[3px] focus-visible:outline-[#ff5a36]">Ventas</button></th>
-      </tr>
-    </thead>
-    <tbody class="[&>tr:nth-child(even)]:bg-[#17130f0d] [&_td]:border-b [&_td]:border-[#17130f33] [&_td]:px-3 [&_td]:py-2.5">
-      <tr><td>Ana Pérez</td><td>Pro</td><td class="text-right tabular-nums">1240</td></tr>
-      <tr><td>Luis Gómez</td><td>Free</td><td class="text-right tabular-nums">310</td></tr>
-      <tr><td>Marta Ruiz</td><td>Pro</td><td class="text-right tabular-nums">2890</td></tr>
-      <tr><td>Carlos Díaz</td><td>Team</td><td class="text-right tabular-nums">760</td></tr>
-    </tbody>
-  </table>
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="max-h-96 overflow-auto rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <table id="t" class="w-full border-separate border-spacing-0">
+      <caption class="sr-only">Ventas por persona. Usa los encabezados para ordenar.</caption>
+      <thead>
+        <tr class="[&>th]:sticky [&>th]:top-0 [&>th]:border-b [&>th]:border-slate-200 [&>th]:bg-white [&>th]:p-0 [&>th]:text-left [&>th]:font-semibold [&>th]:text-slate-500 dark:[&>th]:border-slate-700 dark:[&>th]:bg-slate-900 dark:[&>th]:text-slate-400">
+          <th scope="col" aria-sort="none"><button type="button" class="w-full cursor-pointer px-4 py-2.5 text-left hover:text-slate-900 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:text-slate-100">Nombre</button></th>
+          <th scope="col" aria-sort="none"><button type="button" class="w-full cursor-pointer px-4 py-2.5 text-left hover:text-slate-900 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:text-slate-100">Plan</button></th>
+          <th scope="col" aria-sort="none"><button type="button" class="w-full cursor-pointer px-4 py-2.5 text-right hover:text-slate-900 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:text-slate-100">Ventas</button></th>
+        </tr>
+      </thead>
+      <tbody class="[&_td]:border-b [&_td]:border-slate-200 [&_td]:px-4 [&_td]:py-2.5 dark:[&_td]:border-slate-700 [&>tr:last-child>td]:border-0 [&>tr:hover]:bg-blue-50 dark:[&>tr:hover]:bg-slate-800">
+        <tr><td>Ana Pérez</td><td>Pro</td><td class="text-right tabular-nums">1240</td></tr>
+        <tr><td>Luis Gómez</td><td>Free</td><td class="text-right tabular-nums">310</td></tr>
+        <tr><td>Marta Ruiz</td><td>Pro</td><td class="text-right tabular-nums">2890</td></tr>
+        <tr><td>Carlos Díaz</td><td>Team</td><td class="text-right tabular-nums">760</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <script>
   const t = document.getElementById('t');

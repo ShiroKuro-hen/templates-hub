@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .stack{display:grid;gap:12px;max-width:760px}
+  .banner{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .banner[data-state=ok]{--c:var(--ok);--soft:var(--ok-soft)}
+  .banner[data-state=degraded]{--c:var(--warn);--soft:var(--warn-soft)}
+  .banner[data-state=down]{--c:var(--err);--soft:var(--err-soft)}
+  .body{flex:1 1 260px;min-width:0}
+  .state{display:inline-flex;align-items:center;gap:8px;padding:2px 10px;border-radius:999px;background:var(--soft);font-size:12px;font-weight:600}
+  .dot{position:relative;width:8px;height:8px;border-radius:999px;background:var(--c)}
+  .dot::after{content:"";position:absolute;inset:-3px;border-radius:inherit;border:1px solid var(--c);animation:ping 1.8s ease-out infinite}
+  @keyframes ping{from{transform:scale(.6);opacity:1}to{transform:scale(1.6);opacity:0}}
+  .banner strong{display:block;margin-top:6px;font-size:15px;font-weight:600}
+  .banner p{margin:2px 0 0;color:var(--muted)}
+  .meta{display:flex;align-items:center;gap:16px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .meta a{color:var(--accent);font-size:14px;font-weight:500;text-decoration:none;border-radius:4px}
+  .meta a:hover{text-decoration:underline}
+  .meta a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){.dot::after{animation:none;opacity:0}}
+</style>
+</head>
+<body>
+<div class="stack">
+  <section class="banner" data-state="ok" aria-labelledby="s1">
+    <div class="body">
+      <span class="state"><span class="dot" aria-hidden="true"></span>Operativo</span>
+      <strong id="s1">Todos los sistemas funcionan</strong>
+      <p>API, panel y pagos responden con normalidad.</p>
+    </div>
+    <div class="meta"><time datetime="2026-10-06T10:58">Revisado a las 10:58</time><a href="#">Ver historial</a></div>
+  </section>
+  <section class="banner" data-state="degraded" aria-labelledby="s2">
+    <div class="body">
+      <span class="state"><span class="dot" aria-hidden="true"></span>Degradado</span>
+      <strong id="s2">La API responde más lento de lo habitual</strong>
+      <p>Algunas peticiones tardan hasta 4 s. Estamos aplicando una corrección.</p>
+    </div>
+    <div class="meta"><time datetime="2026-10-06T10:54">Actualizado a las 10:54</time><a href="#">Ver incidente</a></div>
+  </section>
+  <section class="banner" data-state="down" aria-labelledby="s3" role="alert">
+    <div class="body">
+      <span class="state"><span class="dot" aria-hidden="true"></span>Caído</span>
+      <strong id="s3">Los pagos no están disponibles</strong>
+      <p>Los cobros fallan desde las 10:42. Reintenta en unos minutos; no se duplicarán cargos.</p>
+    </div>
+    <div class="meta"><time datetime="2026-10-06T10:50">Actualizado a las 10:50</time><a href="#">Seguir incidente</a></div>
+  </section>
+</div>
+</body>
+</html>

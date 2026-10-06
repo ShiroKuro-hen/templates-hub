@@ -37,4 +37,4 @@ export function Stepper({ steps = ['Carrito', 'Envío', 'Pago', 'Listo'], initia
     </>
   );
 }
-// CSS: copia las reglas .steps / .step / .dot / .sr / .nav / .btn de la pestaña HTML + CSS (los estados usan [data-state]).
+// CSS: copia las reglas .steps / .step / .dot / .sr / .nav / .btn y los tokens :root de la pestaña HTML + CSS (los estados usan [data-state]).

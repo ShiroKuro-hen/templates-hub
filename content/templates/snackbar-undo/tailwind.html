@@ -1,19 +1,19 @@
-<ul id="list" class="m-0 flex list-none flex-col gap-2 p-4 font-sans text-sm text-[#17130f]">
-  <li class="flex items-center gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-2">
+<ul id="list" class="mx-auto m-0 flex max-w-xl list-none flex-col gap-2 p-0 text-sm text-slate-900 dark:text-slate-100">
+  <li class="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
     <span class="flex-1 truncate">propuesta-v3.pdf</span>
-    <button type="button" class="del rounded-lg border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-1 font-semibold hover:bg-[#ffd84d] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Eliminar</button>
+    <button type="button" class="del rounded-lg border border-slate-200 bg-white px-3 py-1 font-semibold hover:border-red-500 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:text-red-400">Eliminar</button>
   </li>
-  <li class="flex items-center gap-2.5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-2">
+  <li class="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
     <span class="flex-1 truncate">logo-final.svg</span>
-    <button type="button" class="del rounded-lg border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-1 font-semibold hover:bg-[#ffd84d] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Eliminar</button>
+    <button type="button" class="del rounded-lg border border-slate-200 bg-white px-3 py-1 font-semibold hover:border-red-500 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:text-red-400">Eliminar</button>
   </li>
 </ul>
 
 <div id="snack" role="status" hidden
-     class="fixed inset-x-3 bottom-3 mx-auto max-w-md items-center gap-3 overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#17130f] py-3 pb-4 pl-3.5 pr-3 text-[#f6f1e7] shadow-[4px_4px_0_#ff5a36] [&:not([hidden])]:flex">
+     class="fixed inset-x-3 bottom-3 mx-auto max-w-md items-center gap-3 overflow-hidden rounded-lg bg-slate-900 py-3 pr-3 pb-4 pl-4 text-slate-100 shadow-sm dark:bg-slate-100 dark:text-slate-900 [&:not([hidden])]:flex">
   <p id="msg" class="m-0 flex-1 text-sm"></p>
-  <button type="button" id="undo" class="rounded-lg border-2 border-[#ffd84d] bg-[#ffd84d] px-2.5 py-1 text-sm font-bold text-[#17130f] hover:bg-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#f6f1e7]">Deshacer</button>
-  <i id="bar" class="absolute bottom-0 left-0 h-[5px] w-full origin-left bg-[#ff5a36] motion-reduce:hidden"></i>
+  <button type="button" id="undo" class="rounded-lg border border-current px-3 py-1 text-sm font-semibold hover:bg-white hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-900 dark:hover:text-slate-100">Deshacer</button>
+  <i id="bar" class="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-gradient-to-r from-cyan-400 to-blue-600 motion-reduce:hidden"></i>
 </div>
 
 <script>
@@ -38,4 +38,5 @@
     pending.li.querySelector('.del').focus();
     finish();
   });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pending) finish(); });
 </script>

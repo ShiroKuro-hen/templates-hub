@@ -4,20 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   *{box-sizing:border-box}
-  body{margin:0;font:15px/1.5 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
-  .quotes{max-width:1040px;margin:0 auto;padding:36px 20px}
-  h2{max-width:30rem;margin:0 0 28px;font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.1;letter-spacing:-.03em}
-  .list{display:grid;gap:18px;margin:0;padding:0;list-style:none;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))}
-  figure{display:flex;flex-direction:column;height:100%;margin:0;padding:22px;border:2px solid #17130f;border-radius:10px;background:#fffdf8;box-shadow:4px 4px 0 #17130f}
-  .mark{width:30px;height:24px;margin-bottom:12px;fill:#ff5a36;stroke:#17130f;stroke-width:2}
-  blockquote{flex:1;margin:0 0 18px;font-size:1.02rem;line-height:1.55}
-  figcaption{display:flex;gap:12px;align-items:center;padding-top:16px;border-top:2px solid #17130f}
-  .av{flex:none;display:grid;place-items:center;width:42px;height:42px;border:2px solid #17130f;border-radius:50%;background:var(--c);font:700 .85rem ui-monospace,monospace}
-  .who{display:block;font-weight:700}
-  .role{display:block;color:#6b6258;font-size:.85rem}
-  li:nth-child(2) figure{background:#ffd84d}
-  li:nth-child(2) .role{color:#3d362e}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .quotes{max-width:1040px;margin:0 auto}
+  h2{max-width:30rem;margin:0 0 20px;font-size:clamp(1.4rem,3.5vw,1.875rem);line-height:1.2;letter-spacing:-.02em}
+  .list{display:grid;gap:16px;margin:0;padding:0;list-style:none;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+  figure{position:relative;overflow:hidden;display:flex;flex-direction:column;height:100%;margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  figure.featured{border-color:var(--accent)}
+  figure.featured::before{content:"";position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .mark{width:24px;height:20px;margin-bottom:12px;fill:var(--accent);opacity:.8}
+  blockquote{flex:1;margin:0 0 16px;font-size:.9375rem;line-height:1.6}
+  blockquote p{margin:0}
+  figcaption{display:flex;gap:12px;align-items:center;padding-top:16px;border-top:1px solid var(--border)}
+  .av{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:.8125rem}
+  .who{display:block;font-weight:600}
+  .role{display:block;color:var(--muted);font-size:.8125rem}
 </style>
 </head>
 <body>
@@ -28,21 +31,21 @@
         <figure>
           <svg class="mark" viewBox="0 0 30 24" aria-hidden="true"><path d="M2 22V11C2 5 6 2 11 2v5C8 7 7 9 7 11h4v11zM17 22V11c0-6 4-9 9-9v5c-3 0-4 2-4 4h4v11z"/></svg>
           <blockquote><p>Pasamos de cinco herramientas a una. Las revisiones semanales duran la mitad y nadie pregunta ya en qué estado está cada entrega.</p></blockquote>
-          <figcaption><span class="av" style="--c:#c9d3ff" aria-hidden="true">LM</span><span><span class="who">Lucía Méndez</span><span class="role">Directora de operaciones, Finca Norte</span></span></figcaption>
+          <figcaption><span class="av" aria-hidden="true">LM</span><span><span class="who">Lucía Méndez</span><span class="role">Directora de operaciones, Finca Norte</span></span></figcaption>
         </figure>
       </li>
       <li>
-        <figure>
+        <figure class="featured">
           <svg class="mark" viewBox="0 0 30 24" aria-hidden="true"><path d="M2 22V11C2 5 6 2 11 2v5C8 7 7 9 7 11h4v11zM17 22V11c0-6 4-9 9-9v5c-3 0-4 2-4 4h4v11z"/></svg>
           <blockquote><p>Las automatizaciones nos ahorran unas ocho horas por semana. Por fin el equipo de diseño y el de desarrollo comparten el mismo tablero.</p></blockquote>
-          <figcaption><span class="av" style="--c:#fffdf8" aria-hidden="true">JR</span><span><span class="who">Javier Ruiz</span><span class="role">Líder de producto, Orbita Labs</span></span></figcaption>
+          <figcaption><span class="av" aria-hidden="true">JR</span><span><span class="who">Javier Ruiz</span><span class="role">Líder de producto, Orbita Labs</span></span></figcaption>
         </figure>
       </li>
       <li>
         <figure>
           <svg class="mark" viewBox="0 0 30 24" aria-hidden="true"><path d="M2 22V11C2 5 6 2 11 2v5C8 7 7 9 7 11h4v11zM17 22V11c0-6 4-9 9-9v5c-3 0-4 2-4 4h4v11z"/></svg>
           <blockquote><p>Los informes en vivo cambiaron las reuniones con clientes: enseñamos el avance real, sin preparar presentaciones.</p></blockquote>
-          <figcaption><span class="av" style="--c:#ff5a36" aria-hidden="true">SP</span><span><span class="who">Sofía Paredes</span><span class="role">Fundadora, Estudio Tramo</span></span></figcaption>
+          <figcaption><span class="av" aria-hidden="true">SP</span><span><span class="who">Sofía Paredes</span><span class="role">Fundadora, Estudio Tramo</span></span></figcaption>
         </figure>
       </li>
     </ul>

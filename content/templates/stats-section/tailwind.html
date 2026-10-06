@@ -1,0 +1,32 @@
+<section aria-labelledby="stats-title" class="relative max-w-5xl overflow-hidden rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm sm:p-7 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400 to-blue-600" aria-hidden="true"></div>
+  <h2 id="stats-title" class="text-[22px] font-semibold leading-tight">La plataforma en cifras</h2>
+  <p class="mb-6 mt-1 max-w-prose text-slate-500 dark:text-slate-400">Datos de producción a 30 de septiembre de 2026, medidos en todas las regiones.</p>
+  <dl class="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-4 dark:border-slate-700 dark:bg-slate-700
+             [&>div]:flex [&>div]:flex-col [&>div]:bg-white [&>div]:p-5 dark:[&>div]:bg-slate-900
+             [&_dt]:order-2 [&_dt]:mt-1 [&_dt]:font-medium
+             [&_.value]:order-1 [&_.value]:text-[32px] [&_.value]:font-semibold [&_.value]:leading-tight [&_.value]:tracking-tight [&_.value]:tabular-nums
+             [&_.ctx]:order-3 [&_.ctx]:mt-2 [&_.ctx]:flex [&_.ctx]:items-center [&_.ctx]:gap-1.5 [&_.ctx]:text-[13px] [&_.ctx]:text-slate-500 dark:[&_.ctx]:text-slate-400
+             [&_svg]:flex-none [&_svg]:text-emerald-600 dark:[&_svg]:text-emerald-400">
+    <div>
+      <dt>Disponibilidad</dt>
+      <dd class="value">99,98&nbsp;%</dd>
+      <dd class="ctx">Últimos 12 meses, sin incidencias graves.</dd>
+    </div>
+    <div>
+      <dt>Solicitudes al día</dt>
+      <dd class="value">2,4&nbsp;M</dd>
+      <dd class="ctx"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>18&nbsp;% más que el trimestre anterior.</dd>
+    </div>
+    <div>
+      <dt>Latencia media</dt>
+      <dd class="value">38&nbsp;ms</dd>
+      <dd class="ctx"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>6&nbsp;ms menos tras migrar a la región UE.</dd>
+    </div>
+    <div>
+      <dt>Equipos activos</dt>
+      <dd class="value">4.200</dd>
+      <dd class="ctx">En 31 países y 9 idiomas.</dd>
+    </div>
+  </dl>
+</section>

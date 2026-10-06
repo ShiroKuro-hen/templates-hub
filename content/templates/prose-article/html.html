@@ -5,31 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Texto largo legible</title>
 <style>
-  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; --link:#3b5bfd; }
-  * { box-sizing:border-box; }
-  body { margin:0; padding:20px; font:16px system-ui, sans-serif; background:var(--bg); color:var(--ink); }
-  .prose { max-width:65ch; margin-inline:auto; font-size:1.0625rem; line-height:1.7; hyphens:auto; }
-  .prose > * + * { margin-top:1.1em; }
-  .prose h1 { margin:0; font-size:clamp(1.8rem, 1.3rem + 2.5vw, 2.4rem); line-height:1.1; letter-spacing:-.02em; text-wrap:balance; }
-  .prose h2 { margin-top:1.8em; font-size:1.4rem; line-height:1.2; letter-spacing:-.02em; }
-  .prose .meta { margin-top:.5em; font:13px ui-monospace, monospace; color:var(--muted); }
-  .prose a { color:var(--link); text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px; }
-  .prose a:hover { background:var(--hl); color:var(--ink); }
-  .prose :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-  .prose blockquote { margin-inline:0; padding:.2em 0 .2em 1em; border-left:6px solid var(--accent); font-size:1.2rem; line-height:1.45; font-style:italic; }
-  .prose blockquote cite { display:block; margin-top:.4em; font:13px ui-monospace, monospace; font-style:normal; color:var(--muted); }
-  .prose ul, .prose ol { padding-left:1.4em; }
-  .prose li + li { margin-top:.4em; }
-  .prose li::marker { color:var(--accent); font-weight:700; }
-  .prose code { padding:.1em .35em; font:.88em ui-monospace, monospace; background:var(--surface); border:1.5px solid var(--ink); border-radius:5px; }
-  .prose hr { border:0; border-top:2px solid var(--ink); margin-block:2em; }
-  .prose mark { background:var(--hl); padding:0 .15em; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .prose{max-width:65ch;margin-inline:auto;font-size:1.0625rem;line-height:1.7;hyphens:auto}
+  .prose>*+*{margin-top:1.1em}
+  .prose h1{margin:0;font-size:clamp(1.8rem,1.3rem + 2.5vw,2.5rem);font-weight:700;line-height:1.1;letter-spacing:-.025em;text-wrap:balance}
+  .prose h2{margin-top:1.8em;font-size:1.4rem;font-weight:650;line-height:1.2;letter-spacing:-.015em}
+  .prose .meta{margin-top:.5em;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .prose a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;border-radius:4px;transition:background .14s}
+  .prose a:hover{background:var(--accent-soft)}
+  .prose :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .prose blockquote{position:relative;margin-inline:0;padding:.3em 0 .3em 1.25em;font-size:1.2rem;line-height:1.45}
+  .prose blockquote::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;border-radius:3px;background:linear-gradient(180deg,#22d3ee,#2f5bff)}
+  .prose blockquote cite{display:block;margin-top:.4em;font-size:13px;font-style:normal;color:var(--muted)}
+  .prose ul,.prose ol{padding-left:1.4em}
+  .prose li+li{margin-top:.4em}
+  .prose li::marker{color:var(--accent);font-weight:700}
+  .prose code{padding:.1em .4em;font:.88em ui-monospace,"Cascadia Code",Menlo,monospace;background:var(--surface);border:1px solid var(--border);border-radius:6px}
+  .prose hr{border:0;border-top:1px solid var(--border);margin-block:2em}
+  .prose mark{background:var(--warn-soft);color:var(--text);padding:0 .2em;border-radius:3px}
+  @media(prefers-reduced-motion:reduce){.prose a{transition:none}}
 </style>
 </head>
 <body>
   <article class="prose">
     <h1>Por qué el texto largo necesita aire</h1>
-    <p class="meta">12 de marzo · 6 min de lectura</p>
+    <p class="meta">12 de marzo, 6 min de lectura</p>
     <p>Una línea de entre 45 y 75 caracteres se lee sin esfuerzo. Por eso limitamos el ancho con <code>max-width: 65ch</code> y subimos el <mark>interlineado a 1.7</mark>, tal como recomienda <a href="#">la guía de legibilidad</a>.</p>
     <blockquote>
       Diseñar es decidir qué se queda fuera de la página.

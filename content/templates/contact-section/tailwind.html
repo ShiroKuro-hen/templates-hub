@@ -1,0 +1,51 @@
+<section aria-labelledby="ct-title" class="grid max-w-5xl grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-10 gap-y-6 text-sm text-slate-900 dark:text-slate-100">
+  <div>
+    <h2 id="ct-title" class="text-[22px] font-semibold leading-tight">Hablemos de tu proyecto</h2>
+    <p class="mb-5 mt-1 max-w-prose text-slate-500 dark:text-slate-400">Cuéntanos qué necesitas y te ponemos en contacto con la persona adecuada.</p>
+    <dl class="grid gap-3.5 [&_a]:text-blue-600 dark:[&_a]:text-blue-400 [&_dd]:font-medium [&_dt]:text-[13px] [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400">
+      <div><dt>Correo</dt><dd><a href="mailto:contacto@ejemplo.com">contacto@ejemplo.com</a></dd></div>
+      <div><dt>Teléfono</dt><dd><a href="tel:+34910000000">+34 910 000 000</a></dd></div>
+      <div><dt>Oficina</dt><dd>Calle de Alcalá 21, 28014 Madrid</dd></div>
+      <div><dt>Horario</dt><dd>Lunes a viernes, de 9:00 a 18:00 (CET)</dd></div>
+    </dl>
+  </div>
+  <form id="cf" novalidate class="relative grid gap-3.5 overflow-hidden rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900
+        [&_label]:mb-1.5 [&_label]:block [&_label]:font-medium [&_.err]:mt-1.5 [&_.err]:text-[13px] [&_.err]:text-red-600 dark:[&_.err]:text-red-400 [&_.err:empty]:hidden
+        [&_:is(input,select,textarea)]:w-full [&_:is(input,select,textarea)]:rounded-lg [&_:is(input,select,textarea)]:border [&_:is(input,select,textarea)]:border-slate-200 [&_:is(input,select,textarea)]:bg-transparent [&_:is(input,select,textarea)]:px-3 [&_:is(input,select,textarea)]:py-2 dark:[&_:is(input,select,textarea)]:border-slate-700
+        [&_[aria-invalid=true]]:border-red-600 dark:[&_[aria-invalid=true]]:border-red-400 [&_:is(input,select,textarea,button)]:focus-visible:outline-2 [&_:is(input,select,textarea,button)]:focus-visible:outline-offset-2 [&_:is(input,select,textarea,button)]:focus-visible:outline-blue-500">
+    <div class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-400 to-blue-600" aria-hidden="true"></div>
+    <div><label for="cf-name">Nombre</label>
+      <input id="cf-name" name="name" autocomplete="name" required aria-describedby="cf-name-err" data-msg="Escribe tu nombre para saber a quién responder.">
+      <p class="err" id="cf-name-err"></p></div>
+    <div><label for="cf-email">Correo</label>
+      <input id="cf-email" name="email" type="email" autocomplete="email" required aria-describedby="cf-email-err" data-msg="Escribe un correo válido, por ejemplo ana@empresa.com.">
+      <p class="err" id="cf-email-err"></p></div>
+    <div><label for="cf-topic">Tema</label>
+      <select id="cf-topic" name="topic" required aria-describedby="cf-topic-err" data-msg="Elige un tema para dirigir tu mensaje al equipo correcto." class="dark:[&>option]:bg-slate-900">
+        <option value="">Elige un tema</option><option>Ventas</option><option>Soporte técnico</option><option>Prensa</option><option>Otro</option>
+      </select>
+      <p class="err" id="cf-topic-err"></p></div>
+    <div><label for="cf-msg">Mensaje</label>
+      <textarea id="cf-msg" name="message" required minlength="20" aria-describedby="cf-msg-err" data-msg="Cuéntanos un poco más: el mensaje necesita al menos 20 caracteres." class="min-h-28 resize-y"></textarea>
+      <p class="err" id="cf-msg-err"></p></div>
+    <button type="submit" class="justify-self-start rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 dark:bg-blue-400 dark:text-slate-950">Enviar mensaje</button>
+    <p id="cf-status" role="status"></p>
+  </form>
+</section>
+<script>
+  const form = document.getElementById('cf'), out = document.getElementById('cf-status');
+  const check = (f) => {
+    const bad = !f.checkValidity();
+    f.setAttribute('aria-invalid', bad);
+    document.getElementById(f.id + '-err').textContent = bad ? f.dataset.msg : '';
+    return bad;
+  };
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const bad = [...form.querySelectorAll('[data-msg]')].filter(check);
+    if (bad.length) { out.textContent = ''; return bad[0].focus(); }
+    out.textContent = `Mensaje enviado. Te respondemos en un día hábil en ${form.email.value}.`;
+    form.reset();
+  });
+  form.addEventListener('input', (e) => { if (e.target.getAttribute('aria-invalid') === 'true') check(e.target); });
+</script>

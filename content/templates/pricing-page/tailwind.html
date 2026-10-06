@@ -1,0 +1,44 @@
+<main class="group bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mx-auto grid max-w-[1040px] gap-8">
+    <header class="grid justify-items-center gap-2 pt-3 text-center">
+      <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">Planes que crecen con tu equipo</h1>
+      <p class="max-w-[52ch] text-slate-500 dark:text-slate-400">Empieza gratis y cambia de plan cuando lo necesites. Todos incluyen soporte por correo y copias de seguridad diarias.</p>
+      <fieldset class="mt-3 inline-flex rounded-lg border border-slate-200 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-900 [&>label]:cursor-pointer [&>label]:rounded-md [&>label]:px-3.5 [&>label]:py-1.5 [&>label]:font-medium [&>label]:text-slate-500 [&>label:has(:checked)]:bg-blue-50 [&>label:has(:checked)]:text-blue-600 dark:[&>label:has(:checked)]:bg-blue-500/15 dark:[&>label:has(:checked)]:text-blue-400 [&>label:has(:focus-visible)]:outline-2 [&>label:has(:focus-visible)]:outline-offset-2 [&>label:has(:focus-visible)]:outline-blue-600">
+        <legend class="sr-only">Periodo de facturación</legend>
+        <label><input type="radio" name="billing" id="mensual" checked class="sr-only">Mensual</label>
+        <label><input type="radio" name="billing" id="anual" class="sr-only">Anual<span class="ml-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400">Ahorra un 20 %</span></label>
+      </fieldset>
+    </header>
+
+    <section aria-label="Planes" class="grid items-start gap-4 md:grid-cols-3 [&_article]:relative [&_article]:grid [&_article]:gap-4 [&_article]:overflow-hidden [&_article]:rounded-lg [&_article]:border [&_article]:border-slate-200 [&_article]:bg-white [&_article]:p-6 [&_article]:shadow-sm dark:[&_article]:border-slate-700 dark:[&_article]:bg-slate-900 [&_h2]:flex [&_h2]:items-center [&_h2]:justify-between [&_h2]:text-base [&_h2]:font-bold [&_.desc]:-mt-2 [&_.desc]:text-slate-500 dark:[&_.desc]:text-slate-400 [&_strong]:text-4xl [&_strong]:font-bold [&_strong]:leading-none [&_strong]:tracking-tight [&_strong]:tabular-nums [&_ul]:grid [&_ul]:gap-2 [&_ul]:border-t [&_ul]:border-slate-200 [&_ul]:pt-4 dark:[&_ul]:border-slate-700 [&_li]:flex [&_li]:gap-2.5 [&_li]:before:mt-1.5 [&_li]:before:size-2 [&_li]:before:flex-none [&_li]:before:rounded-full [&_li]:before:bg-emerald-500">
+      <article>
+        <h2>Básico</h2>
+        <p class="desc">Para probar Nimbo con un equipo pequeño.</p>
+        <p class="flex items-baseline gap-1.5"><strong>0 €</strong><span class="text-slate-500">siempre gratis</span></p>
+        <a href="#registro" class="rounded-lg border border-slate-200 px-4 py-2.5 text-center font-semibold hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:hover:bg-slate-800">Empezar gratis</a>
+        <ul><li>Hasta 3 personas</li><li>5 proyectos activos</li><li>2 GB de almacenamiento</li></ul>
+      </article>
+      <article class="!border-blue-600 before:absolute before:inset-x-0 before:top-0 before:h-[3px] before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 dark:!border-blue-400">
+        <h2>Equipo <span class="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-400">Más elegido</span></h2>
+        <p class="desc">Para equipos que trabajan a diario en Nimbo.</p>
+        <p class="flex items-baseline gap-1.5"><strong class="group-has-[#anual:checked]:hidden">12 €</strong><strong class="hidden group-has-[#anual:checked]:inline">9,60 €</strong><span class="text-slate-500">por persona y mes<span class="hidden group-has-[#anual:checked]:inline">, facturado al año</span></span></p>
+        <a href="#registro" class="rounded-lg bg-blue-600 px-4 py-2.5 text-center font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-500 dark:text-slate-950">Probar 14 días gratis</a>
+        <ul><li>Personas ilimitadas</li><li>Proyectos ilimitados</li><li>100 GB y permisos por rol</li><li>Informes y automatizaciones</li></ul>
+      </article>
+      <article>
+        <h2>Empresa</h2>
+        <p class="desc">Para organizaciones con requisitos de seguridad.</p>
+        <p class="flex items-baseline gap-1.5"><strong class="group-has-[#anual:checked]:hidden">29 €</strong><strong class="hidden group-has-[#anual:checked]:inline">23,20 €</strong><span class="text-slate-500">por persona y mes<span class="hidden group-has-[#anual:checked]:inline">, facturado al año</span></span></p>
+        <a href="#ventas" class="rounded-lg border border-slate-200 px-4 py-2.5 text-center font-semibold hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:hover:bg-slate-800">Hablar con ventas</a>
+        <ul><li>Todo lo del plan Equipo</li><li>SSO y registro de auditoría</li><li>Disponibilidad garantizada del 99,9 %</li></ul>
+      </article>
+    </section>
+
+    <section aria-labelledby="faq" class="mx-auto w-full max-w-[720px] [&_details]:border-b [&_details]:border-slate-200 dark:[&_details]:border-slate-700 [&_summary]:flex [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:justify-between [&_summary]:gap-3 [&_summary]:rounded [&_summary]:px-1 [&_summary]:py-3.5 [&_summary]:font-semibold [&_summary]:after:content-['+'] [&_details[open]_summary]:after:content-['−'] [&_summary]:after:text-slate-500 [&_summary:focus-visible]:outline-2 [&_summary:focus-visible]:outline-blue-600 [&_p]:px-1 [&_p]:pb-4 [&_p]:text-slate-500 dark:[&_p]:text-slate-400">
+      <h2 id="faq" class="mb-3 text-xl font-bold">Preguntas frecuentes</h2>
+      <details name="faq" open class="border-t border-slate-200 dark:border-slate-700"><summary>¿Puedo cambiar de plan más adelante?</summary><p>Sí. El cambio se aplica al momento y prorrateamos el importe en tu siguiente factura.</p></details>
+      <details name="faq"><summary>¿Qué pasa al terminar la prueba gratis?</summary><p>Tu espacio pasa al plan Básico. No perderás datos y puedes contratar cuando quieras.</p></details>
+      <details name="faq"><summary>¿Qué formas de pago aceptáis?</summary><p>Tarjeta de crédito o débito y, en planes anuales, transferencia bancaria.</p></details>
+    </section>
+  </div>
+</main>

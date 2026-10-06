@@ -32,15 +32,18 @@ const helpClass = computed(() => ({ help: true, err: props.status === 'error', g
 
 <style scoped>
 .field { display: flex; flex-direction: column; gap: 4px; }
-label { font-weight: 700; font-size: 13px; letter-spacing: -.01em; }
-input { width: 100%; height: 38px; padding: 0 10px; font: inherit; color: #17130f; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; }
-input::placeholder { color: #6b6258; }
-input:focus { outline: 3px solid #ff5a36; outline-offset: 1px; }
-input[aria-invalid=true] { border-color: #d6293e; background: #fff3f4; }
-input.ok { border-color: #1f9d55; }
-input:disabled { color: #6b6258; background: #ebe4d4; border-style: dashed; cursor: not-allowed; }
-.help { display: flex; gap: 4px; margin: 0; font-size: 12px; color: #6b6258; }
-.help::before { flex: none; font-weight: 800; }
-.err { color: #d6293e; } .err::before { content: "✕"; }
-.good::before { content: "✓"; color: #1f9d55; }
+label { font-weight: 600; font-size: 13px; color: var(--text); }
+input { width: 100%; height: 38px; padding: 0 10px; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .14s; }
+input::placeholder { color: var(--muted); }
+input:hover:not(:disabled) { border-color: var(--muted); }
+input:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 2px; }
+input[aria-invalid=true] { border-color: var(--err); }
+input.ok { border-color: var(--ok); }
+input:disabled { color: var(--muted); background: var(--bg); cursor: not-allowed; }
+.help { display: flex; gap: 4px; margin: 0; font-size: 12px; color: var(--muted); }
+.help::before { flex: none; font-weight: 700; }
+.err { color: var(--err); } .err::before { content: "✕"; }
+.good::before { content: "✓"; color: var(--ok); }
+@media (prefers-reduced-motion: reduce) { input { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

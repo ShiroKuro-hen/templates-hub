@@ -2,10 +2,8 @@
 import Base from '../layouts/Base.astro';
 import { url } from '../lib/data';
 ---
-<Base title="No encontrada · Templates Hub">
-  <section class="hero">
-    <h1>Esta página <mark>no existe</mark>.</h1>
-    <p>Quizá la plantilla cambió de nombre. Prueba el buscador.</p>
-    <a class="btn" href={url('/#filters')}>Ir al buscador</a>
-  </section>
+<Base title="Página no encontrada · Templates Hub">
+  <h1>No encontramos esta página</h1>
+  <p class="lead">Es posible que el componente haya cambiado de nombre. Usa el filtro del menú lateral o vuelve al inicio.</p>
+  <div class="pills"><a class="btn primary" href={url('/')}>Ir al inicio</a></div>
 </Base>

@@ -34,4 +34,4 @@ export function Breadcrumbs({ items, maxVisible = 4 }: Props) {
 }
 
 // Uso: <Breadcrumbs items={[{label:'Inicio',href:'/'},{label:'Tienda',href:'/tienda'},{label:'Calzado',href:'/calzado'},{label:'Zapatillas',href:'/z'},{label:'Modelo Aurora'}]} />
-// CSS: copia las reglas .crumbs (ol, li, li + li::before, a, [aria-current], button) de la pestaña HTML + CSS.
+// CSS: copia las reglas .crumbs (ol, li, li + li::before, a, [aria-current], button) y los tokens de la pestaña HTML + CSS.

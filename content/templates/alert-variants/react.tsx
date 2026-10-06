@@ -8,7 +8,7 @@ const DEFAULTS: AlertItem[] = [
   { id: 'v', kind: 'info', title: 'Nueva versión disponible', text: 'La 2.4 llega el viernes con mejoras de velocidad.' },
   { id: 'p', kind: 'ok', title: 'Pago recibido', text: 'Tu suscripción se renovó hasta el 5 de enero.' },
   { id: 'w', kind: 'warn', title: 'Tu plan vence en 3 días', text: 'Renueva para no perder el acceso a tus informes.' },
-  { id: 'e', kind: 'err', title: 'No se pudo enviar el formulario', text: 'Falta el correo electrónico.' },
+  { id: 'e', kind: 'err', title: 'No se pudo enviar el formulario', text: 'Falta el correo electrónico. Complétalo e inténtalo otra vez.' },
 ];
 
 export function Alerts({ items = DEFAULTS }: { items?: AlertItem[] }) {
@@ -34,4 +34,4 @@ export function Alerts({ items = DEFAULTS }: { items?: AlertItem[] }) {
     </>
   );
 }
-// CSS: copia las reglas .alerts / .alert / .alert.ok / .warn / .err / .alert i / .alert div / .alert b / .alert span / .alert button / .reset de la pestaña HTML + CSS.
+// CSS: copia las reglas .alerts / .alert (y ::before) / .alert.ok / .warn / .err / .alert i / .alert div / .alert b / .alert span / .alert button / .reset de la pestaña HTML + CSS.

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-type Slide = { id: string; big: string; title: string; text: string; color: string };
+type Slide = { id: string; big: string; title: string; text: string; tone: 'c1' | 'c2' | 'c3' | 'c4' };
 
 const SLIDES: Slide[] = [
-  { id: 'cerros', big: '9 km', title: 'Cerros de Lima', text: 'Sendero suave, 2 h.', color: '#ffd84d' },
-  { id: 'valle', big: '14 km', title: 'Valle Sagrado', text: 'Ruta mixta, 5 h.', color: '#ff8a6e' },
-  { id: 'churup', big: '6 km', title: 'Laguna Churup', text: 'Subida corta, 3 h.', color: '#9db4ff' },
-  { id: 'colca', big: '22 km', title: 'Cañón del Colca', text: 'Día completo, 8 h.', color: '#8fdcaa' },
+  { id: 'cerros', big: '9 km', title: 'Cerros de Lima', text: 'Sendero suave, 2 h.', tone: 'c1' },
+  { id: 'valle', big: '14 km', title: 'Valle Sagrado', text: 'Ruta mixta, 5 h.', tone: 'c2' },
+  { id: 'churup', big: '6 km', title: 'Laguna Churup', text: 'Subida corta, 3 h.', tone: 'c3' },
+  { id: 'colca', big: '22 km', title: 'Cañón del Colca', text: 'Día completo, 8 h.', tone: 'c4' },
 ];
 
 export function Carousel({ slides = SLIDES, label = 'Rutas destacadas' }: { slides?: Slide[]; label?: string }) {
@@ -40,7 +40,7 @@ export function Carousel({ slides = SLIDES, label = 'Rutas destacadas' }: { slid
       <ul className="track" ref={track} tabIndex={0} onScroll={update} aria-label="Diapositivas, desplázate con las flechas">
         {slides.map((s) => (
           <li className="slide" key={s.id} aria-roledescription="diapositiva">
-            <div className="art" style={{ background: s.color }}>{s.big}</div>
+            <div className={`art ${s.tone}`}>{s.big}</div>
             <div><h2>{s.title}</h2><p>{s.text}</p></div>
           </li>
         ))}
@@ -48,4 +48,4 @@ export function Carousel({ slides = SLIDES, label = 'Rutas destacadas' }: { slid
     </section>
   );
 }
-// CSS: copia las reglas .head / .ctrl / .count / .btn / .track / .slide / .art de la pestaña HTML + CSS (usa --c o el style inline en .art).
+// CSS: copia las reglas .head / .ctrl / .count / .btn / .track / .slide / .art / .c1 .c2 .c3 .c4 y los tokens :root de la pestaña HTML + CSS.

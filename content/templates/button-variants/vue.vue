@@ -15,15 +15,18 @@ withDefaults(
 </template>
 
 <style scoped>
-.btn { font: 600 14px system-ui, sans-serif; padding: 9px 16px; border: 2px solid #17130f; border-radius: 10px;
-  background: #fffdf8; color: #17130f; box-shadow: 4px 4px 0 #17130f; cursor: pointer;
-  transition: transform .1s, box-shadow .1s, background-color .1s; }
-.btn:hover, .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-.btn:focus-visible { outline: 3px solid #ff5a36; outline-offset: 3px; }
-.btn--primary { background: #ff5a36; }
-.btn--danger { background: #d6293e; color: #fff; }
-.btn--ghost, .btn--link { border-color: transparent; background: transparent; box-shadow: none; }
-.btn--ghost:hover, .btn--ghost:active, .btn--link:hover { transform: none; box-shadow: none; background: #ffd84d; }
-.btn--link { padding: 9px 4px; text-decoration: underline 2px #ff5a36; text-underline-offset: 4px; }
+.btn { font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 8px 16px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); cursor: pointer; transition: background-color .14s, filter .14s, box-shadow .14s; }
+.btn:hover { background: var(--accent-soft); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.btn--primary { border-color: transparent; background: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { background: var(--accent); filter: brightness(1.1); box-shadow: var(--shadow); }
+.btn--danger { border-color: transparent; background: var(--err); color: var(--accent-ink); }
+.btn--danger:hover { background: var(--err); filter: brightness(1.1); }
+.btn--ghost, .btn--link { border-color: transparent; background: transparent; }
+.btn--ghost { color: var(--accent); }
+.btn--link { padding: 8px 4px; color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+.btn--link:hover { background: transparent; text-decoration-thickness: 2px; }
 @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

@@ -1,0 +1,39 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div id="board" class="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4"></div>
+  <p id="live" role="status" class="sr-only"></p>
+</div>
+<script>
+  const COLS = ['Por hacer', 'En curso', 'Hecho'];
+  const cards = [
+    { id: 1, t: 'Revisar contrato de Atlas', tag: 'Legal', c: 0 },
+    { id: 2, t: 'Corregir error de login', tag: 'Bug', c: 0 },
+    { id: 3, t: 'Diseñar panel de informes', tag: 'Diseño', c: 1 },
+    { id: 4, t: 'Migrar base de datos', tag: 'Infra', c: 2 },
+  ];
+  const board = document.getElementById('board'), live = document.getElementById('live');
+  const btn = 'grid size-7 place-items-center rounded-lg border border-slate-200 text-slate-500 hover:border-blue-600 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:border-slate-200 disabled:hover:text-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:text-slate-400';
+  const icon = (d) => `<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+  function render() {
+    board.innerHTML = COLS.map((name, i) => {
+      const list = cards.filter((k) => k.c === i);
+      const line = i === 1 ? 'after:absolute after:inset-x-0 after:-bottom-px after:h-px after:bg-gradient-to-r after:from-cyan-400 after:to-blue-600' : '';
+      return `<section aria-labelledby="h${i}" class="rounded-lg border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+        <h2 id="h${i}" class="relative mb-3 flex items-center gap-2 border-b border-slate-200 pb-2.5 font-semibold dark:border-slate-700 ${line}">${name}
+          <span aria-label="${list.length} tarjetas" class="ml-auto rounded-full bg-blue-50 px-2 text-xs tabular-nums text-blue-700 dark:bg-slate-800 dark:text-blue-300">${list.length}</span></h2>
+        <ul class="grid gap-2">${list.map((k) => `<li class="rounded-lg border border-slate-200 p-3 shadow-sm dark:border-slate-700">
+          <p class="mb-2 font-medium">${k.t}</p><div class="flex items-center gap-1.5">
+          <span class="mr-auto rounded-full px-2 text-xs ${k.tag === 'Bug' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300' : 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300'}">${k.tag}</span>
+          <button type="button" class="${btn}" data-id="${k.id}" data-d="-1" ${i === 0 ? 'disabled' : ''} aria-label="Mover ${k.t} a ${COLS[i - 1] || ''}">${icon('M10 3 5 8l5 5')}</button>
+          <button type="button" class="${btn}" data-id="${k.id}" data-d="1" ${i === 2 ? 'disabled' : ''} aria-label="Mover ${k.t} a ${COLS[i + 1] || ''}">${icon('M6 3l5 5-5 5')}</button>
+        </div></li>`).join('') || '<li class="rounded-lg border border-dashed border-slate-300 p-4 text-center text-slate-500 dark:border-slate-700">Sin tarjetas. Mueve una aquí.</li>'}</ul></section>`;
+    }).join('');
+  }
+  board.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-id]'); if (!b) return;
+    const k = cards.find((x) => x.id === +b.dataset.id), d = +b.dataset.d;
+    k.c += d; render();
+    live.textContent = `${k.t} movida a ${COLS[k.c]}.`;
+    (board.querySelector(`[data-id="${k.id}"][data-d="${d}"]:not(:disabled)`) || board.querySelector(`[data-id="${k.id}"]:not(:disabled)`)).focus();
+  });
+  render();
+</script>

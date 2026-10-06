@@ -10,7 +10,7 @@ const LINKS: NavLink[] = [
   { label: 'Contacto', href: '#contacto' },
 ];
 
-export function NavbarResponsive({ brand = 'Tinta&Co', links = LINKS, cta = { label: 'Crear cuenta', href: '#registro' } }: Props) {
+export function NavbarResponsive({ brand = 'Nexo', links = LINKS, cta = { label: 'Crear cuenta', href: '#registro' } }: Props) {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState(links[0]?.href);
   const burger = useRef<HTMLButtonElement>(null);
@@ -56,4 +56,4 @@ export function NavbarResponsive({ brand = 'Tinta&Co', links = LINKS, cta = { la
     </header>
   );
 }
-// CSS: copia las reglas .nav / .brand / .menu / .menu.open / .btn / .burger (y su @media max-width:560px) de la pestaña HTML + CSS.
+// CSS: copia las reglas .nav / .brand / .menu / .menu.open / .btn / .burger (y su @media max-width:560px) y los tokens de la pestaña HTML + CSS.

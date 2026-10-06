@@ -23,22 +23,23 @@ const id = useId();
 </template>
 
 <style scoped>
-.opt { display: flex; align-items: center; gap: 10px; min-height: 34px; cursor: pointer; }
-.opt:has(:disabled) { color: #6b6258; cursor: not-allowed; }
-input { flex: none; position: relative; appearance: none; margin: 0; width: 22px; height: 22px; background: #fffdf8; border: 2px solid #17130f; cursor: inherit; }
-input:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-input:disabled { border-style: dashed; background: #ebe4d4; }
+.opt { display: flex; align-items: center; gap: 10px; min-height: 34px; cursor: pointer; color: var(--text); }
+.opt:has(:disabled) { color: var(--muted); cursor: not-allowed; }
+input { flex: none; position: relative; appearance: none; margin: 0; width: 20px; height: 20px; background: var(--surface); border: 1px solid var(--muted); cursor: inherit; }
+input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input:disabled { opacity: .5; }
 input::before { content: ""; position: absolute; opacity: 0; }
 input:checked::before { opacity: 1; }
-[type=checkbox] { border-radius: 6px; }
-[type=checkbox]:checked { background: #ffd84d; }
-[type=checkbox]::before { left: 5px; top: 2px; width: 6px; height: 11px; border: solid #17130f; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg); }
+[type=checkbox] { border-radius: 5px; }
+[type=checkbox]:checked { background: var(--accent); border-color: var(--accent); }
+[type=checkbox]::before { left: 6px; top: 2px; width: 5px; height: 10px; border: solid var(--accent-ink); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 [type=radio] { border-radius: 50%; }
-[type=radio]::before { inset: 3px; border-radius: 50%; background: #17130f; }
-[type=radio]:checked { background: #ffd84d; }
-[role=switch] { width: 44px; height: 26px; border-radius: 13px; }
-[role=switch]::before { opacity: 1; left: 2px; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: #17130f; }
-[role=switch]:checked { background: #ff5a36; }
-[role=switch]:checked::before { transform: translateX(18px); background: #fffdf8; }
-@media (prefers-reduced-motion: no-preference) { input, input::before { transition: transform .15s, background .15s; } }
+[type=radio]::before { inset: 4px; border-radius: 50%; background: var(--accent); }
+[type=radio]:checked { border-color: var(--accent); }
+[role=switch] { width: 40px; height: 24px; border-radius: 12px; background: var(--border); border-color: transparent; }
+[role=switch]::before { opacity: 1; left: 2px; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--muted); }
+[role=switch]:checked { background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+[role=switch]:checked::before { transform: translateX(16px); background: #fff; }
+@media (prefers-reduced-motion: no-preference) { input, input::before { transition: transform .14s, background-color .14s, border-color .14s; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

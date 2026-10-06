@@ -43,4 +43,4 @@ export function IconSet({ icons = ICONS }: { icons?: Icon[] }) {
     </section>
   );
 }
-// CSS: copia las reglas header / h1 / #st / .grid / .ico (y .ico svg) de la pestaña HTML + CSS.
+// CSS: copia las reglas header / h1 / #st / .grid / .ico (y .ico svg) y los tokens de la pestaña HTML + CSS.

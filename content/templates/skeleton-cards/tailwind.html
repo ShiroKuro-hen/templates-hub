@@ -1,25 +1,25 @@
-<div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] items-start gap-4 p-5" aria-busy="true">
+<div class="grid max-w-3xl grid-cols-[repeat(auto-fit,minmax(200px,1fr))] items-start gap-4 p-5 [--sk:var(--color-slate-200)] [--sk-hi:var(--color-slate-50)] dark:[--sk:var(--color-slate-800)] dark:[--sk-hi:var(--color-slate-700)]" aria-busy="true">
   <p class="sr-only" aria-live="polite">Cargando contenido</p>
 
-  <article aria-hidden="true" class="overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] shadow-[4px_4px_0_#17130f]">
-    <span class="sk block h-[84px] border-b-2 border-[#17130f]"></span>
-    <div class="p-3">
-      <span class="sk block h-4 w-3/4 rounded-md"></span>
-      <span class="sk mt-2 block h-3 rounded-md"></span>
-      <span class="sk mt-2 block h-3 w-3/5 rounded-md"></span>
+  <article aria-hidden="true" class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <span class="sk block h-[84px]"></span>
+    <div class="p-3.5">
+      <span class="sk block h-3.5 w-3/4 rounded-md"></span>
+      <span class="sk mt-2.5 block h-2.5 rounded-md"></span>
+      <span class="sk mt-2.5 block h-2.5 w-3/5 rounded-md"></span>
     </div>
   </article>
 
-  <div aria-hidden="true" class="overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] shadow-[4px_4px_0_#17130f]">
-    <div class="flex items-center gap-2.5 px-3 py-2.5"><span class="sk h-[34px] w-[34px] flex-none rounded-full"></span><div class="flex-1 space-y-1.5"><span class="sk block h-3 rounded-md"></span><span class="sk block h-3 w-3/5 rounded-md"></span></div></div>
-    <div class="flex items-center gap-2.5 border-t border-[#17130f33] px-3 py-2.5"><span class="sk h-[34px] w-[34px] flex-none rounded-full"></span><div class="flex-1 space-y-1.5"><span class="sk block h-3 rounded-md"></span><span class="sk block h-3 w-2/5 rounded-md"></span></div></div>
-    <div class="flex items-center gap-2.5 border-t border-[#17130f33] px-3 py-2.5"><span class="sk h-[34px] w-[34px] flex-none rounded-full"></span><div class="flex-1 space-y-1.5"><span class="sk block h-3 rounded-md"></span><span class="sk block h-3 w-3/5 rounded-md"></span></div></div>
+  <div aria-hidden="true" class="divide-y divide-slate-200 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900">
+    <div class="flex items-center gap-3 px-3.5 py-3"><span class="sk size-[34px] flex-none rounded-full"></span><div class="flex-1 space-y-2"><span class="sk block h-2.5 rounded-md"></span><span class="sk block h-2.5 w-3/5 rounded-md"></span></div></div>
+    <div class="flex items-center gap-3 px-3.5 py-3"><span class="sk size-[34px] flex-none rounded-full"></span><div class="flex-1 space-y-2"><span class="sk block h-2.5 rounded-md"></span><span class="sk block h-2.5 w-2/5 rounded-md"></span></div></div>
+    <div class="flex items-center gap-3 px-3.5 py-3"><span class="sk size-[34px] flex-none rounded-full"></span><div class="flex-1 space-y-2"><span class="sk block h-2.5 rounded-md"></span><span class="sk block h-2.5 w-3/5 rounded-md"></span></div></div>
   </div>
 </div>
 
 <style>
-  /* .sk = shimmer: ponlo en tu CSS global o conviértelo en @apply / plugin */
-  .sk { background:linear-gradient(100deg,#e9e2d3 30%,#fffdf8 50%,#e9e2d3 70%) 0 0/200% 100%; animation:shimmer 1.4s linear infinite; }
+  /* .sk = shimmer: ponlo en tu CSS global. Los tonos salen de --sk / --sk-hi (definidos en el contenedor). */
+  .sk { background:linear-gradient(100deg,var(--sk) 30%,var(--sk-hi) 50%,var(--sk) 70%) 0 0/200% 100%; animation:shimmer 1.4s linear infinite; }
   @keyframes shimmer { to { background-position:-200% 0; } }
   @media (prefers-reduced-motion:reduce) { .sk { animation:none; } }
 </style>

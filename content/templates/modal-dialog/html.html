@@ -5,25 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Modal con dialog</title>
 <style>
-  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --err:#d6293e; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
-  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  h1 { margin:0 0 4px; font-size:20px; font-weight:600; letter-spacing:-.01em; }
   p { margin:0 0 14px; color:var(--muted); }
-  .btn { font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
-  .btn:hover, .btn:active { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
-  .btn.danger { background:var(--err); color:#fff; }
-  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-  #result { margin-top:16px; font:13px ui-monospace, monospace; color:var(--ink); }
-  dialog { width:min(380px, calc(100% - 24px)); padding:0; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); }
-  dialog[open] { animation:pop .18s ease-out; }
-  dialog::backdrop { background:rgba(23,19,15,.55); }
-  dialog form { padding:18px; }
-  dialog h2 { margin:0 0 6px; font-size:18px; letter-spacing:-.02em; }
-  dialog p { margin:0 0 18px; }
+  .btn { font:600 14px system-ui,-apple-system,"Segoe UI",sans-serif; padding:8px 14px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); cursor:pointer; transition:border-color .14s, filter .14s; }
+  .btn:hover { border-color:var(--accent); }
+  .btn.danger { color:var(--accent-ink); background:var(--err); border-color:var(--err); }
+  .btn.danger:hover { filter:brightness(1.08); }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  #result { margin-top:16px; font-size:13px; }
+  dialog { position:fixed; width:min(400px, calc(100% - 24px)); padding:0; overflow:hidden; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  dialog::before { content:""; position:absolute; inset:0 0 auto; height:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+  dialog[open] { animation:pop .16s ease-out; }
+  dialog::backdrop { background:rgba(10,15,28,.55); }
+  dialog form { padding:22px 20px 20px; }
+  dialog h2 { margin:0 0 6px; font-size:18px; font-weight:600; }
+  dialog p { margin:0 0 20px; }
   .actions { display:flex; justify-content:flex-end; gap:10px; }
-  @keyframes pop { from { opacity:0; transform:translateY(8px) scale(.97); } }
-  @media (prefers-reduced-motion:reduce) { dialog[open] { animation:none; } }
+  @keyframes pop { from { opacity:0; transform:translateY(8px) scale(.98); } }
+  @media (prefers-reduced-motion:reduce) { dialog[open] { animation:none; } * { transition:none !important; } }
 </style>
 </head>
 <body>
@@ -38,7 +41,7 @@
     <p id="dlg-text">Se borrarán sus 24 archivos. Esta acción no se puede deshacer.</p>
     <div class="actions">
       <button class="btn" value="cancel" autofocus>Cancelar</button>
-      <button class="btn danger" value="delete">Eliminar</button>
+      <button class="btn danger" value="delete">Eliminar proyecto</button>
     </div>
   </form>
 </dialog>

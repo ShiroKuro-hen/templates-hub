@@ -30,4 +30,6 @@ withDefaults(defineProps<{ name: IconName; size?: number; label?: string; sprite
 
 <style scoped>
 .i { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* El color se hereda: <SvgIcon style="color: var(--accent)" /> */
+/* Tokens: ver pestaña HTML + CSS */
 </style>

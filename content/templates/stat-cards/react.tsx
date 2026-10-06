@@ -7,10 +7,13 @@ export function StatCards({ stats }: { stats: Stat[] }) {
         <div className="stat" key={s.label}>
           <small>{s.label}</small>
           <strong>{s.value}</strong>
-          <span className={s.delta >= 0 ? 'up' : 'down'}>{Math.abs(s.delta)}%</span>
+          <span className={s.delta >= 0 ? 'up' : 'down'}>
+            <span className="sr-only">{s.delta >= 0 ? 'Sube' : 'Baja'} </span>
+            {Math.abs(s.delta)}%
+          </span>
         </div>
       ))}
     </div>
   );
 }
-// CSS: copia las reglas .stats / .stat / .up / .down de la pestaña HTML + CSS.
+// CSS: copia las reglas .stats / .stat / .up / .down / .sr-only y los tokens :root de la pestaña HTML + CSS.

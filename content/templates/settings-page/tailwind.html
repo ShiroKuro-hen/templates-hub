@@ -1,0 +1,62 @@
+<main class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mx-auto max-w-[960px]">
+    <h1 class="text-[22px] font-bold leading-tight">Ajustes</h1>
+    <p class="mb-5 mt-0.5 text-slate-500 dark:text-slate-400">Gestiona tu perfil, avisos y seguridad de la cuenta.</p>
+    <form id="f" novalidate class="grid overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm sm:grid-cols-[200px_1fr] dark:border-slate-700 dark:bg-slate-900 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-600 [&_.f]:grid [&_.f]:gap-1.5 [&_.f]:font-semibold [&_.f>input]:rounded-lg [&_.f>input]:border [&_.f>input]:border-slate-200 [&_.f>input]:bg-transparent [&_.f>input]:px-3 [&_.f>input]:py-2 [&_.f>input]:font-normal [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 [&_select]:py-2 [&_select]:font-normal dark:[&_.f>input]:border-slate-700 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900 [&_.row]:flex [&_.row]:items-center [&_.row]:justify-between [&_.row]:gap-4 [&_.row]:border-t [&_.row]:border-slate-200 [&_.row]:py-3.5 dark:[&_.row]:border-slate-700 [&_.row:first-of-type]:border-0 [&_.row:first-of-type]:pt-0 [&_small]:block [&_small]:text-[13px] [&_small]:text-slate-500 [&_.switch]:relative [&_.switch]:h-5 [&_.switch]:w-9 [&_.switch]:flex-none [&_.switch]:cursor-pointer [&_.switch]:appearance-none [&_.switch]:rounded-full [&_.switch]:bg-slate-300 [&_.switch]:transition-colors dark:[&_.switch]:bg-slate-700 [&_.switch:checked]:bg-blue-600 [&_.switch]:after:absolute [&_.switch]:after:left-0.5 [&_.switch]:after:top-0.5 [&_.switch]:after:size-4 [&_.switch]:after:rounded-full [&_.switch]:after:bg-white [&_.switch]:after:shadow-sm [&_.switch]:after:transition-transform [&_.switch:checked]:after:translate-x-4 [&_[role=tabpanel]]:p-6 [&_[role=tabpanel][hidden]]:hidden [&_h2]:mb-1 [&_h2]:text-base [&_h2]:font-bold [&_.desc]:mb-5 [&_.desc]:text-slate-500 dark:[&_.desc]:text-slate-400">
+      <div role="tablist" aria-label="Secciones de ajustes" aria-orientation="vertical" class="flex gap-0.5 overflow-x-auto border-b border-slate-200 p-3 sm:flex-col sm:border-b-0 sm:border-r dark:border-slate-700 [&>button]:relative [&>button]:whitespace-nowrap [&>button]:rounded-md [&>button]:px-3 [&>button]:py-2 [&>button]:text-left [&>button]:font-medium [&>button]:text-slate-500 [&>button:hover]:bg-slate-50 dark:[&>button:hover]:bg-slate-800 [&>[aria-selected=true]]:bg-blue-50 [&>[aria-selected=true]]:text-blue-600 dark:[&>[aria-selected=true]]:bg-blue-500/15 dark:[&>[aria-selected=true]]:text-blue-400 [&>[aria-selected=true]]:before:absolute [&>[aria-selected=true]]:before:inset-x-3 [&>[aria-selected=true]]:before:bottom-0 [&>[aria-selected=true]]:before:h-0.5 [&>[aria-selected=true]]:before:rounded-full [&>[aria-selected=true]]:before:bg-gradient-to-br [&>[aria-selected=true]]:before:from-cyan-400 [&>[aria-selected=true]]:before:to-blue-600 sm:[&>[aria-selected=true]]:before:inset-x-auto sm:[&>[aria-selected=true]]:before:inset-y-2 sm:[&>[aria-selected=true]]:before:left-0 sm:[&>[aria-selected=true]]:before:h-auto sm:[&>[aria-selected=true]]:before:w-[3px]">
+        <button type="button" role="tab" id="t1" aria-controls="p1" aria-selected="true">Perfil</button>
+        <button type="button" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">Notificaciones</button>
+        <button type="button" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">Seguridad</button>
+      </div>
+      <section role="tabpanel" id="p1" aria-labelledby="t1" class="min-w-0">
+        <h2>Perfil</h2><p class="desc">Así te ven las personas de tu equipo.</p>
+        <div class="grid max-w-[440px] gap-4">
+          <label class="f">Nombre <input name="name" value="Laura Méndez" required autocomplete="name"></label>
+          <label class="f">Correo <input type="email" name="email" value="laura@altamira.com" required autocomplete="email"></label>
+          <label class="f">Idioma <select name="lang"><option selected>Español</option><option>English</option><option>Português</option></select></label>
+        </div>
+      </section>
+      <section role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+        <h2>Notificaciones</h2><p class="desc">Elige qué avisos recibes por correo.</p>
+        <label class="row"><span>Resumen semanal<small>Un correo cada lunes con la actividad del equipo.</small></span><input class="switch" type="checkbox" role="switch" name="weekly" checked></label>
+        <label class="row"><span>Menciones<small>Cuando alguien te menciona en un comentario.</small></span><input class="switch" type="checkbox" role="switch" name="mentions" checked></label>
+        <label class="row"><span>Novedades del producto<small>Funciones nuevas, como mucho una vez al mes.</small></span><input class="switch" type="checkbox" role="switch" name="news"></label>
+      </section>
+      <section role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+        <h2>Seguridad</h2><p class="desc">Protege el acceso a tu cuenta.</p>
+        <label class="row"><span>Verificación en dos pasos<small>Pide un código de tu app de autenticación al iniciar sesión.</small></span><input class="switch" type="checkbox" role="switch" name="mfa"></label>
+        <label class="f max-w-[440px]">Cerrar sesión por inactividad <select name="timeout"><option>Tras 30 minutos</option><option selected>Tras 8 horas</option><option>Nunca</option></select></label>
+      </section>
+      <div class="col-span-full flex flex-wrap items-center justify-end gap-3 border-t border-slate-200 bg-slate-50 px-4 py-3 sm:px-6 dark:border-slate-700 dark:bg-slate-950">
+        <p id="status" role="status" class="mr-auto text-slate-500 dark:text-slate-400">Sin cambios pendientes.</p>
+        <button type="reset" id="reset" disabled class="rounded-lg border border-slate-200 px-3.5 py-2 font-semibold disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700">Descartar</button>
+        <button type="submit" id="save" disabled class="rounded-lg bg-blue-600 px-3.5 py-2 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-blue-500 dark:text-slate-950">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+</main>
+<script>
+  const form = document.getElementById('f'), tabs = [...form.querySelectorAll('[role=tab]')];
+  const status = document.getElementById('status'), save = document.getElementById('save'), reset = document.getElementById('reset');
+  function select(tab) {
+    tabs.forEach((t) => { const on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+    tab.focus();
+  }
+  tabs.forEach((t) => t.addEventListener('click', () => select(t)));
+  form.querySelector('[role=tablist]').addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(document.activeElement), n = tabs.length;
+    const next = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: n - 1 }[e.key];
+    if (next !== undefined) { e.preventDefault(); select(tabs[(next + n) % n]); }
+  });
+  const dirty = (on, msg) => { save.disabled = reset.disabled = !on; status.textContent = msg; };
+  form.addEventListener('input', () => dirty(true, 'Tienes cambios sin guardar.'));
+  form.addEventListener('reset', () => dirty(false, 'Cambios descartados.'));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const bad = form.querySelector(':invalid');
+    if (bad) { select(document.getElementById(bad.closest('[role=tabpanel]').getAttribute('aria-labelledby'))); return bad.reportValidity(); }
+    form.querySelectorAll('input').forEach((el) => (el.type === 'checkbox' ? (el.defaultChecked = el.checked) : (el.defaultValue = el.value)));
+    form.querySelectorAll('option').forEach((o) => (o.defaultSelected = o.selected));
+    dirty(false, 'Cambios guardados.');
+  });
+</script>

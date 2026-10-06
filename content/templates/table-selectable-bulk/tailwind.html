@@ -1,0 +1,43 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div id="bulk" class="hidden relative flex min-h-[52px] flex-wrap items-center gap-2 bg-blue-50 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-gradient-to-r after:from-cyan-400 after:to-blue-600 px-4 py-2 dark:border-slate-700 dark:bg-slate-800">
+      <span id="count" aria-live="polite" class="rounded-full bg-blue-600 px-2.5 py-0.5 font-semibold tabular-nums text-white">0</span>
+      <span class="flex-1">seleccionados</span>
+      <button type="button" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 hover:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900">Exportar CSV</button>
+      <button type="button" id="del" class="rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-red-600 hover:border-red-600 hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-red-400 dark:hover:bg-red-950">Archivar</button>
+    </div>
+    <div class="overflow-x-auto">
+      <table id="t" class="w-full min-w-[460px] border-collapse [&_td]:border-b [&_td]:border-slate-200 [&_td]:px-4 [&_td]:py-2.5 [&_th]:border-b [&_th]:border-slate-200 [&_th]:px-4 [&_th]:py-2.5 [&_th]:text-left [&_th]:font-semibold [&_th]:text-slate-500 dark:[&_td]:border-slate-700 dark:[&_th]:border-slate-700 dark:[&_th]:text-slate-400 [&_input]:size-4 [&_input]:accent-blue-600">
+        <caption class="sr-only">Facturas pendientes. Marca filas para aplicar acciones en bloque.</caption>
+        <thead><tr>
+          <th scope="col" class="w-5"><input type="checkbox" id="all" aria-label="Seleccionar todas las filas"></th>
+          <th scope="col">Factura</th><th scope="col">Cliente</th><th scope="col" class="!text-right">Importe</th>
+        </tr></thead>
+        <tbody class="[&>tr:has(:checked)]:bg-blue-50 dark:[&>tr:has(:checked)]:bg-slate-800 [&>tr:last-child>td]:border-0">
+          <tr><td><input type="checkbox" aria-label="Seleccionar F-1042"></td><td>F-1042</td><td>Nórdica Labs</td><td class="text-right tabular-nums">1.240,00 €</td></tr>
+          <tr><td><input type="checkbox" aria-label="Seleccionar F-1043"></td><td>F-1043</td><td>Atlas Energía</td><td class="text-right tabular-nums">3.890,50 €</td></tr>
+          <tr><td><input type="checkbox" aria-label="Seleccionar F-1044"></td><td>F-1044</td><td>Brío Studio</td><td class="text-right tabular-nums">760,00 €</td></tr>
+          <tr><td><input type="checkbox" aria-label="Seleccionar F-1045"></td><td>F-1045</td><td>Cobalto SA</td><td class="text-right tabular-nums">12.300,00 €</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+  const t = document.getElementById('t'), all = document.getElementById('all');
+  const bulk = document.getElementById('bulk'), count = document.getElementById('count');
+  const boxes = () => [...t.tBodies[0].querySelectorAll('input')];
+  function sync() {
+    const b = boxes(), n = b.filter((x) => x.checked).length;
+    all.checked = n > 0 && n === b.length;
+    all.indeterminate = n > 0 && n < b.length;
+    all.disabled = !b.length;
+    bulk.classList.toggle('hidden', !n); count.textContent = n;
+  }
+  all.addEventListener('change', () => { boxes().forEach((x) => (x.checked = all.checked)); sync(); });
+  t.tBodies[0].addEventListener('change', sync);
+  document.getElementById('del').addEventListener('click', () => {
+    boxes().filter((x) => x.checked).forEach((x) => x.closest('tr').remove());
+    sync(); all.focus();
+  });
+</script>

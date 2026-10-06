@@ -8,7 +8,7 @@ type Props = {
   confirmLabel?: string;
 };
 
-export function Modal({ open, onClose, title, children, confirmLabel = 'Eliminar' }: Props) {
+export function Modal({ open, onClose, title, children, confirmLabel = 'Eliminar proyecto' }: Props) {
   const ref = useRef<HTMLDialogElement>(null);
   const id = useId();
 
@@ -42,4 +42,4 @@ export function Modal({ open, onClose, title, children, confirmLabel = 'Eliminar
 
 // Uso: <Modal open={open} onClose={(v) => { setOpen(false); if (v === 'delete') borrar(); }} title="¿Eliminar «Rediseño web»?">Se borrarán sus 24 archivos.</Modal>
 // El foco vuelve solo al botón que abrió el modal (comportamiento nativo de showModal).
-// CSS: copia las reglas .btn / .btn.danger / dialog / dialog::backdrop / dialog form / dialog h2 / dialog p / .actions y @keyframes pop de la pestaña HTML + CSS.
+// CSS: copia las reglas .btn / .btn.danger / dialog (y ::before) / dialog::backdrop / dialog form / dialog h2 / dialog p / .actions y @keyframes pop de la pestaña HTML + CSS.

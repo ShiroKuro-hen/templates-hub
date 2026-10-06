@@ -1,14 +1,14 @@
 import { useState, type FormEvent } from 'react';
 
 const MSG: Record<string, string> = {
-  valueMissing: 'Este campo es obligatorio.',
-  typeMismatch: 'Escribe un correo válido, p. ej. ana@correo.com.',
+  valueMissing: 'Completa este campo.',
+  typeMismatch: 'Escribe un correo válido, por ejemplo ana@correo.com.',
   tooShort: 'Usa al menos 8 caracteres.',
   patternMismatch: 'Incluye al menos un número.',
 };
 
 function errorOf(el: HTMLInputElement, pw: string): string {
-  if (el.name === 'pw2') return el.value !== pw ? 'Las contraseñas no coinciden.' : '';
+  if (el.name === 'pw2') return el.value !== pw ? 'Las contraseñas no coinciden. Escríbelas de nuevo.' : '';
   if (el.validity.valid) return '';
   const key = Object.keys(MSG).find((k) => el.validity[k as keyof ValidityState]);
   return key ? MSG[key] : el.validationMessage;
@@ -45,14 +45,17 @@ export function SignupForm({ onSubmit }: { onSubmit?: (data: FormData) => void }
   );
 
   return (
-    <form noValidate onSubmit={submit}>
-      {field('nombre', 'Nombre')}
-      {field('email', 'Correo', 'email')}
-      {field('pw', 'Contraseña', 'password', { minLength: 8, pattern: '.*\\d.*' })}
-      {field('pw2', 'Repite la contraseña', 'password')}
-      <div className="full"><button type="submit">Crear cuenta</button></div>
-      {done && <p id="done" role="status">¡Cuenta creada! Revisa tu correo para confirmarla.</p>}
-    </form>
+    <div className="card">
+      <h1>Crea tu cuenta</h1>
+      <form noValidate onSubmit={submit}>
+        {field('nombre', 'Nombre')}
+        {field('email', 'Correo', 'email')}
+        {field('pw', 'Contraseña', 'password', { minLength: 8, pattern: '.*\\d.*' })}
+        {field('pw2', 'Repite la contraseña', 'password')}
+        <div className="full"><button type="submit">Crear cuenta</button></div>
+      </form>
+      {done && <p id="done" role="status">Cuenta creada. Revisa tu correo para confirmarla.</p>}
+    </div>
   );
 }
-// CSS: copia las reglas form / .field / label / input (aria-invalid, .ok) / .e / .full / button / #done de la pestaña HTML + CSS.
+// CSS: copia las reglas .card / h1 / form / .field / label / input (aria-invalid, .ok) / .e / .full / button / #done de la pestaña HTML + CSS.

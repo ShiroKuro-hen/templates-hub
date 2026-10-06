@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  figure{margin:0;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  figcaption strong{display:block;font-size:15px;font-weight:600}
+  figcaption span{color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 20px;margin:12px 0 4px;padding:0;list-style:none;color:var(--muted);font-size:13px}
+  .legend li{display:flex;align-items:center;gap:8px}
+  .legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+  .plot{position:relative}
+  svg{display:block;overflow:visible}
+  .grid{stroke:var(--border);stroke-dasharray:2 4}
+  .axis{stroke:var(--border)}
+  .seg{stroke:var(--surface);stroke-width:1;cursor:pointer;transition:opacity .14s}
+  .seg:hover{opacity:.85}
+  .seg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .total{fill:var(--text);font-size:12px;font-weight:600;text-anchor:middle;font-variant-numeric:tabular-nums}
+  .tick{fill:var(--muted);font-size:12px;text-anchor:middle}
+  .tip{position:absolute;z-index:5;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font-size:13px;white-space:nowrap;pointer-events:none;transform:translate(-50%,calc(-100% - 8px));overflow:hidden}
+  .tip::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .tip b{font-variant-numeric:tabular-nums}
+  .tip span{display:block;color:var(--muted);font-size:12px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure>
+  <figcaption><strong>Pedidos por canal</strong><span>Primer semestre de 2026, en miles de pedidos</span></figcaption>
+  <ul class="legend" id="legend"></ul>
+  <div class="plot" id="plot">
+    <svg id="chart" width="100%" height="250" role="group" aria-label="Pedidos por canal y mes. Recorre las barras con Tab."></svg>
+    <div class="tip" id="tip" role="tooltip" hidden></div>
+  </div>
+</figure>
+<script>
+  const series = [
+    { key: 'web', label: 'Web', color: 'var(--accent)' },
+    { key: 'app', label: 'App móvil', color: 'var(--info)' },
+    { key: 'tienda', label: 'Tienda física', color: 'var(--ok)' },
+  ];
+  const data = [
+    { mes: 'Ene', web: 42, app: 28, tienda: 12 }, { mes: 'Feb', web: 38, app: 31, tienda: 14 },
+    { mes: 'Mar', web: 51, app: 35, tienda: 11 }, { mes: 'Abr', web: 47, app: 40, tienda: 15 },
+    { mes: 'May', web: 56, app: 44, tienda: 13 }, { mes: 'Jun', web: 61, app: 49, tienda: 16 },
+  ];
+  const $ = (id) => document.getElementById(id);
+  const total = (d) => series.reduce((s, x) => s + d[x.key], 0);
+  const max = Math.ceil(Math.max(...data.map(total)) / 50) * 50;
+  const base = 222, h = 196, n = data.length, k = h / max; // px por unidad
+
+  $('legend').innerHTML = series.map((s) => `<li style="--c:${s.color}"><i></i>${s.label}</li>`).join('');
+  let svg = '';
+  for (let v = 50; v <= max; v += 50) svg += `<line class="grid" x1="0" x2="100%" y1="${base - v * k}" y2="${base - v * k}"/>`;
+  data.forEach((d, i) => {
+    const x = ((i + 0.25) / n) * 100, w = (0.5 / n) * 100, cx = ((i + 0.5) / n) * 100;
+    let y = base;
+    series.forEach((s) => {
+      const hh = d[s.key] * k; y -= hh;
+      svg += `<rect class="seg" tabindex="0" role="img" x="${x}%" y="${y}" width="${w}%" height="${hh}" style="fill:${s.color}"
+        data-i="${i}" data-s="${s.key}" aria-label="${d.mes}, ${s.label}: ${d[s.key]} mil"/>`;
+    });
+    svg += `<text class="total" x="${cx}%" y="${y - 6}">${total(d)}</text><text class="tick" x="${cx}%" y="${base + 20}">${d.mes}</text>`;
+  });
+  $('chart').innerHTML = svg + `<line class="axis" x1="0" x2="100%" y1="${base}" y2="${base}"/>`;
+
+  const tip = $('tip'), plot = $('plot');
+  function show(el) {
+    const d = data[el.dataset.i], s = series.find((x) => x.key === el.dataset.s);
+    tip.innerHTML = `${s.label}: <b>${d[s.key]} mil</b><span>${d.mes}, total ${total(d)} mil</span>`;
+    tip.hidden = false;
+    const r = el.getBoundingClientRect(), p = plot.getBoundingClientRect(), half = tip.offsetWidth / 2;
+    tip.style.left = Math.min(Math.max(r.left - p.left + r.width / 2, half), p.width - half) + 'px';
+    tip.style.top = r.top - p.top + 'px';
+  }
+  const hide = () => { tip.hidden = true; };
+  ['pointerover', 'focusin'].forEach((ev) => $('chart').addEventListener(ev, (e) => e.target.dataset.s && show(e.target)));
+  ['pointerout', 'focusout'].forEach((ev) => $('chart').addEventListener(ev, hide));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && hide());
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+{ "title": "Página de inicio de sesión", "category": "paginas", "description": "Login con correo y contraseña, SSO, recuperar contraseña y validación nativa.", "tags": ["login", "auth", "formulario", "a11y"] }

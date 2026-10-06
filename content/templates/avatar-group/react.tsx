@@ -1,5 +1,3 @@
-import type { CSSProperties } from 'react';
-
 type Person = { nombre: string };
 type Props = {
   people: Person[];
@@ -7,7 +5,7 @@ type Props = {
   size?: 'sm' | 'md' | 'lg';
 };
 
-const COLORS = ['#ffd84d', '#ff8a6e', '#9db4ff', '#8fdcaa'];
+const TONES = ['c1', 'c2', 'c3', 'c4']; // acento, info, ok, aviso (tokens)
 
 const initials = (name: string) =>
   name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0].toUpperCase()).join('');
@@ -22,8 +20,7 @@ export function AvatarGroup({ people, max = 4, size = 'md' }: Props) {
       {shown.map((p, i) => (
         <li
           key={p.nombre}
-          className="avatar"
-          style={{ '--c': COLORS[i % COLORS.length] } as CSSProperties}
+          className={`avatar ${TONES[i % TONES.length]}`}
           role="img"
           aria-label={p.nombre}
           title={p.nombre}
@@ -40,4 +37,4 @@ export function AvatarGroup({ people, max = 4, size = 'md' }: Props) {
     </ul>
   );
 }
-// CSS: copia las reglas .avatars / .avatar / .avatars.sm / .avatars.lg / .avatar.more de la pestaña HTML + CSS.
+// CSS: copia las reglas .avatars / .avatar / .avatars.sm / .avatars.lg / .avatar.more / .c1 .c2 .c3 .c4 y los tokens :root de la pestaña HTML + CSS.

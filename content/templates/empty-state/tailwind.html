@@ -1,19 +1,18 @@
-<section aria-labelledby="t" class="mx-auto my-3.5 max-w-[440px] rounded-[10px] border-2 border-dashed border-[#17130f] bg-[#fffdf8] px-5 pb-[18px] pt-3.5 text-center text-sm">
-  <svg class="mx-auto block h-auto w-32" viewBox="0 0 160 112" fill="none" stroke="#17130f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <ellipse cx="80" cy="104" rx="46" ry="5" fill="#17130f1f" stroke="none"/>
-    <circle cx="80" cy="20" r="10" stroke-dasharray="4 6"/>
-    <path d="M126 14v14M119 21h14" stroke="#3b5bfd"/>
-    <path d="M26 66l12-16h22l6 16zM134 66l-12-16h-22l-6 16z" fill="#ffd84d"/>
-    <rect x="26" y="66" width="108" height="34" rx="5" fill="#fffdf8"/>
-    <rect x="60" y="76" width="40" height="9" rx="4.5" fill="#ff5a36"/>
+<section aria-labelledby="t" class="mx-auto my-5 max-w-md rounded-lg border border-dashed border-slate-200 bg-white px-6 pb-5 pt-6 text-center text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <svg class="mx-auto mb-2 block h-auto w-28 text-slate-500 dark:text-slate-400" viewBox="0 0 160 112" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="80" cy="20" r="10" stroke-dasharray="3 5"/>
+    <path class="stroke-blue-600 dark:stroke-blue-400" d="M126 14v14M119 21h14"/>
+    <path class="fill-blue-50 dark:fill-slate-800" d="M26 66l12-16h22l6 16zM134 66l-12-16h-22l-6 16z"/>
+    <rect class="fill-white dark:fill-slate-900" x="26" y="66" width="108" height="34" rx="5"/>
+    <rect class="fill-blue-600 stroke-none dark:fill-blue-400" x="60" y="77" width="40" height="7" rx="3.5"/>
   </svg>
-  <h2 id="t" class="mb-0.5 mt-1 text-xl font-bold tracking-tight">Aún no tienes proyectos</h2>
-  <p class="mx-auto mb-3.5 max-w-[34ch] text-[#6b6258]">Crea el primero para empezar a organizar tu trabajo.</p>
-  <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5">
-    <button id="create" type="button" class="rounded-[10px] border-2 border-[#17130f] bg-[#ff5a36] px-[18px] py-[9px] font-bold text-[#17130f] shadow-[4px_4px_0_#17130f] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_#17130f] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36] motion-reduce:transition-none">Crear proyecto</button>
-    <button type="button" class="rounded-md p-1.5 font-semibold underline underline-offset-[3px] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">Importar desde CSV</button>
+  <h2 id="t" class="mb-1 text-lg font-semibold tracking-tight">Aún no tienes proyectos</h2>
+  <p class="mx-auto mb-4 max-w-[34ch] text-slate-500 dark:text-slate-400">Crea el primero para empezar a organizar tu trabajo.</p>
+  <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
+    <button id="create" type="button" class="rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none dark:bg-blue-500">Crear proyecto</button>
+    <button type="button" class="rounded-lg px-3 py-2 font-medium text-blue-600 transition-colors hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none dark:text-blue-400 dark:hover:bg-slate-800">Importar desde CSV</button>
   </div>
-  <p id="note" role="status" class="mt-2.5 min-h-6 font-mono text-xs font-semibold text-[#1f7a45]"></p>
+  <p id="note" role="status" class="mt-3 min-h-6 text-[13px] text-emerald-600 dark:text-emerald-400"></p>
 </section>
 
 <script>

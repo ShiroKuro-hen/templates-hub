@@ -39,25 +39,30 @@ const year = new Date().getFullYear();
 </template>
 
 <style scoped>
-footer { background: #17130f; color: #d9d2c5; border-top: 4px solid #ff5a36; font: 14px/1.5 system-ui, sans-serif; }
+footer { position: relative; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); box-shadow: var(--shadow); overflow: hidden; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+footer::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
 a { color: inherit; }
-a:focus-visible { outline: 3px solid #ffd84d; outline-offset: 3px; border-radius: 4px; }
-.top { display: grid; gap: 28px; max-width: 1040px; margin: 0 auto; padding: 36px 20px 28px; }
-@media (min-width: 900px) { .top { grid-template-columns: 1.3fr repeat(4, 1fr); } }
-.brand { display: inline-flex; gap: 10px; align-items: center; color: #fffdf8; font-size: 1.25rem; font-weight: 800; text-decoration: none; }
-.brand span { display: grid; place-items: center; width: 30px; height: 30px; border: 2px solid #fffdf8; border-radius: 8px; background: #ff5a36; color: #17130f; }
-.tag { max-width: 26ch; margin: 12px 0 16px; color: #a89f92; }
-.social { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.social a { display: grid; place-items: center; width: 38px; height: 38px; border: 2px solid #d9d2c5; border-radius: 10px; color: #fffdf8; }
-.social a:hover { background: #ffd84d; border-color: #ffd84d; color: #17130f; }
-.social svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.top { display: grid; gap: 32px; padding: 40px 24px 32px; }
+@media (min-width: 900px) { .top { grid-template-columns: 1.3fr repeat(4, 1fr); padding: 48px 32px 36px; } }
+.brand { display: inline-flex; gap: 10px; align-items: center; color: var(--text); font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; text-decoration: none; }
+.brand span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--radius); background: linear-gradient(135deg, #22d3ee, #2f5bff); color: #fff; font-size: .95rem; }
+.tag { max-width: 26ch; margin: 12px 0 18px; color: var(--muted); }
+.social { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.social a { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--muted); transition: color .14s, border-color .14s, background .14s; }
+.social a:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.social svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 16px; }
 @media (min-width: 900px) { .cols { display: contents; } }
-h2 { margin: 0 0 10px; color: #fffdf8; font: 700 .8rem ui-monospace, monospace; }
+h2 { margin: 0 0 12px; color: var(--text); font-size: .9rem; font-weight: 600; }
 .col ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.col a { text-decoration: none; }
-.col a:hover { color: #ffd84d; text-decoration: underline; }
-.legal { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; max-width: 1040px; margin: 0 auto; padding: 18px 20px; border-top: 1px solid #3d362e; color: #a89f92; font-size: .85rem; }
+.col a { color: var(--muted); text-decoration: none; transition: color .14s; }
+.col a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.legal { display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; padding: 18px 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; }
+@media (min-width: 900px) { .legal { padding: 18px 32px; } }
 .legal p { margin: 0; }
 .legal ul { display: flex; gap: 16px; margin: 0; padding: 0; list-style: none; }
+.legal a:hover { color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .social a, .col a { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

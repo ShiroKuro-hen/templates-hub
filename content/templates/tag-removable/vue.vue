@@ -39,13 +39,16 @@ function add() {
 </template>
 
 <style scoped>
-.box { padding: 12px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
+.box { padding: 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-li { display: inline-flex; align-items: center; gap: 2px; padding: 2px 2px 2px 12px; border: 2px solid #17130f; border-radius: 999px; background: #ffd84d; font-weight: 600; }
-li button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; font-size: 16px; line-height: 1; color: #17130f; cursor: pointer; }
-li button:hover { background: #17130f; color: #ffd84d; }
-button:focus-visible, input:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-input { width: 100%; margin-top: 12px; padding: 8px 10px; border: 2px solid #17130f; border-radius: 10px; background: #fff; font: inherit; color: #17130f; }
-.empty { margin: 0; color: #6b6258; }
+li { display: inline-flex; align-items: center; gap: 2px; padding: 2px 2px 2px 12px; border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 999px; background: var(--accent-soft); color: var(--text); font-weight: 500; }
+li button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 50%; background: none; font-size: 16px; line-height: 1; color: var(--muted); cursor: pointer; transition: background-color .14s, color .14s; }
+li button:hover { background: var(--accent); color: var(--accent-ink); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input { width: 100%; margin-top: 12px; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); font: inherit; color: var(--text); }
+.empty { margin: 0; color: var(--muted); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media (prefers-reduced-motion: reduce) { li button { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

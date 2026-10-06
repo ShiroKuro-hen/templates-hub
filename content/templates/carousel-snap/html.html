@@ -5,23 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carrusel con scroll-snap</title>
 <style>
-  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
   .head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-  h1 { margin:0; font-size:20px; letter-spacing:-.02em; }
+  h1 { margin:0; font-size:1.25rem; letter-spacing:-.01em; }
   .ctrl { display:flex; align-items:center; gap:8px; }
-  .count { min-width:3.2em; text-align:center; font:700 13px ui-monospace, monospace; }
-  .btn { display:grid; place-items:center; width:38px; height:38px; padding:0; font:700 18px system-ui; color:var(--ink); background:var(--hl); border:2px solid var(--ink); border-radius:10px; box-shadow:3px 3px 0 var(--ink); cursor:pointer; }
-  .btn:hover:not(:disabled) { transform:translate(1.5px,1.5px); box-shadow:1.5px 1.5px 0 var(--ink); }
-  .btn:disabled { opacity:.4; box-shadow:none; cursor:not-allowed; }
-  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-  .track { display:flex; gap:14px; margin:0; padding:2px 6px 8px 2px; list-style:none; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:var(--ink) transparent; }
+  .count { min-width:3.2em; text-align:center; font-size:13px; font-weight:600; color:var(--muted); font-variant-numeric:tabular-nums; }
+  .btn { display:grid; place-items:center; width:36px; height:36px; padding:0; font:500 18px system-ui; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:background 140ms, border-color 140ms; }
+  .btn:hover:not(:disabled) { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); }
+  .btn:disabled { opacity:.4; cursor:not-allowed; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .track { display:flex; gap:14px; margin:0; padding:4px 6px 16px 4px; list-style:none; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:var(--border) transparent; }
   @media (prefers-reduced-motion:no-preference) { .track { scroll-behavior:smooth; } }
-  .slide { flex:0 0 min(78%, 260px); scroll-snap-align:start; display:flex; flex-direction:column; border:2px solid var(--ink); border-radius:10px; background:var(--surface); box-shadow:4px 4px 0 var(--ink); overflow:hidden; }
-  .art { height:96px; background:var(--c); border-bottom:2px solid var(--ink); display:grid; place-items:center; font:800 40px/1 system-ui; letter-spacing:-.04em; }
-  .slide div + div { padding:10px 14px 14px; }
-  .slide h2 { margin:0 0 2px; font-size:16px; letter-spacing:-.01em; }
+  @media (prefers-reduced-motion:reduce) { .btn { transition:none; } }
+  .slide { flex:0 0 min(78%, 260px); scroll-snap-align:start; display:flex; flex-direction:column; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); box-shadow:var(--shadow); overflow:hidden; }
+  .art { height:96px; background:var(--c); color:var(--f); display:grid; place-items:center; font-size:40px; font-weight:700; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums; }
+  .c1 { --c:var(--accent-soft); --f:var(--accent); } .c2 { --c:var(--info-soft); --f:var(--info); } .c3 { --c:var(--ok-soft); --f:var(--ok); } .c4 { --c:var(--warn-soft); --f:var(--warn); }
+  .slide div + div { padding:12px 16px 16px; }
+  .slide h2 { margin:0 0 2px; font-size:1rem; font-weight:600; }
   .slide p { margin:0; color:var(--muted); }
 </style>
 </head>
@@ -36,11 +39,11 @@
       </div>
     </div>
     <ul class="track" id="track" tabindex="0" aria-label="Diapositivas, desplázate con las flechas">
-      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#ffd84d">9 km</div><div><h2>Cerros de Lima</h2><p>Sendero suave, 2 h.</p></div></li>
-      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#ff8a6e">14 km</div><div><h2>Valle Sagrado</h2><p>Ruta mixta, 5 h.</p></div></li>
-      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#9db4ff">6 km</div><div><h2>Laguna Churup</h2><p>Subida corta, 3 h.</p></div></li>
-      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#8fdcaa">22 km</div><div><h2>Cañón del Colca</h2><p>Día completo, 8 h.</p></div></li>
-      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#ffd84d">11 km</div><div><h2>Costa Verde</h2><p>Ruta urbana, 3 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art c1">9 km</div><div><h2>Cerros de Lima</h2><p>Sendero suave, 2 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art c2">14 km</div><div><h2>Valle Sagrado</h2><p>Ruta mixta, 5 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art c3">6 km</div><div><h2>Laguna Churup</h2><p>Subida corta, 3 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art c4">22 km</div><div><h2>Cañón del Colca</h2><p>Día completo, 8 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art c1">11 km</div><div><h2>Costa Verde</h2><p>Ruta urbana, 3 h.</p></div></li>
     </ul>
   </section>
 <script>

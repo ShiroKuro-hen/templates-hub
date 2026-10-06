@@ -1,2 +1,2 @@
-Crea una tabla comparativa de planes para {{producto}} con tres planes ({{planes}}), filas de características con ✓ verde / ✕ rojo y un plan destacado con etiqueta "Recomendado".
-Estilo "papel y tinta": bordes gruesos, sombra dura, columna destacada en amarillo. Accesible: caption, th scope, texto oculto "Incluido/No incluido" para lectores de pantalla, scroll horizontal en móvil. Sin librerías.
+Crea una tabla comparativa de planes para {{producto}} con tres planes ({{planes}}), filas de características con ✓ verde / ✕ gris y un plan destacado con etiqueta "Recomendado".
+Estilo sobrio y profesional: bordes finos de 1px, radio 8px, sombras suaves, acento azul, tokens CSS con tema claro y oscuro; la columna destacada usa el fondo suave del acento. Accesible: caption, th scope, texto oculto "Incluido/No incluido" para lectores de pantalla, scroll horizontal en móvil. Sin librerías.

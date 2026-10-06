@@ -42,10 +42,10 @@ export function SiteFooter({ columns, socials = [], tagline, legal = [] }: Foote
         </nav>
       </div>
       <div className="legal">
-        <p style={{ margin: 0 }}>© {new Date().getFullYear()} Nimbo Software, S.L. Todos los derechos reservados.</p>
+        <p>© {new Date().getFullYear()} Nimbo Software, S.L. Todos los derechos reservados.</p>
         <ul>{legal.map((l) => <li key={l.label}><a href={l.href}>{l.label}</a></li>)}</ul>
       </div>
     </footer>
   );
 }
-// CSS: copia las reglas footer / .top / .brand / .tag / .social / .cols / .col / h2 / .legal de la pestaña HTML + CSS.
+// CSS: copia las reglas footer (y footer::before) / .top / .brand / .tag / .social / .cols / .col / h2 / .legal de la pestaña HTML + CSS, junto con los tokens :root.

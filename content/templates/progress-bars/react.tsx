@@ -7,7 +7,7 @@ const tone = (v: number) => (v >= 75 ? 'hi' : v >= 40 ? 'mid' : 'lo');
 export function ProgressBars({ items }: { items: Item[] }) {
   const uid = useId();
   return (
-    <div>
+    <div className="card">
       {items.map(({ label, value }) => {
         const id = `${uid}-${label}`;
         return (
@@ -21,4 +21,4 @@ export function ProgressBars({ items }: { items: Item[] }) {
     </div>
   );
 }
-// CSS: copia las reglas .row / .row output / progress (+ ::-webkit-progress-* y ::-moz-progress-bar) / .lo / .mid / .hi de la pestaña HTML + CSS.
+// CSS: copia las reglas .card / .row / .row output / progress (+ ::-webkit-progress-* y ::-moz-progress-bar) / .lo / .mid / .hi de la pestaña HTML + CSS.

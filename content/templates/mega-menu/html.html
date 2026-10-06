@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;min-height:420px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  nav{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .brand{margin-right:12px;font-weight:700}
+  nav>ul{display:flex;flex-wrap:wrap;gap:4px;margin:0;padding:0;list-style:none}
+  .top{display:flex;align-items:center;gap:6px;padding:8px 12px;font:inherit;font-weight:500;color:var(--text);text-decoration:none;background:none;border:0;border-radius:6px;cursor:pointer;transition:background .14s}
+  .top:hover,.top[aria-expanded=true]{background:var(--accent-soft);color:var(--accent)}
+  .top svg{transition:transform .14s}
+  .top[aria-expanded=true] svg{transform:rotate(180deg)}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .panel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:10;display:grid;grid-template-columns:repeat(3,1fr) 1.2fr;gap:24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .panel[hidden]{display:none}
+  h3{margin:0 0 8px;font-size:12px;font-weight:600;color:var(--muted)}
+  .panel ul{display:grid;gap:2px;margin:0;padding:0;list-style:none}
+  .panel a{display:block;padding:8px;margin:0 -8px;color:var(--text);text-decoration:none;border-radius:6px;transition:background .14s}
+  .panel a:hover{background:var(--accent-soft)}
+  .panel a span{display:block;color:var(--muted);font-size:13px}
+  .feature{padding:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  .feature .line{height:2px;width:40px;margin-bottom:12px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .feature p{margin:4px 0 12px;color:var(--muted)}
+  .feature a{display:inline-block;margin:0;padding:6px 12px;font-weight:600;color:var(--accent-ink);background:var(--accent)}
+  .feature a:hover{background:var(--accent)}
+  @media (max-width:760px){.panel{grid-template-columns:1fr 1fr}}
+  @media (max-width:480px){.panel{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav aria-label="Principal" id="nav">
+  <span class="brand">Ion Cloud</span>
+  <ul>
+    <li>
+      <button type="button" class="top" id="btn" aria-expanded="false" aria-controls="panel">Productos
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 4.5l3 3 3-3"/></svg>
+      </button>
+      <div class="panel" id="panel" hidden>
+        <div><h3 id="c1">Cómputo</h3><ul aria-labelledby="c1">
+          <li><a href="#">Servidores virtuales<span>Instancias que escalan en segundos</span></a></li>
+          <li><a href="#">Contenedores<span>Kubernetes gestionado</span></a></li>
+          <li><a href="#">Funciones<span>Código sin servidores</span></a></li></ul></div>
+        <div><h3 id="c2">Datos</h3><ul aria-labelledby="c2">
+          <li><a href="#">Bases de datos<span>SQL y NoSQL con copias diarias</span></a></li>
+          <li><a href="#">Almacenamiento<span>Objetos y bloques cifrados</span></a></li>
+          <li><a href="#">Analítica<span>Consultas sobre datos en vivo</span></a></li></ul></div>
+        <div><h3 id="c3">Seguridad</h3><ul aria-labelledby="c3">
+          <li><a href="#">Identidad y acceso<span>Roles y permisos por equipo</span></a></li>
+          <li><a href="#">Firewall<span>Reglas por red y región</span></a></li>
+          <li><a href="#">Auditoría<span>Registro de cada cambio</span></a></li></ul></div>
+        <div class="feature"><div class="line" aria-hidden="true"></div>
+          <strong>Nuevo: Ion Analytics 2.0</strong>
+          <p>Paneles en tiempo real con un 40% menos de latencia.</p>
+          <a href="#">Ver novedades</a></div>
+      </div>
+    </li>
+    <li><a class="top" href="#">Precios</a></li>
+    <li><a class="top" href="#">Documentación</a></li>
+  </ul>
+</nav>
+<script>
+  const nav = document.getElementById('nav'), btn = document.getElementById('btn'), panel = document.getElementById('panel');
+  const set = (open) => { btn.setAttribute('aria-expanded', open); panel.hidden = !open; };
+
+  btn.addEventListener('click', () => set(panel.hidden));
+  btn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); set(true); panel.querySelector('a').focus(); }
+  });
+  nav.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !panel.hidden) { set(false); btn.focus(); }
+  });
+  nav.addEventListener('focusout', (e) => { const t = e.relatedTarget; if (t && t !== btn && !panel.contains(t)) set(false); }); // Tab fuera del panel
+  document.addEventListener('click', (e) => { if (!nav.contains(e.target)) set(false); });
+</script>
+</body>
+</html>

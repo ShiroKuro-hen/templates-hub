@@ -57,4 +57,4 @@ export function SearchList({ items, placeholder = 'Busca un país o una capital'
     </>
   );
 }
-// CSS: copia las reglas .box / input / .clear / #n / ul / li / mark / .empty de la pestaña HTML + CSS.
+// CSS: copia las reglas .box (y .box::after) / input / .clear / #n / ul / li / mark / .empty de la pestaña HTML + CSS.

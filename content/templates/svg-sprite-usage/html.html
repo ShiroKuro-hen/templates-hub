@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sprite SVG</title>
 <style>
-  :root { --ink:#17130f; --paper:#f6f1e7; --surface:#fffdf8; --muted:#6b6258; --accent:#ff5a36; --info:#3b5bfd; --ok:#1f9d55; --err:#d6293e; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:12px 14px; font:14px/1.4 system-ui, sans-serif; background:var(--paper); color:var(--ink); }
-  h2 { margin:0 0 6px; font-size:.8rem; font-family:ui-monospace, monospace; color:var(--muted); font-weight:600; }
-  section { margin-bottom:12px; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  h2 { margin:0 0 8px; font-size:.95rem; font-weight:600; }
+  section { margin-bottom:20px; }
   .i { fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
   .row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
-  .tile { display:grid; place-items:center; width:44px; height:44px; background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:3px 3px 0 var(--ink); }
+  .tile { display:grid; place-items:center; width:44px; height:44px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
   .tile .i { width:24px; height:24px; }
-  .sz { align-items:flex-end; gap:12px; }
+  .sz { align-items:flex-end; gap:16px; }
   .sz .i { display:block; }
-  .sz .a { color:var(--ink); } .sz .b { color:var(--accent); } .sz .c { color:var(--info); } .sz .d { color:var(--ok); } .sz .e { color:var(--err); }
-  pre { margin:0; padding:10px 12px; overflow:auto; font:12px/1.5 ui-monospace, monospace; color:var(--paper); background:var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--accent); }
+  .sz .a { color:var(--text); } .sz .b { color:var(--accent); } .sz .c { color:var(--info); } .sz .d { color:var(--ok); } .sz .e { color:var(--err); }
+  pre { margin:0; padding:12px 14px; overflow:auto; font:12px/1.6 ui-monospace,"Cascadia Code",Menlo,monospace; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
 </style>
 </head>
 <body>

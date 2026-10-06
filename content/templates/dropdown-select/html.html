@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .field{max-width:320px;min-height:320px}
+  label{display:block;margin-bottom:6px;font-weight:600}
+  .select{position:relative}
+  .combo{display:flex;align-items:center;justify-content:space-between;gap:8px;height:38px;padding:0 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;user-select:none;transition:border-color .14s}
+  .combo:hover{border-color:var(--muted)}
+  .combo:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .combo[aria-expanded=true]{border-color:var(--accent)}
+  .combo svg{flex:none;color:var(--muted);transition:transform .14s}
+  .combo[aria-expanded=true] svg{transform:rotate(180deg)}
+  .list{position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:10;margin:0;padding:4px;list-style:none;max-height:224px;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  [role=option]{position:relative;display:flex;justify-content:space-between;gap:8px;padding:8px 10px 8px 12px;border-radius:6px;cursor:pointer}
+  [role=option]:hover,[role=option].active{background:var(--accent-soft)}
+  [role=option].active::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:2px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  [role=option][aria-selected=true]{font-weight:600}
+  [role=option][aria-selected=true]::after{content:"✓";color:var(--accent)}
+  .hint{margin:6px 0 0;color:var(--muted);font-size:13px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="field">
+  <label id="lbl">Región del servidor</label>
+  <div class="select">
+    <div class="combo" id="combo" role="combobox" tabindex="0" aria-labelledby="lbl" aria-haspopup="listbox" aria-controls="lb" aria-expanded="false" aria-describedby="hint">
+      <span id="value">Europa (Madrid)</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <ul class="list" id="lb" role="listbox" aria-labelledby="lbl" tabindex="-1" hidden>
+      <li role="option" id="o1" aria-selected="false">EE. UU. Este (Virginia)</li>
+      <li role="option" id="o2" aria-selected="false">EE. UU. Oeste (Oregón)</li>
+      <li role="option" id="o3" aria-selected="true">Europa (Madrid)</li>
+      <li role="option" id="o4" aria-selected="false">Europa (Fráncfort)</li>
+      <li role="option" id="o5" aria-selected="false">Sudamérica (São Paulo)</li>
+      <li role="option" id="o6" aria-selected="false">Asia Pacífico (Tokio)</li>
+    </ul>
+  </div>
+  <p class="hint" id="hint">Elige la región más cercana a tus usuarios.</p>
+</div>
+<script>
+  const combo = document.getElementById('combo'), lb = document.getElementById('lb'), value = document.getElementById('value');
+  const opts = [...lb.children];
+  let active = opts.findIndex((o) => o.getAttribute('aria-selected') === 'true');
+  const isOpen = () => !lb.hidden;
+
+  function setActive(i) {
+    active = Math.max(0, Math.min(opts.length - 1, i));
+    opts.forEach((o, j) => o.classList.toggle('active', j === active));
+    combo.setAttribute('aria-activedescendant', opts[active].id);
+    opts[active].scrollIntoView({ block: 'nearest' });
+  }
+  function toggle(open) {
+    lb.hidden = !open; combo.setAttribute('aria-expanded', open);
+    if (open) setActive(active); else combo.removeAttribute('aria-activedescendant');
+  }
+  function choose(i) {
+    opts.forEach((o, j) => o.setAttribute('aria-selected', j === i));
+    value.textContent = opts[i].textContent; active = i; toggle(false);
+  }
+  combo.addEventListener('keydown', (e) => {
+    const k = e.key;
+    if (!isOpen()) { if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(k)) { e.preventDefault(); toggle(true); } return; }
+    const moves = { ArrowDown: active + 1, ArrowUp: active - 1, Home: 0, End: opts.length - 1 };
+    if (k in moves) { e.preventDefault(); setActive(moves[k]); }
+    else if (k === 'Enter' || k === ' ') { e.preventDefault(); choose(active); }
+    else if (k === 'Escape') toggle(false);
+    else if (k === 'Tab') choose(active);
+    else if (k.length === 1) { // salta a la siguiente opción que empieza por esa letra
+      for (let s = 1; s <= opts.length; s++) {
+        const j = (active + s) % opts.length;
+        if (opts[j].textContent.toLowerCase().startsWith(k.toLowerCase())) { setActive(j); break; }
+      }
+    }
+  });
+  combo.addEventListener('click', () => toggle(!isOpen()));
+  combo.addEventListener('blur', () => isOpen() && toggle(false));
+  lb.addEventListener('mousedown', (e) => e.preventDefault());
+  lb.addEventListener('click', (e) => { const o = e.target.closest('[role=option]'); if (o) choose(opts.indexOf(o)); });
+</script>
+</body>
+</html>

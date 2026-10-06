@@ -54,13 +54,15 @@ function onKeydown(e: KeyboardEvent) {
 </template>
 
 <style scoped>
-[role=toolbar] { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 8px; width: fit-content; max-width: 100%; background: #fffdf8; border: 2px solid #17130f; border-radius: 10px; box-shadow: 4px 4px 0 #17130f; }
-button { position: relative; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; color: #17130f; background: #fffdf8; border: 2px solid transparent; border-radius: 8px; cursor: pointer; }
-button:hover { border-color: #17130f; }
-button[aria-pressed=true] { background: #ffd84d; border-color: #17130f; }
-button:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
+[role=toolbar] { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 6px; width: fit-content; max-width: 100%; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+button { position: relative; display: grid; place-items: center; width: 36px; height: 36px; padding: 0; color: var(--muted); background: transparent; border: 0; border-radius: var(--radius); cursor: pointer; transition: background .14s, color .14s; }
+button:hover { color: var(--text); background: var(--bg); }
+button[aria-pressed=true] { color: var(--accent); background: var(--accent-soft); }
+button[aria-pressed=true]::before { content: ""; position: absolute; left: 9px; right: 9px; bottom: 3px; height: 2px; border-radius: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-button::after { content: attr(data-tip); position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 2; padding: 3px 7px; font: 11px ui-monospace, monospace; white-space: nowrap; color: #f6f1e7; background: #17130f; border-radius: 6px; opacity: 0; pointer-events: none; }
+button::after { content: attr(data-tip); position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); z-index: 2; padding: 3px 8px; font-size: 12px; white-space: nowrap; color: var(--bg); background: var(--text); border-radius: 6px; opacity: 0; pointer-events: none; }
 button:hover::after, button:focus-visible::after { opacity: 1; }
-@media (prefers-reduced-motion: no-preference) { button::after { transition: opacity .12s; } }
+@media (prefers-reduced-motion: reduce) { button { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

@@ -26,4 +26,4 @@ export function IconTextList({ title = 'Por qué Cuaderno', items = FEATURES }: 
     </section>
   );
 }
-// CSS: copia las reglas h1 / ul / li / .ico (y .ico svg) / strong / p de la pestaña HTML + CSS.
+// CSS: copia las reglas h1 / ul / li / .ico (y .ico svg) / strong / p y los tokens de la pestaña HTML + CSS.

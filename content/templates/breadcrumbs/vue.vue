@@ -30,14 +30,16 @@ const isLast = (c: Crumb) => c === props.items[props.items.length - 1];
 </template>
 
 <style scoped>
-:focus-visible { outline:3px solid #ff5a36; outline-offset:2px; }
-.crumbs { padding:10px 14px; font:14px/1.5 system-ui, sans-serif; color:#17130f; background:#fffdf8; border:2px solid #17130f; border-radius:10px; box-shadow:4px 4px 0 #17130f; }
+:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.crumbs { padding:10px 14px; font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
 .crumbs ol { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; margin:0; padding:0; list-style:none; }
 .crumbs li { display:flex; align-items:center; gap:8px; }
-.crumbs li + li::before { content:"/"; content:"/" / ""; color:#ff5a36; font:700 14px ui-monospace, monospace; }
-.crumbs a { color:inherit; font-weight:600; text-underline-offset:3px; border-radius:4px; }
-.crumbs a:hover { background:#ffd84d; }
-.crumbs [aria-current] { padding:1px 8px; font-weight:700; background:#ffd84d; border:2px solid #17130f; border-radius:8px; }
-.crumbs button { min-width:32px; padding:0 8px; font:700 14px/1.3 system-ui, sans-serif; background:#f6f1e7; border:2px solid #17130f; border-radius:8px; cursor:pointer; }
-.crumbs button:hover { background:#ffd84d; }
+.crumbs li + li::before { content:"/"; content:"/" / ""; color:var(--border); }
+.crumbs a { color:var(--muted); text-decoration:none; border-radius:4px; transition:color .14s; }
+.crumbs a:hover { color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
+.crumbs [aria-current] { font-weight:600; padding-bottom:1px; background:linear-gradient(135deg,#22d3ee,#2f5bff) 0 100%/100% 2px no-repeat; }
+.crumbs button { min-width:32px; padding:0 8px; font:inherit; color:var(--muted); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:color .14s, border-color .14s; }
+.crumbs button:hover { color:var(--accent); border-color:var(--accent); }
+@media (prefers-reduced-motion:reduce) { .crumbs a, .crumbs button { transition:none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

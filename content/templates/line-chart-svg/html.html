@@ -4,26 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   *{box-sizing:border-box}
-  body{margin:0;padding:16px;font:14px/1.4 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
-  :focus-visible{outline:3px solid #ff5a36;outline-offset:2px}
-  .card{max-width:620px;margin:0 auto;padding:16px 16px 10px;border:2px solid #17130f;border-radius:10px;background:#fffdf8;box-shadow:4px 4px 0 #17130f}
-  header{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;justify-content:space-between;margin-bottom:6px}
-  h2{margin:0;font-size:1.05rem;letter-spacing:-.02em}
-  .delta{color:#1f9d55;font:700 .8rem ui-monospace,monospace}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card{max-width:620px;margin:0 auto;padding:20px 20px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+  header{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .delta{color:var(--ok);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
   .plot{position:relative}
   svg{display:block;width:100%;height:auto;touch-action:pan-y}
-  .grid line{stroke:#17130f;stroke-opacity:.15}
-  .axis text{fill:#6b6258;font:10px ui-monospace,monospace}
-  .area{fill:#ffd84d;fill-opacity:.55}
-  .line{fill:none;stroke:#17130f;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
-  .pt{fill:#fffdf8;stroke:#17130f;stroke-width:2.5;cursor:pointer;transition:r .12s}
-  .pt.on{fill:#ff5a36;r:6.5}
-  .guide{stroke:#17130f;stroke-width:1.5;stroke-dasharray:4 3;opacity:0}
+  .grid line{stroke:var(--border)}
+  .axis text{fill:var(--muted);font:10px system-ui,-apple-system,"Segoe UI",sans-serif}
+  .area{fill:var(--accent);fill-opacity:.1}
+  .line{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+  .pt{fill:var(--surface);stroke:var(--accent);stroke-width:2;cursor:pointer;transition:r .12s}
+  .pt.on{fill:var(--accent);r:6}
+  .guide{stroke:var(--muted);stroke-width:1;stroke-dasharray:4 3;opacity:0}
   .guide.on{opacity:1}
-  .tip{position:absolute;pointer-events:none;padding:6px 10px;border:2px solid #17130f;border-radius:8px;background:#17130f;color:#fffdf8;font-size:.8rem;line-height:1.25;white-space:nowrap;opacity:0;transition:opacity .12s}
+  .tip{position:absolute;pointer-events:none;padding:6px 10px;border-radius:var(--radius);background:var(--text);color:var(--surface);font-size:12px;line-height:1.25;white-space:nowrap;opacity:0;transition:opacity .12s;box-shadow:var(--shadow)}
   .tip.on{opacity:1}
-  .tip b{display:block;font-size:1rem;font-variant-numeric:tabular-nums}
+  .tip b{display:block;font-size:14px;font-variant-numeric:tabular-nums}
   @media(prefers-reduced-motion:no-preference){.line{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1s .1s ease-out forwards}.area{animation:fade .8s .5s both}}
   @keyframes draw{to{stroke-dashoffset:0}}
   @keyframes fade{from{opacity:0}}
@@ -66,7 +68,7 @@
   el('path', { class: 'line', d: 'M' + pts.join(' L'), pathLength: 1 });
   const guide = el('line', { class: 'guide', y1: T, y2: Y(0) });
   const dots = data.map((d, i) => {
-    const c = el('circle', { class: 'pt', cx: X(i), cy: Y(d.y), r: 4.5, tabindex: 0, role: 'img', 'aria-label': `${d.x}: ${d.y} pedidos` });
+    const c = el('circle', { class: 'pt', cx: X(i), cy: Y(d.y), r: 4, tabindex: 0, role: 'img', 'aria-label': `${d.x}: ${d.y} pedidos` });
     c.addEventListener('focus', () => show(i)); c.addEventListener('blur', hide);
     c.addEventListener('mouseenter', () => show(i));
     return c;

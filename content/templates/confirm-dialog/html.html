@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .zone{max-width:680px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px}
+  p{margin:4px 0 0;color:var(--muted)}
+  .status:empty{margin:0}
+  .status{color:var(--text)}
+  .btn{padding:8px 14px;font:inherit;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .14s,opacity .14s}
+  .btn:hover{background:var(--bg)}
+  .btn.danger{color:var(--accent-ink);background:var(--err);border-color:var(--err)}
+  .btn.danger:hover{filter:brightness(.94)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+  .btn:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  dialog{width:min(440px,calc(100% - 32px));box-sizing:border-box;padding:24px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  dialog::before{content:"";position:absolute;top:0;left:8px;right:8px;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  dialog::backdrop{background:rgba(10,15,28,.5)}
+  dialog h2{font-size:18px}
+  .icon{display:grid;place-items:center;width:40px;height:40px;margin-bottom:12px;border-radius:50%;color:var(--err);background:var(--err-soft)}
+  dialog label{display:block;margin:16px 0 6px;font-weight:500}
+  dialog input{box-sizing:border-box;width:100%;padding:8px 10px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-top:20px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="zone" aria-labelledby="zone-title">
+  <div>
+    <h2 id="zone-title">Eliminar proyecto</h2>
+    <p>Borra «Web corporativa», sus archivos y su historial. No se puede deshacer.</p>
+    <p class="status" role="status" id="zone-status"></p>
+  </div>
+  <button class="btn danger" type="button" id="open">Eliminar proyecto</button>
+</section>
+
+<dialog id="dlg" aria-labelledby="dlg-title" aria-describedby="dlg-desc">
+  <form method="dialog">
+    <div class="icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg>
+    </div>
+    <h2 id="dlg-title">¿Eliminar «Web corporativa»?</h2>
+    <p id="dlg-desc">Se borrarán 128 archivos y 3 integraciones. Esta acción no se puede deshacer.</p>
+    <label for="confirm-in">Escribe <b>ELIMINAR</b> para confirmar</label>
+    <input id="confirm-in" autocomplete="off" spellcheck="false" autocapitalize="characters">
+    <div class="actions">
+      <button class="btn" type="button" id="cancel">Cancelar</button>
+      <button class="btn danger" value="confirm" id="confirm" disabled>Eliminar proyecto</button>
+    </div>
+  </form>
+</dialog>
+<script>
+  const dlg = document.getElementById('dlg'), input = document.getElementById('confirm-in'),
+        ok = document.getElementById('confirm'), open = document.getElementById('open'), out = document.getElementById('zone-status');
+  open.addEventListener('click', () => { input.value = ''; ok.disabled = true; dlg.returnValue = ''; dlg.showModal(); });
+  document.getElementById('cancel').addEventListener('click', () => dlg.close());
+  input.addEventListener('input', () => { ok.disabled = input.value.trim() !== 'ELIMINAR'; });
+  dlg.addEventListener('close', () => {
+    if (dlg.returnValue !== 'confirm') return;
+    out.textContent = 'Eliminaste «Web corporativa».';
+    open.disabled = true;
+  });
+</script>
+</body>
+</html>

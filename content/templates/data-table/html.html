@@ -4,19 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:#f6f1e7; color:#17130f; }
-  table { width:100%; border-collapse:collapse; background:#fffdf8; border:2px solid #17130f; }
-  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #17130f33; }
-  th { position:sticky; top:0; background:#ffd84d; border-bottom:2px solid #17130f; cursor:pointer; user-select:none; }
-  th[aria-sort="ascending"]::after { content:" ▲"; }
-  th[aria-sort="descending"]::after { content:" ▼"; }
-  td.num, th.num { text-align:right; font-variant-numeric:tabular-nums; }
-  tbody tr:nth-child(even) { background:#17130f0d; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .wrap{max-height:360px;overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:separate;border-spacing:0}
+  th,td{padding:10px 16px;text-align:left;border-bottom:1px solid var(--border)}
+  tbody tr:last-child td{border-bottom:0}
+  th{position:sticky;top:0;background:var(--surface);padding:0;font-weight:600;color:var(--muted)}
+  th button{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:6px;width:100%;padding:10px 16px;cursor:pointer;transition:color .14s}
+  th button:hover{color:var(--text)}
+  th button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  th[aria-sort=ascending] button::after{content:"▲"}
+  th[aria-sort=descending] button::after{content:"▼"}
+  th[aria-sort=ascending] button::after,th[aria-sort=descending] button::after{font-size:9px;color:var(--accent)}
+  th[aria-sort=ascending],th[aria-sort=descending]{color:var(--text);box-shadow:inset 0 -2px 0 var(--accent)}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  th.num button{justify-content:flex-end}
+  tbody tr{transition:background .14s}
+  tbody tr:hover{background:var(--accent-soft)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+<div class="wrap">
 <table id="t">
-  <thead><tr><th scope="col">Nombre</th><th scope="col">Plan</th><th scope="col" class="num">Ventas</th></tr></thead>
+  <caption hidden>Ventas por persona. Usa los encabezados para ordenar.</caption>
+  <thead><tr>
+    <th scope="col" aria-sort="none"><button type="button">Nombre</button></th>
+    <th scope="col" aria-sort="none"><button type="button">Plan</button></th>
+    <th scope="col" class="num" aria-sort="none"><button type="button">Ventas</button></th>
+  </tr></thead>
   <tbody>
     <tr><td>Ana Pérez</td><td>Pro</td><td class="num">1240</td></tr>
     <tr><td>Luis Gómez</td><td>Free</td><td class="num">310</td></tr>
@@ -24,12 +42,13 @@
     <tr><td>Carlos Díaz</td><td>Team</td><td class="num">760</td></tr>
   </tbody>
 </table>
+</div>
 <script>
   const t = document.getElementById('t');
   t.tHead.rows[0].addEventListener('click', (e) => {
     const th = e.target.closest('th'); if (!th) return;
     const i = th.cellIndex, asc = th.getAttribute('aria-sort') !== 'ascending';
-    [...t.tHead.rows[0].cells].forEach((c) => c.removeAttribute('aria-sort'));
+    [...t.tHead.rows[0].cells].forEach((c) => c.setAttribute('aria-sort', 'none'));
     th.setAttribute('aria-sort', asc ? 'ascending' : 'descending');
     const rows = [...t.tBodies[0].rows].sort((a, b) =>
       a.cells[i].textContent.localeCompare(b.cells[i].textContent, 'es', { numeric: true }) * (asc ? 1 : -1));

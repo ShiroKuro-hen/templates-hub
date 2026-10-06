@@ -17,7 +17,7 @@ const toggle = (f: string) =>
       {{ p }}
     </button>
   </div>
-  <p aria-live="polite">Mostrando: {{ periodo }}</p>
+  <p class="out" aria-live="polite">Mostrando: {{ periodo }}</p>
 
   <!-- Selección múltiple -->
   <div class="seg" role="group" aria-label="Formato de texto">
@@ -28,13 +28,12 @@ const toggle = (f: string) =>
 </template>
 
 <style scoped>
-.seg { display: inline-flex; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
-.seg button { font: 600 14px system-ui, sans-serif; padding: 8px 16px; border: 0; background: transparent; color: #17130f; cursor: pointer; }
-.seg button + button { border-left: 2px solid #17130f; }
-.seg button:first-child { border-radius: 8px 0 0 8px; }
-.seg button:last-child { border-radius: 0 8px 8px 0; }
-.seg button:hover { background: #ffd84d; }
-.seg button[aria-pressed="true"] { background: #17130f; color: #fffdf8; }
-.seg button:focus-visible { outline: 3px solid #ff5a36; outline-offset: -6px; }
-.seg button[aria-pressed="true"]:focus-visible { outline-color: #ffd84d; }
+.seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+.seg button { font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 6px 16px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; transition: background .14s, color .14s; }
+.seg button:hover { background: var(--accent-soft); color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.out { margin: 12px 0; color: var(--muted); font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { .seg button { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

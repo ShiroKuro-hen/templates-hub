@@ -5,28 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Formulario con validación</title>
 <style>
-  :root { --ink:#17130f; --paper:#f6f1e7; --surface:#fffdf8; --muted:#6b6258; --accent:#ff5a36; --ok:#1f9d55; --err:#d6293e; }
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
   * { box-sizing:border-box; }
-  body { margin:0; padding:14px; font:14px/1.35 system-ui, sans-serif; background:var(--paper); color:var(--ink); }
-  h1 { margin:0 0 10px; font-size:1.1rem; letter-spacing:-.02em; }
-  form { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px 12px; }
-  .field { display:flex; flex-direction:column; gap:3px; }
-  label { font-weight:700; font-size:13px; }
-  input:not([type=checkbox]) { width:100%; height:36px; padding:0 10px; font:inherit; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; }
-  input:focus-visible, button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-  input[aria-invalid=true] { border-color:var(--err); background:#fff3f4; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .card { position:relative; max-width:680px; margin:0 auto; padding:22px 20px 20px; overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .card::before { content:""; position:absolute; inset:0 0 auto; height:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+  h1 { margin:0 0 14px; font-size:18px; font-weight:600; letter-spacing:-.01em; }
+  form { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px 16px; }
+  .field { display:flex; flex-direction:column; gap:4px; }
+  label { font-weight:600; font-size:13px; }
+  input:not([type=checkbox]) { width:100%; height:38px; padding:0 12px; font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); transition:border-color .14s; }
+  input:focus-visible, button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  input[aria-invalid=true] { border-color:var(--err); }
   input.ok { border-color:var(--ok); }
-  .e { min-height:16px; margin:0; font-size:12px; color:var(--err); }
-  .e:not(:empty)::before { content:"✕ "; font-weight:800; }
+  .e { min-height:18px; margin:0; font-size:12px; color:var(--err); }
+  .e:not(:empty)::before { content:"✕ "; font-weight:700; }
   .full { grid-column:1 / -1; }
   .terms { display:flex; align-items:center; gap:8px; font-weight:400; }
-  .terms input { width:18px; height:18px; margin:0; accent-color:var(--ink); }
-  button { height:40px; padding:0 18px; font:700 14px system-ui; color:var(--ink); background:var(--accent); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
-  button:active { transform:translate(2px, 2px); box-shadow:2px 2px 0 var(--ink); }
-  #done { margin:10px 0 0; padding:8px 12px; font-weight:700; background:#e3f5ea; border:2px solid var(--ok); border-radius:10px; }
+  .terms input { width:16px; height:16px; margin:0; accent-color:var(--accent); }
+  button { height:38px; padding:0 18px; font:600 14px system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--accent-ink); background:var(--accent); border:0; border-radius:var(--radius); cursor:pointer; transition:filter .14s, transform .14s; }
+  button:hover { filter:brightness(1.08); }
+  button:active { transform:translateY(1px); }
+  #done { margin:14px 0 0; padding:10px 12px; color:var(--ok); background:var(--ok-soft); border:1px solid var(--ok); border-radius:var(--radius); font-weight:600; }
+  @media (prefers-reduced-motion:reduce) { *, *::before { transition:none !important; } }
 </style>
 </head>
 <body>
+  <div class="card">
   <h1>Crea tu cuenta</h1>
   <form id="f" novalidate>
     <div class="field"><label for="nombre">Nombre</label>
@@ -41,14 +47,15 @@
     <div class="field"><label for="pw2">Repite la contraseña</label>
       <input id="pw2" name="pw2" type="password" required autocomplete="new-password" aria-describedby="pw2-e">
       <p class="e" id="pw2-e"></p></div>
-    <div class="field full"><label class="terms"><input id="terms" type="checkbox" required data-missing="Debes aceptar los términos." aria-describedby="terms-e"> Acepto los términos de uso</label>
+    <div class="field full"><label class="terms"><input id="terms" type="checkbox" required data-missing="Acepta los términos de uso para continuar." aria-describedby="terms-e"> Acepto los términos de uso</label>
       <p class="e" id="terms-e"></p></div>
     <div class="full"><button type="submit">Crear cuenta</button></div>
   </form>
-  <p id="done" role="status" hidden>¡Cuenta creada! Revisa tu correo para confirmarla.</p>
+  <p id="done" role="status" hidden>Cuenta creada. Revisa tu correo para confirmarla.</p>
+  </div>
 <script>
   const f = document.getElementById('f'), pw = f.pw, pw2 = f.pw2, done = document.getElementById('done');
-  const M = { valueMissing: 'Este campo es obligatorio.', typeMismatch: 'Escribe un correo válido, p. ej. ana@correo.com.', tooShort: 'Usa al menos 8 caracteres.', patternMismatch: 'Incluye al menos un número.' };
+  const M = { valueMissing: 'Completa este campo.', typeMismatch: 'Escribe un correo válido, por ejemplo ana@correo.com.', tooShort: 'Usa al menos 8 caracteres.', patternMismatch: 'Incluye al menos un número.' };
   function msg(el) {
     const v = el.validity;
     if (v.valid) return '';
@@ -58,7 +65,7 @@
     return el.validationMessage;
   }
   function show(el) {
-    if (el === pw || el === pw2) pw2.setCustomValidity(pw2.value && pw2.value !== pw.value ? 'Las contraseñas no coinciden.' : '');
+    if (el === pw || el === pw2) pw2.setCustomValidity(pw2.value && pw2.value !== pw.value ? 'Las contraseñas no coinciden. Escríbelas de nuevo.' : '');
     const m = msg(el);
     el.setAttribute('aria-invalid', !!m);
     el.classList.toggle('ok', !m && el.value !== '' && el.type !== 'checkbox');

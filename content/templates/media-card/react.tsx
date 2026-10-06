@@ -4,21 +4,21 @@ type Props = {
   titulo: string;
   fecha: string;
   lectura: string; // p. ej. "5 min de lectura"
-  fondo?: string; // color del placeholder SVG
+  fondo?: string; // color del placeholder SVG; por defecto var(--accent-soft)
   onLeer?: () => void;
 };
 
-export function MediaCard({ titulo, fecha, lectura, fondo = '#ffd84d', onLeer }: Props) {
+export function MediaCard({ titulo, fecha, lectura, fondo, onLeer }: Props) {
   const [guardado, setGuardado] = useState(false);
   const id = `t-${titulo.replace(/\s/g, '-').toLowerCase()}`;
 
   return (
     <article className="media" aria-labelledby={id}>
       <svg viewBox="0 0 160 90" aria-hidden="true" focusable="false">
-        <rect width="160" height="90" fill={fondo} />
-        <circle cx="118" cy="30" r="14" fill="#ff5a36" stroke="#17130f" strokeWidth="2" />
-        <path d="M0 90V62l34-26 30 28 28-18 68 36z" fill="#17130f" />
-        <path d="M0 90V74l30-14 34 16 40-12 56 26z" fill="#1f9d55" stroke="#17130f" strokeWidth="2" />
+        <rect className="sky" width="160" height="90" style={fondo ? { fill: fondo } : undefined} />
+        <circle className="sun" cx="118" cy="30" r="12" />
+        <path className="far" d="M0 90V62l34-26 30 28 28-18 68 36z" />
+        <path className="near" d="M0 90V74l30-14 34 16 40-12 56 26z" />
       </svg>
       <div className="body">
         <h2 id={id}>{titulo}</h2>
@@ -35,4 +35,4 @@ export function MediaCard({ titulo, fecha, lectura, fondo = '#ffd84d', onLeer }:
     </article>
   );
 }
-// CSS: copia las reglas .media / .media svg / .body / .meta / .acts / button / .main de la pestaña HTML + CSS.
+// CSS: copia los tokens :root y las reglas .media / .media svg (.sky .sun .far .near) / .body / .meta / .acts / button / .main de la pestaña HTML + CSS.

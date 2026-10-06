@@ -22,7 +22,7 @@ const SECTIONS: Section[] = [
   },
 ];
 
-export function Sidebar({ sections = SECTIONS, brand = 'Tinta&Co', onNavigate }: Props) {
+export function Sidebar({ sections = SECTIONS, brand = 'Nexo', onNavigate }: Props) {
   const [collapsed, setCollapsed] = useState(false);
   const [current, setCurrent] = useState(sections[0].items[0].id);
 
@@ -66,4 +66,4 @@ export function Sidebar({ sections = SECTIONS, brand = 'Tinta&Co', onNavigate }:
     </aside>
   );
 }
-// CSS: copia las reglas .side / .side.collapsed / .head / .brand / .toggle / .grp / .sec / .ic / .lbl de la pestaña HTML + CSS.
+// CSS: copia las reglas .side / .side.collapsed / .head / .brand / .toggle / .grp / .sec / .ic / .lbl y los tokens de la pestaña HTML + CSS.

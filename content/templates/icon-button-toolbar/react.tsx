@@ -50,4 +50,4 @@ export function IconToolbar({ tools = TOOLS, onChange }: { tools?: Tool[]; onCha
     </div>
   );
 }
-// CSS: copia las reglas [role=toolbar] / button / button[aria-pressed=true] / button::after (tooltip) / svg de la pestaña HTML + CSS.
+// CSS: copia las reglas [role=toolbar] / .sep / button / button[aria-pressed=true] / button::after (tooltip) / svg y los tokens de la pestaña HTML + CSS.

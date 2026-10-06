@@ -22,14 +22,18 @@ const label = computed(() =>
 </template>
 
 <style scoped>
-.btn { position: relative; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 2px solid #17130f;
-  border-radius: 10px; background: #fffdf8; color: #17130f; box-shadow: 4px 4px 0 #17130f; cursor: pointer; transition: transform .1s, box-shadow .1s; }
-.btn:hover, .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #17130f; }
-.btn:focus-visible { outline: 3px solid #ff5a36; outline-offset: 3px; }
-svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.count { position: absolute; top: -9px; right: -9px; min-width: 22px; height: 22px; padding: 0 5px; display: grid; place-items: center;
-  border: 2px solid #17130f; border-radius: 999px; background: #ff5a36; color: #17130f; font: 700 11px system-ui, sans-serif; }
-.tool { margin-left: 12px; padding: 5px 10px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; font: 600 12px system-ui, sans-serif; cursor: pointer; }
-.tool:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
+.btn { position: relative; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid var(--border);
+  border-radius: var(--radius); background: var(--surface); color: var(--text); cursor: pointer; transition: background-color .14s; }
+.btn:hover { background: var(--accent-soft); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.count { position: absolute; top: -8px; right: -8px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center;
+  border-radius: 999px; background: var(--err); color: var(--accent-ink); box-shadow: 0 0 0 2px var(--bg);
+  font: 600 11px system-ui, -apple-system, "Segoe UI", sans-serif; font-variant-numeric: tabular-nums; }
+.tool { margin-left: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text);
+  font: 500 12px system-ui, -apple-system, "Segoe UI", sans-serif; cursor: pointer; }
+.tool:hover { background: var(--accent-soft); }
+.tool:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

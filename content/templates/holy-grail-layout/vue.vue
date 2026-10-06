@@ -33,22 +33,26 @@ withDefaults(defineProps<{
 </template>
 
 <style scoped>
-.page { display: grid; gap: 12px; min-height: 100vh; font: 14px/1.4 system-ui, sans-serif; color: #17130f;
+.page { display: grid; gap: 12px; min-height: 100vh; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text);
   grid-template-columns: minmax(0, 1fr); grid-template-areas: "header" "nav" "main" "aside" "footer"; }
-.page > * { margin: 0; padding: 12px 14px; border: 2px solid #17130f; border-radius: 10px; background: #fffdf8; box-shadow: 4px 4px 0 #17130f; }
-header { grid-area: header; background: #ffd84d; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-nav { grid-area: nav; } main { grid-area: main; } aside { grid-area: aside; background: #cfd8ff; } footer { grid-area: footer; color: #6b6258; }
-h1 { margin: 0; font-size: 1.1rem; letter-spacing: -.02em; }
-.tag { font: 600 .75rem ui-monospace, monospace; }
-nav ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 12px; }
-nav a { color: #17130f; font-weight: 600; text-underline-offset: 3px; }
-nav a[aria-current="page"] { background: #ff5a36; padding: 0 6px; border-radius: 6px; text-decoration: none; }
-a:focus-visible { outline: 3px solid #ff5a36; outline-offset: 2px; }
-.skip { position: absolute; left: -9999px; background: #fffdf8; padding: 6px 10px; border: 2px solid #17130f; }
+.page > * { margin: 0; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
+header { grid-area: header; position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+header::after { content: ""; position: absolute; inset: auto 0 0; height: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+nav { grid-area: nav; } main { grid-area: main; } aside { grid-area: aside; background: var(--accent-soft); } footer { grid-area: footer; color: var(--muted); }
+h1 { margin: 0; font-size: 1.125rem; letter-spacing: -.01em; }
+.tag { padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .75rem; font-weight: 600; }
+nav ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 4px 8px; }
+nav a { display: block; padding: 4px 10px; border-radius: var(--radius); color: var(--text); font-weight: 500; text-decoration: none; transition: background 140ms; }
+nav a:hover { background: var(--accent-soft); }
+nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; background: var(--surface); color: var(--text); padding: 6px 10px; border: 1px solid var(--border); border-radius: var(--radius); }
 .skip:focus { left: 12px; top: 12px; z-index: 1; }
 @media (min-width: 600px) {
   nav ul { flex-direction: column; flex-wrap: nowrap; }
-  .page { grid-template-columns: 130px minmax(0, 1fr) 150px; grid-template-rows: auto 1fr auto;
+  .page { grid-template-columns: 140px minmax(0, 1fr) 160px; grid-template-rows: auto 1fr auto;
     grid-template-areas: "header header header" "nav main aside" "footer footer footer"; }
 }
+@media (prefers-reduced-motion: reduce) { nav a { transition: none; } }
+/* Tokens: ver pestaña HTML + CSS */
 </style>

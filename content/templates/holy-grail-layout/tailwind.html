@@ -1,27 +1,28 @@
-<a href="#contenido" class="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:border-2 focus:border-[#17130f] focus:bg-[#fffdf8] focus:px-2.5 focus:py-1.5">Saltar al contenido</a>
-<div class="grid min-h-screen grid-cols-1 gap-3 p-3 text-sm text-[#17130f] sm:grid-cols-[130px_minmax(0,1fr)_150px] sm:grid-rows-[auto_1fr_auto] sm:[grid-template-areas:'header_header_header'_'nav_main_aside'_'footer_footer_footer']">
-  <header class="flex items-center justify-between gap-2 rounded-[10px] border-2 border-[#17130f] bg-[#ffd84d] px-3.5 py-3 shadow-[4px_4px_0_#17130f] sm:[grid-area:header]">
-    <h1 class="text-lg font-bold tracking-tight">Taller Luna</h1>
-    <span class="font-mono text-xs font-semibold">Panel</span>
+<a href="#contenido" class="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:rounded-lg focus:border focus:border-slate-200 focus:bg-white focus:px-2.5 focus:py-1.5 dark:focus:border-slate-700 dark:focus:bg-slate-900">Saltar al contenido</a>
+<div class="grid min-h-screen grid-cols-1 gap-3 p-5 text-sm text-slate-900 dark:text-slate-100 sm:grid-cols-[140px_minmax(0,1fr)_160px] sm:grid-rows-[auto_1fr_auto] sm:[grid-template-areas:'header_header_header'_'nav_main_aside'_'footer_footer_footer']">
+  <header class="relative flex items-center justify-between gap-2 overflow-hidden rounded-lg border border-slate-200 bg-white px-4 py-3.5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:[grid-area:header]">
+    <h1 class="text-lg font-semibold tracking-tight">Taller Luna</h1>
+    <span class="rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:bg-slate-800 dark:text-blue-400">Panel</span>
+    <span class="absolute inset-x-0 bottom-0 h-0.5 bg-gradient-to-br from-cyan-400 to-blue-600"></span>
   </header>
-  <nav aria-label="Principal" class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-3 shadow-[4px_4px_0_#17130f] sm:[grid-area:nav]">
-    <ul class="flex flex-wrap gap-x-3 gap-y-1.5 sm:flex-col sm:flex-nowrap">
-      <li><a href="#inicio" aria-current="page" class="rounded-md bg-[#ff5a36] px-1.5 font-semibold focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">Inicio</a></li>
-      <li><a href="#pedidos" class="font-semibold underline underline-offset-[3px] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">Pedidos</a></li>
-      <li><a href="#clientes" class="font-semibold underline underline-offset-[3px] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">Clientes</a></li>
-      <li><a href="#ajustes" class="font-semibold underline underline-offset-[3px] focus-visible:outline-[3px] focus-visible:outline-[#ff5a36]">Ajustes</a></li>
+  <nav aria-label="Principal" class="rounded-lg border border-slate-200 bg-white px-4 py-3.5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:[grid-area:nav]">
+    <ul class="flex flex-wrap gap-x-2 gap-y-1 sm:flex-col sm:flex-nowrap">
+      <li><a href="#inicio" aria-current="page" class="block rounded-lg bg-blue-50 px-2.5 py-1 font-semibold text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-slate-800 dark:text-blue-400">Inicio</a></li>
+      <li><a href="#pedidos" class="block rounded-lg px-2.5 py-1 font-medium hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800">Pedidos</a></li>
+      <li><a href="#clientes" class="block rounded-lg px-2.5 py-1 font-medium hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800">Clientes</a></li>
+      <li><a href="#ajustes" class="block rounded-lg px-2.5 py-1 font-medium hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800">Ajustes</a></li>
     </ul>
   </nav>
-  <main id="contenido" class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-3 shadow-[4px_4px_0_#17130f] sm:[grid-area:main]">
-    <h2 class="mb-1.5 text-base font-bold tracking-tight">Resumen del día</h2>
+  <main id="contenido" class="rounded-lg border border-slate-200 bg-white px-4 py-3.5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:[grid-area:main]">
+    <h2 class="mb-1.5 text-base font-semibold tracking-tight">Resumen del día</h2>
     <p class="mb-1.5">Hoy entraron 14 pedidos nuevos y 3 están pendientes de pago.</p>
     <p>El contenido principal ocupa el espacio sobrante y crece con la ventana.</p>
   </main>
-  <aside aria-label="Avisos" class="rounded-[10px] border-2 border-[#17130f] bg-[#cfd8ff] px-3.5 py-3 shadow-[4px_4px_0_#17130f] sm:[grid-area:aside]">
-    <h2 class="mb-1.5 text-base font-bold tracking-tight">Avisos</h2>
+  <aside aria-label="Avisos" class="rounded-lg border border-slate-200 bg-blue-50 px-4 py-3.5 shadow-sm dark:border-slate-700 dark:bg-slate-800 sm:[grid-area:aside]">
+    <h2 class="mb-1.5 text-base font-semibold tracking-tight">Avisos</h2>
     <p>Quedan 5 unidades de cerámica azul.</p>
   </aside>
-  <footer class="rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] px-3.5 py-3 text-[#6b6258] shadow-[4px_4px_0_#17130f] sm:[grid-area:footer]">
+  <footer class="rounded-lg border border-slate-200 bg-white px-4 py-3.5 text-slate-500 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 sm:[grid-area:footer]">
     <small>© 2026 Taller Luna. Todos los derechos reservados.</small>
   </footer>
 </div>
