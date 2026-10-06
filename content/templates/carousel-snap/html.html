@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrusel con scroll-snap</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.45 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  .head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+  h1 { margin:0; font-size:20px; letter-spacing:-.02em; }
+  .ctrl { display:flex; align-items:center; gap:8px; }
+  .count { min-width:3.2em; text-align:center; font:700 13px ui-monospace, monospace; }
+  .btn { display:grid; place-items:center; width:38px; height:38px; padding:0; font:700 18px system-ui; color:var(--ink); background:var(--hl); border:2px solid var(--ink); border-radius:10px; box-shadow:3px 3px 0 var(--ink); cursor:pointer; }
+  .btn:hover:not(:disabled) { transform:translate(1.5px,1.5px); box-shadow:1.5px 1.5px 0 var(--ink); }
+  .btn:disabled { opacity:.4; box-shadow:none; cursor:not-allowed; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .track { display:flex; gap:14px; margin:0; padding:2px 6px 8px 2px; list-style:none; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:var(--ink) transparent; }
+  @media (prefers-reduced-motion:no-preference) { .track { scroll-behavior:smooth; } }
+  .slide { flex:0 0 min(78%, 260px); scroll-snap-align:start; display:flex; flex-direction:column; border:2px solid var(--ink); border-radius:10px; background:var(--surface); box-shadow:4px 4px 0 var(--ink); overflow:hidden; }
+  .art { height:96px; background:var(--c); border-bottom:2px solid var(--ink); display:grid; place-items:center; font:800 40px/1 system-ui; letter-spacing:-.04em; }
+  .slide div + div { padding:10px 14px 14px; }
+  .slide h2 { margin:0 0 2px; font-size:16px; letter-spacing:-.01em; }
+  .slide p { margin:0; color:var(--muted); }
+</style>
+</head>
+<body>
+  <section aria-roledescription="carrusel" aria-label="Rutas destacadas">
+    <div class="head">
+      <h1>Rutas destacadas</h1>
+      <div class="ctrl">
+        <button type="button" class="btn" id="prev" aria-label="Anterior">‹</button>
+        <span class="count" id="count" aria-live="polite">1 / 5</span>
+        <button type="button" class="btn" id="next" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+    <ul class="track" id="track" tabindex="0" aria-label="Diapositivas, desplázate con las flechas">
+      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#ffd84d">9 km</div><div><h2>Cerros de Lima</h2><p>Sendero suave, 2 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#ff8a6e">14 km</div><div><h2>Valle Sagrado</h2><p>Ruta mixta, 5 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#9db4ff">6 km</div><div><h2>Laguna Churup</h2><p>Subida corta, 3 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#8fdcaa">22 km</div><div><h2>Cañón del Colca</h2><p>Día completo, 8 h.</p></div></li>
+      <li class="slide" aria-roledescription="diapositiva"><div class="art" style="--c:#ffd84d">11 km</div><div><h2>Costa Verde</h2><p>Ruta urbana, 3 h.</p></div></li>
+    </ul>
+  </section>
+<script>
+  const track = document.getElementById('track'), prev = document.getElementById('prev'),
+        next = document.getElementById('next'), count = document.getElementById('count');
+  const slides = [...track.children];
+  const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+  const go = (d) => track.scrollBy({ left: d * step() });
+  function update() {
+    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    const i = atEnd ? slides.length - 1 : Math.round(track.scrollLeft / step());
+    count.textContent = `${i + 1} / ${slides.length}`;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = atEnd;
+  }
+  prev.onclick = () => go(-1);
+  next.onclick = () => go(1);
+  track.addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  update();
+</script>
+</body>
+</html>

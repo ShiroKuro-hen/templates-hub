@@ -1,0 +1,18 @@
+<figure class="m-5 overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#17130f] shadow-[4px_4px_0_#17130f]">
+  <figcaption class="flex items-center justify-between gap-2 border-b-2 border-[#17130f] bg-[#ffd84d] py-1.5 pl-3.5 pr-2">
+    <span class="font-mono text-xs font-bold text-[#17130f]">saludar.ts</span>
+    <button type="button" id="copy" aria-live="polite"
+      class="cursor-pointer rounded-lg border-2 border-[#17130f] bg-[#fffdf8] px-2.5 py-1 text-xs font-bold text-[#17130f] shadow-[2px_2px_0_#17130f] hover:translate-x-px hover:translate-y-px hover:shadow-[1px_1px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">Copiar</button>
+  </figcaption>
+  <!-- números de línea: contador CSS en cada .l (clases arbitrarias de Tailwind) -->
+  <pre tabindex="0" class="m-0 overflow-x-auto py-3 font-mono text-[13px] leading-[1.6] text-[#f6f1e7] focus-visible:outline focus-visible:outline-[3px] focus-visible:-outline-offset-2 focus-visible:outline-[#ff5a36]"><code class="block min-w-max [counter-reset:line]"><span class="l block whitespace-pre pr-3.5 before:mr-4 before:inline-block before:w-[2.8em] before:select-none before:border-r before:border-[#4a423a] before:pr-[.6em] before:text-right before:text-[#a39a8d] before:content-[counter(line)] before:[counter-increment:line]"><span class="italic text-[#a39a8d]">// Devuelve un saludo según la hora</span></span><span class="l block whitespace-pre pr-3.5 before:mr-4 before:inline-block before:w-[2.8em] before:select-none before:border-r before:border-[#4a423a] before:pr-[.6em] before:text-right before:text-[#a39a8d] before:content-[counter(line)] before:[counter-increment:line]"><span class="text-[#ff8a6e]">export function</span> <span class="text-[#9db4ff]">saludar</span>(nombre: string) {</span><span class="l block whitespace-pre pr-3.5 before:mr-4 before:inline-block before:w-[2.8em] before:select-none before:border-r before:border-[#4a423a] before:pr-[.6em] before:text-right before:text-[#a39a8d] before:content-[counter(line)] before:[counter-increment:line]">  <span class="text-[#ff8a6e]">return</span> <span class="text-[#ffd84d]">`Hola, ${nombre}`</span>;</span><span class="l block whitespace-pre pr-3.5 before:mr-4 before:inline-block before:w-[2.8em] before:select-none before:border-r before:border-[#4a423a] before:pr-[.6em] before:text-right before:text-[#a39a8d] before:content-[counter(line)] before:[counter-increment:line]">}</span></code></pre>
+</figure>
+<script>
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    const text = [...document.querySelectorAll('.l')].map((l) => l.textContent).join('\n');
+    await navigator.clipboard.writeText(text);
+    btn.textContent = '¡Copiado!';
+    setTimeout(() => (btn.textContent = 'Copiar'), 1800);
+  });
+</script>

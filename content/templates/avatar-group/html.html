@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grupo de avatares</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 14px; font-size:20px; letter-spacing:-.02em; }
+  .row { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .row small { color:var(--muted); }
+  .avatars { display:flex; padding-left:10px; margin:0; list-style:none; }
+  .avatar { --size:40px; display:grid; place-items:center; width:var(--size); height:var(--size); margin-left:-10px; font:700 calc(var(--size) * .36) ui-monospace, monospace; color:var(--ink); background:var(--c); border:2px solid var(--ink); border-radius:50%; position:relative; transition:transform .15s; }
+  .avatar:hover, .avatar:focus-visible { transform:translateY(-4px); z-index:1; }
+  .avatar:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .avatars.sm .avatar { --size:28px; margin-left:-8px; }
+  .avatars.lg .avatar { --size:56px; margin-left:-14px; }
+  .avatar.more { --c:var(--ink); color:var(--bg); }
+  .c1 { --c:#ffd84d; } .c2 { --c:#ff8a6e; } .c3 { --c:#9db4ff; } .c4 { --c:#8fdcaa; }
+  @media (prefers-reduced-motion:reduce) { .avatar { transition:none; } }
+</style>
+</head>
+<body>
+  <h1>Equipo del proyecto</h1>
+  <div class="row">
+    <ul class="avatars lg" aria-label="Miembros del equipo: Ana Pérez, Luis Gómez, Marta Ruiz, Diego Vega y 3 más">
+      <li class="avatar c1" tabindex="0" role="img" aria-label="Ana Pérez" title="Ana Pérez">AP</li>
+      <li class="avatar c2" tabindex="0" role="img" aria-label="Luis Gómez" title="Luis Gómez">LG</li>
+      <li class="avatar c3" tabindex="0" role="img" aria-label="Marta Ruiz" title="Marta Ruiz">MR</li>
+      <li class="avatar c4" tabindex="0" role="img" aria-label="Diego Vega" title="Diego Vega">DV</li>
+      <li class="avatar more" role="img" aria-label="3 personas más">+3</li>
+    </ul>
+    <small>7 personas</small>
+  </div>
+  <div class="row">
+    <ul class="avatars" aria-label="Revisores: Ana Pérez, Luis Gómez y 12 más">
+      <li class="avatar c1" role="img" aria-label="Ana Pérez">AP</li>
+      <li class="avatar c3" role="img" aria-label="Luis Gómez">LG</li>
+      <li class="avatar more" role="img" aria-label="12 personas más">+12</li>
+    </ul>
+    <small>Revisando</small>
+  </div>
+  <div class="row">
+    <ul class="avatars sm" aria-label="Comentaron: Marta Ruiz, Diego Vega">
+      <li class="avatar c2" role="img" aria-label="Marta Ruiz">MR</li>
+      <li class="avatar c4" role="img" aria-label="Diego Vega">DV</li>
+    </ul>
+    <small>2 comentarios</small>
+  </div>
+</body>
+</html>

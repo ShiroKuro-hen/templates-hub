@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Línea de tiempo vertical</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; --ok:#1f9d55; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 16px; font-size:20px; letter-spacing:-.02em; }
+  .tl { position:relative; margin:0; padding:0; list-style:none; }
+  .tl::before { content:""; position:absolute; left:11px; top:6px; bottom:6px; width:4px; background:var(--ink); border-radius:2px; }
+  .tl li { position:relative; padding:0 0 18px 40px; }
+  .tl li:last-child { padding-bottom:0; }
+  .tl li::before { content:""; position:absolute; left:2px; top:2px; width:22px; height:22px; background:var(--surface); border:2px solid var(--ink); border-radius:50%; }
+  .tl .done::before { background:var(--ok); }
+  .tl .now::before { background:var(--accent); box-shadow:3px 3px 0 var(--ink); }
+  .tl .next::before { border-style:dashed; }
+  time { display:inline-block; margin-bottom:4px; padding:1px 8px; font:700 12px ui-monospace, monospace; background:var(--hl); border:2px solid var(--ink); border-radius:6px; }
+  .next time { background:var(--surface); color:var(--muted); }
+  .tl h2 { margin:0; font-size:16px; letter-spacing:-.01em; }
+  .tl p { margin:2px 0 0; color:var(--muted); max-width:52ch; }
+  .tl .state { font:600 12px ui-monospace, monospace; color:#b83a1a; } /* contraste AA sobre crema */
+</style>
+</head>
+<body>
+  <h1>Hoja de ruta del producto</h1>
+  <ol class="tl">
+    <li class="done">
+      <time datetime="2026-01-12">12 ene 2026</time>
+      <h2>Prototipo validado</h2>
+      <p>Probamos el flujo de reserva con 40 clientes de la tienda.</p>
+    </li>
+    <li class="done">
+      <time datetime="2026-03-03">3 mar 2026</time>
+      <h2>Beta privada</h2>
+      <p>Abrimos el acceso a 200 negocios con lista de espera.</p>
+    </li>
+    <li class="now" aria-current="step">
+      <time datetime="2026-06-20">20 jun 2026</time>
+      <h2>Lanzamiento público <span class="state">· en curso</span></h2>
+      <p>Pagos con tarjeta, facturas automáticas y soporte por chat.</p>
+    </li>
+    <li class="next">
+      <time datetime="2026-10-01">1 oct 2026</time>
+      <h2>App móvil</h2>
+      <p>Versión para Android e iOS con notificaciones.</p>
+    </li>
+  </ol>
+</body>
+</html>

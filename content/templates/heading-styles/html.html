@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estilos de encabezados</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:16px/1.55 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  .doc { max-width:60ch; }
+  .doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 { margin:1.2em 0 .35em; line-height:1.15; letter-spacing:-.02em; text-wrap:balance; }
+  .doc > :first-child { margin-top:0; }
+  .eyebrow { display:inline-block; margin:0 0 8px; padding:2px 8px; font:700 12px ui-monospace, monospace; color:var(--ink); background:var(--hl); border:2px solid var(--ink); border-radius:6px; }
+  h1 { font-size:clamp(2rem, 1.4rem + 3vw, 2.8rem); font-weight:800; }
+  h1 + .lead { margin:.4em 0 0; font-size:1.2rem; color:var(--muted); max-width:46ch; }
+  h2 { font-size:1.75rem; font-weight:800; padding-bottom:.25em; border-bottom:2px solid var(--ink); }
+  h3 { font-size:1.35rem; font-weight:700; }
+  h3::before { content:""; display:inline-block; width:.6em; height:.6em; margin-right:.45em; background:var(--accent); border:2px solid var(--ink); border-radius:3px; }
+  h4 { font-size:1.1rem; font-weight:700; }
+  h5 { font-size:1rem; font-weight:700; color:var(--muted); }
+  h6 { font:700 .8rem ui-monospace, monospace; letter-spacing:0; color:var(--muted); }
+  p { margin:.5em 0; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+</style>
+</head>
+<body>
+  <article class="doc">
+    <p class="eyebrow">Guía de marca</p>
+    <h1>Cómo escribimos para la web</h1>
+    <p class="lead">Una jerarquía clara ayuda a leer, a escanear y a navegar con lector de pantalla.</p>
+    <h2>Estructura de la página</h2>
+    <p>Un solo <code>h1</code> por página; no saltes niveles.</p>
+    <h3>Secciones principales</h3>
+    <h4>Subsecciones</h4>
+    <h5>Detalle de apoyo</h5>
+    <h6>Nota al pie de sección</h6>
+  </article>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<section aria-roledescription="carrusel" aria-label="Rutas destacadas" class="p-5 text-sm text-[#17130f]">
+  <div class="mb-3 flex items-center justify-between gap-3">
+    <h1 class="m-0 text-xl font-bold tracking-tight">Rutas destacadas</h1>
+    <div class="flex items-center gap-2">
+      <button type="button" id="prev" aria-label="Anterior"
+        class="grid size-[38px] cursor-pointer place-items-center rounded-[10px] border-2 border-[#17130f] bg-[#ffd84d] text-lg font-bold shadow-[3px_3px_0_#17130f] hover:translate-x-[1.5px] hover:translate-y-[1.5px] hover:shadow-[1.5px_1.5px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none">‹</button>
+      <span id="count" aria-live="polite" class="min-w-[3.2em] text-center font-mono text-[13px] font-bold">1 / 3</span>
+      <button type="button" id="next" aria-label="Siguiente"
+        class="grid size-[38px] cursor-pointer place-items-center rounded-[10px] border-2 border-[#17130f] bg-[#ffd84d] text-lg font-bold shadow-[3px_3px_0_#17130f] hover:translate-x-[1.5px] hover:translate-y-[1.5px] hover:shadow-[1.5px_1.5px_0_#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36] disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none">›</button>
+    </div>
+  </div>
+  <ul id="track" tabindex="0" aria-label="Diapositivas, desplázate con las flechas"
+    class="m-0 flex list-none snap-x snap-mandatory gap-3.5 overflow-x-auto p-0.5 pb-2 motion-safe:scroll-smooth focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">
+    <li aria-roledescription="diapositiva" class="flex w-[min(78%,260px)] flex-none snap-start flex-col overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] shadow-[4px_4px_0_#17130f]">
+      <div class="grid h-24 place-items-center border-b-2 border-[#17130f] bg-[#ffd84d] text-[40px] font-extrabold leading-none tracking-tighter">9 km</div>
+      <div class="px-3.5 pb-3.5 pt-2.5"><h2 class="m-0 mb-0.5 text-base font-bold">Cerros de Lima</h2><p class="m-0 text-[#6b6258]">Sendero suave, 2 h.</p></div>
+    </li>
+    <li aria-roledescription="diapositiva" class="flex w-[min(78%,260px)] flex-none snap-start flex-col overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] shadow-[4px_4px_0_#17130f]">
+      <div class="grid h-24 place-items-center border-b-2 border-[#17130f] bg-[#ff8a6e] text-[40px] font-extrabold leading-none tracking-tighter">14 km</div>
+      <div class="px-3.5 pb-3.5 pt-2.5"><h2 class="m-0 mb-0.5 text-base font-bold">Valle Sagrado</h2><p class="m-0 text-[#6b6258]">Ruta mixta, 5 h.</p></div>
+    </li>
+    <li aria-roledescription="diapositiva" class="flex w-[min(78%,260px)] flex-none snap-start flex-col overflow-hidden rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] shadow-[4px_4px_0_#17130f]">
+      <div class="grid h-24 place-items-center border-b-2 border-[#17130f] bg-[#9db4ff] text-[40px] font-extrabold leading-none tracking-tighter">6 km</div>
+      <div class="px-3.5 pb-3.5 pt-2.5"><h2 class="m-0 mb-0.5 text-base font-bold">Laguna Churup</h2><p class="m-0 text-[#6b6258]">Subida corta, 3 h.</p></div>
+    </li>
+  </ul>
+</section>
+<script>
+  const track = document.getElementById('track'), prev = document.getElementById('prev'),
+        next = document.getElementById('next'), count = document.getElementById('count');
+  const slides = [...track.children];
+  const step = () => slides[1].offsetLeft - slides[0].offsetLeft;
+  function update() {
+    const end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    count.textContent = `${(end ? slides.length - 1 : Math.round(track.scrollLeft / step())) + 1} / ${slides.length}`;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = end;
+  }
+  prev.onclick = () => track.scrollBy({ left: -step() });
+  next.onclick = () => track.scrollBy({ left: step() });
+  track.addEventListener('scroll', update, { passive: true });
+  update();
+</script>

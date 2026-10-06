@@ -13,7 +13,21 @@ export const CATEGORIES: Record<string, { label: string; blurb: string; icon: st
   formularios: { label: 'Formularios', blurb: 'Inputs, selects, toggles y validación.', icon: '▤' },
   navegacion: { label: 'Navegación', blurb: 'Navbar, tabs, breadcrumbs, paginación y sidebar.', icon: '☰' },
   cargando: { label: 'Cargando', blurb: 'Spinners, skeletons y estados vacíos.', icon: '◌' },
+  tipografia: { label: 'Tipografía', blurb: 'Escalas, titulares, texto largo y bloques de código.', icon: 'Aa' },
+  elementos: { label: 'Elementos UI', blurb: 'Acordeones, avatares, ratings, steppers y timelines.', icon: '❖' },
+  secciones: { label: 'Secciones de landing', blurb: 'Hero, features, testimonios, FAQ y footer.', icon: '▭' },
+  graficos: { label: 'Gráficos', blurb: 'Donut, líneas, sparklines y heatmaps en SVG.', icon: '◔' },
 };
+
+// Agrupación estilo design-system de gran empresa (orden de la home).
+export const GROUPS: { label: string; blurb: string; cats: string[] }[] = [
+  { label: 'Fundamentos', blurb: 'Color, tipografía e iconografía.', cats: ['paleta-de-color', 'tipografia', 'iconos'] },
+  { label: 'Componentes', blurb: 'Los bloques de toda interfaz.', cats: ['botones', 'etiquetas', 'formularios', 'tarjetas', 'elementos'] },
+  { label: 'Feedback', blurb: 'Comunicar estados al usuario.', cats: ['notificaciones', 'modales', 'cargando'] },
+  { label: 'Navegación', blurb: 'Moverse por la aplicación.', cats: ['navegacion'] },
+  { label: 'Datos', blurb: 'Mostrar y visualizar información.', cats: ['tablas', 'barras', 'graficos'] },
+  { label: 'Layout y páginas', blurb: 'Estructura y secciones completas.', cats: ['grids', 'secciones'] },
+];
 
 // shiki = lenguaje de resaltado, ext = extensión del archivo en content/templates/<slug>/
 export const LANGS: Record<string, { label: string; ext: string; shiki: string }> = {

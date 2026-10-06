@@ -1,0 +1,38 @@
+<section class="mx-auto flex max-w-[620px] flex-wrap items-center justify-center gap-x-7 gap-y-5 rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] p-[18px] shadow-[4px_4px_0_#17130f]" aria-labelledby="t">
+  <div class="relative h-44 w-44 flex-none" id="wrap">
+    <svg class="block h-full w-full" viewBox="0 0 42 42" role="img" aria-label="Gráfico de donut: visitas por canal">
+      <g id="segs" fill="none" stroke-width="6"></g>
+    </svg>
+    <div class="pointer-events-none absolute inset-0 grid place-content-center text-center" aria-hidden="true">
+      <strong id="pct" class="text-[2rem] leading-none tracking-tight tabular-nums">12,5k</strong>
+      <span id="lbl" class="mt-1 text-xs text-[#6b6258]">visitas</span>
+    </div>
+  </div>
+  <div>
+    <h2 id="t" class="mb-2 text-base font-bold tracking-tight">Visitas por canal</h2>
+    <ul id="legend" class="m-0 grid min-w-[190px] list-none gap-1 p-0"></ul>
+  </div>
+</section>
+<script>
+  const data = [
+    { label: 'Directo', value: 38, color: '#ff5a36' }, { label: 'Orgánico', value: 27, color: '#17130f' },
+    { label: 'Referidos', value: 18, color: '#ffd84d' }, { label: 'Social', value: 12, color: '#3b5bfd' },
+    { label: 'Otros', value: 5, color: '#1f9d55' },
+  ];
+  const NS = 'http://www.w3.org/2000/svg', R = 100 / (2 * Math.PI);
+  const segs = document.getElementById('segs'), legend = document.getElementById('legend');
+  const sum = data.reduce((a, d) => a + d.value, 0);
+  let acc = 0;
+  data.forEach((d) => {
+    const c = document.createElementNS(NS, 'circle');
+    const len = d.value / sum * 100 - 0.8;
+    c.setAttribute('cx', 21); c.setAttribute('cy', 21); c.setAttribute('r', R);
+    c.setAttribute('stroke', d.color);
+    c.setAttribute('stroke-dasharray', `${len} ${100 - len}`);
+    c.setAttribute('stroke-dashoffset', 25 - acc);
+    acc += d.value / sum * 100;
+    segs.appendChild(c);
+    legend.insertAdjacentHTML('beforeend',
+      `<li class="flex items-center gap-2.5 px-2 py-1"><span class="h-3 w-3 rounded-[3px] border-2 border-[#17130f]" style="background:${d.color}"></span><span class="flex-1">${d.label}</span><span class="font-mono text-sm font-semibold tabular-nums">${d.value}%</span></li>`);
+  });
+</script>

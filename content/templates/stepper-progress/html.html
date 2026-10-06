@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasos de un proceso</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; --ok:#1f9d55; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px/1.4 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 18px; font-size:20px; letter-spacing:-.02em; }
+  .steps { display:grid; grid-auto-flow:column; grid-auto-columns:1fr; margin:0 0 20px; padding:0; list-style:none; counter-reset:s; }
+  .step { position:relative; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; font-size:13px; font-weight:600; color:var(--muted); }
+  .step::before { content:""; position:absolute; top:17px; right:50%; width:100%; height:4px; background:var(--ink); z-index:0; }
+  .step:first-child::before { display:none; }
+  .dot { position:relative; z-index:1; display:grid; place-items:center; width:38px; height:38px; font:700 15px ui-monospace, monospace; background:var(--surface); color:var(--ink); border:2px solid var(--ink); border-radius:50%; }
+  .step[data-state="done"] { color:var(--ink); }
+  .step[data-state="done"] .dot { background:var(--ok); color:#fff; }
+  .step[data-state="done"] .dot::after { content:"✓"; }
+  .step[data-state="done"] .dot span { display:none; }
+  .step[data-state="current"] { color:var(--ink); }
+  .step[data-state="current"] .dot { background:var(--accent); box-shadow:3px 3px 0 var(--ink); }
+  .step[data-state="pending"]::before { background:repeating-linear-gradient(90deg, var(--ink) 0 6px, transparent 6px 12px); }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+  .nav { display:flex; gap:10px; }
+  .btn { font:600 14px system-ui; padding:8px 14px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:10px; box-shadow:4px 4px 0 var(--ink); cursor:pointer; }
+  .btn.primary { background:var(--hl); }
+  .btn:hover:not(:disabled) { transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .btn:disabled { opacity:.45; box-shadow:none; cursor:not-allowed; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+</style>
+</head>
+<body>
+  <h1>Finalizar compra</h1>
+  <nav aria-label="Progreso de la compra">
+    <ol class="steps" id="steps">
+      <li class="step"><span class="dot"><span>1</span></span>Carrito</li>
+      <li class="step"><span class="dot"><span>2</span></span>Envío</li>
+      <li class="step"><span class="dot"><span>3</span></span>Pago</li>
+      <li class="step"><span class="dot"><span>4</span></span>Listo</li>
+    </ol>
+  </nav>
+  <div class="nav">
+    <button type="button" class="btn" id="prev">Atrás</button>
+    <button type="button" class="btn primary" id="next">Continuar</button>
+  </div>
+<script>
+  const items = [...document.querySelectorAll('.step')];
+  const prev = document.getElementById('prev'), next = document.getElementById('next');
+  const label = { done: 'completado', current: 'paso actual', pending: 'pendiente' };
+  let cur = 1;
+  function render() {
+    items.forEach((li, i) => {
+      const st = i < cur ? 'done' : i === cur ? 'current' : 'pending';
+      li.dataset.state = st;
+      if (st === 'current') li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+      li.querySelector('.sr')?.remove();
+      li.insertAdjacentHTML('beforeend', `<span class="sr">(${label[st]})</span>`);
+    });
+    prev.disabled = cur === 0;
+    next.disabled = cur === items.length - 1;
+  }
+  prev.onclick = () => { cur--; render(); };
+  next.onclick = () => { cur++; render(); };
+  render();
+</script>
+</body>
+</html>

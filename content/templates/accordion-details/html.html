@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acordeón nativo</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; interpolate-size:allow-keywords; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:15px/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:20px; letter-spacing:-.02em; }
+  .lead { margin:0 0 14px; color:var(--muted); font-size:13px; }
+  .acc { display:grid; gap:10px; }
+  .acc details { border:2px solid var(--ink); border-radius:10px; background:var(--surface); box-shadow:4px 4px 0 var(--ink); }
+  .acc details[open] { background:#fff; box-shadow:2px 2px 0 var(--ink); transform:translate(2px,2px); }
+  .acc summary { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; font-weight:700; cursor:pointer; list-style:none; border-radius:8px; }
+  .acc summary::-webkit-details-marker { display:none; }
+  .acc summary::after { content:"+"; display:grid; place-items:center; flex:none; width:24px; height:24px; font:700 16px ui-monospace, monospace; background:var(--hl); border:2px solid var(--ink); border-radius:50%; transition:transform .2s; }
+  .acc details[open] summary::after { content:"−"; transform:rotate(180deg); background:var(--accent); }
+  .acc summary:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .acc p { margin:0; padding:0 14px 14px; color:var(--muted); }
+  .acc details::details-content { block-size:0; overflow:clip; transition:block-size .25s ease, content-visibility .25s allow-discrete; }
+  .acc details[open]::details-content { block-size:auto; }
+  @media (prefers-reduced-motion:reduce) { .acc details::details-content, .acc summary::after { transition:none; } }
+</style>
+</head>
+<body>
+  <h1>Preguntas frecuentes</h1>
+  <p class="lead">Se abre una a la vez: comparten el mismo <code>name</code>.</p>
+  <div class="acc">
+    <details name="faq" open>
+      <summary>¿Puedo cambiar de plan en cualquier momento?</summary>
+      <p>Sí. El cambio se aplica al instante y cobramos solo la diferencia prorrateada.</p>
+    </details>
+    <details name="faq">
+      <summary>¿Cómo cancelo mi suscripción?</summary>
+      <p>Desde Ajustes → Facturación. Conservas el acceso hasta el final del período pagado.</p>
+    </details>
+    <details name="faq">
+      <summary>¿Ofrecen facturas con RUC?</summary>
+      <p>Claro: añade tus datos fiscales en Facturación y las emitiremos cada mes.</p>
+    </details>
+  </div>
+</body>
+</html>

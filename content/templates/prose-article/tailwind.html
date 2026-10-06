@@ -1,0 +1,20 @@
+<!-- Con @tailwindcss/typography sería: <article class="prose"> — aquí a mano, sin plugin -->
+<article class="mx-auto max-w-[65ch] p-5 text-[1.0625rem] leading-[1.7] text-[#17130f] [&>*+*]:mt-[1.1em]">
+  <h1 class="m-0 text-balance text-[clamp(1.8rem,1.3rem+2.5vw,2.4rem)] font-bold leading-[1.1] tracking-[-.02em]">Por qué el texto largo necesita aire</h1>
+  <p class="font-mono text-[13px] text-[#6b6258]">12 de marzo · 6 min de lectura</p>
+  <p>
+    Una línea de entre 45 y 75 caracteres se lee sin esfuerzo. Por eso limitamos el ancho con
+    <code class="rounded-[5px] border-[1.5px] border-[#17130f] bg-[#fffdf8] px-1.5 font-mono text-[.88em]">max-width: 65ch</code>
+    y, según <a href="#" class="text-[#3b5bfd] underline decoration-2 underline-offset-[3px] hover:bg-[#ffd84d] hover:text-[#17130f] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#ff5a36]">la guía de legibilidad</a>, subimos el interlineado.
+  </p>
+  <blockquote class="m-0 border-l-[6px] border-[#ff5a36] py-1 pl-4 text-xl italic leading-snug">
+    Diseñar es decidir qué se queda fuera de la página.
+    <cite class="mt-1.5 block font-mono text-[13px] not-italic text-[#6b6258]">Marta Ruiz, directora de arte</cite>
+  </blockquote>
+  <h2 class="!mt-[1.8em] text-[1.4rem] font-bold leading-tight tracking-[-.02em]">Tres reglas rápidas</h2>
+  <ul class="list-disc space-y-1.5 pl-[1.4em] marker:font-bold marker:text-[#ff5a36]">
+    <li>Mide el ancho en caracteres, no en píxeles.</li>
+    <li>Separa los párrafos con espacio, sin sangrías.</li>
+    <li>Mantén un contraste mínimo de 4.5:1.</li>
+  </ul>
+</article>

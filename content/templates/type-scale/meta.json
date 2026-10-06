@@ -1,0 +1,1 @@
+{ "title": "Escala tipográfica fluida", "category": "tipografia", "description": "Escala modular con variables CSS y clamp() que crece con el ancho de pantalla.", "tags": ["tipografia", "clamp", "variables-css"] }

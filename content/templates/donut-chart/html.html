@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:16px;font:14px/1.4 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
+  :focus-visible{outline:3px solid #ff5a36;outline-offset:2px}
+  .card{display:flex;flex-wrap:wrap;gap:20px 28px;align-items:center;justify-content:center;max-width:620px;margin:0 auto;padding:18px;border:2px solid #17130f;border-radius:10px;background:#fffdf8;box-shadow:4px 4px 0 #17130f}
+  .wrap{position:relative;width:176px;height:176px;flex:none}
+  svg{width:100%;height:100%;display:block}
+  .seg{fill:none;stroke-width:6;transition:stroke-dasharray .7s cubic-bezier(.3,.7,.2,1),opacity .15s}
+  .dim .seg:not(.on){opacity:.3}
+  .center{position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none}
+  .center strong{font-size:2rem;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+  .center span{margin-top:4px;color:#6b6258;font-size:.75rem}
+  h2{margin:0 0 8px;font-size:1rem;letter-spacing:-.02em}
+  .legend{display:grid;gap:4px;margin:0;padding:0;list-style:none;min-width:190px}
+  .legend button{display:flex;gap:10px;align-items:center;width:100%;padding:5px 8px;border:2px solid transparent;border-radius:8px;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+  .legend button:hover,.legend button.on{border-color:#17130f;background:#f6f1e7}
+  .dot{flex:none;width:12px;height:12px;border:2px solid #17130f;border-radius:3px;background:var(--c)}
+  .name{flex:1}
+  .val{font:600 .85rem ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  @media(prefers-reduced-motion:reduce){.seg{transition:none}}
+</style>
+</head>
+<body>
+  <section class="card" aria-labelledby="t">
+    <div class="wrap" id="wrap">
+      <svg viewBox="0 0 42 42" role="img" aria-label="Gráfico de donut: visitas por canal"><g id="segs"></g></svg>
+      <div class="center" aria-hidden="true"><strong id="pct">12,5k</strong><span id="lbl">visitas</span></div>
+    </div>
+    <div>
+      <h2 id="t">Visitas por canal</h2>
+      <ul class="legend" id="legend"></ul>
+    </div>
+  </section>
+<script>
+  const data = [
+    { label: 'Directo',   value: 38, color: '#ff5a36' },
+    { label: 'Orgánico',  value: 27, color: '#17130f' },
+    { label: 'Referidos', value: 18, color: '#ffd84d' },
+    { label: 'Social',    value: 12, color: '#3b5bfd' },
+    { label: 'Otros',     value: 5,  color: '#1f9d55' },
+  ];
+  const TOTAL = '12,5k', NS = 'http://www.w3.org/2000/svg', GAP = 0.8;
+  const R = 100 / (2 * Math.PI); // circunferencia = 100, así stroke-dasharray usa porcentajes directos
+  const segs = document.getElementById('segs'), legend = document.getElementById('legend'), wrap = document.getElementById('wrap');
+  const pct = document.getElementById('pct'), lbl = document.getElementById('lbl');
+  const sum = data.reduce((a, d) => a + d.value, 0);
+  let acc = 0;
+  const circles = data.map((d, i) => {
+    const c = document.createElementNS(NS, 'circle');
+    c.setAttribute('class', 'seg');
+    c.setAttribute('cx', 21); c.setAttribute('cy', 21); c.setAttribute('r', R);
+    c.setAttribute('stroke', d.color);
+    c.style.strokeDasharray = "0 100";
+    c.setAttribute('stroke-dashoffset', 25 - acc); // 25 = empezar arriba
+    c.dataset.len = Math.max(d.value / sum * 100 - GAP, 0.1);
+    acc += d.value / sum * 100;
+    segs.appendChild(c);
+    const li = document.createElement('li');
+    li.innerHTML = `<button type="button"><span class="dot" style="--c:${d.color}"></span><span class="name">${d.label}</span><span class="val">${d.value}%</span></button>`;
+    legend.appendChild(li);
+    const b = li.firstChild;
+    ['mouseenter', 'focus'].forEach(e => b.addEventListener(e, () => show(i)));
+    ['mouseleave', 'blur'].forEach(e => b.addEventListener(e, reset));
+    c.addEventListener('mouseenter', () => show(i)); c.addEventListener('mouseleave', reset);
+    return c;
+  });
+  const buttons = legend.querySelectorAll('button');
+  function show(i) {
+    wrap.classList.add('dim');
+    circles.forEach((c, j) => c.classList.toggle('on', j === i));
+    buttons.forEach((b, j) => b.classList.toggle('on', j === i));
+    pct.textContent = data[i].value + '%'; lbl.textContent = data[i].label;
+  }
+  function reset() {
+    wrap.classList.remove('dim');
+    circles.forEach(c => c.classList.remove('on')); buttons.forEach(b => b.classList.remove('on'));
+    pct.textContent = TOTAL; lbl.textContent = 'visitas';
+  }
+  requestAnimationFrame(() => requestAnimationFrame(() =>
+    circles.forEach(c => c.style.strokeDasharray = `${c.dataset.len} ${100 - c.dataset.len}`)));
+</script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.55 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
+  .faq{display:grid;gap:24px;max-width:960px;margin:0 auto;padding:36px 20px}
+  @media(min-width:720px){.faq{grid-template-columns:1fr 1.7fr;gap:40px}}
+  h2{margin:0 0 8px;font-size:clamp(1.6rem,4.5vw,2.3rem);line-height:1.1;letter-spacing:-.03em}
+  .intro{margin:0;color:#6b6258}
+  .intro a{color:#17130f;font-weight:600}
+  .list{display:grid;gap:12px;align-content:start}
+  details{border:2px solid #17130f;border-radius:10px;background:#fffdf8;box-shadow:4px 4px 0 #17130f}
+  details[open]{background:#fff6d1}
+  summary{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 16px;font-weight:700;cursor:pointer;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary:focus-visible{outline:3px solid #ff5a36;outline-offset:3px;border-radius:8px}
+  .plus{flex:none;width:22px;height:22px;transition:transform .2s}
+  .plus path{stroke:#17130f;stroke-width:2.5;stroke-linecap:round}
+  details[open] .plus{transform:rotate(45deg)}
+  details p{margin:0;padding:0 16px 16px;color:#3d362e;max-width:60ch}
+  @media(prefers-reduced-motion:reduce){.plus{transition:none}}
+</style>
+</head>
+<body>
+  <section class="faq" aria-labelledby="q">
+    <div>
+      <h2 id="q">Preguntas frecuentes</h2>
+      <p class="intro">¿No encuentras tu duda? <a href="#contacto">Escríbenos</a> y respondemos en menos de un día laborable.</p>
+    </div>
+    <div class="list">
+      <details name="faq" open>
+        <summary>¿Puedo probar Nimbo antes de pagar?<svg class="plus" viewBox="0 0 22 22" aria-hidden="true"><path d="M11 3v16M3 11h16" fill="none"/></svg></summary>
+        <p>Sí. Tienes 14 días con todas las funciones y no pedimos tarjeta. Al terminar, tu cuenta pasa al plan gratuito.</p>
+      </details>
+      <details name="faq">
+        <summary>¿Cuántas personas pueden usarlo?<svg class="plus" viewBox="0 0 22 22" aria-hidden="true"><path d="M11 3v16M3 11h16" fill="none"/></svg></summary>
+        <p>El plan gratuito admite hasta 5 personas. En los planes de pago no hay límite de miembros y solo cobramos por quienes editan.</p>
+      </details>
+      <details name="faq">
+        <summary>¿Puedo importar mis proyectos actuales?<svg class="plus" viewBox="0 0 22 22" aria-hidden="true"><path d="M11 3v16M3 11h16" fill="none"/></svg></summary>
+        <p>Importa desde archivos CSV o desde otras herramientas de tareas. Conservamos responsables, fechas y comentarios.</p>
+      </details>
+      <details name="faq">
+        <summary>¿Dónde se guardan mis datos?<svg class="plus" viewBox="0 0 22 22" aria-hidden="true"><path d="M11 3v16M3 11h16" fill="none"/></svg></summary>
+        <p>En servidores dentro de la Unión Europea, con copias cifradas diarias. Puedes exportar todo cuando quieras.</p>
+      </details>
+      <details name="faq">
+        <summary>¿Cómo cancelo mi suscripción?<svg class="plus" viewBox="0 0 22 22" aria-hidden="true"><path d="M11 3v16M3 11h16" fill="none"/></svg></summary>
+        <p>Desde Ajustes, en Facturación. La cancelación es inmediata y mantienes el acceso hasta el final del periodo pagado.</p>
+      </details>
+    </div>
+  </section>
+</body>
+</html>

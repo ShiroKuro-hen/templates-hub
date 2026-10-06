@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escala tipográfica</title>
+<style>
+  :root {
+    --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d;
+    /* Escala modular fluida: razón 1.2 en móvil → 1.25 en escritorio */
+    --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.90rem);
+    --step-0:  clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+    --step-1:  clamp(1.2rem, 1.1rem + 0.5vw, 1.4rem);
+    --step-2:  clamp(1.44rem, 1.28rem + 0.8vw, 1.76rem);
+    --step-3:  clamp(1.73rem, 1.45rem + 1.3vw, 2.2rem);
+    --step-4:  clamp(2.07rem, 1.6rem + 2vw, 2.75rem);
+    --step-5:  clamp(2.49rem, 1.8rem + 3vw, 3.4rem);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:var(--step-0)/1.5 system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  h1 { margin:0 0 4px; font-size:var(--step-2); letter-spacing:-.02em; line-height:1.1; }
+  .lead { margin:0 0 16px; color:var(--muted); font-size:var(--step--1); }
+  .scale { margin:0; padding:0; list-style:none; border:2px solid var(--ink); border-radius:10px; background:var(--surface); box-shadow:4px 4px 0 var(--ink); }
+  .scale li { display:grid; grid-template-columns:5.5rem 1fr; align-items:baseline; gap:12px; padding:10px 14px; }
+  .scale li + li { border-top:2px solid var(--ink); }
+  .tok { font:12px ui-monospace, monospace; color:var(--muted); }
+  .tok b { display:block; color:var(--ink); }
+  .smp { margin:0; line-height:1.1; letter-spacing:-.02em; font-weight:700; overflow-wrap:anywhere; }
+  .s-1 { font-size:var(--step--1); font-weight:400; letter-spacing:0; line-height:1.4; }
+  .s0 { font-size:var(--step-0); font-weight:400; letter-spacing:0; line-height:1.4; }
+  .s1 { font-size:var(--step-1); } .s2 { font-size:var(--step-2); } .s3 { font-size:var(--step-3); }
+  .s4 { font-size:var(--step-4); } .s5 { font-size:var(--step-5); }
+  .s5 { background:linear-gradient(transparent 62%, var(--hl) 62%); width:fit-content; }
+</style>
+</head>
+<body>
+  <h1>Escala tipográfica</h1>
+  <p class="lead">Siete pasos con <code>clamp()</code>. Cambia el ancho del panel y mira cómo crecen.</p>
+  <ol class="scale">
+    <li><span class="tok"><b>--step-5</b>3.4rem</span><p class="smp s5">Titular</p></li>
+    <li><span class="tok"><b>--step-4</b>2.75rem</span><p class="smp s4">Gran título</p></li>
+    <li><span class="tok"><b>--step-3</b>2.2rem</span><p class="smp s3">Título de sección</p></li>
+    <li><span class="tok"><b>--step-2</b>1.76rem</span><p class="smp s2">Subtítulo destacado</p></li>
+    <li><span class="tok"><b>--step-1</b>1.4rem</span><p class="smp s1">Entradilla o lead de página</p></li>
+    <li><span class="tok"><b>--step-0</b>1.125rem</span><p class="smp s0">Texto base para lectura cómoda.</p></li>
+    <li><span class="tok"><b>--step--1</b>0.9rem</span><p class="smp s-1">Texto pequeño para notas y pies.</p></li>
+  </ol>
+</body>
+</html>

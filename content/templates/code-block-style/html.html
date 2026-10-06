@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bloque de código</title>
+<style>
+  :root { --bg:#f6f1e7; --surface:#fffdf8; --ink:#17130f; --muted:#6b6258; --accent:#ff5a36; --hl:#ffd84d; --ok:#1f9d55; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; font:14px system-ui, sans-serif; background:var(--bg); color:var(--ink); }
+  .code { margin:0 0 16px; border:2px solid var(--ink); border-radius:10px; background:var(--ink); box-shadow:4px 4px 0 var(--ink); overflow:hidden; }
+  .bar { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:6px 8px 6px 14px; background:var(--hl); border-bottom:2px solid var(--ink); }
+  .bar span { font:700 12px ui-monospace, monospace; }
+  .copy { font:700 12px system-ui; padding:4px 10px; color:var(--ink); background:var(--surface); border:2px solid var(--ink); border-radius:8px; box-shadow:2px 2px 0 var(--ink); cursor:pointer; }
+  .copy:hover { transform:translate(1px,1px); box-shadow:1px 1px 0 var(--ink); }
+  .copy[data-ok] { background:var(--ok); color:#fff; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  pre { margin:0; padding:12px 0; overflow-x:auto; font:13px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; color:#f6f1e7; tab-size:2; }
+  pre:focus-visible { outline-offset:-3px; }
+  code { display:block; counter-reset:line; min-width:max-content; }
+  .l { display:block; padding:0 14px 0 0; white-space:pre; }
+  .l::before { counter-increment:line; content:counter(line); display:inline-block; width:2.8em; margin-right:1em; padding-right:.6em; text-align:right; color:#a39a8d; border-right:1px solid #4a423a; user-select:none; }
+  .k { color:#ff8a6e; } .s { color:#ffd84d; } .f { color:#9db4ff; } .c { color:#a39a8d; font-style:italic; }
+</style>
+</head>
+<body>
+  <figure class="code" style="margin-inline:0">
+    <figcaption class="bar">
+      <span>saludar.ts</span>
+      <button type="button" class="copy" aria-live="polite">Copiar</button>
+    </figcaption>
+    <pre tabindex="0" aria-label="Código de saludar.ts"><code><span class="l"><span class="c">// Devuelve un saludo según la hora</span></span><span class="l"><span class="k">export function</span> <span class="f">saludar</span>(nombre: <span class="k">string</span>, hora = <span class="k">new</span> <span class="f">Date</span>().<span class="f">getHours</span>()) {</span><span class="l">  <span class="k">const</span> momento = hora &lt; <span class="s">12</span> ? <span class="s">'Buenos días'</span> : <span class="s">'Buenas tardes'</span>;</span><span class="l">  <span class="k">return</span> <span class="s">`${momento}, ${nombre}`</span>;</span><span class="l">}</span></code></pre>
+  </figure>
+<script>
+  const btn = document.querySelector('.copy');
+  btn.addEventListener('click', async () => {
+    const text = [...document.querySelectorAll('.l')].map(l => l.textContent).join('\n');
+    try { await navigator.clipboard.writeText(text); }
+    catch { // fallback si no hay permiso de portapapeles (iframe)
+      const t = document.createElement('textarea'); t.value = text; document.body.append(t); t.select();
+      try { document.execCommand('copy'); } catch {} t.remove();
+    }
+    btn.textContent = '¡Copiado!'; btn.dataset.ok = '';
+    setTimeout(() => { btn.textContent = 'Copiar'; delete btn.dataset.ok; }, 1800);
+  });
+</script>
+</body>
+</html>

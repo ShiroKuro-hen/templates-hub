@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;padding:36px 20px;font:16px/1.5 system-ui,sans-serif;background:#f6f1e7;color:#17130f}
+  :focus-visible{outline:3px solid #17130f;outline-offset:3px}
+  .cta{position:relative;overflow:hidden;display:grid;gap:22px;align-items:center;max-width:1040px;margin:0 auto;padding:32px 24px;border:2px solid #17130f;border-radius:10px;background:#ff5a36;box-shadow:6px 6px 0 #17130f}
+  @media(min-width:720px){.cta{grid-template-columns:1fr auto;padding:40px}}
+  .deco{position:absolute;right:-30px;top:-30px;width:160px;height:160px;opacity:.9;pointer-events:none}
+  .txt{position:relative;max-width:34rem}
+  h2{margin:0 0 8px;font-size:clamp(1.7rem,5vw,2.6rem);line-height:1.05;letter-spacing:-.03em}
+  p{margin:0;font-size:1.02rem}
+  .row{position:relative;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+  .btn{padding:13px 22px;border:2px solid #17130f;border-radius:10px;background:#17130f;color:#fffdf8;font:700 1rem system-ui,sans-serif;text-decoration:none;box-shadow:4px 4px 0 #ffd84d;transition:transform .12s,box-shadow .12s}
+  .btn:hover,.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #ffd84d}
+  .link{color:#17130f;font-weight:700}
+  @media(prefers-reduced-motion:reduce){.btn{transition:none}}
+</style>
+</head>
+<body>
+  <section class="cta" aria-labelledby="c">
+    <svg class="deco" viewBox="0 0 160 160" aria-hidden="true"><circle cx="100" cy="60" r="56" fill="#ffd84d" stroke="#17130f" stroke-width="3"/><circle cx="100" cy="60" r="30" fill="none" stroke="#17130f" stroke-width="3"/></svg>
+    <div class="txt">
+      <h2 id="c">Empieza hoy con tu primer proyecto.</h2>
+      <p>Crea tu espacio en dos minutos e invita a tu equipo. Gratis hasta 5 personas.</p>
+    </div>
+    <div class="row">
+      <a class="btn" href="#empezar">Crear cuenta gratis</a>
+      <a class="link" href="#ventas">Hablar con ventas</a>
+    </div>
+  </section>
+</body>
+</html>

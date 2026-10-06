@@ -1,0 +1,25 @@
+<!-- Relleno solo con CSS: variantes arbitrarias [selector_&] (Tailwind 3.1+). Cada estrella = input + label. -->
+<form class="max-w-sm rounded-[10px] border-2 border-[#17130f] bg-[#fffdf8] p-4 shadow-[4px_4px_0_#17130f]" onsubmit="return false">
+  <fieldset class="m-0 border-0 p-0">
+    <legend class="mb-2 p-0 font-bold tracking-tight">¿Qué tal estuvo el servicio?</legend>
+    <div class="flex gap-0.5">
+      <input type="radio" name="rate" id="r1" value="1" class="sr-only">
+      <label for="r1" class="group cursor-pointer rounded-lg p-0.5 [input:focus-visible+&]:outline [input:focus-visible+&]:outline-[3px] [input:focus-visible+&]:outline-offset-1 [input:focus-visible+&]:outline-[#ff5a36]">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-[34px] fill-[#fffdf8] stroke-[#17130f] stroke-2 [stroke-linejoin:round] transition-transform group-hover:scale-110 motion-reduce:transition-none [input:checked+label_&]:fill-[#ffd84d] [label:has(~input:checked)_&]:fill-[#ffd84d] [label:hover_&]:fill-[#ffd84d] [label:has(~label:hover)_&]:fill-[#ffd84d]"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg>
+        <span class="sr-only">1 estrella</span>
+      </label>
+      <input type="radio" name="rate" id="r2" value="2" class="sr-only">
+      <label for="r2" class="group cursor-pointer rounded-lg p-0.5 [input:focus-visible+&]:outline [input:focus-visible+&]:outline-[3px] [input:focus-visible+&]:outline-offset-1 [input:focus-visible+&]:outline-[#ff5a36]">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-[34px] fill-[#fffdf8] stroke-[#17130f] stroke-2 [stroke-linejoin:round] transition-transform group-hover:scale-110 motion-reduce:transition-none [input:checked+label_&]:fill-[#ffd84d] [label:has(~input:checked)_&]:fill-[#ffd84d] [label:hover_&]:fill-[#ffd84d] [label:has(~label:hover)_&]:fill-[#ffd84d]"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg>
+        <span class="sr-only">2 estrellas</span>
+      </label>
+      <input type="radio" name="rate" id="r3" value="3" class="sr-only">
+      <label for="r3" class="group cursor-pointer rounded-lg p-0.5 [input:focus-visible+&]:outline [input:focus-visible+&]:outline-[3px] [input:focus-visible+&]:outline-offset-1 [input:focus-visible+&]:outline-[#ff5a36]">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="size-[34px] fill-[#fffdf8] stroke-[#17130f] stroke-2 [stroke-linejoin:round] transition-transform group-hover:scale-110 motion-reduce:transition-none [input:checked+label_&]:fill-[#ffd84d] [label:has(~input:checked)_&]:fill-[#ffd84d] [label:hover_&]:fill-[#ffd84d] [label:has(~label:hover)_&]:fill-[#ffd84d]"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg>
+        <span class="sr-only">3 estrellas</span>
+      </label>
+      <!-- 4 y 5: mismo bloque input + label, cambiando id, value y texto -->
+    </div>
+  </fieldset>
+  <output class="mt-2 block font-mono text-[13px] text-[#6b6258]" aria-live="polite">Elige de 1 a 5 estrellas</output>
+</form>
