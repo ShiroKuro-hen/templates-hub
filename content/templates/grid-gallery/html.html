@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  fieldset{display:flex;margin:0;padding:2px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  fieldset label{position:relative}
+  fieldset input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+  fieldset span{display:block;padding:4px 12px;border-radius:6px;color:var(--muted);font-variant-numeric:tabular-nums;transition:background .14s,color .14s}
+  input:hover:not(:checked)+span{color:var(--text)}
+  input:checked+span{background:var(--accent);color:var(--accent-ink);font-weight:600}
+  input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+  .info{margin:0 0 16px;color:var(--muted);font-size:13px}
+  .info code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--text)}
+  .info span{display:none}
+  .info .i-rows,.card:has([value=sq]:checked) .i-sq,.card:has([value=r43]:checked) .i-r43,.card:has([value=r169]:checked) .i-r169{display:inline}
+  .card:has(:not([value=rows]):checked) .i-rows{display:none}
+  .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-rows:var(--row,170px);grid-auto-flow:dense;gap:12px}
+  .card:has([value=sq]:checked) .grid{--row:auto;--ar:1/1}
+  .card:has([value=r43]:checked) .grid{--row:auto;--ar:4/3}
+  .card:has([value=r169]:checked) .grid{--row:auto;--ar:16/9}
+  .grid li{display:flex;min-width:0;min-height:0;aspect-ratio:var(--ar,auto)}
+  .tile{flex:1;display:grid;grid-template-rows:minmax(0,1fr) auto;min-width:0;margin:0;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden;transition:border-color .14s}
+  .tile:hover{border-color:var(--accent)}
+  .w{grid-column:span 2}
+  .card:has(:not([value=rows]):checked) .w{grid-column:auto}
+  @media (max-width:400px){.w{grid-column:auto}}
+  .art{position:relative;min-height:0;overflow:hidden;background:linear-gradient(135deg,var(--c1),var(--c2))}
+  .art::after{content:"";position:absolute;right:12%;bottom:14%;width:34%;aspect-ratio:1;max-height:70%;background:var(--ink);opacity:.5}
+  .art[data-s=c]::after{border-radius:50%}
+  .art[data-s=s]::after{border-radius:6px;transform:rotate(12deg)}
+  .art[data-s=t]::after{clip-path:polygon(50% 0,100% 100%,0 100%)}
+  .tag{position:absolute;top:8px;left:8px;padding:0 8px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#0a0f1c;font-size:12px;font-weight:600}
+  figcaption{padding:8px 12px;border-top:1px solid var(--border)}
+  figcaption b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  figcaption small{color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <div class="head">
+    <div><h2 id="t">Galería de proyectos</h2><p>Diez entregas recientes del estudio.</p></div>
+    <fieldset>
+      <legend>Disposición de la galería</legend>
+      <label><input type="radio" name="m" value="rows" checked><span>Filas</span></label>
+      <label><input type="radio" name="m" value="sq"><span>1:1</span></label>
+      <label><input type="radio" name="m" value="r43"><span>4:3</span></label>
+      <label><input type="radio" name="m" value="r169"><span>16:9</span></label>
+    </fieldset>
+  </div>
+  <p class="info" aria-live="polite">
+    <span class="i-rows">Filas de altura uniforme: <code>grid-auto-rows: 170px</code> y los destacados ocupan dos columnas.</span>
+    <span class="i-sq">Proporción fija: <code>aspect-ratio: 1 / 1</code></span>
+    <span class="i-r43">Proporción fija: <code>aspect-ratio: 4 / 3</code></span>
+    <span class="i-r169">Proporción fija: <code>aspect-ratio: 16 / 9</code></span>
+  </p>
+  <ul class="grid">
+    <li class="w"><figure class="tile"><div class="art" data-s="c" style="--c1:var(--accent-soft);--c2:var(--info-soft);--ink:var(--accent)"><span class="tag">Destacado</span></div><figcaption><b>Rediseño de la app móvil</b><small>Producto</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="s" style="--c1:var(--info-soft);--c2:var(--ok-soft);--ink:var(--info)"></div><figcaption><b>Identidad Aurora</b><small>Marca</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="t" style="--c1:var(--ok-soft);--c2:var(--warn-soft);--ink:var(--ok)"></div><figcaption><b>Sistema de iconos</b><small>Diseño de sistemas</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="c" style="--c1:var(--warn-soft);--c2:var(--err-soft);--ink:var(--warn)"></div><figcaption><b>Campaña de otoño</b><small>Marketing</small></figcaption></figure></li>
+    <li class="w"><figure class="tile"><div class="art" data-s="s" style="--c1:var(--err-soft);--c2:var(--accent-soft);--ink:var(--err)"></div><figcaption><b>Panel de analítica</b><small>Producto</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="t" style="--c1:var(--accent-soft);--c2:var(--ok-soft);--ink:var(--accent)"></div><figcaption><b>Portal de clientes</b><small>Producto</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="c" style="--c1:var(--info-soft);--c2:var(--accent-soft);--ink:var(--info)"></div><figcaption><b>Guía de estilo</b><small>Marca</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="s" style="--c1:var(--ok-soft);--c2:var(--info-soft);--ink:var(--ok)"></div><figcaption><b>Tienda en línea</b><small>Comercio</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="t" style="--c1:var(--warn-soft);--c2:var(--accent-soft);--ink:var(--warn)"></div><figcaption><b>Onboarding guiado</b><small>Producto</small></figcaption></figure></li>
+    <li><figure class="tile"><div class="art" data-s="c" style="--c1:var(--err-soft);--c2:var(--warn-soft);--ink:var(--err)"></div><figcaption><b>Kit de ilustraciones</b><small>Marca</small></figcaption></figure></li>
+  </ul>
+</section>
+</body>
+</html>

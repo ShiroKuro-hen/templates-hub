@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :root{--c1:#2f5bff;--c2:#d9730d;--c3:#0e9f6e;--c4:#cc3d8e;--c5:#7a4de0;--c6:#9a7b0a}
+  :root[data-theme=dark]{--c1:#6c8cff;--c2:#f59e4b;--c3:#34d399;--c4:#f472b6;--c5:#a78bfa;--c6:#e3b341}
+  figure{max-width:680px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:18px}
+  .sub{margin:2px 0 16px;color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px;padding:0;list-style:none}
+  .legend button{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 8px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:background .14s,border-color .14s}
+  .legend button:hover{border-color:var(--accent)}
+  .legend button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .legend button i{width:12px;height:12px;border-radius:3px;background:var(--c)}
+  .legend button[aria-pressed=false]{color:var(--muted)}
+  .legend button[aria-pressed=false] i{background:transparent;box-shadow:inset 0 0 0 2px var(--c)}
+  .row{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px;margin-top:10px}
+  .row>span{color:var(--muted)}
+  .stack{display:flex;gap:2px;height:28px;border-radius:var(--radius);overflow:hidden;background:var(--bg)}
+  .stack i{flex:var(--v) 1 0;min-width:0;background:var(--c);transition:flex-grow .16s}
+  .stack i:hover{filter:brightness(1.1)}
+  .tot{margin:16px 0 0;color:var(--muted);font-variant-numeric:tabular-nums}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure>
+  <h2>Pedidos por canal y región</h2>
+  <p class="sub">Activa o desactiva un canal para compararlo. Los colores cumplen contraste 3:1 en claro y oscuro.</p>
+  <ul class="legend" id="legend"></ul>
+  <div id="rows"></div>
+  <p class="tot" id="tot" role="status"></p>
+</figure>
+<script>
+  const SERIES = ['Web', 'App', 'Tienda', 'Partners', 'Teléfono', 'Marketplace'];
+  const DATA = { Norte: [320, 210, 140, 90, 60, 80], Sur: [180, 260, 200, 70, 40, 110], Centro: [410, 330, 90, 150, 30, 140], Oeste: [150, 120, 240, 60, 90, 50] };
+  const off = new Set();
+  const legend = document.getElementById('legend');
+  legend.innerHTML = SERIES.map((s, i) => `<li><button type="button" aria-pressed="true" data-i="${i}"><i style="--c:var(--c${i + 1})"></i>${s}</button></li>`).join('');
+  function draw() {
+    document.getElementById('rows').innerHTML = Object.entries(DATA).map(([region, vals]) => {
+      const shown = vals.map((v, i) => [i, v]).filter(([i]) => !off.has(i));
+      const label = `${region}: ${shown.map(([i, v]) => `${SERIES[i]} ${v}`).join(', ') || 'sin canales'}`;
+      return `<div class="row"><span>${region}</span><div class="stack" role="img" aria-label="${label}">${shown.map(([i, v]) => `<i style="--v:${v};--c:var(--c${i + 1})" title="${SERIES[i]}: ${v}"></i>`).join('')}</div></div>`;
+    }).join('');
+    const total = Object.values(DATA).flat().reduce((s, v, k) => s + (off.has(k % 6) ? 0 : v), 0);
+    document.getElementById('tot').textContent = `Total visible: ${total.toLocaleString('es')} pedidos`;
+  }
+  legend.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const i = +b.dataset.i, on = off.has(i);
+    on ? off.delete(i) : off.add(i);
+    b.setAttribute('aria-pressed', String(on));
+    draw();
+  });
+  draw();
+</script>
+</body>
+</html>

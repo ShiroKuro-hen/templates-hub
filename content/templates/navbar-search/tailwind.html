@@ -1,0 +1,34 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<nav id="nav" aria-label="Principal" class="group mx-auto flex h-14 max-w-[900px] items-center gap-4 rounded-lg border border-slate-200 bg-white pl-4 pr-3 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+  <a href="#inicio" class="flex items-center gap-2 whitespace-nowrap font-bold no-underline max-sm:group-[.searching]:hidden"><i class="size-[22px] rounded-md bg-blue-600 dark:bg-blue-400" aria-hidden="true"></i>Nimbo Docs</a>
+  <ul class="m-0 flex min-w-0 list-none gap-1 overflow-x-auto p-0 max-sm:group-[.searching]:hidden [&_a]:block [&_a]:whitespace-nowrap [&_a]:rounded-lg [&_a]:px-3 [&_a]:py-1.5 [&_a]:text-slate-500 [&_a]:no-underline hover:[&_a]:bg-blue-50 hover:[&_a]:text-slate-900 dark:[&_a]:text-slate-400 dark:hover:[&_a]:bg-slate-800 dark:hover:[&_a]:text-slate-100 [&_a[aria-current]]:bg-blue-50 [&_a[aria-current]]:font-semibold [&_a[aria-current]]:text-slate-900 dark:[&_a[aria-current]]:bg-slate-800 dark:[&_a[aria-current]]:text-slate-100">
+    <li><a href="#guias" aria-current="page">Guías</a></li><li><a href="#api">Referencia API</a></li><li><a href="#cambios">Cambios</a></li><li><a href="#estado">Estado</a></li>
+  </ul>
+  <form id="s" role="search" class="group/s relative ml-auto flex items-center rounded-lg border border-transparent transition-colors [&.open]:border-slate-200 [&.open]:bg-slate-50 dark:[&.open]:border-slate-700 dark:[&.open]:bg-slate-950">
+    <button id="tg" type="button" aria-label="Buscar" aria-expanded="false" aria-controls="q" aria-keyshortcuts="/" class="grid size-[34px] cursor-pointer place-items-center rounded-lg text-slate-500 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-400 dark:hover:text-slate-100">
+      <svg viewBox="0 0 24 24" class="size-[18px] fill-none stroke-current stroke-2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+    </button>
+    <input id="q" type="search" name="q" placeholder="Buscar en la documentación" aria-label="Buscar en la documentación" autocomplete="off" class="invisible w-0 bg-transparent p-0 transition-all duration-150 focus:outline-none group-[.open]/s:visible group-[.open]/s:w-[min(220px,calc(100vw-190px))] group-[.open]/s:pr-2 [&::-webkit-search-cancel-button]:hidden">
+    <span class="pointer-events-none absolute inset-x-2 -bottom-px h-0.5 origin-left scale-x-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 transition-transform duration-150 [.open:focus-within_&]:scale-x-100"></span>
+  </form>
+</nav>
+<p id="r" role="status" class="mx-auto mt-4 max-w-[900px] text-slate-500 dark:text-slate-400">Pulsa <kbd class="rounded border border-slate-200 px-1.5 text-xs dark:border-slate-700">/</kbd> para buscar. Esc cierra el buscador.</p>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  function set(open) {
+    $('s').classList.toggle('open', open); $('nav').classList.toggle('searching', open);
+    $('tg').setAttribute('aria-expanded', open);
+    if (open) $('q').focus(); else $('q').value = '';
+  }
+  $('tg').addEventListener('click', () => set($('tg').getAttribute('aria-expanded') !== 'true'));
+  $('q').addEventListener('keydown', (e) => { if (e.key === 'Escape') { set(false); $('tg').focus(); } });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); set(true); }
+  });
+  $('s').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = $('q').value.trim();
+    $('r').textContent = v ? `Mostrando resultados para «${v}».` : 'Escribe qué quieres buscar, por ejemplo «webhooks».';
+  });
+</script>

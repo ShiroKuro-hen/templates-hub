@@ -1,0 +1,56 @@
+<main class="mx-auto max-w-[460px] rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h1 class="text-lg font-semibold leading-snug">Áreas del proyecto</h1>
+  <p class="mb-4 text-slate-500 dark:text-slate-400">Elige las áreas que participan. Puedes escribir para buscar.</p>
+  <label id="lbl" for="q" class="mb-1.5 block font-semibold">Áreas</label>
+  <div id="box" class="flex cursor-text flex-wrap items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2 py-1.5 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+    <ul id="chips" aria-label="Áreas elegidas" class="contents"></ul>
+    <input id="q" role="combobox" aria-expanded="false" aria-controls="list" aria-autocomplete="list" aria-haspopup="listbox" autocomplete="off" placeholder="Buscar áreas" class="min-w-0 flex-[1_1_120px] bg-transparent p-1 outline-none">
+  </div>
+  <ul id="list" role="listbox" aria-labelledby="lbl" aria-multiselectable="true" class="mt-2 hidden max-h-56 list-none overflow-auto rounded-lg border border-slate-200 bg-white p-1 shadow-md dark:border-slate-700 dark:bg-slate-900"></ul>
+  <p id="count" role="status" class="mt-2 tabular-nums text-slate-500 dark:text-slate-400"></p>
+</main>
+<script>
+  const D = ['Frontend', 'Backend', 'Diseño', 'Calidad (QA)', 'Infraestructura', 'Datos', 'Seguridad', 'Móvil', 'Producto'];
+  const sel = new Set(['Frontend', 'Diseño']), $ = (id) => document.getElementById(id), q = $('q'), list = $('list');
+  const norm = (s) => s.normalize('NFD').replace(/\p{M}/g, '').toLowerCase();
+  const LI = 'flex cursor-pointer items-center gap-2.5 rounded-md px-2.5 py-2 ', BOX = 'grid size-4 flex-none place-items-center rounded border text-[11px] ';
+  let act = 0, shown = D;
+  const open = (v) => { list.classList.toggle('hidden', !v); q.setAttribute('aria-expanded', v); };
+  function toggle(o) { sel.has(o) ? sel.delete(o) : sel.add(o); render(); }
+  function render() {
+    shown = D.filter((o) => norm(o).includes(norm(q.value)));
+    act = Math.min(act, Math.max(shown.length - 1, 0));
+    list.replaceChildren(...(shown.length ? shown.map((o, i) => {
+      const li = document.createElement('li'), box = document.createElement('span'), on = sel.has(o);
+      li.setAttribute('role', 'option'); li.id = 'o' + D.indexOf(o); li.setAttribute('aria-selected', on);
+      li.className = LI + (i === act ? 'act bg-blue-50 dark:bg-slate-800 ' : '') + (on ? 'font-semibold' : '');
+      box.className = BOX + (on ? 'border-transparent bg-gradient-to-br from-cyan-400 to-blue-600 text-white' : 'border-slate-300 bg-white dark:border-slate-600 dark:bg-slate-900');
+      box.textContent = on ? '✓' : ''; box.setAttribute('aria-hidden', 'true'); li.append(box, o);
+      li.onmousedown = (e) => { e.preventDefault(); toggle(o); };
+      return li;
+    }) : [Object.assign(document.createElement('li'), { className: 'p-2.5 text-slate-500 dark:text-slate-400', textContent: 'No hay áreas con ese nombre. Prueba otra palabra.' })]));
+    q.setAttribute('aria-activedescendant', shown[act] ? 'o' + D.indexOf(shown[act]) : '');
+    list.querySelector('.act')?.scrollIntoView({ block: 'nearest' });
+    $('chips').replaceChildren(...[...sel].map((o) => {
+      const li = document.createElement('li'), b = document.createElement('button');
+      li.className = 'inline-flex items-center gap-0.5 rounded-full border border-slate-200 bg-blue-50 py-px pl-2.5 pr-0.5 dark:border-slate-700 dark:bg-slate-800'; li.append(o, b);
+      b.type = 'button'; b.textContent = '×'; b.setAttribute('aria-label', 'Quitar ' + o);
+      b.className = 'grid size-5 cursor-pointer place-items-center rounded-full leading-none text-slate-500 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-blue-500 dark:text-slate-400 dark:hover:text-slate-100';
+      b.onclick = () => { sel.delete(o); render(); q.focus(); };
+      return li;
+    }));
+    $('count').textContent = sel.size ? `${sel.size} ${sel.size > 1 ? 'áreas elegidas' : 'área elegida'}.` : 'Aún no elegiste ninguna área. Abre la lista y marca una.';
+  }
+  q.oninput = () => { act = 0; open(true); render(); };
+  q.onfocus = () => { open(true); render(); };
+  q.onblur = () => open(false);
+  $('box').onclick = () => q.focus();
+  q.onkeydown = (e) => {
+    const k = e.key, cerrada = list.classList.contains('hidden');
+    if (k === 'ArrowDown' || k === 'ArrowUp') { e.preventDefault(); open(true); act = (act + (k === 'ArrowDown' ? 1 : -1) + shown.length) % (shown.length || 1); render(); }
+    else if (k === 'Enter' && !cerrada && shown[act]) { e.preventDefault(); toggle(shown[act]); }
+    else if (k === 'Escape') { if (!cerrada) { e.preventDefault(); open(false); } else { q.value = ''; render(); } }
+    else if (k === 'Backspace' && !q.value && sel.size) { sel.delete([...sel].pop()); render(); }
+  };
+  render();
+</script>

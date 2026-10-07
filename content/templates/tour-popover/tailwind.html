@@ -1,0 +1,62 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div id="stage" class="relative mx-auto grid min-h-72 max-w-2xl grid-cols-1 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm sm:grid-cols-[140px_1fr] dark:border-slate-700 dark:bg-slate-900">
+    <nav aria-label="Navegación principal" class="border-b border-slate-200 px-3 py-2 sm:border-b-0 sm:border-r sm:py-4 dark:border-slate-700">
+      <ul class="m-0 flex list-none flex-wrap gap-1 p-0 sm:grid [&>li]:rounded-lg [&>li]:px-3 [&>li]:py-1.5 [&>li]:text-slate-500 dark:[&>li]:text-slate-400">
+        <li class="!bg-blue-50 font-semibold !text-blue-600 dark:!bg-slate-800 dark:!text-blue-400">Panel</li><li id="t-rep">Informes</li><li id="t-eq">Equipo</li>
+      </ul>
+    </nav>
+    <main class="p-4">
+      <div class="mb-4 flex flex-wrap gap-2">
+        <input id="t-bus" type="search" placeholder="Buscar proyectos y personas" aria-label="Buscar" class="box-border h-9 min-w-28 flex-1 rounded-lg border border-slate-200 bg-white px-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+        <button id="start" type="button" class="h-9 cursor-pointer rounded-lg border border-blue-600 bg-blue-600 px-4 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">Iniciar recorrido</button>
+      </div>
+      <div class="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-3">
+        <div id="t-kpi" class="rounded-lg border border-slate-200 px-4 py-3 dark:border-slate-700"><small class="block text-slate-500 dark:text-slate-400">Ingresos del mes</small><b class="text-[22px] font-semibold tabular-nums">$ 48.200</b></div>
+        <div class="rounded-lg border border-slate-200 px-4 py-3 dark:border-slate-700"><small class="block text-slate-500 dark:text-slate-400">Usuarios activos</small><b class="text-[22px] font-semibold tabular-nums">3.412</b></div>
+      </div>
+    </main>
+    <div id="spot" hidden class="pointer-events-none absolute rounded-lg shadow-[0_0_0_100vmax_rgb(15_23_42/0.5)] ring-1 ring-blue-500 transition-all duration-150"></div>
+  </div>
+  <div id="pop" popover role="dialog" aria-labelledby="pt" class="fixed inset-auto m-0 box-border w-[min(300px,calc(100vw-16px))] rounded-lg border border-slate-200 bg-white p-4 text-slate-900 shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+    <div id="seg" aria-hidden="true" class="mb-3 grid grid-cols-4 gap-1"><i class="h-1 rounded-full"></i><i class="h-1 rounded-full"></i><i class="h-1 rounded-full"></i><i class="h-1 rounded-full"></i></div>
+    <p class="m-0 tabular-nums text-slate-500 dark:text-slate-400">Paso <span id="n">1</span> de 4</p>
+    <div aria-live="polite"><h3 id="pt" class="mb-1 mt-0.5 text-[15px] font-semibold"></h3><p id="pd" class="m-0 mb-4 text-slate-500 dark:text-slate-400"></p></div>
+    <div class="flex items-center gap-2">
+      <button id="skip" type="button" class="mr-auto cursor-pointer rounded bg-transparent p-1 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100">Omitir</button>
+      <button id="prev" type="button" class="h-8 cursor-pointer rounded-lg border border-slate-200 px-3 hover:border-blue-500 disabled:cursor-default disabled:opacity-50 dark:border-slate-700">Anterior</button>
+      <button id="next" type="button" class="h-8 cursor-pointer rounded-lg border border-blue-600 bg-blue-600 px-3 font-semibold text-white hover:bg-blue-700">Siguiente</button>
+    </div>
+  </div>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const S = [['t-rep', 'Informes', 'Cruza ingresos y usuarios por periodo y exporta a PDF o CSV.', 1], ['t-eq', 'Equipo', 'Invita a tus compañeros y define quién puede editar.', 1],
+    ['t-bus', 'Búsqueda', 'Encuentra proyectos, informes y personas por nombre.', 0], ['t-kpi', 'Tus métricas', 'Cada tarjeta resume un indicador clave del mes.', 0]];
+  const pop = $('pop'), spot = $('spot'), segs = [...$('seg').children];
+  let i = 0;
+  function place() {
+    const t = $(S[i][0]).getBoundingClientRect(), s = $('stage').getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight, right = S[i][3] && innerWidth >= 640;
+    spot.style.cssText = `left:${t.left - s.left - 4}px;top:${t.top - s.top - 4}px;width:${t.width + 8}px;height:${t.height + 8}px`;
+    let x = right ? t.right + 16 : t.left + t.width / 2 - w / 2, y = right ? t.top + t.height / 2 - h / 2 : t.bottom + 16;
+    if (!right && y + h > innerHeight - 8) y = t.top - h - 16;
+    pop.style.left = Math.max(8, Math.min(x, innerWidth - w - 8)) + 'px';
+    pop.style.top = Math.max(8, Math.min(y, innerHeight - h - 8)) + 'px';
+  }
+  function go(n, focus = true) {
+    i = Math.max(0, Math.min(S.length - 1, n));
+    $('pt').textContent = S[i][1]; $('pd').textContent = S[i][2]; $('n').textContent = i + 1;
+    segs.forEach((e, k) => (e.className = 'h-1 rounded-full ' + (k <= i ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-slate-200 dark:bg-slate-700')));
+    $('prev').disabled = i === 0;
+    $('next').textContent = i === S.length - 1 ? 'Finalizar' : 'Siguiente';
+    if (!pop.matches(':popover-open')) pop.showPopover();
+    place(); spot.hidden = false;
+    if (focus) $('next').focus();
+  }
+  $('start').onclick = () => go(0);
+  $('next').onclick = () => (i === S.length - 1 ? pop.hidePopover() : go(i + 1));
+  $('prev').onclick = () => go(i - 1);
+  $('skip').onclick = () => pop.hidePopover();
+  pop.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(i + 1); if (e.key === 'ArrowLeft') go(i - 1); });
+  pop.addEventListener('toggle', (e) => { if (e.newState === 'closed') { spot.hidden = true; $('start').focus(); } });
+  go(0, false);
+</script>

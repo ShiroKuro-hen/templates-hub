@@ -1,0 +1,43 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<section id="card" aria-busy="true" aria-labelledby="t" class="mx-auto max-w-3xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+  <header class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 dark:border-slate-700">
+    <h2 id="t" class="text-base font-semibold">Pedidos recientes</h2>
+    <button id="re" type="button" aria-disabled="true" class="cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-2 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-disabled:cursor-progress aria-disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Recargar</button>
+  </header>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[520px] border-collapse text-left">
+      <caption class="sr-only">Últimos pedidos de clientes con estado y total.</caption>
+      <thead class="text-slate-500 dark:text-slate-400 [&_th]:border-b [&_th]:border-slate-200 [&_th]:px-5 [&_th]:py-3 [&_th]:font-semibold dark:[&_th]:border-slate-700">
+        <tr><th scope="col">Pedido</th><th scope="col">Cliente</th><th scope="col">Estado</th><th scope="col" class="text-right">Total</th></tr>
+      </thead>
+      <tbody id="b" class="[&_td]:border-b [&_td]:border-slate-200 [&_td]:px-5 [&_td]:py-3 dark:[&_td]:border-slate-700 [&>tr:last-child>td]:border-0"></tbody>
+    </table>
+  </div>
+  <p id="live" role="status" class="sr-only"></p>
+</section>
+</div>
+<script>
+  const rows = [
+    ['#4821', 'Textiles Andina', 'Pagado', 'bg-emerald-100 dark:bg-emerald-500/20', 'S/ 2,480.00'],
+    ['#4820', 'Café del Valle', 'Pendiente', 'bg-amber-100 dark:bg-amber-500/20', 'S/ 960.50'],
+    ['#4819', 'Logística Pacífico', 'Pagado', 'bg-emerald-100 dark:bg-emerald-500/20', 'S/ 5,310.00'],
+    ['#4818', 'Estudio Mirador', 'Fallido', 'bg-red-100 dark:bg-red-500/20', 'S/ 740.00'],
+    ['#4817', 'Agro Sierra', 'Pagado', 'bg-emerald-100 dark:bg-emerald-500/20', 'S/ 1,125.80'],
+  ];
+  const $ = (id) => document.getElementById(id);
+  const sk = (w) => `<span class="block h-3 animate-pulse rounded-full bg-gradient-to-r from-blue-100 via-cyan-100 to-blue-100 motion-reduce:animate-none dark:from-slate-800 dark:via-slate-700 dark:to-slate-800" style="width:${w}"></span>`;
+  function load() {
+    $('card').setAttribute('aria-busy', 'true'); $('re').setAttribute('aria-disabled', 'true');
+    $('live').textContent = 'Cargando pedidos…';
+    $('b').innerHTML = [38, 70, 52, 64, 46].map((w) =>
+      `<tr aria-hidden="true"><td>${sk(w + '%')}</td><td>${sk('70%')}</td><td>${sk('72px')}</td><td>${sk('60%')}</td></tr>`).join('');
+    setTimeout(() => {
+      $('b').innerHTML = rows.map((r) =>
+        `<tr><td>${r[0]}</td><td>${r[1]}</td><td><span class="rounded-full px-2.5 py-0.5 text-xs font-semibold ${r[3]}">${r[2]}</span></td><td class="text-right tabular-nums">${r[4]}</td></tr>`).join('');
+      $('card').setAttribute('aria-busy', 'false'); $('re').removeAttribute('aria-disabled');
+      $('live').textContent = 'Pedidos cargados.';
+    }, 1800);
+  }
+  $('re').addEventListener('click', () => { if ($('re').getAttribute('aria-disabled') !== 'true') load(); });
+  load();
+</script>

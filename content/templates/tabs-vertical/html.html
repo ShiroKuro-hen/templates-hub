@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .tabs{display:grid;grid-template-columns:200px 1fr;max-width:720px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  [role=tablist]{display:flex;flex-direction:column;gap:2px;padding:8px;border-right:1px solid var(--border)}
+  [role=tab]{position:relative;font:inherit;text-align:left;padding:10px 12px 10px 16px;border:0;border-radius:var(--radius);background:none;color:var(--muted);cursor:pointer;transition:background .14s,color .14s}
+  [role=tab]:hover{background:var(--accent-soft);color:var(--text)}
+  [role=tab][aria-selected=true]{background:var(--accent-soft);color:var(--text);font-weight:600}
+  [role=tab][aria-selected=true]::before{content:"";position:absolute;left:4px;top:10px;bottom:10px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  [role=tab]:focus-visible,[role=tabpanel]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  [role=tabpanel]{padding:20px 24px}
+  h2{margin:0 0 4px;font-size:16px}
+  p{margin:0 0 16px;color:var(--muted)}
+  dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 20px}
+  dt{color:var(--muted)} dd{margin:0}
+  @media (max-width:520px){.tabs{grid-template-columns:1fr}[role=tablist]{border-right:0;border-bottom:1px solid var(--border)}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="tabs">
+  <div role="tablist" aria-label="Ajustes de la cuenta" aria-orientation="vertical" id="tl">
+    <button role="tab" id="tab-0" aria-controls="p-0" aria-selected="true" type="button">Perfil</button>
+    <button role="tab" id="tab-1" aria-controls="p-1" aria-selected="false" tabindex="-1" type="button">Seguridad</button>
+    <button role="tab" id="tab-2" aria-controls="p-2" aria-selected="false" tabindex="-1" type="button">Notificaciones</button>
+    <button role="tab" id="tab-3" aria-controls="p-3" aria-selected="false" tabindex="-1" type="button">Facturación</button>
+  </div>
+  <div>
+    <section role="tabpanel" id="p-0" aria-labelledby="tab-0" tabindex="0">
+      <h2>Perfil</h2><p>Estos datos aparecen en tus comentarios y menciones.</p>
+      <dl><dt>Nombre</dt><dd>Valeria Quispe</dd><dt>Correo</dt><dd>valeria@nimbo.pe</dd><dt>Zona horaria</dt><dd>Lima (UTC-5)</dd></dl>
+    </section>
+    <section role="tabpanel" id="p-1" aria-labelledby="tab-1" tabindex="0" hidden>
+      <h2>Seguridad</h2><p>Protege tu cuenta con verificación en dos pasos.</p>
+      <dl><dt>Contraseña</dt><dd>Cambiada hace 42 días</dd><dt>Verificación</dt><dd>App de autenticación activa</dd><dt>Sesiones</dt><dd>3 dispositivos</dd></dl>
+    </section>
+    <section role="tabpanel" id="p-2" aria-labelledby="tab-2" tabindex="0" hidden>
+      <h2>Notificaciones</h2><p>Elige qué avisos recibes y por qué canal.</p>
+      <dl><dt>Menciones</dt><dd>Correo y aplicación</dd><dt>Resumen semanal</dt><dd>Lunes a las 08:00</dd><dt>Alertas de pago</dt><dd>Solo aplicación</dd></dl>
+    </section>
+    <section role="tabpanel" id="p-3" aria-labelledby="tab-3" tabindex="0" hidden>
+      <h2>Facturación</h2><p>Consulta tu plan y el próximo cobro.</p>
+      <dl><dt>Plan</dt><dd>Business, 12 usuarios</dd><dt>Próximo cobro</dt><dd>1 de noviembre, S/ 1,940.00</dd><dt>Método de pago</dt><dd>Visa terminada en 4242</dd></dl>
+    </section>
+  </div>
+</div>
+<script>
+  const tabs = [...document.querySelectorAll('[role=tab]')];
+  function select(i, focus) {
+    tabs.forEach((t, j) => {
+      t.setAttribute('aria-selected', j === i); t.tabIndex = j === i ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = j !== i;
+    });
+    if (focus) tabs[i].focus();
+  }
+  tabs.forEach((t, i) => t.addEventListener('click', () => select(i)));
+  document.getElementById('tl').addEventListener('keydown', (e) => {
+    const i = tabs.indexOf(document.activeElement); if (i < 0) return;
+    const n = { ArrowDown: (i + 1) % tabs.length, ArrowUp: (i - 1 + tabs.length) % tabs.length, Home: 0, End: tabs.length - 1 }[e.key];
+    if (n === undefined) return;
+    e.preventDefault(); select(n, true);
+  });
+</script>
+</body>
+</html>

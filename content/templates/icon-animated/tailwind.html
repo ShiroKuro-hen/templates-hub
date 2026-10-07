@@ -1,0 +1,49 @@
+<style>
+  @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+  @keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+  .d{stroke-dasharray:1;stroke-dashoffset:0}
+  .run .d{animation:draw .4s ease-out both;animation-delay:var(--dl,0s)}
+  .err.run svg{animation:shake .4s .35s}
+  .cp .b{opacity:0;transform:scale(.6)}
+  .cp.run .a{opacity:0;transform:scale(.6)}
+  .cp.run .b{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <article class="flex flex-col items-start rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="mb-3 grid size-16 place-items-center rounded-lg border border-slate-200 bg-slate-50 text-blue-600 dark:border-slate-700 dark:bg-slate-950 dark:text-blue-400">
+      <svg class="size-9 animate-spin fill-none stroke-current stroke-2 [animation-duration:.9s]" viewBox="0 0 24 24" role="img" aria-label="Cargando" stroke-linecap="round"><circle cx="12" cy="12" r="9" opacity=".2"/><circle cx="12" cy="12" r="9" pathLength="1" stroke-dasharray=".28 .72"/></svg>
+    </div>
+    <h3 class="font-semibold">Cargando</h3><p class="mb-3 mt-0.5 text-slate-500 dark:text-slate-400">Gira mientras la tarea sigue en curso.</p>
+  </article>
+  <article class="flex flex-col items-start rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div id="ok" class="run mb-3 grid size-16 place-items-center rounded-lg border border-slate-200 bg-slate-50 text-emerald-600 dark:border-slate-700 dark:bg-slate-950 dark:text-emerald-400">
+      <svg class="size-9 fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="d" pathLength="1" cx="12" cy="12" r="10"/><path class="d" pathLength="1" d="m7.5 12.5 3 3 6-6.5" style="--dl:.3s"/></svg>
+    </div>
+    <h3 class="font-semibold">Éxito</h3><p class="mb-3 mt-0.5 text-slate-500 dark:text-slate-400">El trazo se dibuja al confirmar.</p>
+    <button type="button" data-replay="ok" class="btn mt-auto cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Repetir animación</button>
+  </article>
+  <article class="flex flex-col items-start rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div id="err" class="err run mb-3 grid size-16 place-items-center rounded-lg border border-slate-200 bg-slate-50 text-rose-600 dark:border-slate-700 dark:bg-slate-950 dark:text-rose-400">
+      <svg class="size-9 fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="d" pathLength="1" cx="12" cy="12" r="10"/><path class="d" pathLength="1" d="m9 9 6 6" style="--dl:.3s"/><path class="d" pathLength="1" d="m15 9-6 6" style="--dl:.4s"/></svg>
+    </div>
+    <h3 class="font-semibold">Error</h3><p class="mb-3 mt-0.5 text-slate-500 dark:text-slate-400">Se dibuja y vibra una vez.</p>
+    <button type="button" data-replay="err" class="btn mt-auto cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Repetir animación</button>
+  </article>
+  <article class="flex flex-col items-start rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div id="cp" class="cp mb-3 grid size-16 place-items-center rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-950">
+      <svg class="size-9 overflow-visible fill-none stroke-current stroke-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="a origin-center transition duration-150"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></g><path class="b origin-center stroke-emerald-600 transition duration-150 dark:stroke-emerald-400" d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+    </div>
+    <h3 class="font-semibold">Copiar</h3><p class="mb-3 mt-0.5 text-slate-500 dark:text-slate-400">Cambia a una marca al copiar.</p>
+    <button type="button" id="copy" aria-live="polite" class="btn mt-auto cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Copiar enlace</button>
+  </article>
+</div>
+<script>
+  const replay = (el) => { el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); };
+  document.querySelectorAll('[data-replay]').forEach((b) => b.addEventListener('click', () => replay(document.getElementById(b.dataset.replay))));
+  copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText('https://app.ejemplo.com/informes/q3'); copy.textContent = 'Copiado'; cp.classList.add('run'); }
+    catch { copy.textContent = 'No se pudo copiar'; }
+    setTimeout(() => { copy.textContent = 'Copiar enlace'; cp.classList.remove('run'); }, 1600);
+  });
+</script>

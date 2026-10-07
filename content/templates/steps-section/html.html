@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .sec{max-width:1000px;margin:0 auto}
+  header{text-align:center;margin-bottom:32px}
+  h2{margin:0 0 8px;font-size:clamp(24px,4vw,32px);line-height:1.2;letter-spacing:-.02em}
+  header p{margin:0 auto;max-width:52ch;color:var(--muted)}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:0;padding:0;list-style:none}
+  .steps li{position:relative;display:grid;gap:16px;align-content:start}
+  .n{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+  .steps li:not(:last-child)::before{content:"";position:absolute;top:16px;left:40px;right:-16px;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  .card{display:grid;gap:8px;align-content:start;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h3{margin:0;font-size:16px}
+  .card p{margin:0;color:var(--muted)}
+  .mock{display:grid;gap:6px;margin-top:8px;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);font-size:13px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .row span{color:var(--muted)}
+  .row .tag{padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-size:12px;font-weight:600}
+  .bar{height:6px;border-radius:999px;background:var(--border);overflow:hidden}
+  .bar i{display:block;height:100%;width:62%;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
+  .btn{padding:9px 16px;font-weight:600;color:var(--text);text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:filter .14s,border-color .14s}
+  .btn:hover{border-color:var(--accent);filter:brightness(.97)}
+  .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (max-width:760px){
+    .steps{grid-template-columns:1fr;gap:16px}
+    .steps li{grid-template-columns:32px 1fr;gap:16px}
+    .steps li:not(:last-child)::before{top:40px;bottom:-16px;left:15px;right:auto;width:1px;height:auto;background:linear-gradient(#22d3ee,#2f5bff)}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="sec" aria-labelledby="t">
+  <header>
+    <h2 id="t">Automatiza tu trabajo en tres pasos</h2>
+    <p>Conecta tus herramientas, define reglas y mide el resultado. La mayoría de equipos termina en menos de 15 minutos.</p>
+  </header>
+  <ol class="steps">
+    <li>
+      <span class="n" aria-hidden="true">1</span>
+      <div class="card">
+        <h3>Conecta tus herramientas</h3>
+        <p>Autoriza Slack, GitHub o Drive con un clic. Nimbo solo lee lo que tú permites.</p>
+        <div class="mock"><div class="row">Slack<span class="tag">Conectado</span></div><div class="row">GitHub<span class="tag">Conectado</span></div><div class="row">Google Drive<span>Pendiente</span></div></div>
+      </div>
+    </li>
+    <li>
+      <span class="n" aria-hidden="true">2</span>
+      <div class="card">
+        <h3>Define tus reglas</h3>
+        <p>Elige una condición y una acción. Sin código y con vista previa antes de activar.</p>
+        <div class="mock"><div class="row"><span>Si</span>Prioridad es Urgente</div><div class="row"><span>Entonces</span>Asignar a Soporte</div><div class="row"><span>Y también</span>Avisar en #incidentes</div></div>
+      </div>
+    </li>
+    <li>
+      <span class="n" aria-hidden="true">3</span>
+      <div class="card">
+        <h3>Mide y mejora</h3>
+        <p>Consulta cuánto tiempo ahorras y ajusta las reglas desde un solo panel.</p>
+        <div class="mock"><div class="row">Horas ahorradas<b>128 h</b></div><div class="bar" role="img" aria-label="62 % del objetivo mensual"><i></i></div><div class="row"><span>62 % del objetivo mensual</span></div></div>
+      </div>
+    </li>
+  </ol>
+  <div class="actions">
+    <a class="btn pri" href="#">Crear cuenta gratis</a>
+    <a class="btn" href="#">Ver demo de 3 minutos</a>
+  </div>
+</section>
+</body>
+</html>

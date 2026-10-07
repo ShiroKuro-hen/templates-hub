@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;max-width:820px;margin:0 auto}
+  .card{overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,box-shadow .14s}
+  .card:hover,.card:focus-within{border-color:var(--accent);box-shadow:var(--shadow)}
+  .thumb{position:relative;height:128px;background:var(--bg);border-bottom:1px solid var(--border)}
+  .sk{display:grid;align-content:center;gap:8px;height:100%;padding:0 20px;box-sizing:border-box}
+  .sk i{display:block;height:6px;width:calc(var(--w) * 1%);border-radius:999px;background:var(--border)}
+  .sk i:first-child{height:10px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .acts{position:absolute;right:10px;bottom:10px;left:10px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;opacity:0;transform:translateY(4px);transition:opacity .14s,transform .14s}
+  .card:hover .acts,.card:focus-within .acts{opacity:1;transform:none}
+  @media (hover:none){.acts{opacity:1;transform:none}}
+  .btn{font:inherit;font-size:13px;font-weight:600;padding:3px 10px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:background .14s}
+  .btn:hover{background:var(--accent-soft)}
+  .btn.pri{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
+  .btn.pri:hover{filter:brightness(1.08)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .body{padding:12px 16px 14px}
+  h2{margin:0;font-size:15px;line-height:1.35}
+  .meta{margin:2px 0 0;color:var(--muted);font-size:13px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="grid">
+  <article class="card">
+    <div class="thumb">
+      <div class="sk" aria-hidden="true"><i style="--w:55"></i><i style="--w:90"></i><i style="--w:78"></i><i style="--w:84"></i><i style="--w:40"></i></div>
+      <div class="acts" role="group" aria-label="Acciones de Informe trimestral Q3"><button type="button" class="btn pri">Abrir</button><button type="button" class="btn">Compartir</button><button type="button" class="btn">Archivar</button></div>
+    </div>
+    <div class="body"><h2>Informe trimestral Q3</h2><p class="meta">Editado hace 2 horas por Marta Ruiz</p></div>
+  </article>
+  <article class="card">
+    <div class="thumb">
+      <div class="sk" aria-hidden="true"><i style="--w:70"></i><i style="--w:86"></i><i style="--w:62"></i><i style="--w:90"></i><i style="--w:52"></i></div>
+      <div class="acts" role="group" aria-label="Acciones de Plan de lanzamiento"><button type="button" class="btn pri">Abrir</button><button type="button" class="btn">Compartir</button><button type="button" class="btn">Archivar</button></div>
+    </div>
+    <div class="body"><h2>Plan de lanzamiento</h2><p class="meta">Editado ayer por Luis Gómez</p></div>
+  </article>
+  <article class="card">
+    <div class="thumb">
+      <div class="sk" aria-hidden="true"><i style="--w:45"></i><i style="--w:80"></i><i style="--w:92"></i><i style="--w:66"></i><i style="--w:74"></i></div>
+      <div class="acts" role="group" aria-label="Acciones de Presupuesto 2026"><button type="button" class="btn pri">Abrir</button><button type="button" class="btn">Compartir</button><button type="button" class="btn">Archivar</button></div>
+    </div>
+    <div class="body"><h2>Presupuesto 2026</h2><p class="meta">Editado hace 3 días por Carlos Díaz</p></div>
+  </article>
+</div>
+</body>
+</html>

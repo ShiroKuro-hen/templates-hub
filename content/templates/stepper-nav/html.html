@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:760px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  ol{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  li::before{content:"";display:block;height:4px;margin-bottom:10px;border-radius:999px;background:var(--border)}
+  li[data-s=done]::before{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  li[data-s=current]::before{background:var(--accent)}
+  li[data-s=error]::before{background:var(--err)}
+  .step{display:flex;gap:10px;align-items:flex-start;padding:6px;border-radius:var(--radius);color:var(--muted);text-decoration:none;transition:background .14s}
+  a.step{color:var(--text)}
+  a.step:hover{background:var(--accent-soft)}
+  a.step:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .dot{flex:none;display:grid;place-items:center;width:24px;height:24px;border:1px solid var(--border);border-radius:50%;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+  [data-s=done] .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  [data-s=current] .dot{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
+  [data-s=error] .dot{background:var(--err-soft);border-color:var(--err);color:var(--text)}
+  .dot svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .lbl{display:block;font-weight:600}
+  .sub{display:block;color:var(--muted);font-size:13px}
+  [data-s=error] .sub{color:var(--err)}
+  .panel{padding:16px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  h2{margin:0 0 4px;font-size:16px}
+  .panel p{margin:0 0 16px;color:var(--muted)}
+  .row{display:flex;gap:8px}
+  .btn{font:inherit;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s}
+  .btn:hover:not(:disabled){background:var(--accent-soft)}
+  .btn.p{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.p:hover:not(:disabled){background:var(--accent);filter:brightness(1.08)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (max-width:560px){ol{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <h1 id="t" hidden>Publicar un sitio</h1>
+  <nav aria-label="Pasos para publicar tu sitio"><ol id="ol"></ol></nav>
+  <div class="panel" aria-live="polite">
+    <h2 id="h"></h2><p id="d"></p>
+    <div class="row"><button class="btn" id="back" type="button">Atrás</button><button class="btn p" id="next" type="button">Continuar</button></div>
+  </div>
+</section>
+<script>
+  const steps = [
+    ['Dominio', 'Conecta tu dominio', 'Apunta tu dominio al servidor con un registro CNAME.'],
+    ['Contenido', 'Revisa el contenido', 'Agrega la imagen de portada para poder continuar.'],
+    ['Pagos', 'Configura los pagos', 'Conecta una cuenta bancaria para cobrar a tus clientes.'],
+    ['Publicación', 'Publica tu sitio', 'Revisa el resumen y publica cuando estés listo.'],
+  ];
+  const ICON = { done: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>', error: '!' };
+  const SUB = { done: 'Completo', error: 'Requiere atención', current: 'En curso', todo: 'Pendiente' };
+  let cur = 2, max = 2, err = { 1: 'Falta la imagen de portada' };
+  const $ = (id) => document.getElementById(id);
+  function render(focus) {
+    $('ol').innerHTML = steps.map(([name], i) => {
+      const s = i === cur ? 'current' : i > max ? 'todo' : err[i] ? 'error' : 'done';
+      const inner = `<span class="dot">${ICON[s] || i + 1}</span><span><span class="lbl">${name}</span><span class="sub">${err[i] && s === 'error' ? err[i] : SUB[s]}</span></span>`;
+      return `<li data-s="${s}">` + (s === 'todo' ? `<span class="step">${inner}</span>` :
+        `<a class="step" href="#paso-${i + 1}" data-i="${i}"${s === 'current' ? ' aria-current="step"' : ''}>${inner}</a>`) + '</li>';
+    }).join('');
+    const s = steps[cur] || ['', 'Sitio publicado', 'Tu sitio ya está disponible en tu dominio.'];
+    $('h').textContent = s[1]; $('d').textContent = s[2];
+    $('back').disabled = cur === 0; $('next').disabled = cur > 3;
+    $('next').textContent = cur === 3 ? 'Publicar sitio' : 'Continuar';
+    if (focus) $('ol').querySelector('[aria-current]')?.focus();
+  }
+  $('ol').addEventListener('click', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    e.preventDefault(); cur = +a.dataset.i; render(true);
+  });
+  $('back').addEventListener('click', () => { cur--; render(); });
+  $('next').addEventListener('click', () => { delete err[cur]; cur++; max = Math.max(max, cur); render(); });
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-4v-6H8v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H8l-5 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h9M17 6h3M4 12h3M11 12h9M4 18h11M19 18h1"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+</svg>
+<div class="mx-auto grid min-h-[340px] max-w-[720px] grid-cols-[56px_1fr] rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+  <nav id="rail" aria-label="Principal" class="group relative z-10 flex flex-col items-center gap-1 border-r border-slate-200 py-3 dark:border-slate-700 [&_ul]:m-0 [&_ul]:flex [&_ul]:list-none [&_ul]:flex-col [&_ul]:gap-1 [&_ul]:p-0 [&_ul:last-child]:mt-auto
+    [&_a]:relative [&_a]:grid [&_a]:size-10 [&_a]:place-items-center [&_a]:rounded-lg [&_a]:text-slate-500 hover:[&_a]:bg-blue-50 hover:[&_a]:text-slate-900 dark:[&_a]:text-slate-400 dark:hover:[&_a]:bg-slate-800 dark:hover:[&_a]:text-slate-100
+    [&_a[aria-current]]:bg-blue-50 [&_a[aria-current]]:text-slate-900 dark:[&_a[aria-current]]:bg-slate-800 dark:[&_a[aria-current]]:text-slate-100
+    [&_a[aria-current]]:before:absolute [&_a[aria-current]]:before:-left-2 [&_a[aria-current]]:before:inset-y-2.5 [&_a[aria-current]]:before:w-[3px] [&_a[aria-current]]:before:rounded-full [&_a[aria-current]]:before:bg-gradient-to-br [&_a[aria-current]]:before:from-cyan-400 [&_a[aria-current]]:before:to-blue-600
+    [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-blue-500
+    [&_a]:after:invisible [&_a]:after:absolute [&_a]:after:left-[calc(100%+12px)] [&_a]:after:top-1/2 [&_a]:after:-translate-y-1/2 [&_a]:after:whitespace-nowrap [&_a]:after:rounded-md [&_a]:after:bg-slate-900 [&_a]:after:px-2.5 [&_a]:after:py-1 [&_a]:after:text-xs [&_a]:after:text-white [&_a]:after:opacity-0 [&_a]:after:shadow-md [&_a]:after:transition-opacity [&_a]:after:content-[attr(data-tip)] dark:[&_a]:after:bg-slate-100 dark:[&_a]:after:text-slate-900
+    hover:[&_a]:after:visible hover:[&_a]:after:opacity-100 [&_a:focus-visible]:after:visible [&_a:focus-visible]:after:opacity-100 group-data-[esc]:[&_a]:after:hidden">
+    <span class="mb-3 size-7 rounded-lg bg-blue-600 dark:bg-blue-400" aria-hidden="true"></span>
+    <ul>
+      <li><a href="#inicio" data-tip="Inicio" aria-label="Inicio" aria-current="page" data-d="Resumen de actividad de tu equipo esta semana."><svg class="size-5 fill-none stroke-current stroke-[1.75]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-home"/></svg></a></li>
+      <li><a href="#proyectos" data-tip="Proyectos" aria-label="Proyectos" data-d="Tienes 8 proyectos activos y 2 por revisar."><svg class="size-5 fill-none stroke-current stroke-[1.75]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-folder"/></svg></a></li>
+      <li><a href="#mensajes" data-tip="Mensajes" aria-label="Mensajes, 3 sin leer" data-d="Tienes 3 mensajes sin leer."><svg class="size-5 fill-none stroke-current stroke-[1.75]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-chat"/></svg><span class="absolute right-0.5 top-0.5 min-w-4 rounded-full bg-blue-600 px-1 text-center text-[11px] font-semibold leading-4 tabular-nums text-white dark:bg-blue-400 dark:text-slate-950" aria-hidden="true">3</span></a></li>
+      <li><a href="#analitica" data-tip="Analítica" aria-label="Analítica" data-d="Las visitas subieron un 12 % frente a la semana pasada."><svg class="size-5 fill-none stroke-current stroke-[1.75]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-chart"/></svg></a></li>
+      <li><a href="#equipo" data-tip="Equipo" aria-label="Equipo" data-d="12 personas en 3 equipos. Invita a alguien nuevo."><svg class="size-5 fill-none stroke-current stroke-[1.75]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-users"/></svg></a></li>
+    </ul>
+    <ul>
+      <li><a href="#ajustes" data-tip="Ajustes" aria-label="Ajustes" data-d="Gestiona tu cuenta, el plan y las integraciones."><svg class="size-5 fill-none stroke-current stroke-[1.75]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-sliders"/></svg></a></li>
+    </ul>
+  </nav>
+  <main class="px-6 py-5"><h1 id="h" class="mb-1 text-lg font-semibold">Inicio</h1><p id="d" aria-live="polite" class="text-slate-500 dark:text-slate-400">Resumen de actividad de tu equipo esta semana.</p></main>
+</div>
+</div>
+<script>
+  const rail = document.getElementById('rail'), links = [...rail.querySelectorAll('a')];
+  rail.addEventListener('click', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    e.preventDefault();
+    links.forEach((l) => l.removeAttribute('aria-current')); a.setAttribute('aria-current', 'page');
+    document.getElementById('h').textContent = a.dataset.tip; document.getElementById('d').textContent = a.dataset.d;
+  });
+  rail.addEventListener('keydown', (e) => { if (e.key === 'Escape') rail.dataset.esc = ''; });
+  ['mouseover', 'focusin'].forEach((ev) => rail.addEventListener(ev, () => rail.removeAttribute('data-esc')));
+</script>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:620px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:14px 20px;border-bottom:1px solid var(--border)}
+  fieldset{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;min-width:240px;margin:0;padding:0;border:0}
+  legend{padding:0;margin-bottom:6px;font-weight:600}
+  fieldset label{display:block;padding:6px 4px;border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-size:12px;cursor:pointer;transition:border-color .14s,background .14s}
+  fieldset label:hover{border-color:var(--accent)}
+  fieldset label:has(:checked){border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+  fieldset label:has(:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  fieldset input{position:absolute;opacity:0;pointer-events:none}
+  .go{padding:8px 16px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;cursor:pointer}
+  .go:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .stage{position:relative;height:300px;margin:16px;overflow:hidden;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  .stage p{margin:0;padding:12px;color:var(--muted)}
+  .toasts{position:absolute;display:flex;flex-direction:column;gap:8px;width:min(250px,calc(100% - 24px));margin:12px;pointer-events:none}
+  [data-pos^=top]{top:0}
+  [data-pos^=bottom]{bottom:0;flex-direction:column-reverse}
+  [data-pos$=left]{left:0}
+  [data-pos$=right]{right:0}
+  [data-pos$=center]{left:0;right:0;margin-inline:auto}
+  .toast{--k:var(--info);--ks:var(--info-soft);position:relative;display:flex;gap:10px;padding:10px 12px;overflow:hidden;pointer-events:auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);animation:in .14s ease-out}
+  .toast.ok{--k:var(--ok);--ks:var(--ok-soft)}
+  .toast.warn{--k:var(--warn);--ks:var(--warn-soft)}
+  .toast.err{--k:var(--err);--ks:var(--err-soft)}
+  .ic{display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;background:var(--ks);color:var(--k);font-size:12px;font-weight:700}
+  .toast div{flex:1;min-width:0}
+  .toast b{display:block}
+  .toast .m{color:var(--muted);font-size:13px}
+  .x{align-self:flex-start;width:24px;height:24px;padding:0;border:0;border-radius:4px;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer}
+  .x:hover{color:var(--text)}
+  .x:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .toast::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:linear-gradient(135deg,#22d3ee,#2f5bff);transform-origin:left;animation:t 5s linear forwards}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}}
+  @keyframes t{to{transform:scaleX(0)}}
+  @media (prefers-reduced-motion:reduce){.toast,.toast::after{animation:none}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <div class="bar">
+    <fieldset>
+      <legend id="t">Posición de los avisos</legend>
+      <label><input type="radio" name="pos" value="top-left">Arriba izquierda</label>
+      <label><input type="radio" name="pos" value="top-center">Arriba centro</label>
+      <label><input type="radio" name="pos" value="top-right">Arriba derecha</label>
+      <label><input type="radio" name="pos" value="bottom-left">Abajo izquierda</label>
+      <label><input type="radio" name="pos" value="bottom-center">Abajo centro</label>
+      <label><input type="radio" name="pos" value="bottom-right" checked>Abajo derecha</label>
+    </fieldset>
+    <button class="go" id="go" type="button">Mostrar aviso</button>
+  </div>
+  <div class="stage">
+    <p>Vista previa de la pantalla</p>
+    <div class="toasts" id="box" data-pos="bottom-right" role="region" aria-label="Notificaciones" aria-live="polite"></div>
+  </div>
+</section>
+<script>
+  const box = document.getElementById('box');
+  const MSG = [
+    ['ok', '✓', 'Cambios guardados', 'Se actualizó el proyecto Atlas.'],
+    ['info', 'i', 'Nueva versión disponible', 'Recarga la página para ver las mejoras.'],
+    ['warn', '!', 'Almacenamiento al 90 %', 'Libera espacio o amplía tu plan.'],
+    ['err', '×', 'No se pudo sincronizar', 'Revisa tu conexión y vuelve a intentarlo.'],
+  ];
+  let n = 0;
+  function show() {
+    const [k, ic, title, text] = MSG[n++ % MSG.length];
+    const t = document.createElement('div');
+    t.className = 'toast ' + k;
+    t.innerHTML = `<span class="ic" aria-hidden="true">${ic}</span><div><b>${title}</b><span class="m">${text}</span></div><button class="x" type="button" aria-label="Cerrar aviso">×</button>`;
+    t.querySelector('.x').onclick = () => t.remove();
+    box.append(t);
+    setTimeout(() => t.remove(), 5000);
+  }
+  document.getElementById('go').onclick = show;
+  document.querySelectorAll('[name=pos]').forEach((r) => r.addEventListener('change', () => { box.dataset.pos = r.value; show(); }));
+  show();
+</script>
+</body>
+</html>

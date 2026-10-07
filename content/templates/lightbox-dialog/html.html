@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:420px;margin:0 auto;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .card h1{margin:0 0 2px;font-size:16px;font-weight:600}
+  .card p{margin:0 0 12px;color:var(--muted)}
+  .thumb{position:relative;display:block;width:100%;padding:8px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);cursor:zoom-in;transition:border-color .14s}
+  .thumb:hover{border-color:var(--accent)}
+  .thumb svg{display:block;width:100%;height:auto}
+  .thumb span{position:absolute;right:8px;bottom:8px;padding:2px 10px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-size:12px;font-weight:600}
+  .n{fill:var(--surface);stroke:var(--border)}
+  .g{fill:var(--accent-soft);stroke:url(#gr);stroke-width:1.5}
+  .t{fill:var(--text);font:600 11px system-ui,sans-serif}
+  .s{fill:var(--muted);font:10px system-ui,sans-serif}
+  .l{fill:none;stroke:var(--muted);stroke-width:1;marker-end:url(#ah)}
+  dialog{box-sizing:border-box;width:min(92vw,820px);padding:0;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);box-shadow:var(--shadow);opacity:0;transform:scale(.98);transition:opacity .14s,transform .14s,overlay .14s allow-discrete,display .14s allow-discrete}
+  dialog[open]{opacity:1;transform:none}
+  @starting-style{dialog[open]{opacity:0;transform:scale(.98)}}
+  dialog::backdrop{background:rgba(14,23,38,.55)}
+  .hd{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+  .hd h2{margin:0;font-size:16px;font-weight:600}
+  .view{height:min(56vh,420px);overflow:auto;margin:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  .view svg{display:block;width:100%;height:auto}
+  .view:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:0 16px 16px}
+  .bar input{flex:1;min-width:120px;accent-color:var(--accent)}
+  .bar output{min-width:3.5em;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+  .btn{min-width:36px;height:36px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:border-color .14s}
+  .btn:hover{border-color:var(--accent)}
+  .btn:focus-visible,.bar input:focus-visible,.thumb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><defs>
+  <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient>
+  <marker id="ah" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6z" style="fill:var(--muted)"/></marker>
+  <symbol id="diag" viewBox="0 0 400 240">
+    <rect class="n" x="10" y="100" width="80" height="40" rx="8"/><text class="t" x="50" y="118" text-anchor="middle">Cliente</text><text class="s" x="50" y="131" text-anchor="middle">Web y móvil</text>
+    <rect class="g" x="140" y="100" width="100" height="40" rx="8"/><text class="t" x="190" y="118" text-anchor="middle">API Gateway</text><text class="s" x="190" y="131" text-anchor="middle">Autenticación</text>
+    <rect class="n" x="300" y="20" width="90" height="40" rx="8"/><text class="t" x="345" y="38" text-anchor="middle">Usuarios</text><text class="s" x="345" y="51" text-anchor="middle">12 ms</text>
+    <rect class="n" x="300" y="100" width="90" height="40" rx="8"/><text class="t" x="345" y="118" text-anchor="middle">Pagos</text><text class="s" x="345" y="131" text-anchor="middle">48 ms</text>
+    <rect class="n" x="300" y="180" width="90" height="40" rx="8"/><text class="t" x="345" y="198" text-anchor="middle">Informes</text><text class="s" x="345" y="211" text-anchor="middle">120 ms</text>
+    <path class="l" d="M90 120H140"/><path class="l" d="M240 120C270 120 270 40 300 40"/><path class="l" d="M240 120H300"/><path class="l" d="M240 120C270 120 270 200 300 200"/>
+    <text class="s" x="115" y="113" text-anchor="middle">HTTPS</text><text class="s" x="270" y="114" text-anchor="middle">gRPC</text>
+  </symbol>
+</defs></svg>
+
+<div class="card">
+  <h1>Arquitectura del servicio</h1>
+  <p>Cómo viaja una solicitud desde el cliente hasta cada servicio.</p>
+  <button class="thumb" id="open" type="button" aria-label="Ampliar diagrama de arquitectura"><svg viewBox="0 0 400 240" role="img" aria-label="Cliente, API Gateway y tres servicios: Usuarios, Pagos e Informes"><use href="#diag" width="400" height="240"/></svg><span>Ampliar</span></button>
+</div>
+
+<dialog id="dlg" aria-labelledby="t">
+  <div class="hd"><h2 id="t">Arquitectura del servicio</h2><button class="btn" id="close" type="button" aria-label="Cerrar">×</button></div>
+  <div class="view" id="view" tabindex="0" role="region" aria-label="Diagrama ampliado. Usa las flechas para desplazarte."><svg id="img" viewBox="0 0 400 240" role="img" aria-label="Cliente, API Gateway y tres servicios: Usuarios, Pagos e Informes"><use href="#diag" width="400" height="240"/></svg></div>
+  <div class="bar">
+    <button class="btn" id="out" type="button" aria-label="Alejar">−</button>
+    <input id="rng" type="range" min="100" max="400" step="25" value="100" aria-label="Nivel de zoom">
+    <button class="btn" id="in" type="button" aria-label="Acercar">+</button>
+    <output id="val" aria-live="polite">100 %</output>
+    <button class="btn" id="reset" type="button">Restablecer</button>
+  </div>
+</dialog>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const d = $('dlg'), view = $('view'), img = $('img'), rng = $('rng');
+  let z = 100;
+  function setZ(v) {
+    const rx = (view.scrollLeft + view.clientWidth / 2) / view.scrollWidth, ry = (view.scrollTop + view.clientHeight / 2) / view.scrollHeight;
+    z = Math.min(400, Math.max(100, v));
+    rng.value = z; img.style.width = z + '%'; $('val').textContent = z + ' %';
+    view.scrollLeft = rx * view.scrollWidth - view.clientWidth / 2;
+    view.scrollTop = ry * view.scrollHeight - view.clientHeight / 2;
+  }
+  $('open').onclick = () => { d.showModal(); setZ(100); };
+  $('close').onclick = () => d.close();
+  d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+  $('in').onclick = () => setZ(z + 25);
+  $('out').onclick = () => setZ(z - 25);
+  $('reset').onclick = () => setZ(100);
+  rng.oninput = () => setZ(+rng.value);
+  d.addEventListener('keydown', (e) => {
+    if (e.key === '+' || e.key === '=') setZ(z + 25);
+    else if (e.key === '-') setZ(z - 25);
+    else if (e.key === '0') setZ(100);
+  });
+  let p = null;
+  view.onpointerdown = (e) => { if (e.pointerType === 'mouse') { p = [e.clientX + view.scrollLeft, e.clientY + view.scrollTop]; view.setPointerCapture(e.pointerId); } };
+  view.onpointermove = (e) => { if (p) { view.scrollLeft = p[0] - e.clientX; view.scrollTop = p[1] - e.clientY; } };
+  view.onpointerup = view.onpointercancel = () => (p = null);
+</script>
+</body>
+</html>

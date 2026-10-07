@@ -1,0 +1,35 @@
+<section class="mx-auto max-w-sm rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" aria-labelledby="t">
+  <h2 id="t" class="text-base font-semibold">Informe trimestral</h2>
+  <p class="mb-4 mt-0.5 tabular-nums text-slate-500 dark:text-slate-400">informe-q3.pdf, 4,2 MB</p>
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-2">
+    <button type="button" id="btn" data-state="idle" class="relative min-w-40 cursor-pointer overflow-hidden rounded-lg border border-blue-600 bg-blue-600 px-4 py-2.5 font-semibold tabular-nums text-white transition-colors hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 data-[state=up]:cursor-progress data-[state=up]:border-slate-200 data-[state=up]:bg-blue-50 data-[state=up]:text-slate-900 data-[state=done]:border-emerald-600 data-[state=done]:bg-emerald-50 data-[state=done]:text-emerald-700 dark:border-blue-400 dark:bg-blue-400 dark:text-slate-950 dark:data-[state=up]:border-slate-700 dark:data-[state=up]:bg-slate-800 dark:data-[state=up]:text-slate-100 dark:data-[state=done]:border-emerald-400 dark:data-[state=done]:bg-emerald-950 dark:data-[state=done]:text-emerald-400">
+      <span id="lbl">Subir informe</span>
+      <span id="fill" role="progressbar" aria-label="Progreso de subida" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" class="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-br from-cyan-400 to-blue-600 transition-[width] duration-100 ease-linear"></span>
+    </button>
+    <button type="button" id="cancel" hidden class="cursor-pointer text-slate-500 underline underline-offset-4 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-400 dark:hover:text-slate-100">Cancelar subida</button>
+  </div>
+  <p id="msg" role="status" class="mt-3 min-h-5 tabular-nums text-slate-500 dark:text-slate-400"></p>
+</section>
+<script>
+  const SIZE = 4.2, fmt = (n) => n.toFixed(1).replace('.', ',');
+  let p = 0, quarter = 0, timer;
+  function set(state, label, text = '') {
+    btn.dataset.state = state; lbl.textContent = label; msg.textContent = text;
+    btn.setAttribute('aria-busy', state === 'up'); cancel.hidden = state !== 'up';
+  }
+  function paint() { fill.style.width = p + '%'; fill.setAttribute('aria-valuenow', Math.round(p)); }
+  function reset(text) { clearInterval(timer); p = 0; quarter = 0; paint(); set('idle', 'Subir informe', text); }
+  btn.addEventListener('click', () => {
+    if (btn.dataset.state === 'up') return;
+    reset(); set('up', 'Subiendo 0 %', 'Subiendo informe-q3.pdf.');
+    timer = setInterval(() => {
+      p = Math.min(100, p + 2 + Math.random() * 5); paint();
+      lbl.textContent = `Subiendo ${Math.round(p)} %`;
+      if (Math.floor(p / 25) > quarter) { quarter = Math.floor(p / 25); msg.textContent = `${fmt(SIZE * p / 100)} MB de ${fmt(SIZE)} MB.`; }
+      if (p < 100) return;
+      clearInterval(timer); set('done', 'Informe subido', 'Listo. El equipo ya puede verlo.');
+      fill.hidden = true; setTimeout(() => { fill.hidden = false; btn.dataset.state === 'done' && reset(); }, 2500);
+    }, 120);
+  });
+  cancel.addEventListener('click', () => { reset('Subida cancelada. Vuelve a intentarlo cuando quieras.'); btn.focus(); });
+</script>

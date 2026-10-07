@@ -1,0 +1,1 @@
+{ "title": "Tabla con filas expandibles", "category": "tablas", "description": "Cada fila se despliega con su detalle mediante un botón con aria-expanded.", "tags": ["table", "expandir", "aria-expanded", "a11y"] }

@@ -1,0 +1,1 @@
+{ "title": "Etiqueta con ayuda contextual", "category": "etiquetas", "description": "Etiqueta de formulario con botón de ayuda accesible: hover, clic, Esc y aria-describedby.", "tags": ["etiqueta", "tooltip", "formulario", "a11y"] }

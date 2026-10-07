@@ -1,0 +1,1 @@
+{ "title": "Navegación por pasos con estados", "category": "navegacion", "description": "Pasos enlazables con estados completo, actual, atención y pendiente, y aria-current.", "tags": ["stepper", "navegacion", "estados", "a11y"] }

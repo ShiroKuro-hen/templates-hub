@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  a{color:inherit;text-decoration:none}
+  .page{max-width:1100px;margin:0 auto}
+  header h1{margin:0 0 4px;font-size:clamp(26px,4vw,36px);letter-spacing:-.02em;line-height:1.2}
+  header p{margin:0 0 16px;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .chips button{padding:5px 14px;font:inherit;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:background .14s,color .14s,border-color .14s}
+  .chips button:hover{color:var(--text);border-color:var(--accent)}
+  .chips button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  button:focus-visible,a:focus-visible,.card:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+  .card{position:relative;display:grid;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);transition:border-color .14s}
+  .card:hover{border-color:var(--accent)}
+  .card[hidden]{display:none}
+  .cover{aspect-ratio:16/9;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--border) 14px 15px),linear-gradient(135deg,var(--accent-soft),var(--info-soft))}
+  .c2{background-image:repeating-linear-gradient(135deg,transparent 0 14px,var(--border) 14px 15px),linear-gradient(135deg,var(--ok-soft),var(--warn-soft))}
+  .c3{background-image:repeating-linear-gradient(135deg,transparent 0 14px,var(--border) 14px 15px),linear-gradient(135deg,var(--warn-soft),var(--accent-soft))}
+  .c4{background-image:repeating-linear-gradient(135deg,transparent 0 14px,var(--border) 14px 15px),linear-gradient(135deg,var(--ok-soft),var(--info-soft))}
+  .body{display:grid;gap:8px;align-content:start;padding:16px}
+  .badge{justify-self:start;padding:1px 10px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600}
+  h2,h3{margin:0;line-height:1.3;letter-spacing:-.01em}
+  h3{font-size:17px}
+  h2 a::after,h3 a::after{content:"";position:absolute;inset:0}
+  .body p{margin:0;color:var(--muted)}
+  .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px;margin-top:4px;font-size:13px;color:var(--muted)}
+  .who{display:flex;align-items:center;gap:8px;color:var(--text)}
+  .av{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:10px;font-weight:700}
+  .feat{grid-template-columns:1.1fr 1fr;margin-bottom:16px}
+  .feat .cover{aspect-ratio:auto;min-height:240px;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.18) 14px 15px),linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .feat .body{gap:12px;padding:28px;align-content:center}
+  .feat h2{font-size:clamp(22px,3vw,28px)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .count{margin:0 0 12px;color:var(--muted)}
+  .pager{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:32px 0 0;padding:0;list-style:none}
+  .pager a{display:grid;place-items:center;min-width:34px;height:34px;padding:0 10px;box-sizing:border-box;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);font-variant-numeric:tabular-nums;transition:border-color .14s}
+  .pager a:hover{border-color:var(--accent)}
+  .pager [aria-current=page]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .pager [aria-disabled=true]{color:var(--muted);opacity:.6;pointer-events:none}
+  @media (max-width:760px){.feat{grid-template-columns:1fr}.feat .cover{min-height:150px}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header><h1>Blog de Nimbo</h1><p>Historias de clientes, guías prácticas y novedades del producto.</p></header>
+  <div class="chips" role="group" aria-label="Filtrar por categoría">
+    <button type="button" aria-pressed="true">Todo</button><button type="button" aria-pressed="false">Producto</button><button type="button" aria-pressed="false">Ingeniería</button><button type="button" aria-pressed="false">Seguridad</button><button type="button" aria-pressed="false">Guías</button>
+  </div>
+  <article class="card feat">
+    <div class="cover" aria-hidden="true"></div>
+    <div class="body">
+      <span class="badge">Casos de éxito</span>
+      <h2><a href="#">Cómo Kintsu automatizó 40.000 aprobaciones al mes sin perder el control</a></h2>
+      <p>El equipo de finanzas pasó de tres días a tres horas en su cierre mensual. Estas son las reglas que lo hicieron posible.</p>
+      <div class="meta"><span class="who"><span class="av">VR</span>Valeria Rojas</span><span>2 oct 2026, 8 min de lectura</span></div>
+    </div>
+  </article>
+  <p class="count" id="n" role="status">6 artículos</p>
+  <div class="grid" id="g">
+    <article class="card" data-cat="Producto"><div class="cover" aria-hidden="true"></div><div class="body"><span class="badge">Producto</span><h3><a href="#">Presentamos las automatizaciones con vista previa</a></h3><p>Prueba cada regla con datos reales antes de activarla.</p><div class="meta"><span class="who"><span class="av">DS</span>Diego Salazar</span><span>28 sep, 4 min</span></div></div></article>
+    <article class="card" data-cat="Ingeniería"><div class="cover c2" aria-hidden="true"></div><div class="body"><span class="badge">Ingeniería</span><h3><a href="#">Reducimos un 60 % la latencia del motor de reglas</a></h3><p>Qué medimos, qué cambiamos y qué aprendimos en el proceso.</p><div class="meta"><span class="who"><span class="av">CT</span>Camila Torres</span><span>24 sep, 9 min</span></div></div></article>
+    <article class="card" data-cat="Seguridad"><div class="cover c3" aria-hidden="true"></div><div class="body"><span class="badge">Seguridad</span><h3><a href="#">SSO y SCIM: guía de implementación para equipos de TI</a></h3><p>Configura el acceso único y el aprovisionamiento en una tarde.</p><div class="meta"><span class="who"><span class="av">AQ</span>Andrés Quispe</span><span>19 sep, 7 min</span></div></div></article>
+    <article class="card" data-cat="Guías"><div class="cover c4" aria-hidden="true"></div><div class="body"><span class="badge">Guías</span><h3><a href="#">Siete flujos que todo equipo de soporte debería tener</a></h3><p>Asignación, escalamiento y encuestas de satisfacción listos para copiar.</p><div class="meta"><span class="who"><span class="av">LM</span>Lucía Mejía</span><span>12 sep, 6 min</span></div></div></article>
+    <article class="card" data-cat="Producto"><div class="cover c2" aria-hidden="true"></div><div class="body"><span class="badge">Producto</span><h3><a href="#">Novedades de septiembre: paneles, filtros y permisos</a></h3><p>Todo lo que lanzamos este mes, con ejemplos de uso.</p><div class="meta"><span class="who"><span class="av">DS</span>Diego Salazar</span><span>5 sep, 3 min</span></div></div></article>
+    <article class="card" data-cat="Seguridad"><div class="cover" aria-hidden="true"></div><div class="body"><span class="badge">Seguridad</span><h3><a href="#">Nimbo abre su región de datos en São Paulo</a></h3><p>Mantén tus datos en Latinoamérica con menor latencia.</p><div class="meta"><span class="who"><span class="av">AQ</span>Andrés Quispe</span><span>1 sep, 3 min</span></div></div></article>
+  </div>
+  <nav aria-label="Paginación">
+    <ul class="pager"><li><a href="#" aria-disabled="true">Anterior</a></li><li><a href="#" aria-current="page" aria-label="Página 1">1</a></li><li><a href="#" aria-label="Página 2">2</a></li><li><a href="#" aria-label="Página 3">3</a></li><li><a href="#">Siguiente</a></li></ul>
+  </nav>
+</div>
+<script>
+  const btns = document.querySelectorAll('.chips button'), cards = document.querySelectorAll('#g .card');
+  btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((x) => x.setAttribute('aria-pressed', x === b));
+    let n = 0;
+    cards.forEach((c) => { c.hidden = b.textContent !== 'Todo' && c.dataset.cat !== b.textContent; n += !c.hidden; });
+    document.getElementById('n').textContent = n ? n + (n === 1 ? ' artículo' : ' artículos') : 'No hay artículos en esta categoría. Prueba con otra.';
+  }));
+</script>
+</body>
+</html>

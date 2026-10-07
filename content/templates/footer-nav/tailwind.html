@@ -1,0 +1,27 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<footer class="relative mx-auto max-w-[960px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-gradient-to-r before:from-transparent before:via-cyan-400 before:to-blue-600 dark:border-slate-700 dark:bg-slate-900 [&_a]:text-slate-500 [&_a]:no-underline hover:[&_a]:text-slate-900 hover:[&_a]:underline dark:[&_a]:text-slate-400 dark:hover:[&_a]:text-slate-100 [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-blue-500">
+  <nav aria-label="Pie de página" class="grid grid-cols-1 px-5 md:grid-cols-4 md:gap-6 md:p-7 [&_details]:border-b [&_details]:border-slate-200 dark:[&_details]:border-slate-700 md:[&_details]:border-0 [&_summary]:flex [&_summary]:list-none [&_summary]:items-center [&_summary]:justify-between [&_summary]:py-3.5 [&_summary]:font-semibold max-md:[&_summary]:cursor-pointer md:[&_summary]:cursor-default md:[&_summary]:p-0 [&_summary::-webkit-details-marker]:hidden [&_summary:focus-visible]:outline-2 [&_summary:focus-visible]:outline-offset-2 [&_summary:focus-visible]:outline-blue-500 [&_ul]:m-0 [&_ul]:grid [&_ul]:list-none [&_ul]:gap-2 [&_ul]:p-0 max-md:[&_ul]:pb-3.5 md:[&_ul]:mt-3">
+    <details><summary>Producto<b class="font-normal text-slate-500 md:hidden" aria-hidden="true">+</b></summary><ul><li><a href="#">Plataforma</a></li><li><a href="#">Integraciones</a></li><li><a href="#">Seguridad</a></li><li><a href="#">Precios</a></li></ul></details>
+    <details><summary>Recursos<b class="font-normal text-slate-500 md:hidden" aria-hidden="true">+</b></summary><ul><li><a href="#">Documentación</a></li><li><a href="#">Referencia API</a></li><li><a href="#">Guías</a></li><li><a href="#">Comunidad</a></li></ul></details>
+    <details><summary>Empresa<b class="font-normal text-slate-500 md:hidden" aria-hidden="true">+</b></summary><ul><li><a href="#">Nosotros</a></li><li><a href="#">Clientes</a></li><li><a href="#">Empleo</a></li><li><a href="#">Contacto</a></li></ul></details>
+    <details><summary>Legal<b class="font-normal text-slate-500 md:hidden" aria-hidden="true">+</b></summary><ul><li><a href="#">Privacidad</a></li><li><a href="#">Términos</a></li><li><a href="#">Cookies</a></li><li><a href="#">Accesibilidad</a></li></ul></details>
+  </nav>
+  <div class="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-200 px-5 py-4 text-[13px] text-slate-500 dark:border-slate-700 dark:text-slate-400 md:px-7">
+    <a href="#estado" class="inline-flex items-center gap-2 before:size-2 before:rounded-full before:bg-emerald-600 dark:before:bg-emerald-400">Todos los sistemas operativos</a>
+    <label class="flex items-center gap-2">Idioma
+      <select class="rounded-lg border border-slate-200 bg-white px-2 py-1 text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"><option>Español (Perú)</option><option>English</option><option>Português</option></select>
+    </label>
+    <a href="#top" class="md:ml-auto">Volver arriba</a>
+    <p class="m-0 basis-full">© 2026 Nimbo Software S.A.C. Todos los derechos reservados.</p>
+  </div>
+</footer>
+</div>
+<script>
+  const mq = matchMedia('(min-width:768px)'), ds = [...document.querySelectorAll('details')];
+  function sync() {
+    ds.forEach((d) => { d.open = mq.matches; d.firstElementChild.tabIndex = mq.matches ? -1 : 0; });
+  }
+  ds.forEach((d) => d.firstElementChild.addEventListener('click', (e) => { if (mq.matches) e.preventDefault(); }));
+  mq.addEventListener('change', sync);
+  sync();
+</script>

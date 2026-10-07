@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:640px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:18px}
+  .sub{margin:2px 0 16px;color:var(--muted)}
+  .strip{display:flex;height:48px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .strip i{flex:1;background:var(--c)}
+  .strip i:nth-child(5){box-shadow:inset 0 -3px 0 #22d3ee}
+  ul{list-style:none;margin:16px 0 0;padding:0}
+  li{display:grid;grid-template-columns:56px 1fr;gap:4px 12px;align-items:center;padding:10px 0;border-top:1px solid var(--border)}
+  .sw{all:unset;box-sizing:border-box;grid-row:span 2;display:grid;place-items:center;height:40px;border:1px solid var(--border);border-radius:var(--radius);background:var(--c);color:var(--fg);font-weight:600;cursor:pointer;transition:transform .12s}
+  .sw:hover{transform:scale(1.04)}
+  .sw:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .name{font-weight:600}
+  .hex{margin-left:8px;color:var(--muted);font-variant-numeric:tabular-nums;font-family:ui-monospace,"Cascadia Code",Menlo,monospace;font-size:13px}
+  .ratios{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .b{display:inline-block;margin-left:4px;padding:0 8px;border-radius:999px;font-size:12px;font-weight:600}
+  .b.ok{background:var(--ok-soft);color:var(--ok)}
+  .b.warn{background:var(--warn-soft);color:var(--warn)}
+  .b.err{background:var(--err-soft);color:var(--err)}
+  #msg{min-height:21px;margin:12px 0 0;color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <h2 id="t">Escala de acento</h2>
+  <p class="sub">Diez tonos del azul ultramar. Haz clic en un tono para copiar su valor.</p>
+  <div class="strip" id="strip" aria-hidden="true"></div>
+  <ul id="list"></ul>
+  <p id="msg" role="status"></p>
+</section>
+<script>
+  const SCALE = {50:'#f0f4ff',100:'#dee5ff',200:'#bccbff',300:'#97adff',400:'#6384ff',500:'#2f5bff',600:'#2a50e1',700:'#2444bf',800:'#1d3594',900:'#16276d'};
+  const INK = '#0e1726', WHITE = '#ffffff';
+  const lum = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4))
+    .reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0);
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+  const badge = (r) => r >= 4.5 ? '<span class="b ok">AA</span>' : r >= 3 ? '<span class="b warn">AA texto grande</span>' : '<span class="b err">No cumple</span>';
+  const entries = Object.entries(SCALE);
+  document.getElementById('strip').innerHTML = entries.map(([, h]) => `<i style="--c:${h}"></i>`).join('');
+  document.getElementById('list').innerHTML = entries.map(([n, h]) => {
+    const w = ratio(h, WHITE), k = ratio(h, INK);
+    return `<li><button class="sw" type="button" data-hex="${h}" style="--c:${h};--fg:${w >= k ? WHITE : INK}" aria-label="Copiar azul ${n}, ${h}">Aa</button>
+      <div><span class="name">Azul ${n}</span><span class="hex">${h}</span></div>
+      <div class="ratios"><span>Texto blanco ${w.toFixed(2)}:1 ${badge(w)}</span><span>Texto oscuro ${k.toFixed(2)}:1 ${badge(k)}</span></div></li>`;
+  }).join('');
+  document.getElementById('list').addEventListener('click', async (e) => {
+    const b = e.target.closest('.sw'); if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.hex); msg.textContent = `Copiado ${b.dataset.hex}.`; }
+    catch { msg.textContent = `No se pudo copiar. Selecciona ${b.dataset.hex} a mano.`; }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<figure class="m-0 rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <figcaption class="mb-4 flex flex-wrap justify-between gap-3">
+    <div>
+      <h2 class="m-0 text-base font-semibold">Ingresos por línea de negocio</h2>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400">El área de cada bloque es proporcional a su aporte. Selecciona uno para ver el detalle.</p>
+    </div>
+    <div id="key" aria-hidden="true" class="flex flex-wrap gap-x-4 gap-y-1 text-slate-500 dark:text-slate-400"></div>
+  </figcaption>
+  <svg id="svg" role="group" aria-label="Mapa de árbol de ingresos por línea de negocio" class="block h-[340px] w-full"></svg>
+  <div id="dt" aria-live="polite" class="mt-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-950"></div>
+</figure>
+<script>
+  const cats = {
+    Software: ['fill-blue-50 dark:fill-blue-950', 'fill-blue-600 dark:fill-blue-400', 'bg-blue-600 dark:bg-blue-400'],
+    Infraestructura: ['fill-cyan-50 dark:fill-cyan-950', 'fill-cyan-600 dark:fill-cyan-400', 'bg-cyan-600 dark:bg-cyan-400'],
+    Servicios: ['fill-emerald-50 dark:fill-emerald-950', 'fill-emerald-600 dark:fill-emerald-400', 'bg-emerald-600 dark:bg-emerald-400'],
+    Hardware: ['fill-amber-50 dark:fill-amber-950', 'fill-amber-600 dark:fill-amber-400', 'bg-amber-600 dark:bg-amber-400'],
+  };
+  const items = [
+    ['Plataforma en la nube', 420, 'Infraestructura'], ['Ciberseguridad', 260, 'Software'], ['Analítica de datos', 210, 'Software'],
+    ['IA aplicada', 180, 'Software'], ['Consultoría', 150, 'Servicios'], ['Redes', 120, 'Infraestructura'],
+    ['Soporte gestionado', 90, 'Servicios'], ['Dispositivos', 70, 'Hardware'], ['Capacitación', 40, 'Servicios'],
+  ];
+  const total = items.reduce((a, i) => a + i[1], 0), H = 340;
+  const f = (n) => n.toLocaleString('es'), pc = (n) => (n / total * 100).toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %';
+  let sel = 0;
+  key.innerHTML = Object.entries(cats).map(([n, c]) => `<span class="inline-flex items-center gap-2"><i class="size-2.5 rounded-sm ${c[2]}"></i>${n}</span>`).join('');
+  function lay(a, x, y, w, h, out) {
+    if (a.length === 1) return out.push({ d: a[0], x, y, w, h });
+    const tot = a.reduce((s, i) => s + i[1], 0); let k = 1, acc = a[0][1];
+    while (k < a.length - 1 && acc < tot / 2) acc += a[k++][1];
+    const r = acc / tot;
+    if (w >= h) { lay(a.slice(0, k), x, y, w * r, h, out); lay(a.slice(k), x + w * r, y, w * (1 - r), h, out); }
+    else { lay(a.slice(0, k), x, y, w, h * r, out); lay(a.slice(k), x, y + h * r, w, h * (1 - r), out); }
+  }
+  function draw() {
+    const W = svg.clientWidth || 560, tiles = []; lay(items, 0, 0, W, H, tiles);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = tiles.map(({ d, x, y, w, h }, i) => {
+      const [soft, ink] = cats[d[2]], big = w > 80 && h > 44;
+      return `<svg class="t group cursor-pointer outline-none" data-i="${i}" data-sel="${i === sel}" x="${x}" y="${y}" width="${w}" height="${h}" tabindex="0" role="button" aria-pressed="${i === sel}" aria-label="${d[0]}, ${d[2]}: ${f(d[1])} millones de USD, ${pc(d[1])} del total">
+        <title>${d[0]}: ${f(d[1])} M USD</title><rect class="${soft} stroke-slate-200 transition group-hover:brightness-95 group-focus:stroke-blue-600 group-focus:stroke-2 group-data-[sel=true]:stroke-blue-600 dark:stroke-slate-700 dark:group-focus:stroke-blue-400 dark:group-data-[sel=true]:stroke-blue-400" x="1" y="1" width="${w - 2}" height="${h - 2}" rx="4"/><rect class="${ink}" x="1" y="1" width="${w - 2}" height="3" rx="1.5"/>
+        ${big ? `<text class="fill-slate-900 text-[13px] font-semibold dark:fill-slate-100" x="10" y="26">${d[0]}</text><text class="fill-slate-500 text-xs tabular-nums dark:fill-slate-400" x="10" y="44">${f(d[1])} M USD, ${pc(d[1])}</text>` : ''}</svg>`;
+    }).join('');
+    detail();
+  }
+  function detail() {
+    const d = items[sel], p = d[1] / total * 100;
+    dt.innerHTML = `<div class="flex flex-wrap items-baseline justify-between gap-x-4"><span><b class="text-[15px]">${d[0]}</b><span class="ml-2 text-slate-500 dark:text-slate-400">${d[2]}</span></span><span class="text-xl font-semibold tabular-nums">${f(d[1])} M USD</span></div><div class="my-2 h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"><i class="block h-full rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" style="width:${p}%"></i></div><small class="tabular-nums text-slate-500 dark:text-slate-400">${pc(d[1])} de los ${f(total)} M USD facturados</small>`;
+  }
+  function pick(t) { sel = +t.dataset.i; svg.querySelectorAll('.t').forEach((n) => { n.dataset.sel = n === t; n.setAttribute('aria-pressed', n === t); }); detail(); }
+  svg.addEventListener('click', (e) => { const t = e.target.closest('.t'); if (t) pick(t); });
+  svg.addEventListener('keydown', (e) => { const t = e.target.closest('.t'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pick(t); } });
+  addEventListener('resize', draw);
+  draw();
+</script>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :root{--grad-ultramar:linear-gradient(135deg,var(--info),var(--accent));--grad-aurora:linear-gradient(135deg,var(--ok),var(--info));--grad-brasa:linear-gradient(135deg,var(--warn),var(--err));--grad-nebulosa:linear-gradient(135deg,var(--accent),var(--err))}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+  article{padding:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .fill{height:96px;border-radius:var(--radius);background:var(--g)}
+  h3{margin:12px 0 0;font-size:15px}
+  p{margin:0;color:var(--muted)}
+  .uses{display:grid;gap:10px;margin:12px 0}
+  .ring{padding:8px 12px;border:1px solid transparent;border-radius:var(--radius);background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--g) border-box}
+  .bar{height:6px;border-radius:999px;background:var(--g)}
+  .copy{display:flex;align-items:center;gap:8px;padding:4px 4px 4px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:12px ui-monospace,"Cascadia Code",Menlo,monospace}
+  button{padding:4px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:background .14s,border-color .14s}
+  button:hover{background:var(--accent-soft);border-color:var(--accent)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="grid" id="g"></div>
+<script>
+  const GRADS = [
+    ['ultramar', 'Ultramar', 'Marca principal. Úsalo en encabezados y llamadas a la acción.'],
+    ['aurora', 'Aurora', 'Estados positivos, métricas en crecimiento y logros.'],
+    ['brasa', 'Brasa', 'Avisos destacados y ofertas con fecha límite.'],
+    ['nebulosa', 'Nebulosa', 'Campañas y lanzamientos. Úsalo poco.'],
+  ];
+  document.getElementById('g').innerHTML = GRADS.map(([id, name, use]) => `
+    <article style="--g:var(--grad-${id})">
+      <div class="fill" role="img" aria-label="Muestra del degradado ${name}"></div>
+      <h3>${name}</h3><p>${use}</p>
+      <div class="uses"><div class="ring">Borde degradado</div><div class="bar" role="img" aria-label="Barra con degradado ${name}"></div></div>
+      <div class="copy"><code>background: var(--grad-${id});</code><button type="button" data-css="background: var(--grad-${id});" aria-label="Copiar CSS de ${name}">Copiar</button></div>
+    </article>`).join('');
+  document.getElementById('g').addEventListener('click', async (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.css); b.textContent = 'Copiado'; }
+    catch { b.textContent = 'Sin acceso'; }
+    setTimeout(() => (b.textContent = 'Copiar'), 1500);
+  });
+</script>
+</body>
+</html>

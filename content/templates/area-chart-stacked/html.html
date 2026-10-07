@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:16px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px}
+  .legend button{display:inline-flex;align-items:center;gap:8px;font:inherit;padding:4px 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s,color .14s}
+  .legend button:hover{background:var(--accent-soft)}
+  .legend button[aria-pressed=false]{color:var(--muted);background:transparent}
+  .legend button[aria-pressed=false] i{opacity:.3}
+  i.sw{display:inline-block;width:10px;height:10px;border-radius:3px}
+  button:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .plot{position:relative}
+  svg{display:block;width:100%;height:280px;overflow:visible;border-radius:4px}
+  .gl{stroke:var(--border);stroke-width:1}
+  .ax{fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .tip{position:absolute;top:0;transform:translateX(-50%);min-width:160px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);pointer-events:none;font-size:13px;transition:left .12s}
+  .tip>b{display:block;margin-bottom:4px}
+  .tip div{display:flex;justify-content:space-between;gap:16px;font-variant-numeric:tabular-nums}
+  .tip i.sw{margin-right:6px}
+  .tip .tot{margin-top:4px;padding-top:4px;border-top:1px solid var(--border);font-weight:600}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption class="head">
+    <div><h2>Sesiones por dispositivo</h2><p>Miles de sesiones al mes, de enero a agosto</p></div>
+    <div class="legend" id="lg" role="group" aria-label="Series visibles"></div>
+  </figcaption>
+  <div class="plot">
+    <svg id="svg" tabindex="0" role="img" aria-label="Áreas apiladas de sesiones por dispositivo. Usa las flechas izquierda y derecha para explorar los meses."></svg>
+    <div class="tip" id="tip" hidden></div>
+  </div>
+  <p class="sr" id="live" aria-live="polite"></p>
+</figure>
+<script>
+  const series = [
+    { n: 'Escritorio', c: '--accent', d: [42, 45, 48, 46, 52, 55, 58, 61] },
+    { n: 'Móvil', c: '--info', d: [30, 34, 39, 44, 48, 53, 57, 64] },
+    { n: 'Tablet', c: '--ok', d: [8, 9, 9, 10, 11, 11, 12, 13] },
+  ];
+  const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago'];
+  const on = new Set([0, 1, 2]), H = 280, L = 40, R = 12, T = 12, B = 28;
+  let W = 560, idx = -1;
+  const x = (i) => L + i * (W - L - R) / (months.length - 1);
+  const vis = () => series.map((_, i) => i).filter((i) => on.has(i));
+  function legend() {
+    lg.innerHTML = series.map((s, i) => `<button type="button" data-i="${i}" aria-pressed="${on.has(i)}"><i class="sw" style="background:var(${s.c})"></i>${s.n}</button>`).join('');
+  }
+  function draw() {
+    W = svg.clientWidth || 560;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const v = vis(), tot = months.map((_, i) => v.reduce((a, s) => a + series[s].d[i], 0));
+    const max = Math.ceil(Math.max(...tot) / 40) * 40, y = (n) => T + (H - T - B) * (1 - n / max);
+    let s = '<defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>', base = months.map(() => 0);
+    for (let t = 0; t <= max; t += 40) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text class="ax" x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
+    v.forEach((si) => {
+      const top = base.map((b, i) => b + series[si].d[i]);
+      const up = top.map((n, i) => `${x(i)},${y(n)}`), dn = base.map((n, i) => `${x(i)},${y(n)}`).reverse();
+      s += `<polygon points="${[...up, ...dn].join(' ')}" style="fill:var(${series[si].c});fill-opacity:.35"/><polyline points="${up.join(' ')}" fill="none" stroke-width="2" style="stroke:var(${series[si].c})"/>`;
+      base = top;
+    });
+    months.forEach((m, i) => { s += `<text class="ax" x="${x(i)}" y="${H - 8}" text-anchor="middle">${m}</text>`; });
+    if (idx >= 0) s += `<rect x="${x(idx) - 0.75}" y="${T}" width="1.5" height="${H - T - B}" fill="url(#cg)"/>`;
+    svg.innerHTML = s;
+    if (idx >= 0) show(idx, tot[idx]); else tip.hidden = true;
+  }
+  function show(i, total) {
+    idx = i;
+    const v = vis(), t = total ?? v.reduce((a, s) => a + series[s].d[i], 0);
+    tip.innerHTML = `<b>${months[i]}</b>` + [...v].reverse().map((s) => `<div><span><i class="sw" style="background:var(${series[s].c})"></i>${series[s].n}</span><span>${series[s].d[i]}</span></div>`).join('') + `<div class="tot"><span>Total</span><span>${t}</span></div>`;
+    tip.style.left = Math.min(Math.max(x(i), 90), W - 90) + 'px'; tip.hidden = false;
+    live.textContent = `${months[i]}: ` + v.map((s) => `${series[s].n} ${series[s].d[i]}`).join(', ') + `. Total ${t}.`;
+  }
+  const set = (i) => { if (i !== idx) { idx = i; draw(); } };
+  lg.onclick = (e) => { const b = e.target.closest('button'); if (!b) return; const i = +b.dataset.i; if (on.has(i) && on.size > 1) on.delete(i); else on.add(i); legend(); draw(); };
+  svg.onpointermove = (e) => { const r = svg.getBoundingClientRect(); set(Math.max(0, Math.min(months.length - 1, Math.round((e.clientX - r.left - L) / ((W - L - R) / (months.length - 1)))))); };
+  svg.onpointerleave = () => document.activeElement !== svg && set(-1);
+  svg.onblur = () => set(-1);
+  svg.onkeydown = (e) => {
+    const n = months.length - 1, k = { ArrowRight: Math.min(n, idx + 1), ArrowLeft: Math.max(0, idx < 0 ? 0 : idx - 1), Home: 0, End: n }[e.key];
+    if (e.key === 'Escape') set(-1); else if (k !== undefined) { e.preventDefault(); set(k); }
+  };
+  addEventListener('resize', draw);
+  legend(); draw();
+</script>
+</body>
+</html>

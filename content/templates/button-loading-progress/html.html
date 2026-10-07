@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:420px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px}
+  .file{margin:2px 0 16px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+  .btn{position:relative;overflow:hidden;min-width:168px;padding:10px 18px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;font-variant-numeric:tabular-nums;cursor:pointer;transition:background .14s,color .14s,border-color .14s}
+  .btn:hover{filter:brightness(1.06)}
+  .btn:focus-visible,.link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .fill{position:absolute;left:0;bottom:0;height:3px;width:calc(var(--p,0) * 1%);background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .12s linear}
+  .btn[data-state=up]{background:var(--accent-soft);color:var(--text);border-color:var(--border);cursor:progress}
+  .btn[data-state=done]{background:var(--ok-soft);color:var(--ok);border-color:var(--ok)}
+  .btn[data-state=done] .fill{display:none}
+  .link{all:unset;color:var(--muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+  .link:hover{color:var(--text)}
+  .link[hidden]{display:none}
+  #msg{min-height:21px;margin:12px 0 0;color:var(--muted);font-variant-numeric:tabular-nums}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <h2 id="t">Informe trimestral</h2>
+  <p class="file">informe-q3.pdf, 4,2 MB</p>
+  <div class="row">
+    <button type="button" class="btn" id="btn" data-state="idle">
+      <span id="lbl">Subir informe</span>
+      <span class="fill" id="fill" role="progressbar" aria-label="Progreso de subida" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span>
+    </button>
+    <button type="button" class="link" id="cancel" hidden>Cancelar subida</button>
+  </div>
+  <p id="msg" role="status"></p>
+</section>
+<script>
+  const SIZE = 4.2, fmt = (n) => n.toFixed(1).replace('.', ',');
+  let p = 0, quarter = 0, timer;
+  function set(state, label, text = '') {
+    btn.dataset.state = state; lbl.textContent = label; msg.textContent = text;
+    btn.setAttribute('aria-busy', state === 'up'); cancel.hidden = state !== 'up';
+  }
+  function paint() { fill.style.setProperty('--p', p); fill.setAttribute('aria-valuenow', Math.round(p)); }
+  function reset(text) { clearInterval(timer); p = 0; quarter = 0; paint(); set('idle', 'Subir informe', text); }
+  btn.addEventListener('click', () => {
+    if (btn.dataset.state === 'up') return;
+    reset(); set('up', 'Subiendo 0 %', 'Subiendo informe-q3.pdf.');
+    timer = setInterval(() => {
+      p = Math.min(100, p + 2 + Math.random() * 5); paint();
+      lbl.textContent = `Subiendo ${Math.round(p)} %`;
+      if (Math.floor(p / 25) > quarter) { quarter = Math.floor(p / 25); msg.textContent = `${fmt(SIZE * p / 100)} MB de ${fmt(SIZE)} MB.`; }
+      if (p < 100) return;
+      clearInterval(timer); set('done', 'Informe subido', 'Listo. El equipo ya puede verlo.');
+      setTimeout(() => btn.dataset.state === 'done' && reset(), 2500);
+    }, 120);
+  });
+  cancel.addEventListener('click', () => { reset('Subida cancelada. Vuelve a intentarlo cuando quieras.'); btn.focus(); });
+</script>
+</body>
+</html>

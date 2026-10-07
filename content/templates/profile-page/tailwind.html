@@ -1,0 +1,52 @@
+<div class="mx-auto max-w-[1000px] bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <header class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div aria-hidden="true" class="h-28 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-slate-800 dark:to-slate-900"></div>
+    <div class="flex flex-wrap items-end gap-x-5 gap-y-4 px-6 pb-4">
+      <div class="-mt-11 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 p-px"><div aria-hidden="true" class="grid size-[88px] place-items-center rounded-full bg-blue-50 text-3xl font-bold text-blue-600 shadow-[inset_0_0_0_3px_white] dark:bg-slate-800 dark:text-blue-400 dark:shadow-[inset_0_0_0_3px_theme(colors.slate.900)]">MV</div></div>
+      <div class="min-w-[200px] flex-1">
+        <h1 class="flex flex-wrap items-center gap-2 text-[22px] font-bold tracking-tight">Mariana Vélez <span class="rounded-full bg-blue-50 px-2.5 py-px text-xs font-semibold text-blue-600 dark:bg-slate-800 dark:text-blue-400">Administradora</span></h1>
+        <p class="mt-0.5 text-slate-500 dark:text-slate-400">Diseñadora de producto en Nimbo. Lima, Perú.</p>
+      </div>
+      <div class="flex gap-2">
+        <button id="seg" type="button" aria-pressed="false" class="rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 font-semibold text-white transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-pressed:border-slate-200 aria-pressed:bg-white aria-pressed:text-slate-900 dark:aria-pressed:border-slate-700 dark:aria-pressed:bg-slate-900 dark:aria-pressed:text-slate-100">Seguir</button>
+        <button type="button" class="rounded-lg border border-slate-200 bg-white px-4 py-2 font-semibold transition hover:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">Enviar mensaje</button>
+      </div>
+    </div>
+    <dl class="flex gap-8 border-t border-slate-200 px-6 py-3 tabular-nums dark:border-slate-700 [&>div]:flex [&>div]:items-baseline [&>div]:gap-1.5 [&_dd]:text-base [&_dd]:font-bold [&_dt]:order-2 [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400"><div><dt>proyectos</dt><dd>48</dd></div><div><dt>seguidores</dt><dd id="fol">1.248</dd></div><div><dt>siguiendo</dt><dd>312</dd></div></dl>
+  </header>
+  <div class="mt-4 grid items-start gap-4 md:grid-cols-[1fr_280px]">
+    <main class="rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+      <div role="tablist" aria-label="Secciones del perfil" class="flex gap-1 overflow-x-auto border-b border-slate-200 px-3 dark:border-slate-700">
+        <button role="tab" id="t1" aria-controls="p1" aria-selected="true" class="-mb-px whitespace-nowrap border-b-2 border-transparent px-3 py-3 text-slate-500 focus-visible:outline-2 focus-visible:outline-blue-500 aria-selected:border-blue-600 aria-selected:font-semibold aria-selected:text-slate-900 dark:text-slate-400 dark:aria-selected:text-slate-100">Actividad</button>
+        <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1" class="-mb-px whitespace-nowrap border-b-2 border-transparent px-3 py-3 text-slate-500 focus-visible:outline-2 focus-visible:outline-blue-500 aria-selected:border-blue-600 aria-selected:font-semibold aria-selected:text-slate-900 dark:text-slate-400 dark:aria-selected:text-slate-100">Proyectos</button>
+      </div>
+      <div role="tabpanel" id="p1" aria-labelledby="t1" tabindex="0" class="p-5">
+        <h2 class="mb-3 text-xs font-semibold text-slate-500 dark:text-slate-400">Hoy</h2>
+        <ul class="mb-5 grid gap-4">
+          <li class="flex gap-3"><span class="grid size-7 flex-none place-items-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"><svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><p>Publicó la automatización <b>Aprobaciones de gastos</b> en Finanzas.<br><small class="text-slate-500 dark:text-slate-400">10:42</small></p></li>
+          <li class="flex gap-3"><span class="grid size-7 flex-none place-items-center rounded-full bg-blue-50 text-blue-600 dark:bg-slate-800 dark:text-blue-400"><svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span><p>Comentó en <b>Rediseño del panel de métricas</b>.<q class="mt-1.5 block border-l border-slate-200 pl-3 text-slate-500 [quotes:none] dark:border-slate-700 dark:text-slate-400">Propongo unificar los filtros en una sola barra.</q><small class="text-slate-500 dark:text-slate-400">09:15</small></p></li>
+        </ul>
+        <h2 class="mb-3 text-xs font-semibold text-slate-500 dark:text-slate-400">Ayer</h2>
+        <ul class="grid gap-4">
+          <li class="flex gap-3"><span class="grid size-7 flex-none place-items-center rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"><svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span><p>Completó 5 tareas en <b>Lanzamiento del cuarto trimestre</b>.<br><small class="text-slate-500 dark:text-slate-400">17:30</small></p></li>
+          <li class="flex gap-3"><span class="grid size-7 flex-none place-items-center rounded-full bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400"><svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg></span><p>Obtuvo la insignia <b>Mentora</b>.<br><small class="text-slate-500 dark:text-slate-400">11:08</small></p></li>
+        </ul>
+      </div>
+      <div role="tabpanel" id="p2" aria-labelledby="t2" tabindex="0" hidden class="p-5">
+        <div class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 border-b border-slate-200 pb-3 dark:border-slate-700"><b>Rediseño del panel de métricas</b><span class="rounded-full bg-blue-50 px-2.5 py-px text-xs font-semibold text-blue-600 dark:bg-slate-800 dark:text-blue-400">En curso</span><progress max="100" value="72" aria-label="72 % completado" class="col-span-2 h-1.5 w-full overflow-hidden rounded-full [&::-webkit-progress-bar]:bg-slate-200 [&::-webkit-progress-value]:bg-gradient-to-br [&::-webkit-progress-value]:from-cyan-400 [&::-webkit-progress-value]:to-blue-600 [&::-moz-progress-bar]:bg-blue-600"></progress></div>
+        <div class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 pt-3"><b>Onboarding móvil</b><span class="rounded-full bg-blue-50 px-2.5 py-px text-xs font-semibold text-blue-600 dark:bg-slate-800 dark:text-blue-400">Completado</span><progress max="100" value="100" aria-label="100 % completado" class="col-span-2 h-1.5 w-full overflow-hidden rounded-full [&::-webkit-progress-bar]:bg-slate-200 [&::-webkit-progress-value]:bg-gradient-to-br [&::-webkit-progress-value]:from-cyan-400 [&::-webkit-progress-value]:to-blue-600 [&::-moz-progress-bar]:bg-blue-600"></progress></div>
+      </div>
+    </main>
+    <aside class="grid gap-4">
+      <section class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"><h2 class="mb-3 text-xs font-semibold text-slate-500 dark:text-slate-400">Acerca de</h2><p class="text-slate-500 dark:text-slate-400">Diseño interfaces claras para equipos de operaciones. Me interesa la accesibilidad y la documentación.</p></section>
+      <section class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900"><h2 class="mb-3 text-xs font-semibold text-slate-500 dark:text-slate-400">Habilidades</h2><ul class="flex flex-wrap gap-1.5 text-[13px] [&>li]:rounded-full [&>li]:border [&>li]:border-slate-200 [&>li]:px-2.5 [&>li]:py-px dark:[&>li]:border-slate-700"><li>Diseño de sistemas</li><li>Investigación</li><li>Prototipado</li><li>Accesibilidad</li></ul></section>
+    </aside>
+  </div>
+</div>
+<script>
+  const seg = document.getElementById('seg'), fol = document.getElementById('fol');
+  seg.onclick = () => { const on = seg.getAttribute('aria-pressed') !== 'true'; seg.setAttribute('aria-pressed', on); seg.textContent = on ? 'Siguiendo' : 'Seguir'; fol.textContent = on ? '1.249' : '1.248'; };
+  const tabs = [...document.querySelectorAll('[role=tab]')];
+  function sel(t) { tabs.forEach((x) => { const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); t.focus(); }
+  tabs.forEach((t, i) => { t.onclick = () => sel(t); t.onkeydown = (e) => { const k = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (k) sel(tabs[(i + k + tabs.length) % tabs.length]); }; });
+</script>

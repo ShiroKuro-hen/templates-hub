@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:680px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 16px}
+  h2{margin:0;font-size:18px}
+  .sub{margin:2px 0 8px;color:var(--muted)}
+  .chk{display:flex;align-items:center;gap:8px;color:var(--muted)}
+  .chk input{accent-color:var(--accent);width:16px;height:16px;margin:0}
+  .chk input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  ul{list-style:none;margin:0;padding:0}
+  li{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:12px 0;border-top:1px solid var(--border)}
+  .tk{width:112px}
+  .tk b{display:block}
+  .tk span{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  .ic{display:grid;place-items:center;width:56px;color:var(--accent)}
+  .ic svg{width:var(--s);height:var(--s);fill:none;stroke:currentColor;stroke-width:var(--w);stroke-linecap:round;stroke-linejoin:round}
+  .t{display:inline-flex;align-items:center;gap:.4em;font-size:var(--f);line-height:1.2;white-space:nowrap}
+  .t svg{width:calc(var(--f) * 1.2);height:calc(var(--f) * 1.2);flex:none;fill:none;stroke:currentColor;stroke-width:var(--w);stroke-linecap:round;stroke-linejoin:round}
+  .card:has(#g:checked) .t{outline:1px dashed var(--accent)}
+  .card:has(#g:checked) .ic svg{outline:1px dashed var(--muted)}
+  code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace}
+  .rule{margin:12px 0 0;padding:10px 12px;border-radius:var(--radius);background:var(--accent-soft);color:var(--text)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" vector-effect="non-scaling-stroke"/><path d="m20 20-3.5-3.5" vector-effect="non-scaling-stroke"/></symbol></svg>
+<section class="card" aria-labelledby="t">
+  <div class="head">
+    <div><h2 id="t">Tamaños y trazos de iconos</h2><p class="sub">Cada tamaño tiene su propio grosor de trazo, en píxeles reales.</p></div>
+    <label class="chk"><input id="g" type="checkbox"> Mostrar guías</label>
+  </div>
+  <ul>
+    <li style="--s:12px;--w:1.25px;--f:12px"><div class="tk"><b>xs</b><span>12 px, trazo 1,25</span></div><div class="ic"><svg aria-hidden="true"><use href="#i-search"/></svg></div><span class="t"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar clientes</span></li>
+    <li style="--s:16px;--w:1.5px;--f:14px"><div class="tk"><b>sm</b><span>16 px, trazo 1,5</span></div><div class="ic"><svg aria-hidden="true"><use href="#i-search"/></svg></div><span class="t"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar clientes</span></li>
+    <li style="--s:20px;--w:1.75px;--f:16px"><div class="tk"><b>md</b><span>20 px, trazo 1,75</span></div><div class="ic"><svg aria-hidden="true"><use href="#i-search"/></svg></div><span class="t"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar clientes</span></li>
+    <li style="--s:24px;--w:2px;--f:20px"><div class="tk"><b>lg</b><span>24 px, trazo 2</span></div><div class="ic"><svg aria-hidden="true"><use href="#i-search"/></svg></div><span class="t"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar clientes</span></li>
+    <li style="--s:32px;--w:2.5px;--f:28px"><div class="tk"><b>xl</b><span>32 px, trazo 2,5</span></div><div class="ic"><svg aria-hidden="true"><use href="#i-search"/></svg></div><span class="t"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar clientes</span></li>
+    <li style="--s:48px;--w:3px;--f:40px"><div class="tk"><b>2xl</b><span>48 px, trazo 3</span></div><div class="ic"><svg aria-hidden="true"><use href="#i-search"/></svg></div><span class="t"><svg aria-hidden="true"><use href="#i-search"/></svg>Buscar</span></li>
+  </ul>
+  <p class="rule">Junto a texto, el icono mide 1,2 veces el cuerpo y se centra con <code>align-items: center</code>.</p>
+</section>
+</body>
+</html>

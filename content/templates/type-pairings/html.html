@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :root{--serif:Charter,"Iowan Old Style","Palatino Linotype",Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--humanist:Seravek,"Gill Sans","Gill Sans MT",Calibri,"Segoe UI",sans-serif;--mono:ui-monospace,"Cascadia Code",Menlo,monospace}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  article{display:flex;flex-direction:column;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .meta{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+  .meta b{font-size:15px}
+  .meta span{color:var(--muted);font-size:13px}
+  .spec h3{margin:0 0 8px;font:700 24px/1.2 var(--d);letter-spacing:-.01em;text-wrap:balance}
+  .spec p{margin:0 0 12px;font:16px/1.6 var(--b);max-width:60ch}
+  .spec .nums{display:flex;flex-wrap:wrap;align-items:center;gap:2px 14px;font:600 13px var(--b);font-variant-numeric:tabular-nums;color:var(--muted)}
+  .spec .nums i{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  code{display:block;margin-top:auto;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);font:12px/1.6 var(--mono);white-space:pre-wrap}
+  .spec{margin-bottom:16px}
+</style>
+</head>
+<body>
+<div class="grid">
+  <article>
+    <div class="meta"><b>Editorial</b><span>Serif + sans</span></div>
+    <div class="spec" style="--d:var(--serif);--b:var(--sans)">
+      <h3>El informe trimestral ya está listo</h3>
+      <p>Titulares con serifa dan autoridad; el cuerpo en sans mantiene la lectura ágil en pantalla.</p>
+      <div class="nums"><i></i><span>Ingresos 1.284.500</span><span>Clientes 3.912</span></div>
+    </div>
+    <code>--display: var(--serif);
+--body: var(--sans);</code>
+  </article>
+  <article>
+    <div class="meta"><b>Técnico</b><span>Sans + monoespaciada</span></div>
+    <div class="spec" style="--d:var(--sans);--b:var(--sans)">
+      <h3>Despliegue completado en 42 s</h3>
+      <p>Una sola familia limpia para la interfaz, con monoespaciada reservada para identificadores y comandos.</p>
+      <div class="nums" style="font-family:var(--mono)"><i></i><span>build #2481</span><span>14 pruebas</span></div>
+    </div>
+    <code>--display: var(--sans);
+--body: var(--sans);
+--code: var(--mono);</code>
+  </article>
+  <article>
+    <div class="meta"><b>Humanista</b><span>Humanista + serif</span></div>
+    <div class="spec" style="--d:var(--humanist);--b:var(--serif)">
+      <h3>Tu equipo crece, tu plan también</h3>
+      <p>Titulares cálidos y legibles, cuerpo con serifa para textos largos como guías y artículos de ayuda.</p>
+      <div class="nums"><i></i><span>12 miembros</span><span>40 GB libres</span></div>
+    </div>
+    <code>--display: var(--humanist);
+--body: var(--serif);</code>
+  </article>
+</div>
+</body>
+</html>

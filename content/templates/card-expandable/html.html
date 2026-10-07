@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :root{interpolate-size:allow-keywords}
+  .list{display:grid;gap:12px;max-width:620px;margin:0 auto}
+  details{overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:box-shadow .14s}
+  details[open]{box-shadow:var(--shadow)}
+  details::details-content{block-size:0;overflow:hidden;transition:block-size .16s ease,content-visibility .16s allow-discrete}
+  details[open]::details-content{block-size:auto}
+  summary{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 12px;padding:14px 16px;cursor:pointer;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .ttl{display:block;font-size:15px;font-weight:600;line-height:1.35}
+  .own{display:block;color:var(--muted);font-size:13px}
+  .end{display:flex;align-items:center;gap:10px}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--info-soft)}
+  .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--info)}
+  .badge.warn{background:var(--warn-soft)} .badge.warn::before{background:var(--warn)}
+  .badge.ok{background:var(--ok-soft)} .badge.ok::before{background:var(--ok)}
+  .chev{width:16px;height:16px;color:var(--muted);transition:transform .16s}
+  details[open] .chev{transform:rotate(180deg)}
+  .pg{grid-column:1/-1;display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  .pg i{flex:1;height:6px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
+  .pg i::after{content:"";display:block;height:100%;width:calc(var(--p) * 1%);border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .det{padding:14px 16px 16px;border-top:1px solid var(--border)}
+  dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px 16px;margin:0 0 14px}
+  dt{color:var(--muted);font-size:13px}
+  dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+  .ms{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:6px}
+  .ms li{display:flex;justify-content:space-between;gap:12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  .ms li:last-child{border-bottom:0;padding-bottom:0}
+  .ms time{color:var(--muted);font-variant-numeric:tabular-nums}
+  .btn{display:inline-block;padding:6px 14px;font-weight:600;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);text-decoration:none;transition:filter .14s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}details::details-content{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="list">
+  <details open>
+    <summary>
+      <span><span class="ttl">Migración a la nube</span><span class="own">Responsable: Marta Ruiz</span></span>
+      <span class="end"><span class="badge">En curso</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></span>
+      <span class="pg" style="--p:68"><i></i>68% completado</span>
+    </summary>
+    <div class="det">
+      <dl><div><dt>Entrega</dt><dd>30 abr 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 84.000</dd></div><div><dt>Equipo</dt><dd>7 personas</dd></div></dl>
+      <ul class="ms"><li><span>Pruebas de carga</span><time datetime="2026-03-14">14 mar</time></li><li><span>Corte de la base de datos</span><time datetime="2026-04-02">2 abr</time></li></ul>
+      <a class="btn" href="#">Ver proyecto</a>
+    </div>
+  </details>
+  <details>
+    <summary>
+      <span><span class="ttl">Rediseño del panel de clientes</span><span class="own">Responsable: Luis Gómez</span></span>
+      <span class="end"><span class="badge warn">En riesgo</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></span>
+      <span class="pg" style="--p:41"><i></i>41% completado</span>
+    </summary>
+    <div class="det">
+      <dl><div><dt>Entrega</dt><dd>18 may 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 52.500</dd></div><div><dt>Equipo</dt><dd>4 personas</dd></div></dl>
+      <ul class="ms"><li><span>Validar prototipo con clientes</span><time datetime="2026-03-20">20 mar</time></li><li><span>Entrega de componentes</span><time datetime="2026-04-15">15 abr</time></li></ul>
+      <a class="btn" href="#">Ver proyecto</a>
+    </div>
+  </details>
+  <details>
+    <summary>
+      <span><span class="ttl">Auditoría de seguridad anual</span><span class="own">Responsable: Carlos Díaz</span></span>
+      <span class="end"><span class="badge ok">Completado</span><svg class="chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></span>
+      <span class="pg" style="--p:100"><i></i>100% completado</span>
+    </summary>
+    <div class="det">
+      <dl><div><dt>Entrega</dt><dd>28 feb 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 31.200</dd></div><div><dt>Equipo</dt><dd>3 personas</dd></div></dl>
+      <ul class="ms"><li><span>Informe final firmado</span><time datetime="2026-02-28">28 feb</time></li></ul>
+      <a class="btn" href="#">Ver proyecto</a>
+    </div>
+  </details>
+</div>
+</body>
+</html>

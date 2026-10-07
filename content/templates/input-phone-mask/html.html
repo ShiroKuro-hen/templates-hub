@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:420px;margin:0 auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h1{margin:0;font-size:18px;line-height:1.3}
+  .sub{margin:2px 0 18px;color:var(--muted)}
+  label{display:block;margin-bottom:6px;font-weight:600}
+  .grp{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s}
+  .grp:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+  .grp.bad{border-color:var(--err)}
+  select,input{font:inherit;color:var(--text);background:transparent;border:0;padding:8px 12px;min-width:0}
+  select{max-width:55%;border-right:1px solid var(--border);border-radius:var(--radius) 0 0 var(--radius);cursor:pointer}
+  option{background:var(--surface);color:var(--text)}
+  input{flex:1;font-variant-numeric:tabular-nums;border-radius:0 var(--radius) var(--radius) 0}
+  select:focus-visible,input:focus-visible{outline:0}
+  .meter{height:4px;margin-top:8px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
+  .meter i{display:block;height:100%;width:var(--p,0%);border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+  .hint{min-height:21px;margin:8px 0 0;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .hint.err{color:var(--err)}
+  .hint.ok{color:var(--ok)}
+  .row{display:flex;justify-content:flex-end;margin-top:16px}
+  .btn{font:inherit;font-weight:600;padding:8px 16px;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer;transition:filter .14s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card">
+<form id="f" novalidate>
+  <h1>Teléfono de contacto</h1>
+  <p class="sub">Solo lo usaremos para confirmar tu pedido.</p>
+  <label for="tel">Número de teléfono</label>
+  <div class="grp" id="g">
+    <select id="pais" aria-label="País" autocomplete="tel-country-code">
+      <option value="51" data-mask="### ### ###" data-n="Perú">Perú +51</option>
+      <option value="52" data-mask="## #### ####" data-n="México">México +52</option>
+      <option value="57" data-mask="### ### ####" data-n="Colombia">Colombia +57</option>
+      <option value="56" data-mask="# #### ####" data-n="Chile">Chile +56</option>
+      <option value="34" data-mask="### ## ## ##" data-n="España">España +34</option>
+    </select>
+    <input id="tel" type="tel" inputmode="numeric" autocomplete="tel-national" aria-describedby="h">
+  </div>
+  <div class="meter" aria-hidden="true"><i id="m"></i></div>
+  <p class="hint" id="h" aria-live="polite"></p>
+  <div class="row"><button class="btn">Guardar número</button></div>
+</form>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id), p = $('pais'), t = $('tel'), h = $('h'), g = $('g');
+  const cur = () => { const o = p.selectedOptions[0], m = o.dataset.mask; return { m, max: m.split('#').length - 1, code: o.value, name: o.dataset.n }; };
+  const digits = (v, c) => { v = v.trim(); return (v.startsWith('+' + c.code) ? v.slice(c.code.length + 1) : v).replace(/\D/g, '').slice(0, c.max); };
+  function fmt(d, m) { let o = '', i = 0; for (const c of m) { if (i >= d.length) break; o += c === '#' ? d[i++] : c; } return o; }
+  function say(msg, cls = '') { h.className = 'hint ' + cls; h.textContent = msg; g.classList.toggle('bad', cls === 'err'); t.setAttribute('aria-invalid', cls === 'err'); }
+  function render() {
+    const c = cur(), d = digits(t.value, c), k = c.max - d.length;
+    t.value = fmt(d, c.m); t.placeholder = fmt('9876543210', c.m);
+    $('m').style.setProperty('--p', (d.length / c.max) * 100 + '%');
+    say(!d.length ? `Un número de ${c.name} tiene ${c.max} dígitos.` : k ? `Faltan ${k} dígito${k > 1 ? 's' : ''}.` : `Se guardará como +${c.code}${d}.`, !k ? 'ok' : '');
+  }
+  t.oninput = p.onchange = render;
+  $('f').onsubmit = (e) => {
+    e.preventDefault();
+    const c = cur(), d = digits(t.value, c), k = c.max - d.length;
+    if (k) { say(`Faltan ${k} dígito${k > 1 ? 's' : ''}. Un número de ${c.name} tiene ${c.max}.`, 'err'); t.focus(); }
+    else say(`Número guardado: +${c.code} ${t.value}.`, 'ok');
+  };
+  render();
+</script>
+</body>
+</html>

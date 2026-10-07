@@ -1,0 +1,37 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div role="group" aria-labelledby="t" class="mx-auto max-w-xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900 [&_.row]:flex [&_.row]:items-center [&_.row]:gap-3 [&_.row]:border-b [&_.row]:border-slate-200 [&_.row]:px-5 [&_.row]:py-3.5 dark:[&_.row]:border-slate-700 [&_.row:last-child]:border-0 [&_p]:text-slate-500 dark:[&_p]:text-slate-400">
+    <header class="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-slate-200 px-5 py-4 dark:border-slate-700">
+      <h2 id="t" class="m-0 text-base font-semibold">Funciones del espacio</h2>
+      <p class="m-0 tabular-nums text-slate-500 dark:text-slate-400" aria-live="polite"><b id="n" class="font-semibold">3</b> de 4 activadas</p>
+    </header>
+    <div class="row"><div class="min-w-0 flex-1"><label for="f1" class="font-semibold">Autoguardado</label><p id="d1" class="m-0">Guarda tus cambios cada 30 segundos.</p></div>
+      <input id="f1" type="checkbox" role="switch" checked aria-describedby="d1" class="sw peer order-2">
+      <span aria-hidden="true" class="order-1 hidden w-24 text-right text-xs text-slate-500 after:content-['Desactivado'] peer-checked:text-slate-900 peer-checked:after:content-['Activado'] sm:block dark:peer-checked:text-slate-100"></span></div>
+    <div class="row"><div class="min-w-0 flex-1"><label for="f2" class="font-semibold">Comentarios en tiempo real</label><p id="d2" class="m-0">Muestra los comentarios del equipo sin recargar.</p></div>
+      <input id="f2" type="checkbox" role="switch" checked aria-describedby="d2" class="sw peer order-2">
+      <span aria-hidden="true" class="order-1 hidden w-24 text-right text-xs text-slate-500 after:content-['Desactivado'] peer-checked:text-slate-900 peer-checked:after:content-['Activado'] sm:block dark:peer-checked:text-slate-100"></span></div>
+    <div class="row"><div class="min-w-0 flex-1"><label for="f3" class="font-semibold">Vista previa pública</label><p id="d3" class="m-0">Cualquiera con el enlace puede ver el documento.</p></div>
+      <input id="f3" type="checkbox" role="switch" aria-describedby="d3" class="sw peer order-2">
+      <span aria-hidden="true" class="order-1 hidden w-24 text-right text-xs text-slate-500 after:content-['Desactivado'] peer-checked:text-slate-900 peer-checked:after:content-['Activado'] sm:block dark:peer-checked:text-slate-100"></span></div>
+    <div class="row"><div class="min-w-0 flex-1"><label for="f4" class="font-semibold">Resumen semanal</label><p id="d4" class="m-0">Recibe los cambios de la semana cada lunes.</p></div>
+      <input id="f4" type="checkbox" role="switch" checked aria-describedby="d4" class="sw peer order-2">
+      <span aria-hidden="true" class="order-1 hidden w-24 text-right text-xs text-slate-500 after:content-['Desactivado'] peer-checked:text-slate-900 peer-checked:after:content-['Activado'] sm:block dark:peer-checked:text-slate-100"></span></div>
+    <div class="row"><div class="min-w-0 flex-1"><label for="f5" class="font-semibold">Registro de auditoría <span class="ml-2 rounded-full bg-blue-100 px-2 py-px text-xs font-semibold text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">Plan Business</span></label><p id="d5" class="m-0">Disponible al mejorar tu plan.</p></div>
+      <input id="f5" type="checkbox" role="switch" disabled aria-describedby="d5" class="sw peer order-2">
+      <span aria-hidden="true" class="order-1 hidden w-24 text-right text-xs text-slate-500 after:content-['No_disponible'] sm:block"></span></div>
+  </div>
+</div>
+<style>
+  /* El interruptor usa ::before para la perilla; Tailwind lo cubre con @apply en tu build */
+  .sw{appearance:none;position:relative;flex:none;width:40px;height:24px;margin:0;border:1px solid #cbd5e1;border-radius:999px;background:#f1f5f9;cursor:pointer;transition:background .14s}
+  .sw::before{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#64748b;transition:transform .14s}
+  .sw:checked{border-color:transparent;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .sw:checked::before{transform:translateX(16px);background:#fff}
+  .sw:disabled{opacity:.5;cursor:not-allowed}
+  .sw:focus-visible{outline:2px solid #3b82f6;outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){.sw,.sw::before{transition:none}}
+</style>
+<script>
+  const sw = [...document.querySelectorAll('[role=switch]:not(:disabled)')];
+  document.addEventListener('change', () => (n.textContent = sw.filter((i) => i.checked).length));
+</script>

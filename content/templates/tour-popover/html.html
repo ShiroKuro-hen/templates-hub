@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .stage{position:relative;display:grid;grid-template-columns:140px 1fr;max-width:680px;min-height:300px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .side{padding:16px 12px;border-right:1px solid var(--border)}
+  .side ul{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+  .side li{padding:6px 12px;border-radius:var(--radius);color:var(--muted)}
+  .side li.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+  main{padding:16px}
+  .top{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .top input{flex:1;min-width:120px;box-sizing:border-box;height:36px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+  .kpi{padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius)}
+  .kpi small{display:block;color:var(--muted)}
+  .kpi b{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+  .btn{height:36px;padding:0 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:border-color .14s}
+  .btn:hover:not(:disabled){border-color:var(--accent)}
+  .btn.main{border-color:var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:600}
+  .btn:disabled{opacity:.5;cursor:default}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .spot{position:absolute;pointer-events:none;border-radius:var(--radius);box-shadow:0 0 0 1px var(--accent),0 0 0 100vmax rgba(14,23,38,.5);transition:left .16s,top .16s,width .16s,height .16s}
+  #pop{position:fixed;inset:auto;margin:0;width:min(300px,calc(100vw - 16px));box-sizing:border-box;padding:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
+  .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:12px}
+  .seg i{height:4px;border-radius:999px;background:var(--border)}
+  .seg i.on{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .step{margin:0;color:var(--muted);font-variant-numeric:tabular-nums}
+  #pop h3{margin:2px 0 4px;font-size:15px;font-weight:600}
+  #pt+p{margin:0 0 16px;color:var(--muted)}
+  .acts{display:flex;align-items:center;gap:8px}
+  .acts .btn{height:32px;padding:0 12px}
+  .link{margin-right:auto;padding:4px;border:0;border-radius:4px;background:none;color:var(--muted);font:inherit;cursor:pointer}
+  .link:hover{color:var(--text)}
+  @media (max-width:520px){.stage{grid-template-columns:1fr}.side{padding:8px 12px;border-right:0;border-bottom:1px solid var(--border)}.side ul{display:flex;flex-wrap:wrap}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <nav class="side" aria-label="Navegación principal"><ul>
+    <li class="on">Panel</li><li id="t-rep">Informes</li><li id="t-eq">Equipo</li>
+  </ul></nav>
+  <main>
+    <div class="top">
+      <input id="t-bus" type="search" placeholder="Buscar proyectos y personas" aria-label="Buscar">
+      <button class="btn main" id="start" type="button">Iniciar recorrido</button>
+    </div>
+    <div class="kpis">
+      <div class="kpi" id="t-kpi"><small>Ingresos del mes</small><b>$ 48.200</b></div>
+      <div class="kpi"><small>Usuarios activos</small><b>3.412</b></div>
+    </div>
+  </main>
+  <div class="spot" id="spot" hidden></div>
+</div>
+<div id="pop" popover role="dialog" aria-labelledby="pt">
+  <div class="seg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <p class="step">Paso <span id="n">1</span> de 4</p>
+  <div aria-live="polite"><h3 id="pt"></h3><p id="pd"></p></div>
+  <div class="acts">
+    <button class="link" id="skip" type="button">Omitir</button>
+    <button class="btn" id="prev" type="button">Anterior</button>
+    <button class="btn main" id="next" type="button">Siguiente</button>
+  </div>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const S = [
+    ['t-rep', 'Informes', 'Cruza ingresos y usuarios por periodo y exporta a PDF o CSV.', 'right'],
+    ['t-eq', 'Equipo', 'Invita a tus compañeros y define quién puede editar.', 'right'],
+    ['t-bus', 'Búsqueda', 'Encuentra proyectos, informes y personas por nombre.', 'bottom'],
+    ['t-kpi', 'Tus métricas', 'Cada tarjeta resume un indicador clave del mes.', 'bottom'],
+  ];
+  const pop = $('pop'), spot = $('spot'), stage = $('stage'), segs = [...pop.querySelectorAll('.seg i')];
+  let i = 0;
+  function place() {
+    const t = $(S[i][0]).getBoundingClientRect(), s = stage.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
+    const right = S[i][3] === 'right' && innerWidth >= 520;
+    spot.style.cssText = `left:${t.left - s.left - 4}px;top:${t.top - s.top - 4}px;width:${t.width + 8}px;height:${t.height + 8}px`;
+    let x = right ? t.right + 16 : t.left + t.width / 2 - w / 2, y = right ? t.top + t.height / 2 - h / 2 : t.bottom + 16;
+    if (!right && y + h > innerHeight - 8) y = t.top - h - 16;
+    pop.style.left = Math.max(8, Math.min(x, innerWidth - w - 8)) + 'px';
+    pop.style.top = Math.max(8, Math.min(y, innerHeight - h - 8)) + 'px';
+  }
+  function go(n, focus = true) {
+    i = Math.max(0, Math.min(S.length - 1, n));
+    if (focus) $(S[i][0]).scrollIntoView({ block: 'nearest' });
+    $('pt').textContent = S[i][1]; $('pd').textContent = S[i][2]; $('n').textContent = i + 1;
+    segs.forEach((e, k) => e.classList.toggle('on', k <= i));
+    $('prev').disabled = i === 0;
+    $('next').textContent = i === S.length - 1 ? 'Finalizar' : 'Siguiente';
+    if (!pop.matches(':popover-open')) pop.showPopover();
+    place(); spot.hidden = false;
+    if (focus) $('next').focus();
+  }
+  $('start').onclick = () => go(0);
+  $('next').onclick = () => (i === S.length - 1 ? pop.hidePopover() : go(i + 1));
+  $('prev').onclick = () => go(i - 1);
+  $('skip').onclick = () => pop.hidePopover();
+  pop.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') go(i + 1); if (e.key === 'ArrowLeft') go(i - 1); });
+  pop.addEventListener('toggle', (e) => {
+    if (e.newState === 'closed') { spot.hidden = true; if (!document.activeElement || document.activeElement === document.body || pop.contains(document.activeElement)) $('start').focus(); }
+  });
+  addEventListener('resize', () => pop.matches(':popover-open') && place());
+  go(0, false);
+</script>
+</body>
+</html>

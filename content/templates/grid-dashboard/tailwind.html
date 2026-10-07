@@ -1,0 +1,33 @@
+<div class="group text-sm text-slate-900 dark:text-slate-100">
+  <header class="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div><h1 class="m-0 text-xl font-semibold">Panel de ventas</h1><p class="m-0 text-slate-500 dark:text-slate-400">Septiembre de 2025</p></div>
+    <label class="flex cursor-pointer items-center gap-2 text-slate-500 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-blue-500 dark:text-slate-400">
+      <input type="checkbox" id="ar" class="m-0 accent-blue-600">Ver áreas del grid
+    </label>
+  </header>
+  <main id="dash" class="grid grid-cols-2 gap-3 min-[900px]:grid-cols-4"></main>
+</div>
+<script>
+  const card = (area, cls, body) => `<article class="${cls} relative min-w-0 rounded-lg border border-slate-200 bg-white p-4 shadow-sm group-has-[#ar:checked]:outline-dashed group-has-[#ar:checked]:outline-1 group-has-[#ar:checked]:-outline-offset-1 group-has-[#ar:checked]:outline-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:group-has-[#ar:checked]:outline-blue-400">${body}<span class="absolute right-2 top-2 hidden rounded-full bg-blue-600 px-2 font-mono text-[11px] leading-[18px] text-white group-has-[#ar:checked]:block dark:bg-blue-400 dark:text-slate-950">grid-area: ${area}</span></article>`;
+  const h2 = (t) => `<h2 class="m-0 mb-3 text-sm font-semibold">${t}</h2>`, muted = 'text-slate-500 dark:text-slate-400';
+  const kpis = [['Ingresos', '$ 84.200', '+12,4 %', 1], ['Pedidos', '1.284', '+4,1 %', 1], ['Ticket promedio', '$ 65,6', '-2,3 %', 0], ['Clientes nuevos', '312', '+8,7 %', 1]];
+  const act = [['bg-emerald-600 dark:bg-emerald-400', 'Pedido #4821 pagado', 'Hace 2 min'], ['bg-amber-600 dark:bg-amber-400', 'Reembolso pedido #4807', 'Hace 14 min'], ['bg-blue-600 dark:bg-blue-400', 'Nueva cliente: Marta Quispe', 'Hace 31 min'], ['bg-rose-600 dark:bg-rose-400', 'Poco stock: monitor 27" 4K', 'Hace 1 h'], ['bg-cyan-600 dark:bg-cyan-400', 'Reporte semanal listo', 'Hace 3 h']];
+  const prods = [['Teclado mecánico K2', 412, 100], ['Monitor 27" 4K', 268, 65], ['Auriculares ANC', 231, 56], ['Base para laptop', 174, 42]];
+  const vals = [2.1, 2.4, 2.2, 3.0, 3.4, 3.1, 2.8, 3.6, 4.0, 3.8, 4.4, 4.1, 4.9, 5.2]; // miles de USD por día
+  dash.innerHTML = kpis.map(([l, v, d, up], i) => card('kpi' + (i + 1), '', `<p class="m-0 ${muted}">${l}</p><p class="m-0 text-2xl font-semibold leading-snug tabular-nums">${v}</p><span class="inline-block rounded-full px-2 text-xs tabular-nums ${up ? 'bg-emerald-50 dark:bg-emerald-950' : 'bg-rose-50 dark:bg-rose-950'}"><span class="sr-only">${up ? 'Subió ' : 'Bajó '}</span>${d}</span>`)).join('')
+    + card('chart', 'col-span-2 min-[900px]:col-span-3', h2('Ventas diarias') + '<svg id="svg" role="img" aria-label="Ventas diarias de septiembre: suben de 2,1 a 5,2 miles de dólares en 14 días." class="block h-[180px] w-full overflow-visible"></svg>')
+    + card('act', 'order-last col-span-2 min-[900px]:order-none min-[900px]:col-span-1 min-[900px]:row-span-2', h2('Actividad reciente') + `<ul class="m-0 grid list-none gap-3 p-0">${act.map(([c, t, h]) => `<li class="grid grid-cols-[auto_1fr] gap-x-2.5"><i class="mt-[7px] size-2 rounded-full ${c}"></i><span>${t}</span><small class="col-start-2 ${muted}">${h}</small></li>`).join('')}</ul>`)
+    + card('tabla', 'col-span-2 min-[600px]:col-span-1 min-[900px]:col-span-2', h2('Productos más vendidos') + `<ul class="m-0 grid list-none gap-3 p-0 tabular-nums">${prods.map(([n, u, p]) => `<li class="grid grid-cols-[1fr_auto] gap-x-3 gap-y-1"><span>${n}</span><span class="${muted}">${u} u.</span><div class="col-span-full h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"><i class="block h-full rounded-full bg-blue-600 dark:bg-blue-400" style="width:${p}%"></i></div></li>`).join('')}</ul>`)
+    + card('meta', 'col-span-2 min-[600px]:col-span-1', h2('Meta del mes') + `<p class="m-0 mb-2 text-2xl font-semibold leading-snug tabular-nums">72 %</p><progress value="72" max="100" aria-label="Avance de la meta mensual" class="h-2 w-full overflow-hidden rounded-full [&::-moz-progress-bar]:bg-gradient-to-br [&::-moz-progress-bar]:from-cyan-400 [&::-moz-progress-bar]:to-blue-600 [&::-webkit-progress-bar]:bg-slate-200 dark:[&::-webkit-progress-bar]:bg-slate-700 [&::-webkit-progress-value]:rounded-full [&::-webkit-progress-value]:bg-gradient-to-br [&::-webkit-progress-value]:from-cyan-400 [&::-webkit-progress-value]:to-blue-600">72 %</progress><p class="m-0 mt-2 ${muted}">Faltan $ 33.600 y quedan 9 días.</p>`);
+  function draw() {
+    const W = svg.clientWidth || 300, H = 180, L = 28, T = 8, B = 24, MAX = 6, ax = 'fill-slate-500 text-xs tabular-nums dark:fill-slate-400';
+    const x = (i) => L + i * (W - L - 8) / (vals.length - 1), y = (v) => T + (H - T - B) * (1 - v / MAX), pts = vals.map((v, i) => `${x(i)},${y(v)}`);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = '<defs><linearGradient id="lg"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>'
+      + [0, 2, 4, 6].map((t) => `<line class="stroke-slate-200 dark:stroke-slate-700" x1="${L}" x2="${W - 8}" y1="${y(t)}" y2="${y(t)}"/><text class="${ax}" x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${t}</text>`).join('')
+      + `<polygon class="fill-blue-600/15 dark:fill-blue-400/15" points="${x(0)},${y(0)} ${pts.join(' ')} ${x(vals.length - 1)},${y(0)}"/><polyline fill="none" stroke="url(#lg)" stroke-width="2" stroke-linejoin="round" points="${pts.join(' ')}"/>`
+      + `<circle class="fill-blue-600 stroke-white dark:fill-blue-400 dark:stroke-slate-900" stroke-width="2" cx="${x(vals.length - 1)}" cy="${y(vals[vals.length - 1])}" r="4"/>`
+      + [[0, '1 sep', 'start'], [6, '7 sep', 'middle'], [13, '14 sep', 'end']].map(([i, t, a]) => `<text class="${ax}" x="${x(i)}" y="${H - 6}" text-anchor="${a}">${t}</text>`).join('');
+  }
+  addEventListener('resize', draw); draw();
+</script>

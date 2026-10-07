@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .list{display:grid;gap:16px;max-width:680px;margin:0 auto}
+  .card{display:grid;grid-template-columns:minmax(120px,38%) 1fr;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,box-shadow .14s}
+  .card:hover,.card:focus-within{border-color:var(--accent);box-shadow:var(--shadow)}
+  .art{position:relative;min-height:160px}
+  .art svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .rev .art{order:2}
+  .bg{fill:var(--accent-soft)}
+  .gl{fill:none;stroke:var(--border);stroke-width:1}
+  .dot{fill:var(--surface);stroke:var(--accent);stroke-width:2}
+  .h1{fill:var(--accent);opacity:.18}
+  .h2{fill:var(--accent);opacity:.35}
+  .body{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px 20px}
+  .badge{padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--info-soft);color:var(--info)}
+  .badge.ok{background:var(--ok-soft);color:var(--ok)}
+  h2{margin:0;font-size:17px;line-height:1.35}
+  p{margin:0;color:var(--muted)}
+  .meta{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;font-variant-numeric:tabular-nums}
+  .btn{margin-top:auto;padding:6px 14px;font-weight:600;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);text-decoration:none;transition:filter .14s}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (max-width:520px){.card{grid-template-columns:1fr}.art{height:140px;min-height:0}.rev .art{order:0}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="list">
+  <article class="card">
+    <div class="art">
+      <svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+        <rect class="bg" width="240" height="180"/>
+        <path class="gl" d="M0 45H240M0 90H240M0 135H240M60 0V180M120 0V180M180 0V180"/>
+        <path d="M0 140L50 110L95 124L150 66L240 40V180H0Z" fill="url(#g1)" opacity=".16"/>
+        <path d="M0 140L50 110L95 124L150 66L240 40" fill="none" stroke="url(#g1)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle class="dot" cx="150" cy="66" r="6"/>
+      </svg>
+    </div>
+    <div class="body">
+      <span class="badge">Seguridad</span>
+      <h2>Activa la verificación en dos pasos</h2>
+      <p>Protege tu cuenta con un código temporal. Tarda menos de dos minutos.</p>
+      <div class="meta"><span>Lectura de 4 min</span><time datetime="2026-03-12">12 mar 2026</time></div>
+      <a class="btn" href="#">Leer guía</a>
+    </div>
+  </article>
+  <article class="card rev">
+    <div class="art">
+      <svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>
+        <rect class="bg" width="240" height="180"/>
+        <circle cx="170" cy="58" r="26" fill="url(#g2)"/>
+        <path class="h1" d="M0 150Q60 100 120 130T240 110V180H0Z"/>
+        <path class="h2" d="M0 165Q70 125 130 150T240 135V180H0Z"/>
+      </svg>
+    </div>
+    <div class="body">
+      <span class="badge ok">Facturación</span>
+      <h2>Entiende tu primera factura</h2>
+      <p>Revisa qué incluye cada línea, cómo se prorratea el plan y dónde descargar el PDF.</p>
+      <div class="meta"><span>Lectura de 6 min</span><time datetime="2026-02-03">3 feb 2026</time></div>
+      <a class="btn" href="#">Leer guía</a>
+    </div>
+  </article>
+</div>
+</body>
+</html>

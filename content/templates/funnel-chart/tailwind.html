@@ -1,0 +1,36 @@
+<figure class="m-0 rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <figcaption class="mb-5 flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h2 class="m-0 text-base font-semibold">Embudo de conversión</h2>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400">Visitantes del sitio que llegan a pagar, en septiembre.</p>
+    </div>
+    <p id="sum" class="m-0 text-right"></p>
+  </figcaption>
+  <div class="grid grid-cols-[minmax(90px,2fr)_3fr] gap-4">
+    <svg id="fn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" class="block w-full"><defs><linearGradient id="fg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs></svg>
+    <ol id="ls" class="m-0 grid list-none auto-rows-[64px] p-0"></ol>
+  </div>
+</figure>
+<script>
+  const stages = [['Visitas al sitio', 24800], ['Registros', 14900], ['Cuentas activadas', 9800], ['Planes elegidos', 5400], ['Pagos completados', 3100]];
+  const f = (n) => n.toLocaleString('es'), pc = (n) => (n * 100).toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %';
+  const peak = stages[0][1], n = stages.length, h = 100 / n;
+  const step = stages.map((s, i) => (i ? s[1] / stages[i - 1][1] : 1));
+  const worst = step.indexOf(Math.min(...step.slice(1)));
+  const badge = 'rounded-full border px-2 text-xs text-slate-900 dark:text-slate-100 ';
+  fn.style.height = n * 64 + 'px';
+  fn.insertAdjacentHTML('beforeend', stages.map((s, i) => {
+    const w0 = s[1] / peak * 100, w1 = (stages[i + 1] ? stages[i + 1][1] : s[1] * 0.8) / peak * 100, y0 = i * h + 0.8, y1 = (i + 1) * h - 0.8;
+    return `<polygon class="transition-opacity duration-150" fill="url(#fg)" data-i="${i}" points="${50 - w0 / 2},${y0} ${50 + w0 / 2},${y0} ${50 + w1 / 2},${y1} ${50 - w1 / 2},${y1}"/>`;
+  }).join(''));
+  ls.innerHTML = stages.map((s, i) => `<li tabindex="0" data-i="${i}" class="flex min-w-0 flex-col justify-center rounded-lg px-2.5 hover:bg-blue-50 focus:bg-blue-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800 dark:focus:bg-slate-800" aria-label="${s[0]}: ${f(s[1])}, ${pc(s[1] / peak)} del total${i ? ', ' + pc(step[i]) + ' de la etapa anterior' : ''}">
+    <span class="font-semibold">${s[0]}</span><span class="flex flex-wrap items-center gap-x-2 text-[13px] tabular-nums text-slate-500 dark:text-slate-400"><b class="text-sm text-slate-900 dark:text-slate-100">${f(s[1])}</b>${pc(s[1] / peak)} del total${i ? `<span class="${badge}${i === worst ? 'border-transparent bg-amber-50 dark:bg-amber-950' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900'}">${i === worst ? 'Mayor caída: ' : 'Paso '}${pc(step[i])}</span>` : ''}</span></li>`).join('');
+  sum.innerHTML = `<b class="block text-2xl font-semibold leading-tight tabular-nums">${pc(stages[n - 1][1] / peak)}</b><span class="text-[13px] text-slate-500 dark:text-slate-400">de las visitas terminan en pago</span>`;
+  const hl = (i) => fn.querySelectorAll('polygon').forEach((p) => p.classList.toggle('opacity-30', i >= 0 && +p.dataset.i !== i));
+  ls.addEventListener('pointerover', (e) => { const l = e.target.closest('li'); if (l) hl(+l.dataset.i); });
+  ls.addEventListener('focusin', (e) => hl(+e.target.dataset.i));
+  ['pointerleave', 'focusout'].forEach((t) => ls.addEventListener(t, () => hl(-1)));
+  fn.addEventListener('pointerover', (e) => e.target.dataset.i && hl(+e.target.dataset.i));
+  fn.addEventListener('pointerleave', () => hl(-1));
+  addEventListener('keydown', (e) => e.key === 'Escape' && hl(-1));
+</script>

@@ -1,0 +1,4 @@
+Crea una guía visual de un sistema de 12 columnas con CSS Grid para {{producto}}, con ejemplos reales de combinaciones (12, 6 + 6, 4 + 4 + 4, 8 + 4, 3 + 3 + 3 + 3, 2 + 8 + 2).
+Cada bloque usa grid-column: span var(--sm), con variables --md y --lg para cambiar el número de columnas por punto de quiebre mediante container queries (640 px y 900 px). Incluye un ejemplo de tarjetas adaptables y uno de contenido con lateral.
+Añade un interruptor nativo "Mostrar columnas" que dibuja las 12 guías detrás de cada fila solo con CSS (:has y un degradado), un indicador del punto de quiebre actual que cambia con container queries y una tabla de breakpoints cuya fila activa se resalta.
+Estilo sobrio y profesional: bordes finos de 1px, radio 8px, sombras suaves, acento azul, tokens CSS con tema claro y oscuro.

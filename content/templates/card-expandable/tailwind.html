@@ -1,0 +1,44 @@
+<style>
+  html{interpolate-size:allow-keywords}
+  details::details-content{block-size:0;overflow:hidden;transition:block-size .16s ease,content-visibility .16s allow-discrete}
+  details[open]::details-content{block-size:auto}
+  @media (prefers-reduced-motion:reduce){details::details-content{transition:none}}
+</style>
+<div class="mx-auto grid max-w-[620px] gap-3 bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100 [&_dt]:text-[13px] [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400 [&_dd]:m-0 [&_dd]:font-semibold [&_dd]:tabular-nums [&_dl]:mb-3.5 [&_dl]:grid [&_dl]:grid-cols-[repeat(auto-fit,minmax(120px,1fr))] [&_dl]:gap-x-4 [&_dl]:gap-y-2.5 [&_ul]:mb-3.5 [&_ul]:grid [&_ul]:list-none [&_ul]:gap-1.5 [&_ul]:p-0 [&_li]:flex [&_li]:justify-between [&_li]:gap-3 [&_time]:tabular-nums [&_time]:text-slate-500 dark:[&_time]:text-slate-400 [&_.btn]:inline-block [&_.btn]:rounded-lg [&_.btn]:bg-blue-600 [&_.btn]:px-3.5 [&_.btn]:py-1.5 [&_.btn]:font-semibold [&_.btn]:text-white [&_.btn]:no-underline [&_.btn:hover]:bg-blue-700 [&_.btn:focus-visible]:outline-2 [&_.btn:focus-visible]:outline-offset-2 [&_.btn:focus-visible]:outline-blue-500">
+  <details open class="group overflow-hidden rounded-lg border border-slate-200 bg-white transition-shadow open:shadow-md motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900">
+    <summary class="grid cursor-pointer list-none grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2.5 px-4 py-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 [&::-webkit-details-marker]:hidden">
+      <span><span class="block text-[15px] font-semibold leading-snug">Migración a la nube</span><span class="block text-[13px] text-slate-500 dark:text-slate-400">Responsable: Marta Ruiz</span></span>
+      <span class="flex items-center gap-2.5"><span class="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 px-2.5 text-xs font-semibold before:size-1.5 before:rounded-full before:bg-cyan-600 dark:bg-slate-800 dark:before:bg-cyan-400">En curso</span><svg class="size-4 text-slate-500 transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></span>
+      <span class="col-span-full flex items-center gap-2.5 text-[13px] tabular-nums text-slate-500 dark:text-slate-400"><i class="h-1.5 flex-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800"><b class="block h-full w-[68%] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></b></i>68% completado</span>
+    </summary>
+    <div class="border-t border-slate-200 px-4 pb-4 pt-3.5 dark:border-slate-700">
+      <dl><div><dt>Entrega</dt><dd>30 abr 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 84.000</dd></div><div><dt>Equipo</dt><dd>7 personas</dd></div></dl>
+      <ul><li><span>Pruebas de carga</span><time datetime="2026-03-14">14 mar</time></li><li><span>Corte de la base de datos</span><time datetime="2026-04-02">2 abr</time></li></ul>
+      <a class="btn" href="#">Ver proyecto</a>
+    </div>
+  </details>
+  <details class="group overflow-hidden rounded-lg border border-slate-200 bg-white transition-shadow open:shadow-md motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900">
+    <summary class="grid cursor-pointer list-none grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2.5 px-4 py-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 [&::-webkit-details-marker]:hidden">
+      <span><span class="block text-[15px] font-semibold leading-snug">Rediseño del panel de clientes</span><span class="block text-[13px] text-slate-500 dark:text-slate-400">Responsable: Luis Gómez</span></span>
+      <span class="flex items-center gap-2.5"><span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 text-xs font-semibold before:size-1.5 before:rounded-full before:bg-amber-600 dark:bg-slate-800 dark:before:bg-amber-400">En riesgo</span><svg class="size-4 text-slate-500 transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></span>
+      <span class="col-span-full flex items-center gap-2.5 text-[13px] tabular-nums text-slate-500 dark:text-slate-400"><i class="h-1.5 flex-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800"><b class="block h-full w-[41%] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></b></i>41% completado</span>
+    </summary>
+    <div class="border-t border-slate-200 px-4 pb-4 pt-3.5 dark:border-slate-700">
+      <dl><div><dt>Entrega</dt><dd>18 may 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 52.500</dd></div><div><dt>Equipo</dt><dd>4 personas</dd></div></dl>
+      <ul><li><span>Validar prototipo con clientes</span><time datetime="2026-03-20">20 mar</time></li><li><span>Entrega de componentes</span><time datetime="2026-04-15">15 abr</time></li></ul>
+      <a class="btn" href="#">Ver proyecto</a>
+    </div>
+  </details>
+  <details class="group overflow-hidden rounded-lg border border-slate-200 bg-white transition-shadow open:shadow-md motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900">
+    <summary class="grid cursor-pointer list-none grid-cols-[1fr_auto] items-center gap-x-3 gap-y-2.5 px-4 py-3.5 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 [&::-webkit-details-marker]:hidden">
+      <span><span class="block text-[15px] font-semibold leading-snug">Auditoría de seguridad anual</span><span class="block text-[13px] text-slate-500 dark:text-slate-400">Responsable: Carlos Díaz</span></span>
+      <span class="flex items-center gap-2.5"><span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 text-xs font-semibold before:size-1.5 before:rounded-full before:bg-emerald-600 dark:bg-slate-800 dark:before:bg-emerald-400">Completado</span><svg class="size-4 text-slate-500 transition-transform group-open:rotate-180 motion-reduce:transition-none" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></span>
+      <span class="col-span-full flex items-center gap-2.5 text-[13px] tabular-nums text-slate-500 dark:text-slate-400"><i class="h-1.5 flex-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800"><b class="block h-full w-full rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></b></i>100% completado</span>
+    </summary>
+    <div class="border-t border-slate-200 px-4 pb-4 pt-3.5 dark:border-slate-700">
+      <dl><div><dt>Entrega</dt><dd>28 feb 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 31.200</dd></div><div><dt>Equipo</dt><dd>3 personas</dd></div></dl>
+      <ul><li><span>Informe final firmado</span><time datetime="2026-02-28">28 feb</time></li></ul>
+      <a class="btn" href="#">Ver proyecto</a>
+    </div>
+  </details>
+</div>

@@ -1,0 +1,63 @@
+<main class="mx-auto max-w-[460px] rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+<form id="f" novalidate>
+  <h1 class="text-lg font-semibold">Crear espacio de trabajo</h1>
+  <p id="paso" aria-live="polite" class="mb-3 tabular-nums text-slate-500 dark:text-slate-400"></p>
+  <div id="bar" role="progressbar" aria-label="Progreso del formulario" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" class="mb-5 h-1.5 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800">
+    <i class="block h-full w-1/3 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 transition-[width] duration-150 motion-reduce:transition-none"></i>
+  </div>
+  <fieldset class="m-0 min-w-0 border-0 p-0 [&_label]:font-semibold [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-3 [&_input]:py-2 [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 [&_select]:py-2 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900 [&_.f]:mb-3.5 [&_.f]:grid [&_.f]:gap-1.5 [&_.err]:text-[13px] [&_.err]:text-red-600 dark:[&_.err]:text-red-400 [&_.err:empty]:hidden [&_[aria-invalid=true]]:border-red-500">
+    <legend class="mb-3 text-base font-semibold">Tus datos</legend>
+    <div class="f"><label for="n">Nombre completo</label><input id="n" required minlength="2" autocomplete="name" aria-describedby="n-e" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"><p class="err" id="n-e"></p></div>
+    <div class="f"><label for="e">Correo de trabajo</label><input id="e" type="email" required autocomplete="email" aria-describedby="e-e" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"><p class="err" id="e-e"></p></div>
+  </fieldset>
+  <fieldset hidden class="m-0 min-w-0 border-0 p-0 [&_label]:font-semibold [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-3 [&_input]:py-2 [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 [&_select]:py-2 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900 [&_.f]:mb-3.5 [&_.f]:grid [&_.f]:gap-1.5 [&_.err]:text-[13px] [&_.err]:text-red-600 dark:[&_.err]:text-red-400 [&_.err:empty]:hidden [&_[aria-invalid=true]]:border-red-500">
+    <legend class="mb-3 text-base font-semibold">Tu empresa</legend>
+    <div class="f"><label for="c">Nombre de la empresa</label><input id="c" required minlength="2" aria-describedby="c-e" class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"><p class="err" id="c-e"></p></div>
+    <div class="f"><label for="s">Tamaño del equipo</label>
+      <select id="s" required aria-describedby="s-e" data-value-missing="Elige el tamaño de tu equipo." class="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"><option value="">Selecciona una opción</option><option>1 a 10 personas</option><option>11 a 50 personas</option><option>Más de 50 personas</option></select><p class="err" id="s-e"></p></div>
+  </fieldset>
+  <fieldset hidden class="m-0 min-w-0 border-0 p-0 [&_.err]:text-[13px] [&_.err]:text-red-600 dark:[&_.err]:text-red-400 [&_.err:empty]:hidden">
+    <legend class="mb-3 text-base font-semibold">Revisa y confirma</legend>
+    <dl id="sum" class="mb-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-950 [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400 [&_dd]:m-0 [&_dd]:font-semibold"></dl>
+    <div class="flex items-center gap-2"><input type="checkbox" id="t" required aria-describedby="t-e" data-value-missing="Acepta los términos para crear el espacio." class="size-4 accent-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"><label for="t">Acepto los términos del servicio</label></div>
+    <p class="err mt-1.5" id="t-e"></p>
+  </fieldset>
+  <div class="mt-5 flex justify-end gap-2">
+    <button type="button" id="prev" hidden class="cursor-pointer rounded-lg border border-slate-200 bg-white px-4 py-2 font-semibold hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Atrás</button>
+    <button id="next" class="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">Continuar</button>
+  </div>
+</form>
+</main>
+<script>
+  const f = document.getElementById('f'), S = [...f.querySelectorAll('fieldset')], $ = (id) => document.getElementById(id);
+  const M = { valueMissing: 'Completa este campo.', typeMismatch: 'Escribe un correo válido, como ana@empresa.com.', tooShort: 'Usa al menos 2 caracteres.' };
+  let n = 0;
+  function show() {
+    S.forEach((s, i) => (s.hidden = i !== n));
+    const p = ((n + 1) / S.length) * 100;
+    $('bar').firstElementChild.style.width = p + '%'; $('bar').setAttribute('aria-valuenow', Math.round(p));
+    $('paso').textContent = `Paso ${n + 1} de ${S.length}`;
+    $('prev').hidden = !n; $('next').textContent = n === S.length - 1 ? 'Crear espacio' : 'Continuar';
+    if (n === S.length - 1) $('sum').replaceChildren(...['n', 'e', 'c', 's'].flatMap((id) => {
+      const a = document.createElement('dt'), b = document.createElement('dd');
+      a.textContent = document.querySelector(`label[for=${id}]`).textContent; b.textContent = $(id).value; return [a, b];
+    }));
+  }
+  function valid() {
+    let first;
+    S[n].querySelectorAll('input,select').forEach((i) => {
+      const k = Object.keys(M).find((k) => i.validity[k]);
+      $(i.id + '-e').textContent = k ? i.dataset[k] || M[k] : '';
+      i.setAttribute('aria-invalid', !!k);
+      if (k && !first) first = i;
+    });
+    first?.focus(); return !first;
+  }
+  f.onsubmit = (e) => {
+    e.preventDefault(); if (!valid()) return;
+    if (n < S.length - 1) { n++; show(); S[n].querySelector('input,select').focus(); }
+    else f.innerHTML = '<h1 class="text-lg font-semibold">Espacio creado</h1><p class="text-slate-500">Revisa tu correo para activar la cuenta.</p>';
+  };
+  $('prev').onclick = () => { n--; show(); };
+  show();
+</script>

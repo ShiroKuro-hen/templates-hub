@@ -1,0 +1,1 @@
+{ "title": "Skeleton de tabla que se resuelve", "category": "cargando", "description": "Filas esqueleto con brillo suave que se reemplazan por datos reales, con aria-busy.", "tags": ["skeleton", "table", "loading", "a11y"] }

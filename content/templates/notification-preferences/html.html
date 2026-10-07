@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:640px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding:16px 20px;border-bottom:1px solid var(--border)}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .sum{margin:0;color:var(--muted);font-variant-numeric:tabular-nums}
+  .scroll{overflow-x:auto}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:12px 8px;border-bottom:1px solid var(--border)}
+  tbody tr:last-child>*{border-bottom:0}
+  thead th{color:var(--muted);font-weight:600;text-align:center;vertical-align:bottom}
+  thead th:first-child,tbody th{padding-left:20px;text-align:left}
+  tbody th{min-width:110px;font-weight:600}
+  tbody th span{display:block;color:var(--muted);font-weight:400}
+  thead th label{color:var(--text);display:grid;justify-items:center;gap:6px;cursor:pointer}
+  td{width:64px;text-align:center}
+  tbody tr:hover{background:var(--accent-soft)}
+  input{appearance:none;display:block;width:18px;height:18px;margin:0 auto;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;transition:background .14s,border-color .14s}
+  input:hover{border-color:var(--accent)}
+  input:checked,input:indeterminate{border-color:transparent;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.3l2.4 2.4 4.6-5' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat,linear-gradient(135deg,#22d3ee,#2f5bff)}
+  input:indeterminate{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 6h6' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E"),linear-gradient(135deg,#22d3ee,#2f5bff)}
+  input:disabled{opacity:.5;cursor:not-allowed}
+  input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .note{margin:0;padding:12px 20px;border-top:1px solid var(--border);color:var(--muted)}
+  @media (max-width:460px){tbody th span{display:none}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <header><h2 id="t">Preferencias de notificación</h2><p class="sum" aria-live="polite"><b id="n">0</b> de 15 activadas</p></header>
+  <div class="scroll">
+  <table>
+    <caption hidden>Elige por qué canal recibes cada tipo de aviso.</caption>
+    <thead><tr>
+      <th scope="col">Evento</th>
+      <th scope="col"><label>Correo<input type="checkbox" data-all="0" aria-label="Activar todo por Correo"></label></th>
+      <th scope="col"><label>Push<input type="checkbox" data-all="1" aria-label="Activar todo por Push"></label></th>
+      <th scope="col"><label>SMS<input type="checkbox" data-all="2" aria-label="Activar todo por SMS"></label></th>
+    </tr></thead>
+    <tbody>
+      <tr><th scope="row">Menciones<span>Cuando alguien te menciona con @.</span></th>
+        <td><input type="checkbox" data-c="0" checked aria-label="Menciones por Correo"></td><td><input type="checkbox" data-c="1" checked aria-label="Menciones por Push"></td><td><input type="checkbox" data-c="2" aria-label="Menciones por SMS"></td></tr>
+      <tr><th scope="row">Comentarios<span>Respuestas en los hilos que sigues.</span></th>
+        <td><input type="checkbox" data-c="0" checked aria-label="Comentarios por Correo"></td><td><input type="checkbox" data-c="1" checked aria-label="Comentarios por Push"></td><td><input type="checkbox" data-c="2" aria-label="Comentarios por SMS"></td></tr>
+      <tr><th scope="row">Asignaciones<span>Tareas que te asignan o reasignan.</span></th>
+        <td><input type="checkbox" data-c="0" checked aria-label="Asignaciones por Correo"></td><td><input type="checkbox" data-c="1" aria-label="Asignaciones por Push"></td><td><input type="checkbox" data-c="2" aria-label="Asignaciones por SMS"></td></tr>
+      <tr><th scope="row">Resumen semanal<span>Cada lunes a las 9:00.</span></th>
+        <td><input type="checkbox" data-c="0" checked aria-label="Resumen semanal por Correo"></td><td><input type="checkbox" data-c="1" aria-label="Resumen semanal por Push"></td><td><input type="checkbox" data-c="2" aria-label="Resumen semanal por SMS"></td></tr>
+      <tr><th scope="row">Alertas de seguridad<span>Inicios de sesión y cambios de contraseña.</span></th>
+        <td><input type="checkbox" data-c="0" checked disabled aria-label="Alertas de seguridad por Correo (obligatorio)"></td><td><input type="checkbox" data-c="1" checked aria-label="Alertas de seguridad por Push"></td><td><input type="checkbox" data-c="2" aria-label="Alertas de seguridad por SMS"></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">Los cambios se guardan solos. Las alertas de seguridad por correo son obligatorias.</p>
+</section>
+<script>
+  const cells = [...document.querySelectorAll('[data-c]')], cols = [...document.querySelectorAll('[data-all]')];
+  const sync = () => {
+    cols.forEach((h, i) => {
+      const g = cells.filter((c) => c.dataset.c == i && !c.disabled), k = g.filter((c) => c.checked).length;
+      h.checked = k === g.length;
+      h.indeterminate = k > 0 && k < g.length;
+    });
+    n.textContent = cells.filter((c) => c.checked).length;
+  };
+  cols.forEach((h, i) => h.addEventListener('change', () => {
+    cells.filter((c) => c.dataset.c == i && !c.disabled).forEach((c) => (c.checked = h.checked));
+    sync();
+  }));
+  cells.forEach((c) => c.addEventListener('change', sync));
+  sync();
+</script>
+</body>
+</html>

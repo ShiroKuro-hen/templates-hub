@@ -1,0 +1,26 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <div class="mx-auto max-w-sm rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <h1 class="m-0 text-lg font-semibold">Proyecto Atlas</h1>
+    <p class="mb-4 mt-1 text-slate-500 dark:text-slate-400">Última edición hoy a las 10:42 por Ana Pérez.</p>
+    <button id="open" type="button" class="cursor-pointer rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">Compartir proyecto</button>
+    <p id="msg" role="status" class="mb-0 mt-3 min-h-6 text-slate-500 dark:text-slate-400"></p>
+  </div>
+  <dialog id="sheet" aria-labelledby="st"
+          class="fixed inset-x-0 bottom-0 m-0 mx-auto mt-auto w-full max-w-lg translate-y-0 overflow-auto rounded-t-lg border border-b-0 border-slate-200 bg-white p-0 text-slate-900 shadow-lg transition-transform duration-150 backdrop:bg-slate-900/50 starting:open:translate-y-full dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+    <button id="close" type="button" aria-label="Cerrar hoja" class="block w-full cursor-pointer border-0 bg-transparent pb-1.5 pt-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"><i class="mx-auto block h-1 w-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></button>
+    <h2 id="st" class="m-0 px-5 pb-3 pt-1 text-base font-semibold">Compartir Proyecto Atlas</h2>
+    <ul class="m-0 list-none px-2">
+      <li><button data-msg="Enlace copiado al portapapeles." autofocus class="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-left hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800"><span class="flex-1">Copiar enlace<small class="block text-slate-500 dark:text-slate-400">Cualquiera con el enlace puede ver</small></span></button></li>
+      <li><button data-msg="Invitación enviada por correo." class="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-left hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800"><span class="flex-1">Enviar por correo<small class="block text-slate-500 dark:text-slate-400">Invita a personas concretas</small></span></button></li>
+      <li><button data-msg="Exportación a PDF iniciada." class="flex w-full cursor-pointer items-center gap-3 rounded-lg p-3 text-left hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800"><span class="flex-1">Exportar a PDF<small class="block text-slate-500 dark:text-slate-400">Descarga una copia estática</small></span></button></li>
+    </ul>
+    <div class="px-5 pb-5 pt-2"><button id="cancel" type="button" class="w-full cursor-pointer rounded-lg border border-slate-200 px-4 py-2 font-semibold hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700">Cancelar</button></div>
+  </dialog>
+</div>
+<script>
+  const d = document.getElementById('sheet'), msg = document.getElementById('msg');
+  document.getElementById('open').onclick = () => d.showModal();
+  document.getElementById('close').onclick = document.getElementById('cancel').onclick = () => d.close();
+  d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+  d.querySelectorAll('[data-msg]').forEach((b) => (b.onclick = () => { msg.textContent = b.dataset.msg; d.close(); }));
+</script>

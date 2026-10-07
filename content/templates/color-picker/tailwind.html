@@ -1,0 +1,58 @@
+<main id="card" class="mx-auto max-w-[460px] rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h1 class="text-lg font-semibold leading-snug">Color de marca</h1>
+  <p class="mb-4 text-slate-500 dark:text-slate-400">Se usará en botones y enlaces de tu espacio.</p>
+  <div id="prev" aria-hidden="true" class="flex min-h-[88px] flex-wrap items-end gap-x-5 gap-y-1 rounded-lg px-4 py-3.5 text-lg font-semibold [&>span:first-child]:text-white [&>span:last-child]:text-black"><span>Aa Texto blanco</span><span>Aa Texto negro</span></div>
+  <ul aria-live="polite" class="mb-4 mt-3 grid list-none gap-1.5 p-0 tabular-nums">
+    <li class="flex flex-wrap items-center gap-2">Texto blanco <b id="rw"></b> <span id="bw"></span></li>
+    <li class="flex flex-wrap items-center gap-2">Texto negro <b id="rk"></b> <span id="bk"></span></li>
+  </ul>
+  <div class="flex flex-wrap items-end gap-3">
+    <input type="color" id="c" aria-label="Elegir color" value="#2f5bff" class="box-border h-10 w-11 cursor-pointer rounded-lg border border-slate-200 bg-white p-[3px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+    <div class="grid gap-1.5">
+      <label for="x" class="font-semibold">Valor HEX</label>
+      <input id="x" maxlength="7" spellcheck="false" autocomplete="off" aria-describedby="xe" class="w-28 rounded-lg border border-slate-200 bg-white px-3 py-2 uppercase tabular-nums focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 [&[aria-invalid=true]]:border-red-500">
+    </div>
+    <p id="rgb" class="pb-2 tabular-nums text-slate-500 dark:text-slate-400"></p>
+  </div>
+  <p id="xe" role="alert" class="mt-1.5 min-h-[21px] text-[13px] text-red-600 dark:text-red-400"></p>
+  <fieldset id="sws" class="m-0 flex flex-wrap gap-2 border-0 p-0 [&_button]:size-9 [&_button]:cursor-pointer [&_button]:rounded-lg [&_button]:border [&_button]:border-slate-200 [&_button]:text-base [&_button]:leading-none [&_button]:text-white [&_button]:transition-transform [&_button:hover]:-translate-y-px [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-blue-500 motion-reduce:[&_button]:transition-none dark:[&_button]:border-slate-700 [&_button[aria-pressed=true]]:ring-1 [&_button[aria-pressed=true]]:ring-blue-600 [&_button[aria-pressed=true]]:ring-offset-2 [&_button[aria-pressed=true]]:ring-offset-white dark:[&_button[aria-pressed=true]]:ring-blue-400 dark:[&_button[aria-pressed=true]]:ring-offset-slate-900 [&_button[aria-pressed=true]::after]:content-['✓']">
+    <legend class="mb-2 p-0 font-semibold">Muestras</legend>
+    <button type="button" style="background:#2f5bff" data-hex="#2f5bff" aria-label="Ultramar #2F5BFF"></button>
+    <button type="button" style="background:#0891b2" data-hex="#0891b2" aria-label="Cian #0891B2"></button>
+    <button type="button" style="background:#0e9f6e" data-hex="#0e9f6e" aria-label="Esmeralda #0E9F6E"></button>
+    <button type="button" style="background:#b7791f" data-hex="#b7791f" aria-label="Ámbar #B7791F"></button>
+    <button type="button" style="background:#d92d4a" data-hex="#d92d4a" aria-label="Coral #D92D4A"></button>
+    <button type="button" style="background:#7c3aed" data-hex="#7c3aed" aria-label="Violeta #7C3AED"></button>
+    <button type="button" style="background:#334155" data-hex="#334155" aria-label="Pizarra #334155"></button>
+    <button type="button" style="background:#0e1726" data-hex="#0e1726" aria-label="Grafito #0E1726"></button>
+  </fieldset>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id), c = $('c'), x = $('x'), HEX = /^#[0-9a-f]{6}$/i;
+  const BASE = 'rounded-full px-2 text-xs font-semibold ', OK = 'bg-emerald-50 text-emerald-700 dark:bg-slate-800 dark:text-emerald-400', NO = 'bg-red-50 text-red-700 dark:bg-slate-800 dark:text-red-400';
+  const rgb = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const lum = (v) => { const [r, g, b] = v.map((n) => { n /= 255; return n <= 0.03928 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4; }); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
+  const ratio = (a, b) => { const [p, q] = [lum(a), lum(b)].sort((m, n) => n - m); return (p + 0.05) / (q + 0.05); };
+  function set(hex, from) {
+    hex = hex.toLowerCase(); c.value = hex;
+    $('prev').style.background = `linear-gradient(135deg,${hex} 60%,color-mix(in srgb,${hex} 55%,cyan))`;
+    if (from !== x) x.value = hex;
+    x.removeAttribute('aria-invalid'); $('xe').textContent = '';
+    const v = rgb(hex); $('rgb').textContent = `rgb(${v.join(', ')})`;
+    [['w', [255, 255, 255]], ['k', [0, 0, 0]]].forEach(([k, fg]) => {
+      const r = ratio(v, fg), ok = r >= 4.5;
+      $('r' + k).textContent = r.toFixed(1).replace('.', ',') + ':1';
+      $('b' + k).textContent = ok ? 'Cumple AA' : 'No cumple AA'; $('b' + k).className = BASE + (ok ? OK : NO);
+    });
+    document.querySelectorAll('#sws button').forEach((b) => b.setAttribute('aria-pressed', b.dataset.hex === hex));
+  }
+  c.oninput = () => set(c.value);
+  x.oninput = () => { const v = '#' + x.value.replace(/[^0-9a-f]/gi, ''); x.value = v; if (HEX.test(v)) set(v, x); };
+  x.onblur = () => {
+    let v = x.value; if (/^#[0-9a-f]{3}$/i.test(v)) v = '#' + [...v.slice(1)].map((d) => d + d).join('');
+    const ok = HEX.test(v); if (ok) set(v);
+    x.setAttribute('aria-invalid', !ok); $('xe').textContent = ok ? '' : 'Escribe un HEX de 6 dígitos, como #2F5BFF.';
+  };
+  document.querySelectorAll('#sws button').forEach((b) => (b.onclick = () => set(b.dataset.hex)));
+  set('#2f5bff');
+</script>

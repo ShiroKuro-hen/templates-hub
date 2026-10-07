@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:16px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  h2::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:2px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px}
+  .legend button{display:inline-flex;align-items:center;gap:8px;font:inherit;padding:4px 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s,color .14s}
+  .legend button:hover{background:var(--accent-soft)}
+  .legend button[aria-pressed=false]{color:var(--muted);background:transparent}
+  .legend button[aria-pressed=false] i{opacity:.3}
+  i.sw{display:inline-block;width:10px;height:10px;border-radius:3px}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .plot{position:relative}
+  svg{display:block;width:100%;height:260px;overflow:visible}
+  .gl{stroke:var(--border);stroke-width:1}
+  .ax{fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .hit{fill:transparent;transition:fill .14s}
+  .grp{outline:none}
+  .grp:hover .hit{fill:var(--accent-soft)}
+  .grp:focus .hit{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1}
+  .tip{position:absolute;top:0;transform:translateX(-50%);min-width:150px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);pointer-events:none;font-size:13px}
+  .tip>b{display:block;margin-bottom:4px}
+  .tip div{display:flex;justify-content:space-between;gap:16px;font-variant-numeric:tabular-nums}
+  .tip i.sw{margin-right:6px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption class="head">
+    <div><h2>Ingresos, costos y margen por trimestre</h2><p>Miles de USD, año fiscal 2025</p></div>
+    <div class="legend" id="lg" role="group" aria-label="Series visibles"></div>
+  </figcaption>
+  <div class="plot"><svg id="svg" role="group" aria-label="Barras agrupadas por trimestre"></svg><div class="tip" id="tip" hidden></div></div>
+</figure>
+<script>
+  const series = [{ n: 'Ingresos', c: '--accent' }, { n: 'Costos', c: '--info' }, { n: 'Margen', c: '--ok' }];
+  const data = [['T1', [120, 78, 42]], ['T2', [138, 84, 54]], ['T3', [126, 90, 36]], ['T4', [152, 96, 56]]];
+  const on = new Set([0, 1, 2]), H = 260, L = 36, R = 8, T = 12, B = 28, MAX = 160;
+  let W = 480;
+  function legend() {
+    lg.innerHTML = series.map((s, i) => `<button type="button" data-i="${i}" aria-pressed="${on.has(i)}"><i class="sw" style="background:var(${s.c})"></i>${s.n}</button>`).join('');
+  }
+  function draw() {
+    W = svg.clientWidth || 480;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const vis = series.map((_, i) => i).filter((i) => on.has(i));
+    const gw = (W - L - R) / data.length, bw = Math.min(28, (gw * 0.72 - 4 * (vis.length - 1)) / vis.length);
+    const y = (v) => T + (H - T - B) * (1 - v / MAX);
+    let s = '';
+    for (let t = 0; t <= MAX; t += 40) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text class="ax" x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
+    data.forEach(([l, v], g) => {
+      const x0 = L + g * gw, off = (gw - bw * vis.length - 4 * (vis.length - 1)) / 2;
+      s += `<g class="grp" data-g="${g}" tabindex="0" role="img" aria-label="${l}: ${vis.map((i) => series[i].n + ' ' + v[i]).join(', ')}"><rect class="hit" x="${x0}" y="${T}" width="${gw}" height="${H - T - B}" rx="4"/>`;
+      vis.forEach((i, k) => { s += `<rect x="${x0 + off + k * (bw + 4)}" y="${y(v[i])}" width="${bw}" height="${y(0) - y(v[i])}" rx="2" style="fill:var(${series[i].c})"/>`; });
+      s += `</g><text class="ax" x="${x0 + gw / 2}" y="${H - 8}" text-anchor="middle">${l}</text>`;
+    });
+    svg.innerHTML = s; tip.hidden = true;
+  }
+  function show(g) {
+    const [l, v] = data[g.dataset.g], x = L + (+g.dataset.g + 0.5) * (W - L - R) / data.length;
+    tip.innerHTML = `<b>${l}</b>` + series.map((q, i) => on.has(i) ? `<div><span><i class="sw" style="background:var(${q.c})"></i>${q.n}</span><b>${v[i]}</b></div>` : '').join('');
+    tip.style.left = Math.min(Math.max(x, 80), W - 80) + 'px'; tip.hidden = false;
+  }
+  lg.onclick = (e) => { const b = e.target.closest('button'); if (!b) return; const i = +b.dataset.i; if (on.has(i) && on.size > 1) on.delete(i); else on.add(i); legend(); draw(); };
+  svg.addEventListener('pointerover', (e) => { const g = e.target.closest('.grp'); if (g) show(g); });
+  svg.addEventListener('focusin', (e) => show(e.target.closest('.grp')));
+  svg.addEventListener('pointerleave', () => (tip.hidden = true));
+  svg.addEventListener('focusout', () => (tip.hidden = true));
+  addEventListener('keydown', (e) => e.key === 'Escape' && (tip.hidden = true));
+  addEventListener('resize', draw);
+  legend(); draw();
+</script>
+</body>
+</html>

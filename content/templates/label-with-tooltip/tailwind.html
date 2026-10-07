@@ -1,0 +1,33 @@
+<form onsubmit="return false" aria-labelledby="t" class="mx-auto max-w-md rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h2 id="t" class="mb-4 text-lg font-semibold">Configurar facturación</h2>
+  <div id="fields"></div>
+  <button type="submit" class="h-9 cursor-pointer rounded-lg border border-blue-600 bg-blue-600 px-4 font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-blue-400 dark:bg-blue-400 dark:text-slate-950">Guardar cambios</button>
+</form>
+<script>
+  const FIELDS = [
+    ['f1', 'Límite de gasto mensual', 'el límite de gasto', 'Al llegar a este importe pausamos los envíos y te avisamos por correo. Puedes subirlo cuando quieras.', 'value="1.500" inputmode="numeric"'],
+    ['f2', 'Dominio personalizado', 'el dominio', 'Escribe solo el dominio, sin https://. Después añade un registro CNAME que apunte a clientes.ejemplo.com.', 'placeholder="panel.miempresa.com"'],
+  ];
+  fields.innerHTML = FIELDS.map(([id, label, about, tip, attrs]) => `
+    <div class="mb-4">
+      <div class="lab relative mb-1.5 flex items-center gap-1.5">
+        <label for="${id}" class="font-semibold">${label}</label>
+        <button type="button" class="help grid size-5 cursor-pointer place-items-center rounded-full border border-slate-200 text-slate-500 transition-colors hover:border-blue-500 hover:bg-blue-50 hover:text-blue-600 aria-expanded:border-blue-500 aria-expanded:bg-blue-50 aria-expanded:text-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:aria-expanded:bg-slate-800" aria-label="Más información sobre ${about}" aria-expanded="false" aria-controls="tip-${id}">
+          <svg class="size-3 fill-none stroke-current stroke-[2.2] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8M12 17.5v.01"/></svg>
+        </button>
+        <div id="tip-${id}" hidden class="absolute left-0 top-[calc(100%+6px)] z-10 box-border w-[min(300px,100%)] rounded-lg border border-slate-200 bg-white px-3 py-2.5 font-normal shadow-md border-l-[3px] border-l-blue-600 dark:border-slate-700 dark:border-l-blue-400 dark:bg-slate-900">${tip}</div>
+      </div>
+      <input id="${id}" ${attrs} aria-describedby="tip-${id}" class="box-border h-9 w-full rounded-lg border border-slate-200 bg-white px-3 tabular-nums focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">
+    </div>`).join('');
+  const helps = [...document.querySelectorAll('.help')];
+  const tipOf = (b) => document.getElementById(b.getAttribute('aria-controls'));
+  const setOpen = (b, open) => { b.setAttribute('aria-expanded', open); tipOf(b).hidden = !open; };
+  const closeAll = (except) => helps.forEach((b) => b !== except && setOpen(b, false));
+  helps.forEach((b) => {
+    b.addEventListener('click', () => { const pin = b.dataset.pinned !== 'true'; closeAll(b); setOpen(b, pin); b.dataset.pinned = pin; });
+    b.addEventListener('pointerenter', () => { closeAll(b); setOpen(b, true); });
+    b.addEventListener('pointerleave', () => b.dataset.pinned !== 'true' && setOpen(b, false));
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') helps.forEach((b) => { if (b.getAttribute('aria-expanded') === 'true') { setOpen(b, false); b.dataset.pinned = false; b.focus(); } }); });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.lab')) helps.forEach((b) => { setOpen(b, false); b.dataset.pinned = false; }); });
+</script>

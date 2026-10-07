@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  form{max-width:420px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0 0 16px;font-size:18px}
+  .field{margin-bottom:16px}
+  .lab{position:relative;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+  label{font-weight:600}
+  .help{all:unset;box-sizing:border-box;display:grid;place-items:center;width:20px;height:20px;border:1px solid var(--border);border-radius:50%;color:var(--muted);cursor:pointer;transition:background .14s,color .14s,border-color .14s}
+  .help:hover,.help[aria-expanded=true]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .help:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .help svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+  .tip{position:absolute;z-index:1;top:calc(100% + 6px);left:0;width:min(300px,100%);box-sizing:border-box;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);color:var(--text);font-weight:400}
+  .tip::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:var(--radius) 0 0 var(--radius);background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .tip[hidden]{display:none}
+  input{box-sizing:border-box;width:100%;height:36px;padding:0 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;font-variant-numeric:tabular-nums}
+  input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .hint{margin:4px 0 0;color:var(--muted);font-size:13px}
+  .btn{height:36px;padding:0 16px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;cursor:pointer}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<form onsubmit="return false" aria-labelledby="t">
+  <h2 id="t">Configurar facturación</h2>
+  <div class="field">
+    <div class="lab"><label for="f1">Límite de gasto mensual</label>
+      <button type="button" class="help" aria-label="Más información sobre el límite de gasto" aria-expanded="false" aria-controls="tip1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8M12 17.5v.01"/></svg></button>
+      <div class="tip" id="tip1" hidden>Al llegar a este importe pausamos los envíos y te avisamos por correo. Puedes subirlo cuando quieras.</div></div>
+    <input id="f1" inputmode="numeric" value="1.500" aria-describedby="tip1">
+  </div>
+  <div class="field">
+    <div class="lab"><label for="f2">Dominio personalizado</label>
+      <button type="button" class="help" aria-label="Más información sobre el dominio" aria-expanded="false" aria-controls="tip2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8M12 17.5v.01"/></svg></button>
+      <div class="tip" id="tip2" hidden>Escribe solo el dominio, sin https://. Después añade un registro CNAME que apunte a clientes.ejemplo.com.</div></div>
+    <input id="f2" placeholder="panel.miempresa.com" aria-describedby="tip2">
+  </div>
+  <button class="btn" type="submit">Guardar cambios</button>
+</form>
+<script>
+  const helps = [...document.querySelectorAll('.help')];
+  const tipOf = (b) => document.getElementById(b.getAttribute('aria-controls'));
+  const setOpen = (b, open) => { b.setAttribute('aria-expanded', open); tipOf(b).hidden = !open; };
+  const closeAll = (except) => helps.forEach((b) => b !== except && setOpen(b, false));
+  helps.forEach((b) => {
+    b.addEventListener('click', () => { const pin = b.dataset.pinned !== 'true'; closeAll(b); setOpen(b, pin); b.dataset.pinned = pin; });
+    b.addEventListener('pointerenter', () => { closeAll(b); setOpen(b, true); });
+    b.addEventListener('pointerleave', () => b.dataset.pinned !== 'true' && setOpen(b, false));
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') helps.forEach((b) => { if (b.getAttribute('aria-expanded') === 'true') { setOpen(b, false); b.dataset.pinned = false; b.focus(); } }); });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.lab')) helps.forEach((b) => { setOpen(b, false); b.dataset.pinned = false; }); });
+</script>
+</body>
+</html>

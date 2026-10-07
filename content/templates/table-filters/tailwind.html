@@ -1,0 +1,59 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<section aria-labelledby="t" class="mx-auto max-w-[820px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900
+  [&_input]:w-full [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-2.5 [&_input]:py-1.5 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900
+  [&_select]:w-full [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-2.5 [&_select]:py-1.5 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900
+  [&_input:focus-visible]:outline-2 [&_input:focus-visible]:outline-offset-2 [&_input:focus-visible]:outline-blue-500 [&_select:focus-visible]:outline-2 [&_select:focus-visible]:outline-offset-2 [&_select:focus-visible]:outline-blue-500">
+  <header class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 dark:border-slate-700">
+    <h2 id="t" class="text-base font-semibold">Clientes</h2>
+    <div class="max-w-xs flex-[1_1_220px]"><label class="sr-only" for="q">Buscar en toda la tabla</label><input id="q" type="search" placeholder="Buscar cliente, plan o estado" autocomplete="off"></div>
+  </header>
+  <div class="overflow-x-auto">
+    <table id="tb" class="group w-full min-w-[560px] border-collapse text-left">
+      <caption class="sr-only">Clientes. Los filtros bajo cada encabezado reducen las filas al instante.</caption>
+      <thead class="[&_th]:px-4 [&_th]:pb-1.5 [&_th]:pt-2.5 [&_th]:font-semibold [&_th]:text-slate-500 dark:[&_th]:text-slate-400">
+        <tr><th scope="col">Cliente</th><th scope="col">Plan</th><th scope="col">Estado</th><th scope="col" class="text-right">MRR</th></tr>
+        <tr class="[&>td]:border-b [&>td]:border-slate-200 [&>td]:px-4 [&>td]:pb-2.5 dark:[&>td]:border-slate-700 group-[.on]:[&>td]:border-cyan-400 dark:group-[.on]:[&>td]:border-cyan-500">
+          <td><input data-f="0" type="text" aria-label="Filtrar por cliente" placeholder="Filtrar" autocomplete="off"></td>
+          <td><select data-f="1" aria-label="Filtrar por plan"><option value="">Todos</option><option>Free</option><option>Pro</option><option>Team</option><option>Enterprise</option></select></td>
+          <td><select data-f="2" aria-label="Filtrar por estado"><option value="">Todos</option><option>Activo</option><option>Prueba</option><option>Suspendido</option></select></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody class="[&>tr>*]:border-b [&>tr>*]:border-slate-200 [&>tr>*]:px-4 [&>tr>*]:py-2.5 dark:[&>tr>*]:border-slate-700 hover:[&>tr]:bg-blue-50 dark:hover:[&>tr]:bg-slate-800 [&_th]:font-semibold [&_b]:rounded-full [&_b]:px-2.5 [&_b]:py-0.5 [&_b]:text-xs [&_b]:font-semibold [&_.ok]:bg-emerald-100 dark:[&_.ok]:bg-emerald-500/20 [&_.warn]:bg-amber-100 dark:[&_.warn]:bg-amber-500/20 [&_.err]:bg-red-100 dark:[&_.err]:bg-red-500/20">
+        <tr><th scope="row">Textiles Andina</th><td>Team</td><td><b class="ok">Activo</b></td><td class="text-right tabular-nums">S/ 1,240</td></tr>
+        <tr><th scope="row">Café del Valle</th><td>Pro</td><td><b class="warn">Prueba</b></td><td class="text-right tabular-nums">S/ 0</td></tr>
+        <tr><th scope="row">Logística Pacífico</th><td>Enterprise</td><td><b class="ok">Activo</b></td><td class="text-right tabular-nums">S/ 8,900</td></tr>
+        <tr><th scope="row">Estudio Mirador</th><td>Pro</td><td><b class="ok">Activo</b></td><td class="text-right tabular-nums">S/ 390</td></tr>
+        <tr><th scope="row">Agro Sierra</th><td>Team</td><td><b class="err">Suspendido</b></td><td class="text-right tabular-nums">S/ 1,240</td></tr>
+        <tr><th scope="row">Clínica San Isidro</th><td>Enterprise</td><td><b class="ok">Activo</b></td><td class="text-right tabular-nums">S/ 6,450</td></tr>
+        <tr><th scope="row">Bodega Los Olivos</th><td>Free</td><td><b class="warn">Prueba</b></td><td class="text-right tabular-nums">S/ 0</td></tr>
+        <tr><th scope="row">Nova Telecom</th><td>Pro</td><td><b class="err">Suspendido</b></td><td class="text-right tabular-nums">S/ 390</td></tr>
+        <tr id="none" hidden><td colspan="4" class="!py-8 text-center text-slate-500 dark:text-slate-400">Ningún cliente coincide. Cambia los filtros o limpia la búsqueda.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <footer class="flex min-h-7 items-center justify-between gap-3 px-5 py-3 text-[13px] text-slate-500 dark:text-slate-400">
+    <span id="cnt" role="status">8 de 8 clientes</span>
+    <button id="clr" type="button" hidden class="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-1 text-slate-900 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800">Limpiar filtros</button>
+  </footer>
+</section>
+</div>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const norm = (s) => s.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').trim();
+  const rows = [...$('tb').tBodies[0].rows].filter((r) => r.id !== 'none');
+  const fields = [...document.querySelectorAll('[data-f]')];
+  function apply() {
+    const q = norm($('q').value), fs = fields.map((e) => [+e.dataset.f, norm(e.value)]).filter((x) => x[1]);
+    let n = 0;
+    rows.forEach((r) => {
+      const c = [...r.cells].map((x) => norm(x.textContent));
+      const ok = (!q || c.join(' ').includes(q)) && fs.every(([i, v]) => (i ? c[i] === v : c[i].includes(v)));
+      r.hidden = !ok; n += ok;
+    });
+    $('none').hidden = n > 0; $('tb').classList.toggle('on', fs.length > 0);
+    $('cnt').textContent = `${n} de ${rows.length} clientes`; $('clr').hidden = !(q || fs.length);
+  }
+  [$('q'), ...fields].forEach((e) => e.addEventListener('input', apply));
+  $('clr').addEventListener('click', () => { [$('q'), ...fields].forEach((e) => (e.value = '')); apply(); $('q').focus(); });
+</script>

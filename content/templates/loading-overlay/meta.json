@@ -1,0 +1,1 @@
+{ "title": "Overlay de carga sobre un panel", "category": "cargando", "description": "Capa de carga con spinner sobre un panel, con aria-busy y contenido inerte.", "tags": ["loading", "overlay", "a11y"] }

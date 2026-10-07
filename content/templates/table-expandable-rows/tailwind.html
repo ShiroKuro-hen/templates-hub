@@ -1,0 +1,39 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<section aria-labelledby="t" class="mx-auto max-w-[820px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+  <header class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 dark:border-slate-700">
+    <h2 id="t" class="text-base font-semibold">Despliegues recientes</h2>
+    <button id="all" type="button" class="cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-2 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Expandir todo</button>
+  </header>
+  <div class="overflow-x-auto">
+    <table class="w-full min-w-[560px] border-collapse text-left">
+      <caption class="sr-only">Despliegues recientes. Usa el botón de cada fila para ver su detalle.</caption>
+      <thead class="text-slate-500 dark:text-slate-400 [&_th]:border-b [&_th]:border-slate-200 [&_th]:px-4 [&_th]:py-2.5 [&_th]:font-semibold dark:[&_th]:border-slate-700">
+        <tr><th scope="col" class="w-11"><span class="sr-only">Detalle</span></th><th scope="col">Servicio</th><th scope="col">Entorno</th><th scope="col">Estado</th><th scope="col" class="text-right">Duración</th></tr>
+      </thead>
+      <tbody class="[&>tr:last-child>*]:border-0 [&>tr>*]:border-b [&>tr>*]:border-slate-200 [&>tr>*]:px-4 [&>tr>*]:py-2.5 dark:[&>tr>*]:border-slate-700 [&>tr.open>*]:bg-blue-50 dark:[&>tr.open>*]:bg-slate-800 [&>tr.open+tr>*]:bg-slate-50 dark:[&>tr.open+tr>*]:bg-slate-950 [&>tr.open>:first-child]:bg-[linear-gradient(180deg,theme(colors.cyan.400),theme(colors.blue.600))] [&>tr.open>:first-child]:bg-[length:3px_100%] [&>tr.open>:first-child]:bg-no-repeat
+        [&_.tg]:grid [&_.tg]:size-7 [&_.tg]:cursor-pointer [&_.tg]:place-items-center [&_.tg]:rounded-lg [&_.tg]:text-slate-500 hover:[&_.tg]:bg-blue-50 hover:[&_.tg]:text-slate-900 dark:[&_.tg]:text-slate-400 dark:hover:[&_.tg]:bg-slate-800 dark:hover:[&_.tg]:text-slate-100 [&_.tg:focus-visible]:outline-2 [&_.tg:focus-visible]:outline-offset-2 [&_.tg:focus-visible]:outline-blue-500
+        [&_.tg_svg]:size-4 [&_.tg_svg]:fill-none [&_.tg_svg]:stroke-current [&_.tg_svg]:stroke-2 [&_.tg_svg]:transition-transform [&_.tg[aria-expanded=true]_svg]:rotate-90
+        [&_dl]:m-0 [&_dl]:grid [&_dl]:grid-cols-[max-content_1fr] [&_dl]:gap-x-5 [&_dl]:gap-y-1 [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400 [&_dd]:m-0 [&_b]:rounded-full [&_b]:px-2.5 [&_b]:py-0.5 [&_b]:text-xs [&_b]:font-semibold">
+        <tr><td class="w-11"><button class="tg" type="button" aria-expanded="false" aria-controls="d1" aria-label="Detalle de api-pagos"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></td><th scope="row" class="font-semibold">api-pagos</th><td>Producción</td><td><b class="bg-emerald-100 dark:bg-emerald-500/20">Completado</b></td><td class="text-right tabular-nums">2 min 14 s</td></tr>
+        <tr id="d1" hidden><td></td><td colspan="4"><dl><dt>Versión</dt><dd>v3.8.1</dd><dt>Responsable</dt><dd>Lucía Vargas</dd><dt>Cambios</dt><dd>Corrige el redondeo de impuestos en las facturas.</dd></dl></td></tr>
+        <tr><td class="w-11"><button class="tg" type="button" aria-expanded="false" aria-controls="d2" aria-label="Detalle de web-cliente"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></td><th scope="row" class="font-semibold">web-cliente</th><td>Preproducción</td><td><b class="bg-cyan-100 dark:bg-cyan-500/20">En curso</b></td><td class="text-right tabular-nums">1 min 03 s</td></tr>
+        <tr id="d2" hidden><td></td><td colspan="4"><dl><dt>Versión</dt><dd>v5.2.0-rc2</dd><dt>Responsable</dt><dd>Marco Huamán</dd><dt>Cambios</dt><dd>Nuevo flujo de registro con verificación por correo.</dd></dl></td></tr>
+        <tr><td class="w-11"><button class="tg" type="button" aria-expanded="false" aria-controls="d3" aria-label="Detalle de worker-correo"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></td><th scope="row" class="font-semibold">worker-correo</th><td>Producción</td><td><b class="bg-red-100 dark:bg-red-500/20">Fallido</b></td><td class="text-right tabular-nums">48 s</td></tr>
+        <tr id="d3" hidden><td></td><td colspan="4"><dl><dt>Versión</dt><dd>v1.14.3</dd><dt>Responsable</dt><dd>Diana Salas</dd><dt>Error</dt><dd class="text-red-600 dark:text-red-400">Tiempo de espera agotado al conectar con la cola.</dd><dt>Solución</dt><dd>Revisa la variable QUEUE_URL y vuelve a desplegar.</dd></dl></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+</div>
+<script>
+  const btns = [...document.querySelectorAll('.tg')], all = document.getElementById('all');
+  const isOpen = (b) => b.getAttribute('aria-expanded') === 'true';
+  function set(b, open) {
+    b.setAttribute('aria-expanded', open);
+    document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
+    b.closest('tr').classList.toggle('open', open);
+    all.textContent = btns.every(isOpen) ? 'Contraer todo' : 'Expandir todo';
+  }
+  btns.forEach((b) => b.addEventListener('click', () => set(b, !isOpen(b))));
+  all.addEventListener('click', () => { const o = !btns.every(isOpen); btns.forEach((b) => set(b, o)); });
+</script>

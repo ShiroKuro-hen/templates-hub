@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:16px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .legend{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px}
+  .legend button,.legend .tr{display:inline-flex;align-items:center;gap:8px;font:inherit;padding:4px 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text)}
+  .legend button{cursor:pointer;transition:background .14s,color .14s}
+  .legend button:hover{background:var(--accent-soft)}
+  .legend button[aria-pressed=false]{color:var(--muted);background:transparent}
+  .legend button[aria-pressed=false] i{opacity:.3}
+  .legend .tr{color:var(--muted);border-style:dashed}
+  i.sw{display:inline-block;width:10px;height:10px;border-radius:50%}
+  .tr i{width:16px;height:3px;border-radius:2px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .plot{position:relative}
+  svg{display:block;width:100%;height:320px;overflow:visible}
+  .gl{stroke:var(--border);stroke-width:1}
+  .ax{fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .at{fill:var(--text);font-size:12px;font-weight:600}
+  circle.p{stroke:var(--surface);stroke-width:1.5;fill-opacity:.85;cursor:pointer;outline:none;transition:r .12s}
+  circle.p:hover,circle.p:focus{r:8;stroke:var(--text);stroke-width:2}
+  .tip{position:absolute;min-width:150px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);pointer-events:none;font-size:13px;transform:translate(-50%,calc(-100% - 14px))}
+  .tip.below{transform:translate(-50%,14px)}
+  .tip>b{display:block}
+  .tip div{display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .tip div span:last-child{color:var(--text)}
+  .hint{margin:12px 0 0;color:var(--muted);font-size:13px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption class="head">
+    <div><h2>Gasto frente a clientes nuevos</h2><p>Cada punto es una campaña del primer semestre.</p></div>
+    <div class="legend" id="lg" role="group" aria-label="Canales visibles"></div>
+  </figcaption>
+  <div class="plot"><svg id="svg" role="group" aria-label="Diagrama de dispersión de gasto y clientes nuevos"></svg><div class="tip" id="tip" hidden></div></div>
+  <p class="hint">Usa Tab para entrar en el gráfico y las flechas para moverte entre campañas.</p>
+</figure>
+<script>
+  const groups = [{ n: 'Búsqueda', c: '--accent' }, { n: 'Redes sociales', c: '--info' }, { n: 'Correo', c: '--ok' }];
+  // [campaña, gasto en miles de USD, clientes nuevos, canal]
+  const pts = [
+    ['Marca', 14, 52, 0], ['Competencia', 28, 88, 0], ['Genéricas', 45, 118, 0], ['Remarketing', 62, 170, 0], ['Shopping', 78, 196, 0],
+    ['Reels', 10, 24, 1], ['Anuncios en feed', 26, 46, 1], ['Influencers', 44, 64, 1], ['Comunidad', 58, 92, 1], ['Video largo', 84, 104, 1],
+    ['Bienvenida', 6, 48, 2], ['Carrito abandonado', 12, 92, 2], ['Boletín mensual', 20, 70, 2], ['Reactivación', 32, 110, 2],
+  ].sort((a, b) => a[1] - b[1]);
+  const on = new Set([0, 1, 2]), H = 320, L = 48, R = 12, T = 12, B = 44;
+  let W = 560, cur = 0;
+  const vis = () => pts.filter((p) => on.has(p[3]));
+  function legend() {
+    lg.innerHTML = groups.map((g, i) => `<button type="button" data-i="${i}" aria-pressed="${on.has(i)}"><i class="sw" style="background:var(${g.c})"></i>${g.n}</button>`).join('') + '<span class="tr"><i></i>Tendencia</span>';
+  }
+  function draw() {
+    W = svg.clientWidth || 560;
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    const x = (v) => L + (W - L - R) * v / 100, y = (v) => T + (H - T - B) * (1 - v / 200), v = vis();
+    let s = '<defs><linearGradient id="tg"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>';
+    for (let t = 0; t <= 200; t += 50) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text class="ax" x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
+    for (let t = 0; t <= 100; t += 20) s += `<line class="gl" x1="${x(t)}" x2="${x(t)}" y1="${T}" y2="${H - B}"/><text class="ax" x="${x(t)}" y="${H - B + 18}" text-anchor="middle">${t}</text>`;
+    s += `<text class="at" x="${L + (W - L - R) / 2}" y="${H - 6}" text-anchor="middle">Gasto en marketing (miles de USD)</text><text class="at" transform="translate(12 ${T + (H - T - B) / 2}) rotate(-90)" text-anchor="middle">Clientes nuevos</text>`;
+    if (v.length > 2) {
+      const n = v.length, sx = v.reduce((a, p) => a + p[1], 0), sy = v.reduce((a, p) => a + p[2], 0);
+      const m = (n * v.reduce((a, p) => a + p[1] * p[2], 0) - sx * sy) / (n * v.reduce((a, p) => a + p[1] ** 2, 0) - sx ** 2), b = (sy - m * sx) / n;
+      const x0 = v[0][1], x1 = v[n - 1][1];
+      s += `<line x1="${x(x0)}" y1="${y(m * x0 + b)}" x2="${x(x1)}" y2="${y(m * x1 + b)}" stroke="url(#tg)" stroke-width="2" stroke-linecap="round"/>`;
+    }
+    cur = Math.min(cur, v.length - 1);
+    v.forEach((p, i) => { s += `<circle class="p" data-i="${i}" cx="${x(p[1])}" cy="${y(p[2])}" r="6" tabindex="${i === cur ? 0 : -1}" role="img" aria-label="${p[0]}, ${groups[p[3]].n}: gasto ${p[1]} mil USD, ${p[2]} clientes nuevos" style="fill:var(${groups[p[3]].c})"/>`; });
+    svg.innerHTML = s; tip.hidden = true;
+  }
+  function show(c) {
+    const p = vis()[c.dataset.i], cx = +c.getAttribute('cx'), cy = +c.getAttribute('cy');
+    tip.innerHTML = `<b>${p[0]}</b><div><span>Canal</span><span>${groups[p[3]].n}</span></div><div><span>Gasto</span><span>${p[1]} mil USD</span></div><div><span>Clientes nuevos</span><span>${p[2]}</span></div>`;
+    tip.className = 'tip' + (cy < 110 ? ' below' : '');
+    tip.style.left = Math.min(Math.max(cx, 80), W - 80) + 'px'; tip.style.top = cy + 'px'; tip.hidden = false;
+  }
+  lg.onclick = (e) => { const b = e.target.closest('button'); if (!b) return; const i = +b.dataset.i; if (on.has(i) && on.size > 1) on.delete(i); else on.add(i); legend(); draw(); };
+  svg.addEventListener('pointerover', (e) => e.target.matches('circle.p') && show(e.target));
+  svg.addEventListener('focusin', (e) => { if (!e.target.matches('circle.p')) return; svg.querySelectorAll('circle.p').forEach((c) => (c.tabIndex = -1)); e.target.tabIndex = 0; cur = +e.target.dataset.i; show(e.target); });
+  svg.addEventListener('pointerleave', () => (tip.hidden = true));
+  svg.addEventListener('focusout', () => (tip.hidden = true));
+  svg.addEventListener('keydown', (e) => {
+    const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+    if (e.key === 'Escape') tip.hidden = true;
+    if (!d || !e.target.matches('circle.p')) return;
+    e.preventDefault(); svg.querySelector(`circle[data-i="${+e.target.dataset.i + d}"]`)?.focus();
+  });
+  addEventListener('resize', draw);
+  legend(); draw();
+</script>
+</body>
+</html>

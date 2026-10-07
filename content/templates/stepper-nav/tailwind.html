@@ -1,0 +1,49 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<section aria-label="Publicar un sitio" class="mx-auto max-w-3xl rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+  <nav aria-label="Pasos para publicar tu sitio"><ol id="ol" class="mb-5 grid list-none gap-3 p-0 sm:grid-cols-4"></ol></nav>
+  <div aria-live="polite" class="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-950">
+    <h2 id="h" class="mb-1 text-base font-semibold"></h2>
+    <p id="d" class="mb-4 text-slate-500 dark:text-slate-400"></p>
+    <div class="flex gap-2">
+      <button id="back" type="button" class="cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-2 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Atrás</button>
+      <button id="next" type="button" class="cursor-pointer rounded-lg border border-blue-600 bg-blue-600 px-3.5 py-2 text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-blue-400 dark:bg-blue-400 dark:text-slate-950">Continuar</button>
+    </div>
+  </div>
+</section>
+</div>
+<script>
+  const steps = [
+    ['Dominio', 'Conecta tu dominio', 'Apunta tu dominio al servidor con un registro CNAME.'],
+    ['Contenido', 'Revisa el contenido', 'Agrega la imagen de portada para poder continuar.'],
+    ['Pagos', 'Configura los pagos', 'Conecta una cuenta bancaria para cobrar a tus clientes.'],
+    ['Publicación', 'Publica tu sitio', 'Revisa el resumen y publica cuando estés listo.'],
+  ];
+  const RAIL = { done: 'bg-gradient-to-br from-cyan-400 to-blue-600', current: 'bg-blue-600 dark:bg-blue-400', error: 'bg-red-600 dark:bg-red-400', todo: 'bg-slate-200 dark:bg-slate-700' };
+  const DOT = { done: 'border-blue-600 bg-blue-600 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-slate-950', current: 'border-blue-600 bg-blue-50 dark:border-blue-400 dark:bg-slate-800', error: 'border-red-600 bg-red-50 dark:border-red-400 dark:bg-red-500/20', todo: 'border-slate-200 text-slate-500 dark:border-slate-700' };
+  const SUB = { done: 'Completo', error: 'Requiere atención', current: 'En curso', todo: 'Pendiente' };
+  const CHECK = '<svg viewBox="0 0 24 24" class="size-3.5 fill-none stroke-current stroke-[2.5]" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>';
+  let cur = 2, max = 2, err = { 1: 'Falta la imagen de portada' };
+  const $ = (id) => document.getElementById(id);
+  function render(focus) {
+    $('ol').innerHTML = steps.map(([name], i) => {
+      const s = i === cur ? 'current' : i > max ? 'todo' : err[i] ? 'error' : 'done';
+      const sub = s === 'error' ? `<span class="block text-[13px] text-red-600 dark:text-red-400">${err[i]}</span>` : `<span class="block text-[13px] text-slate-500 dark:text-slate-400">${SUB[s]}</span>`;
+      const inner = `<span class="grid size-6 flex-none place-items-center rounded-full border text-xs font-semibold tabular-nums ${DOT[s]}">${s === 'done' ? CHECK : s === 'error' ? '!' : i + 1}</span><span><span class="block font-semibold">${name}</span>${sub}</span>`;
+      const box = 'flex items-start gap-2.5 rounded-lg p-1.5 no-underline';
+      return `<li><div class="mb-2.5 h-1 rounded-full ${RAIL[s]}"></div>` + (s === 'todo' ? `<span class="${box} text-slate-500 dark:text-slate-400">${inner}</span>` :
+        `<a href="#paso-${i + 1}" data-i="${i}" ${s === 'current' ? 'aria-current="step"' : ''} class="${box} text-inherit hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800">${inner}</a>`) + '</li>';
+    }).join('');
+    const s = steps[cur] || ['', 'Sitio publicado', 'Tu sitio ya está disponible en tu dominio.'];
+    $('h').textContent = s[1]; $('d').textContent = s[2];
+    $('back').disabled = cur === 0; $('next').disabled = cur > 3;
+    $('next').textContent = cur === 3 ? 'Publicar sitio' : 'Continuar';
+    if (focus) $('ol').querySelector('[aria-current]')?.focus();
+  }
+  $('ol').addEventListener('click', (e) => {
+    const a = e.target.closest('a'); if (!a) return;
+    e.preventDefault(); cur = +a.dataset.i; render(true);
+  });
+  $('back').addEventListener('click', () => { cur--; render(); });
+  $('next').addEventListener('click', () => { delete err[cur]; cur++; max = Math.max(max, cur); render(); });
+  render();
+</script>

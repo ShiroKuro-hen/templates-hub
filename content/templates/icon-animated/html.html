@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  article{display:flex;flex-direction:column;align-items:flex-start;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .vis{display:grid;place-items:center;width:64px;height:64px;margin-bottom:12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  h3{margin:0;font-size:15px}
+  p{margin:2px 0 12px;color:var(--muted)}
+  button{margin-top:auto;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:background .14s,border-color .14s}
+  button:hover{background:var(--accent-soft);border-color:var(--accent)}
+  button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .load{color:var(--accent)}
+  .load svg{animation:spin .9s linear infinite}
+  .ok{color:var(--ok)}
+  .err{color:var(--err)}
+  .d{stroke-dasharray:1;stroke-dashoffset:0}
+  .run .d{animation:draw .4s ease-out both;animation-delay:var(--dl,0s)}
+  .err.run svg{animation:shake .4s .35s}
+  .cp svg{overflow:visible}
+  .cp .a,.cp .b{transition:opacity .14s,transform .14s;transform-origin:center}
+  .cp .b{opacity:0;transform:scale(.6);color:var(--ok);stroke:var(--ok)}
+  .cp.run .a{opacity:0;transform:scale(.6)}
+  .cp.run .b{opacity:1;transform:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+  @keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="grid">
+  <article>
+    <div class="vis load"><svg role="img" aria-label="Cargando"><use href="#x"/></svg></div>
+    <h3>Cargando</h3><p>Gira mientras la tarea sigue en curso.</p>
+  </article>
+  <article>
+    <div class="vis ok run" id="ok"><svg aria-hidden="true" viewBox="0 0 24 24"><circle class="d" pathLength="1" cx="12" cy="12" r="10"/><path class="d" pathLength="1" d="m7.5 12.5 3 3 6-6.5" style="--dl:.3s"/></svg></div>
+    <h3>Éxito</h3><p>El trazo se dibuja al confirmar.</p>
+    <button type="button" data-replay="ok">Repetir animación</button>
+  </article>
+  <article>
+    <div class="vis err run" id="err"><svg aria-hidden="true" viewBox="0 0 24 24"><circle class="d" pathLength="1" cx="12" cy="12" r="10"/><path class="d" pathLength="1" d="m9 9 6 6" style="--dl:.3s"/><path class="d" pathLength="1" d="m15 9-6 6" style="--dl:.4s"/></svg></div>
+    <h3>Error</h3><p>Se dibuja y vibra una vez.</p>
+    <button type="button" data-replay="err">Repetir animación</button>
+  </article>
+  <article>
+    <div class="vis cp" id="cp"><svg aria-hidden="true" viewBox="0 0 24 24"><g class="a"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></g><path class="b" d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+    <h3>Copiar</h3><p>Cambia a una marca al copiar.</p>
+    <button type="button" id="copy" aria-live="polite">Copiar enlace</button>
+  </article>
+</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" opacity=".2"/><circle cx="12" cy="12" r="9" pathLength="1" stroke-dasharray=".28 .72"/></symbol></svg>
+<script>
+  const replay = (el) => { el.classList.remove('run'); void el.offsetWidth; el.classList.add('run'); };
+  document.querySelectorAll('[data-replay]').forEach((b) =>
+    b.addEventListener('click', () => replay(document.getElementById(b.dataset.replay))));
+  copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText('https://app.ejemplo.com/informes/q3'); copy.textContent = 'Copiado'; cp.classList.add('run'); }
+    catch { copy.textContent = 'No se pudo copiar'; }
+    setTimeout(() => { copy.textContent = 'Copiar enlace'; cp.classList.remove('run'); }, 1600);
+  });
+</script>
+</body>
+</html>

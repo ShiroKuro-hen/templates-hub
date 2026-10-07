@@ -1,0 +1,54 @@
+<section class="mx-auto max-w-[540px] overflow-hidden rounded-lg border border-slate-200 bg-white text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" aria-labelledby="t">
+  <header class="px-4 pb-3.5 pt-4 sm:px-6 sm:pt-5">
+    <h1 id="t" class="text-lg font-semibold">Perfil de la cuenta</h1>
+    <p class="text-slate-500 dark:text-slate-400">Selecciona Editar para cambiar un dato. Enter guarda y Esc cancela.</p>
+  </header>
+  <dl class="m-0 [&_button]:cursor-pointer [&_button]:rounded-lg [&_button]:border [&_button]:border-slate-200 [&_button]:bg-white [&_button]:px-3 [&_button]:py-1.5 [&_button]:font-semibold [&_button:hover]:bg-blue-50 [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-blue-500 dark:[&_button]:border-slate-700 dark:[&_button]:bg-slate-900 dark:[&_button:hover]:bg-slate-800 [&_.pri]:border-blue-600 [&_.pri]:bg-blue-600 [&_.pri]:text-white [&_input]:min-w-0 [&_input]:flex-1 [&_input]:basis-40 [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-3 [&_input]:py-1.5 [&_input:focus-visible]:outline-2 [&_input:focus-visible]:outline-offset-2 [&_input:focus-visible]:outline-blue-500 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 [&_input[aria-invalid=true]]:border-red-500 [&_.err]:basis-full [&_.err]:text-[13px] [&_.err]:text-red-600 dark:[&_.err]:text-red-400 [&_.err:empty]:hidden [&_dt]:text-slate-500 dark:[&_dt]:text-slate-400 [&_dd]:min-w-0 [&_.view:not(.hidden)]:flex [&_.view]:items-center [&_.view]:justify-between [&_.view]:gap-3 [&_.val]:break-words [&_.val]:font-semibold [&_form:not(.hidden)]:flex [&_form]:flex-wrap [&_form]:gap-2">
+    <div class="row relative grid items-center gap-1 border-t border-slate-200 px-4 py-3 transition-colors motion-reduce:transition-none sm:grid-cols-[140px_1fr] sm:gap-4 sm:px-6 dark:border-slate-700 [&.editing]:bg-blue-50 dark:[&.editing]:bg-slate-800">
+      <dt id="l1">Nombre</dt>
+      <dd>
+        <div class="view"><span class="val">Ana Pérez</span><button type="button" aria-label="Editar nombre">Editar</button></div>
+        <form class="hidden" novalidate><input aria-labelledby="l1" required minlength="2" autocomplete="name" data-err="Usa al menos 2 caracteres."><button class="pri">Guardar</button><button type="button">Cancelar</button><p class="err"></p></form>
+      </dd>
+      <i class="absolute inset-x-0 -bottom-px hidden h-px bg-gradient-to-br from-cyan-400 to-blue-600"></i>
+    </div>
+    <div class="row relative grid items-center gap-1 border-t border-slate-200 px-4 py-3 transition-colors motion-reduce:transition-none sm:grid-cols-[140px_1fr] sm:gap-4 sm:px-6 dark:border-slate-700 [&.editing]:bg-blue-50 dark:[&.editing]:bg-slate-800">
+      <dt id="l2">Correo</dt>
+      <dd>
+        <div class="view"><span class="val">ana.perez@meridian.pe</span><button type="button" aria-label="Editar correo">Editar</button></div>
+        <form class="hidden" novalidate><input type="email" aria-labelledby="l2" required autocomplete="email" data-err="Escribe un correo válido, como ana@empresa.com."><button class="pri">Guardar</button><button type="button">Cancelar</button><p class="err"></p></form>
+      </dd>
+      <i class="absolute inset-x-0 -bottom-px hidden h-px bg-gradient-to-br from-cyan-400 to-blue-600"></i>
+    </div>
+    <div class="row relative grid items-center gap-1 border-t border-slate-200 px-4 py-3 transition-colors motion-reduce:transition-none sm:grid-cols-[140px_1fr] sm:gap-4 sm:px-6 dark:border-slate-700 [&.editing]:bg-blue-50 dark:[&.editing]:bg-slate-800">
+      <dt id="l3">Cargo</dt>
+      <dd>
+        <div class="view"><span class="val">Responsable de Producto</span><button type="button" aria-label="Editar cargo">Editar</button></div>
+        <form class="hidden" novalidate><input aria-labelledby="l3" required autocomplete="organization-title"><button class="pri">Guardar</button><button type="button">Cancelar</button><p class="err"></p></form>
+      </dd>
+      <i class="absolute inset-x-0 -bottom-px hidden h-px bg-gradient-to-br from-cyan-400 to-blue-600"></i>
+    </div>
+  </dl>
+  <p id="live" role="status" class="border-t border-slate-200 bg-emerald-50 px-4 py-2.5 text-emerald-700 empty:hidden sm:px-6 dark:border-slate-700 dark:bg-slate-800 dark:text-emerald-400"></p>
+</section>
+<script>
+  const live = document.getElementById('live');
+  document.querySelectorAll('.row').forEach((r) => {
+    const view = r.querySelector('.view'), form = r.querySelector('form'), inp = form.querySelector('input'),
+      val = r.querySelector('.val'), edit = view.querySelector('button'), err = form.querySelector('.err');
+    const set = (on) => { form.classList.toggle('hidden', !on); view.classList.toggle('hidden', on); r.classList.toggle('editing', on); r.querySelector('i').classList.toggle('hidden', !on); };
+    const close = () => { set(false); edit.focus(); };
+    edit.onclick = () => { inp.value = val.textContent; err.textContent = ''; inp.removeAttribute('aria-invalid'); set(true); inp.select(); };
+    form.querySelector('[type=button]').onclick = close;
+    form.onkeydown = (e) => { if (e.key === 'Escape') close(); };
+    form.onsubmit = (e) => {
+      e.preventDefault(); inp.value = inp.value.trim();
+      const bad = !inp.checkValidity();
+      err.textContent = bad ? (inp.validity.valueMissing ? 'Este campo no puede quedar vacío. Escribe un valor.' : inp.dataset.err) : '';
+      inp.setAttribute('aria-invalid', bad);
+      if (bad) return inp.focus();
+      val.textContent = inp.value; close();
+      live.textContent = 'Cambios guardados: ' + r.querySelector('dt').textContent.toLowerCase() + ' actualizado.';
+    };
+  });
+</script>

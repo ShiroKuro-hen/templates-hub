@@ -1,0 +1,1 @@
+{ "title": "Progreso indeterminado y determinado", "category": "cargando", "description": "Barras de progreso con estado en curso, completado y error, con role=progressbar.", "tags": ["progress", "loading", "a11y"] }

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :root[data-theme=dark] input,:root[data-theme=dark] select{color-scheme:dark}
+  .card{max-width:460px;margin:0 auto;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h1{margin:0;font-size:18px;line-height:1.3}
+  .sub{margin:2px 0 18px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+  .f{display:grid;gap:6px}
+  .full{grid-column:1/-1}
+  label{font-weight:600}
+  input,select{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:8px 12px;min-width:0;font-variant-numeric:tabular-nums;transition:border-color .14s}
+  input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  input[aria-invalid=true]{border-color:var(--err)}
+  .err{min-height:21px;margin:10px 0 0;color:var(--err);font-size:13px}
+  .sum{position:relative;margin-top:8px;padding:14px 16px 14px 28px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  .sum::before{content:"";position:absolute;left:12px;top:14px;bottom:14px;width:4px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .sum h2{margin:0;font-size:13px;font-weight:600;color:var(--muted)}
+  .when{margin:2px 0 0;font-size:20px;font-weight:600;line-height:1.3;font-variant-numeric:tabular-nums}
+  .day,.zone{margin:0;color:var(--muted)}
+  .day{color:var(--text)}
+  .sum.off .when,.sum.off .day{color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Agendar una demostración</h1>
+  <p class="sub">Elige un día laboral y una hora entre 09:00 y 18:00.</p>
+  <div class="grid">
+    <div class="f"><label for="d">Fecha</label><input id="d" type="date" required aria-describedby="e"></div>
+    <div class="f"><label for="h">Hora de inicio</label><input id="h" type="time" min="09:00" max="18:00" step="900" required aria-describedby="e"></div>
+    <div class="f full"><label for="u">Duración</label>
+      <select id="u"><option value="30">30 minutos</option><option value="45" selected>45 minutos</option><option value="60">1 hora</option></select></div>
+  </div>
+  <p class="err" id="e" role="alert"></p>
+  <section class="sum" id="sum" aria-live="polite" aria-label="Resumen de la reserva">
+    <h2>Tu demostración</h2>
+    <p class="when" id="w"></p>
+    <p class="day" id="dy"></p>
+    <p class="zone" id="z"></p>
+  </section>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id), d = $('d'), h = $('h'), u = $('u');
+  const iso = (x) => x.toLocaleDateString('sv');
+  const hoy = new Date(), sig = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1);
+  while ([0, 6].includes(sig.getDay())) sig.setDate(sig.getDate() + 1);
+  d.min = iso(hoy); d.value = iso(sig); h.value = '10:00';
+  $('z').textContent = 'Zona horaria: ' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const T = (x) => x.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit', hour12: false });
+  function render() {
+    const [y, m, dd] = d.value.split('-').map(Number), [hh, mm] = h.value.split(':').map(Number);
+    const a = new Date(y, m - 1, dd, hh, mm), b = new Date(+a + u.value * 60000);
+    const msg = !d.value || !h.value ? 'Elige una fecha y una hora para ver el resumen.'
+      : d.validity.rangeUnderflow ? 'Esa fecha ya pasó. Elige hoy o un día posterior.'
+      : [0, 6].includes(a.getDay()) ? 'No hay demostraciones en fin de semana. Elige un día de lunes a viernes.'
+      : !h.checkValidity() ? 'Elige una hora entre 09:00 y 18:00.' : '';
+    $('e').textContent = msg;
+    d.setAttribute('aria-invalid', !d.value || d.validity.rangeUnderflow || [0, 6].includes(a.getDay()));
+    h.setAttribute('aria-invalid', !h.checkValidity());
+    $('sum').classList.toggle('off', !!msg);
+    $('w').textContent = msg ? 'Sin horario válido' : T(a) + ' a ' + T(b);
+    $('dy').textContent = msg ? 'Corrige la fecha o la hora de arriba.' : a.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  document.querySelector('main').addEventListener('input', render);
+  render();
+</script>
+</body>
+</html>

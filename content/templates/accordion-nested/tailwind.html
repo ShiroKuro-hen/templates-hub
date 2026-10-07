@@ -1,0 +1,34 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="t" class="mx-auto max-w-xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900
+    [&_summary]:flex [&_summary]:cursor-pointer [&_summary]:list-none [&_summary]:items-center [&_summary]:gap-2.5 [&_summary]:after:ml-auto [&_summary]:after:size-[7px] [&_summary]:after:rotate-45 [&_summary]:after:border-b [&_summary]:after:border-r [&_summary]:after:border-slate-500 [&_summary]:after:content-[''] [&_details[open]>summary]:after:rotate-[225deg] [&_summary]:hover:bg-blue-50 dark:[&_summary]:hover:bg-slate-800 [&_summary::-webkit-details-marker]:hidden [&_summary]:focus-visible:outline-2 [&_summary]:focus-visible:-outline-offset-2 [&_summary]:focus-visible:outline-blue-500">
+    <header class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 px-5 py-3.5 dark:border-slate-700">
+      <h2 id="t" class="m-0 text-base font-semibold">Centro de ayuda</h2>
+      <button id="all" type="button" aria-controls="acc" class="cursor-pointer rounded-lg border border-slate-200 px-3 py-1 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700">Expandir todo</button>
+    </header>
+    <div id="acc">
+      <details open class="border-b border-slate-200 dark:border-slate-700">
+        <summary id="s1" class="px-5 py-3.5 font-semibold">Cuenta y acceso <span class="rounded-full bg-blue-100 px-2 text-xs font-semibold tabular-nums text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">3</span></summary>
+        <div role="group" aria-labelledby="s1" class="relative mb-3 ml-7 mr-5 border-l border-blue-500 pl-4 [&>details:last-child]:border-0">
+          <details class="border-b border-slate-200 dark:border-slate-700"><summary class="rounded-lg px-2 py-2.5">Cómo restablezco mi contraseña</summary><p class="m-0 px-2 pb-3 text-slate-500 dark:text-slate-400">Elige "¿Olvidaste tu contraseña?" y sigue el enlace del correo. Caduca en 30 minutos.</p></details>
+          <details class="border-b border-slate-200 dark:border-slate-700"><summary class="rounded-lg px-2 py-2.5">Cómo activo la verificación en dos pasos</summary><p class="m-0 px-2 pb-3 text-slate-500 dark:text-slate-400">En Seguridad, selecciona "Activar" y escanea el código QR con tu app de autenticación.</p></details>
+          <details><summary class="rounded-lg px-2 py-2.5">Cómo invito a mi equipo</summary><p class="m-0 px-2 pb-3 text-slate-500 dark:text-slate-400">En Miembros, escribe los correos y asigna un rol. Cada invitación vence a los 7 días.</p></details>
+        </div>
+      </details>
+      <details>
+        <summary id="s2" class="px-5 py-3.5 font-semibold">Facturación <span class="rounded-full bg-blue-100 px-2 text-xs font-semibold tabular-nums text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">2</span></summary>
+        <div role="group" aria-labelledby="s2" class="relative mb-3 ml-7 mr-5 border-l border-blue-500 pl-4 [&>details:last-child]:border-0">
+          <details class="border-b border-slate-200 dark:border-slate-700"><summary class="rounded-lg px-2 py-2.5">Dónde descargo mis facturas</summary><p class="m-0 px-2 pb-3 text-slate-500 dark:text-slate-400">En Facturación, abre el historial y elige el icono de descarga junto a cada pago.</p></details>
+          <details><summary class="rounded-lg px-2 py-2.5">Cómo cambio el método de pago</summary><p class="m-0 px-2 pb-3 text-slate-500 dark:text-slate-400">Edita la tarjeta en Facturación. El cambio se aplica desde el próximo ciclo.</p></details>
+        </div>
+      </details>
+    </div>
+  </section>
+</div>
+<script>
+  const all = document.getElementById('all');
+  all.addEventListener('click', () => {
+    const abrir = all.textContent === 'Expandir todo';
+    document.querySelectorAll('#acc details').forEach((d) => (d.open = abrir));
+    all.textContent = abrir ? 'Contraer todo' : 'Expandir todo';
+  });
+</script>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:20px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .sum{text-align:right}
+  .sum b{display:block;font-size:24px;line-height:1.1;font-weight:600;font-variant-numeric:tabular-nums}
+  .sum span{color:var(--muted);font-size:13px}
+  .wrap{display:grid;grid-template-columns:minmax(90px,2fr) 3fr;gap:16px}
+  svg{display:block;width:100%}
+  polygon{fill:url(#fg);transition:opacity .14s}
+  svg.dim polygon:not(.on){opacity:.3}
+  ol{list-style:none;margin:0;padding:0;display:grid;grid-auto-rows:64px}
+  li{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:0 10px;border-radius:var(--radius);transition:background .14s;cursor:default}
+  li:hover,li.on{background:var(--accent-soft)}
+  li:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .n{font-weight:600;overflow-wrap:anywhere}
+  .m{display:flex;flex-wrap:wrap;align-items:center;gap:0 8px;font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+  .m b{color:var(--text);font-size:14px}
+  .badge{padding:0 8px;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-size:12px;color:var(--text)}
+  .badge.warn{background:var(--warn-soft);border-color:transparent}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption class="head">
+    <div><h2>Embudo de conversión</h2><p>Visitantes del sitio que llegan a pagar, en septiembre.</p></div>
+    <p class="sum" id="sum"></p>
+  </figcaption>
+  <div class="wrap">
+    <svg id="fn" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="fg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs></svg>
+    <ol id="ls"></ol>
+  </div>
+</figure>
+<script>
+  const stages = [['Visitas al sitio', 24800], ['Registros', 14900], ['Cuentas activadas', 9800], ['Planes elegidos', 5400], ['Pagos completados', 3100]];
+  const f = (n) => n.toLocaleString('es'), pc = (n) => (n * 100).toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %';
+  const peak = stages[0][1], n = stages.length, h = 100 / n;
+  const step = stages.map((s, i) => (i ? s[1] / stages[i - 1][1] : 1));
+  const worst = step.indexOf(Math.min(...step.slice(1)));
+  fn.style.height = n * 64 + 'px';
+  fn.insertAdjacentHTML('beforeend', stages.map((s, i) => {
+    const w0 = s[1] / peak * 100, w1 = (stages[i + 1] ? stages[i + 1][1] : s[1] * 0.8) / peak * 100, y0 = i * h + 0.8, y1 = (i + 1) * h - 0.8;
+    return `<polygon data-i="${i}" points="${50 - w0 / 2},${y0} ${50 + w0 / 2},${y0} ${50 + w1 / 2},${y1} ${50 - w1 / 2},${y1}"/>`;
+  }).join(''));
+  ls.innerHTML = stages.map((s, i) => `<li tabindex="0" data-i="${i}" aria-label="${s[0]}: ${f(s[1])}, ${pc(s[1] / peak)} del total${i ? ', ' + pc(step[i]) + ' de la etapa anterior' : ''}">
+    <span class="n">${s[0]}</span><span class="m"><b>${f(s[1])}</b>${pc(s[1] / peak)} del total${i ? `<span class="badge ${i === worst ? 'warn' : ''}">${i === worst ? 'Mayor caída: ' : 'Paso '}${pc(step[i])}</span>` : ''}</span></li>`).join('');
+  sum.innerHTML = `<b>${pc(stages[n - 1][1] / peak)}</b><span>de las visitas terminan en pago</span>`;
+  const hl = (i) => { fn.classList.toggle('dim', i >= 0); fn.querySelectorAll('polygon').forEach((p) => p.classList.toggle('on', +p.dataset.i === i)); ls.querySelectorAll('li').forEach((l) => l.classList.toggle('on', +l.dataset.i === i)); };
+  ls.addEventListener('pointerover', (e) => { const l = e.target.closest('li'); if (l) hl(+l.dataset.i); });
+  ls.addEventListener('focusin', (e) => hl(+e.target.dataset.i));
+  ['pointerleave', 'focusout'].forEach((t) => ls.addEventListener(t, () => hl(-1)));
+  fn.addEventListener('pointerover', (e) => e.target.dataset.i && hl(+e.target.dataset.i));
+  fn.addEventListener('pointerleave', () => hl(-1));
+  addEventListener('keydown', (e) => e.key === 'Escape' && hl(-1));
+</script>
+</body>
+</html>

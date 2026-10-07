@@ -1,0 +1,36 @@
+<figure class="mx-auto max-w-2xl rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h2 class="text-lg font-semibold">Pedidos por canal y región</h2>
+  <p class="mb-4 text-slate-500 dark:text-slate-400">Activa o desactiva un canal para compararlo. Los colores cumplen contraste 3:1 en claro y oscuro.</p>
+  <ul id="legend" class="mb-4 flex flex-wrap gap-2"></ul>
+  <div id="rows"></div>
+  <p id="tot" role="status" class="mt-4 tabular-nums text-slate-500 dark:text-slate-400"></p>
+</figure>
+<script>
+  const SERIES = [
+    ['Web', 'bg-blue-600 dark:bg-blue-400'], ['App', 'bg-orange-600 dark:bg-orange-400'], ['Tienda', 'bg-emerald-600 dark:bg-emerald-400'],
+    ['Partners', 'bg-pink-600 dark:bg-pink-400'], ['Teléfono', 'bg-violet-600 dark:bg-violet-400'], ['Marketplace', 'bg-yellow-600 dark:bg-yellow-400'],
+  ];
+  const DATA = { Norte: [320, 210, 140, 90, 60, 80], Sur: [180, 260, 200, 70, 40, 110], Centro: [410, 330, 90, 150, 30, 140], Oeste: [150, 120, 240, 60, 90, 50] };
+  const off = new Set();
+  const BTN = 'flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-white py-1 pl-2 pr-3 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-pressed:text-slate-900 text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:aria-pressed:text-slate-100 dark:text-slate-400';
+  legend.innerHTML = SERIES.map(([s, c], i) => `<li><button type="button" aria-pressed="true" data-i="${i}" class="${BTN}"><i class="size-3 rounded-sm ${c}"></i>${s}</button></li>`).join('');
+  function draw() {
+    rows.innerHTML = Object.entries(DATA).map(([region, vals]) => {
+      const shown = vals.map((v, i) => [i, v]).filter(([i]) => !off.has(i));
+      const label = `${region}: ${shown.map(([i, v]) => `${SERIES[i][0]} ${v}`).join(', ') || 'sin canales'}`;
+      return `<div class="mt-2.5 grid grid-cols-[64px_1fr] items-center gap-3"><span class="text-slate-500 dark:text-slate-400">${region}</span>
+        <div class="flex h-7 gap-0.5 overflow-hidden rounded-lg bg-slate-50 dark:bg-slate-950" role="img" aria-label="${label}">${shown.map(([i, v]) => `<i class="min-w-0 ${SERIES[i][1]}" style="flex:${v} 1 0" title="${SERIES[i][0]}: ${v}"></i>`).join('')}</div></div>`;
+    }).join('');
+    const total = Object.values(DATA).flat().reduce((s, v, k) => s + (off.has(k % 6) ? 0 : v), 0);
+    tot.textContent = `Total visible: ${total.toLocaleString('es')} pedidos`;
+  }
+  legend.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    const i = +b.dataset.i, on = off.has(i);
+    on ? off.delete(i) : off.add(i);
+    b.setAttribute('aria-pressed', String(on));
+    b.firstElementChild.classList.toggle('opacity-30', !on);
+    draw();
+  });
+  draw();
+</script>

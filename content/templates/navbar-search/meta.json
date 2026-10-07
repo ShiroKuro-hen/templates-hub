@@ -1,0 +1,1 @@
+{ "title": "Navbar con buscador expandible", "category": "navegacion", "description": "Barra superior cuyo icono de búsqueda se expande en un campo, con atajo / y Esc.", "tags": ["navbar", "búsqueda", "teclado", "a11y"] }

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:16px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .key{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted)}
+  .key span{display:inline-flex;align-items:center;gap:8px}
+  .key i{width:10px;height:10px;border-radius:3px}
+  svg.map{display:block;width:100%;height:340px}
+  .t{cursor:pointer;outline:none}
+  .bg{stroke:var(--border);stroke-width:1;transition:filter .14s}
+  .t:hover .bg{filter:brightness(.96)}
+  .t.sel .bg{stroke:var(--accent)}
+  .t:focus .bg{stroke:var(--accent);stroke-width:2}
+  .nm{fill:var(--text);font-size:13px;font-weight:600}
+  .vl{fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .detail{margin-top:16px;padding:12px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
+  .detail .row{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px}
+  .detail b{font-size:15px}
+  .detail .cat{margin-left:8px;color:var(--muted)}
+  .detail .num{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+  .bar{height:8px;margin:8px 0 4px;border-radius:999px;background:var(--border);overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+  .detail small{color:var(--muted);font-variant-numeric:tabular-nums}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption class="head">
+    <div><h2>Ingresos por línea de negocio</h2><p>El área de cada bloque es proporcional a su aporte. Selecciona uno para ver el detalle.</p></div>
+    <div class="key" id="key" aria-hidden="true"></div>
+  </figcaption>
+  <svg class="map" id="svg" role="group" aria-label="Mapa de árbol de ingresos por línea de negocio"></svg>
+  <div class="detail" id="dt" aria-live="polite"></div>
+</figure>
+<script>
+  const cats = { Software: ['--accent-soft', '--accent'], Infraestructura: ['--info-soft', '--info'], Servicios: ['--ok-soft', '--ok'], Hardware: ['--warn-soft', '--warn'] };
+  const items = [
+    ['Plataforma en la nube', 420, 'Infraestructura'], ['Ciberseguridad', 260, 'Software'], ['Analítica de datos', 210, 'Software'],
+    ['IA aplicada', 180, 'Software'], ['Consultoría', 150, 'Servicios'], ['Redes', 120, 'Infraestructura'],
+    ['Soporte gestionado', 90, 'Servicios'], ['Dispositivos', 70, 'Hardware'], ['Capacitación', 40, 'Servicios'],
+  ];
+  const total = items.reduce((a, i) => a + i[1], 0), H = 340;
+  const f = (n) => n.toLocaleString('es'), pc = (n) => (n / total * 100).toLocaleString('es', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %';
+  let sel = 0;
+  key.innerHTML = Object.entries(cats).map(([n, c]) => `<span><i style="background:var(${c[1]})"></i>${n}</span>`).join('');
+  // Partición binaria: divide la lista en dos mitades de peso similar y corta por el lado más largo.
+  function lay(a, x, y, w, h, out) {
+    if (a.length === 1) return out.push({ d: a[0], x, y, w, h });
+    const tot = a.reduce((s, i) => s + i[1], 0); let k = 1, acc = a[0][1];
+    while (k < a.length - 1 && acc < tot / 2) acc += a[k++][1];
+    const r = acc / tot;
+    if (w >= h) { lay(a.slice(0, k), x, y, w * r, h, out); lay(a.slice(k), x + w * r, y, w * (1 - r), h, out); }
+    else { lay(a.slice(0, k), x, y, w, h * r, out); lay(a.slice(k), x, y + h * r, w, h * (1 - r), out); }
+  }
+  function draw() {
+    const W = svg.clientWidth || 560, tiles = []; lay(items, 0, 0, W, H, tiles);
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.innerHTML = tiles.map(({ d, x, y, w, h }, i) => {
+      const [soft, ink] = cats[d[2]], big = w > 80 && h > 44;
+      return `<svg class="t${i === sel ? ' sel' : ''}" data-i="${i}" x="${x}" y="${y}" width="${w}" height="${h}" tabindex="0" role="button" aria-pressed="${i === sel}" aria-label="${d[0]}, ${d[2]}: ${f(d[1])} millones de USD, ${pc(d[1])} del total">
+        <title>${d[0]}: ${f(d[1])} M USD</title><rect class="bg" x="1" y="1" width="${w - 2}" height="${h - 2}" rx="4" style="fill:var(${soft})"/><rect x="1" y="1" width="${w - 2}" height="3" rx="1.5" style="fill:var(${ink})"/>
+        ${big ? `<text class="nm" x="10" y="26">${d[0]}</text><text class="vl" x="10" y="44">${f(d[1])} M USD, ${pc(d[1])}</text>` : ''}</svg>`;
+    }).join('');
+    svg._tiles = tiles; detail();
+  }
+  function detail() {
+    const d = items[sel], p = d[1] / total * 100;
+    dt.innerHTML = `<div class="row"><span><b>${d[0]}</b><span class="cat">${d[2]}</span></span><span class="num">${f(d[1])} M USD</span></div><div class="bar"><i style="width:${p}%"></i></div><small>${pc(d[1])} de los ${f(total)} M USD facturados</small>`;
+  }
+  function pick(t) { sel = +t.dataset.i; svg.querySelectorAll('.t').forEach((n) => { n.classList.toggle('sel', n === t); n.setAttribute('aria-pressed', n === t); }); detail(); }
+  svg.addEventListener('click', (e) => { const t = e.target.closest('.t'); if (t) pick(t); });
+  svg.addEventListener('keydown', (e) => { const t = e.target.closest('.t'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pick(t); } });
+  addEventListener('resize', draw);
+  draw();
+</script>
+</body>
+</html>

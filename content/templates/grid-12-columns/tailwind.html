@@ -1,0 +1,44 @@
+<section class="group rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" aria-labelledby="t">
+  <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+    <div>
+      <h2 id="t" class="m-0 text-base font-semibold">Sistema de 12 columnas</h2>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400">Punto de quiebre actual:
+        <span class="ml-2 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 px-2.5 font-semibold text-slate-950">
+          <span class="md:hidden">sm</span><span class="hidden md:inline lg:hidden">md</span><span class="hidden lg:inline">lg</span>
+        </span>
+      </p>
+    </div>
+    <label class="flex cursor-pointer items-center gap-2 text-slate-500 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-blue-500 dark:text-slate-400">
+      <input type="checkbox" id="gd" checked class="m-0 accent-blue-600">Mostrar columnas
+    </label>
+  </div>
+  <div id="list"></div>
+  <table class="mt-2 w-full border-collapse tabular-nums" aria-label="Puntos de quiebre">
+    <thead class="text-left text-slate-500 dark:text-slate-400">
+      <tr><th scope="col" class="border-b border-slate-200 px-3 py-2 font-medium dark:border-slate-700">Nombre</th><th scope="col" class="border-b border-slate-200 px-3 py-2 font-medium dark:border-slate-700">Ancho de la ventana</th><th scope="col" class="border-b border-slate-200 px-3 py-2 font-medium dark:border-slate-700">Prefijo</th></tr>
+    </thead>
+    <tbody class="text-left [&_td]:border-b [&_td]:border-slate-200 [&_td]:px-3 [&_td]:py-2 [&_th]:border-b [&_th]:border-slate-200 [&_th]:px-3 [&_th]:py-2 dark:[&_td]:border-slate-700 dark:[&_th]:border-slate-700">
+      <tr class="bg-blue-50 md:bg-transparent dark:bg-blue-950 dark:md:bg-transparent"><th scope="row">sm</th><td>0 a 767 px</td><td class="font-mono text-xs text-slate-500 dark:text-slate-400">sin prefijo</td></tr>
+      <tr class="md:bg-blue-50 lg:bg-transparent dark:md:bg-blue-950 dark:lg:bg-transparent"><th scope="row">md</th><td>768 a 1023 px</td><td class="font-mono text-xs text-slate-500 dark:text-slate-400">md:</td></tr>
+      <tr class="lg:bg-blue-50 dark:lg:bg-blue-950"><th scope="row">lg</th><td>1024 px o más</td><td class="font-mono text-xs text-slate-500 dark:text-slate-400">lg:</td></tr>
+    </tbody>
+  </table>
+</section>
+<script>
+  // [título, descripción, [clases de columnas por bloque]]
+  const c = { 12: 'col-span-12', 6: 'col-span-6', 4: 'col-span-4', 8: 'col-span-8', 3: 'col-span-3', 2: 'col-span-2' };
+  const fix = (...n) => n.map((v) => [c[v], 'col-' + v]);
+  const ejemplos = [
+    ['Una columna', '12', fix(12)],
+    ['Mitad y mitad', '6 + 6', fix(6, 6)],
+    ['Tercios', '4 + 4 + 4', fix(4, 4, 4)],
+    ['Contenido y lateral', '8 + 4', fix(8, 4)],
+    ['Cuartos', '3 + 3 + 3 + 3', fix(3, 3, 3, 3)],
+    ['Centrado', '2 + 8 + 2', fix(2, 8, 2)],
+    ['Tarjetas adaptables', 'sm 12, md 6, lg 3', [1, 2, 3, 4].map((i) => ['col-span-12 md:col-span-6 lg:col-span-3', i])],
+    ['Lateral adaptable', 'sm 12, md 4 y 8, lg 3 y 9', [['col-span-12 md:col-span-4 lg:col-span-3', 1], ['col-span-12 md:col-span-8 lg:col-span-9', 2]]],
+  ];
+  list.innerHTML = ejemplos.map(([t, d, cols]) => `<div class="mb-4"><p class="m-0 mb-1.5 flex flex-wrap justify-between gap-x-3"><b class="font-semibold">${t}</b><code class="font-mono text-xs text-slate-500 dark:text-slate-400">${d}</code></p>
+    <div class="relative"><div class="invisible absolute inset-0 grid grid-cols-12 gap-3 group-has-[#gd:checked]:visible" aria-hidden="true">${'<i class="bg-blue-100 dark:bg-blue-950"></i>'.repeat(12)}</div>
+    <div class="relative grid grid-cols-12 gap-3">${cols.map(([k, l]) => `<div class="${k} grid min-h-11 place-items-center overflow-hidden rounded-lg border border-blue-600 bg-white/75 p-1 tabular-nums dark:border-blue-400 dark:bg-slate-900/75">${l}</div>`).join('')}</div></div></div>`).join('');
+</script>

@@ -1,0 +1,43 @@
+<main class="mx-auto max-w-[460px] rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+  <h1 class="text-lg font-semibold leading-snug">Agendar una demostración</h1>
+  <p class="mb-4 text-slate-500 dark:text-slate-400">Elige un día laboral y una hora entre 09:00 y 18:00.</p>
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3.5 [&_label]:font-semibold [&_.f]:grid [&_.f]:gap-1.5 [&_input]:min-w-0 [&_input]:rounded-lg [&_input]:border [&_input]:border-slate-200 [&_input]:bg-white [&_input]:px-3 [&_input]:py-2 [&_input]:tabular-nums [&_input:focus-visible]:outline-2 [&_input:focus-visible]:outline-offset-2 [&_input:focus-visible]:outline-blue-500 dark:[&_input]:border-slate-700 dark:[&_input]:bg-slate-900 dark:[&_input]:[color-scheme:dark] [&_input[aria-invalid=true]]:border-red-500 [&_select]:rounded-lg [&_select]:border [&_select]:border-slate-200 [&_select]:bg-white [&_select]:px-3 [&_select]:py-2 [&_select:focus-visible]:outline-2 [&_select:focus-visible]:outline-offset-2 [&_select:focus-visible]:outline-blue-500 dark:[&_select]:border-slate-700 dark:[&_select]:bg-slate-900 dark:[&_select]:[color-scheme:dark]">
+    <div class="f"><label for="d">Fecha</label><input id="d" type="date" required aria-describedby="e"></div>
+    <div class="f"><label for="h">Hora de inicio</label><input id="h" type="time" min="09:00" max="18:00" step="900" required aria-describedby="e"></div>
+    <div class="f col-span-full"><label for="u">Duración</label>
+      <select id="u"><option value="30">30 minutos</option><option value="45" selected>45 minutos</option><option value="60">1 hora</option></select></div>
+  </div>
+  <p id="e" role="alert" class="mt-2.5 min-h-[21px] text-[13px] text-red-600 dark:text-red-400"></p>
+  <section id="sum" aria-live="polite" aria-label="Resumen de la reserva" class="group relative mt-2 rounded-lg border border-slate-200 bg-slate-50 py-3.5 pl-7 pr-4 dark:border-slate-700 dark:bg-slate-950 [&.off]:text-slate-500 dark:[&.off]:text-slate-400">
+    <span class="absolute inset-y-3.5 left-3 w-1 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></span>
+    <h2 class="text-[13px] font-semibold text-slate-500 dark:text-slate-400">Tu demostración</h2>
+    <p id="w" class="mt-0.5 text-xl font-semibold leading-snug tabular-nums"></p>
+    <p id="dy"></p>
+    <p id="z" class="text-slate-500 dark:text-slate-400"></p>
+  </section>
+</main>
+<script>
+  const $ = (id) => document.getElementById(id), d = $('d'), h = $('h'), u = $('u');
+  const iso = (x) => x.toLocaleDateString('sv');
+  const hoy = new Date(), sig = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1);
+  while ([0, 6].includes(sig.getDay())) sig.setDate(sig.getDate() + 1);
+  d.min = iso(hoy); d.value = iso(sig); h.value = '10:00';
+  $('z').textContent = 'Zona horaria: ' + Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const T = (x) => x.toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit', hour12: false });
+  function render() {
+    const [y, m, dd] = d.value.split('-').map(Number), [hh, mm] = h.value.split(':').map(Number);
+    const a = new Date(y, m - 1, dd, hh, mm), b = new Date(+a + u.value * 60000);
+    const msg = !d.value || !h.value ? 'Elige una fecha y una hora para ver el resumen.'
+      : d.validity.rangeUnderflow ? 'Esa fecha ya pasó. Elige hoy o un día posterior.'
+      : [0, 6].includes(a.getDay()) ? 'No hay demostraciones en fin de semana. Elige un día de lunes a viernes.'
+      : !h.checkValidity() ? 'Elige una hora entre 09:00 y 18:00.' : '';
+    $('e').textContent = msg;
+    d.setAttribute('aria-invalid', !d.value || d.validity.rangeUnderflow || [0, 6].includes(a.getDay()));
+    h.setAttribute('aria-invalid', !h.checkValidity());
+    $('sum').classList.toggle('off', !!msg);
+    $('w').textContent = msg ? 'Sin horario válido' : T(a) + ' a ' + T(b);
+    $('dy').textContent = msg ? 'Corrige la fecha o la hora de arriba.' : a.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  document.querySelector('main').addEventListener('input', render);
+  render();
+</script>

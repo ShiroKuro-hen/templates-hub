@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{max-width:520px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;padding:16px 20px;font-size:16px;font-weight:600;border-bottom:1px solid transparent;background:linear-gradient(90deg,#22d3ee,#2f5bff) bottom/100% 1px no-repeat}
+  form{display:grid;gap:16px;padding:20px}
+  .alert{--k:var(--info);--ks:var(--info-soft);display:flex;gap:10px;padding:12px 14px;border:1px solid var(--k);border-radius:var(--radius);background:var(--ks)}
+  .alert.err{--k:var(--err);--ks:var(--err-soft)}
+  .alert.warn{--k:var(--warn);--ks:var(--warn-soft)}
+  .alert.ok{--k:var(--ok);--ks:var(--ok-soft)}
+  .ic{display:grid;place-items:center;flex:none;width:20px;height:20px;border-radius:50%;background:var(--k);color:var(--surface);font-size:12px;font-weight:700}
+  .alert strong{display:block}
+  .alert p,.alert ul{margin:2px 0 0}
+  .alert ul{padding-left:18px}
+  .alert a{color:var(--text);font-weight:600;text-decoration-color:var(--k);text-underline-offset:2px}
+  .alert a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+  .field label{display:block;margin-bottom:4px;font-weight:600}
+  .field input{box-sizing:border-box;width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;transition:border-color .14s}
+  .field input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+  .field input[aria-invalid=true]{border-color:var(--err)}
+  .msg{margin:4px 0 0;color:var(--err);font-size:13px}
+  .msg:empty{display:none}
+  .field .alert{margin-top:8px}
+  .acts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+  .btn{padding:8px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;font-weight:600;cursor:pointer}
+  .btn.main{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <h2 id="t">Datos de facturación</h2>
+  <form id="f" novalidate>
+    <div id="sum" aria-live="polite"></div>
+    <div class="field">
+      <label for="razon">Razón social</label>
+      <input id="razon" name="razon" value="Crazy Llama Perú S.A.C." autocomplete="organization">
+    </div>
+    <div class="field">
+      <label for="email">Correo de facturación</label>
+      <input id="email" name="email" type="email" value="facturacion@empresa" aria-describedby="email-e" autocomplete="email">
+      <p class="msg" id="email-e"></p>
+    </div>
+    <div class="field">
+      <label for="ruc">RUC</label>
+      <input id="ruc" name="ruc" inputmode="numeric" value="2051234" aria-describedby="ruc-e ruc-w">
+      <p class="msg" id="ruc-e"></p>
+      <div class="alert warn" id="ruc-w"><span class="ic" aria-hidden="true">!</span><p>Si cambias el RUC, volveremos a verificar tu cuenta. Tarda hasta 24 horas.</p></div>
+    </div>
+    <div class="acts"><button class="btn" type="reset">Cancelar</button><button class="btn main" type="submit">Guardar cambios</button></div>
+  </form>
+</section>
+<script>
+  const f = document.getElementById('f'), sum = document.getElementById('sum');
+  const rules = {
+    email: (v) => !v ? 'Escribe un correo de facturación.' : /^[^@\s]+@[^@\s]+\.\w{2,}$/.test(v) ? '' : 'El formato no es válido. Usa nombre@empresa.com.',
+    ruc: (v) => !v ? 'Escribe el RUC de 11 dígitos.' : /^\d{11}$/.test(v) ? '' : 'El RUC tiene 11 dígitos, sin espacios ni letras.',
+  };
+  const names = { email: 'Correo de facturación', ruc: 'RUC' };
+  let saved = false;
+  function render() {
+    const errs = [];
+    for (const k in rules) {
+      const m = rules[k](f[k].value.trim());
+      f[k].setAttribute('aria-invalid', !!m);
+      document.getElementById(k + '-e').textContent = m;
+      if (m) errs.push(`<li><a href="#${k}">${names[k]}: ${m}</a></li>`);
+    }
+    sum.innerHTML = errs.length
+      ? `<div class="alert err"><span class="ic" aria-hidden="true">×</span><div><strong>Revisa ${errs.length} ${errs.length > 1 ? 'campos' : 'campo'} antes de guardar</strong><ul>${errs.join('')}</ul></div></div>`
+      : saved ? '<div class="alert ok"><span class="ic" aria-hidden="true">✓</span><div><strong>Datos guardados</strong><p>Enviaremos las facturas al correo indicado.</p></div></div>' : '';
+    return !errs.length;
+  }
+  sum.addEventListener('click', (e) => { const a = e.target.closest('a'); if (a) { e.preventDefault(); f[a.hash.slice(1)].focus(); } });
+  f.addEventListener('input', () => { saved = false; render(); });
+  f.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (render()) { saved = true; render(); } else f.querySelector('[aria-invalid=true]').focus();
+  });
+  f.addEventListener('reset', () => setTimeout(() => { saved = false; render(); }));
+  render();
+</script>
+</body>
+</html>

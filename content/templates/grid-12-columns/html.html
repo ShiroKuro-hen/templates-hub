@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{container-type:inline-size;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .sw{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer}
+  .sw input{accent-color:var(--accent);margin:0}
+  .sw:has(:focus-visible){outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+  .bp{margin-left:8px;padding:0 10px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#0a0f1c;font-weight:600}
+  .bp::after{content:"sm"}
+  .ex{margin-bottom:16px}
+  .lb{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 12px;margin:0 0 6px}
+  .lb b{font-weight:600}
+  code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;color:var(--muted)}
+  .row{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}
+  .card:has(#gd:checked) .row{background:linear-gradient(90deg,var(--accent-soft) calc(100% - 12px),transparent 0) 0 0/calc((100% + 12px)/12) 100% repeat-x}
+  .col{grid-column:span var(--sm,12);display:grid;place-items:center;min-height:44px;padding:4px;border:1px solid var(--accent);border-radius:var(--radius);background:color-mix(in srgb,var(--surface) 75%,transparent);font-variant-numeric:tabular-nums;overflow:hidden}
+  table{width:100%;margin-top:8px;border-collapse:collapse;font-variant-numeric:tabular-nums}
+  th,td{padding:8px 12px;border-bottom:1px solid var(--border);text-align:left}
+  th{color:var(--muted);font-weight:500}
+  tr.sm{background:var(--accent-soft)}
+  @container (min-width:640px){.col{grid-column:span var(--md,var(--sm,12))}.bp::after{content:"md"}tr.sm{background:none}tr.md{background:var(--accent-soft)}}
+  @container (min-width:900px){.col{grid-column:span var(--lg,var(--md,var(--sm,12)))}.bp::after{content:"lg"}tr.md{background:none}tr.lg{background:var(--accent-soft)}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="card" aria-labelledby="t">
+  <div class="head">
+    <div><h2 id="t">Sistema de 12 columnas</h2><p>Punto de quiebre actual:<span class="bp"></span></p></div>
+    <label class="sw"><input type="checkbox" id="gd" checked>Mostrar columnas</label>
+  </div>
+  <div id="list"></div>
+  <table aria-label="Puntos de quiebre">
+    <thead><tr><th scope="col">Nombre</th><th scope="col">Ancho del contenedor</th><th scope="col">Regla</th></tr></thead>
+    <tbody>
+      <tr class="sm"><th scope="row">sm</th><td>0 a 639 px</td><td><code>--sm</code></td></tr>
+      <tr class="md"><th scope="row">md</th><td>640 a 899 px</td><td><code>--md</code></td></tr>
+      <tr class="lg"><th scope="row">lg</th><td>900 px o más</td><td><code>--lg</code></td></tr>
+    </tbody>
+  </table>
+</section>
+<script>
+  // [título, descripción, [columnas por bloque en sm, md, lg]]
+  const fix = (n) => [n];
+  const ejemplos = [
+    ['Una columna', '12', [fix(12)]],
+    ['Mitad y mitad', '6 + 6', [fix(6), fix(6)]],
+    ['Tercios', '4 + 4 + 4', [fix(4), fix(4), fix(4)]],
+    ['Contenido y lateral', '8 + 4', [fix(8), fix(4)]],
+    ['Cuartos', '3 + 3 + 3 + 3', [fix(3), fix(3), fix(3), fix(3)]],
+    ['Centrado', '2 + 8 + 2', [fix(2), fix(8), fix(2)]],
+    ['Tarjetas adaptables', 'sm 12, md 6, lg 3', [1, 2, 3, 4].map(() => [12, 6, 3])],
+    ['Lateral adaptable', 'sm 12, md 4 y 8, lg 3 y 9', [[12, 4, 3], [12, 8, 9]]],
+  ];
+  list.innerHTML = ejemplos.map(([t, d, cols]) => `<div class="ex"><p class="lb"><b>${t}</b><code>${d}</code></p><div class="row">${cols.map((c, i) =>
+    `<div class="col" style="--sm:${c[0]};${c[1] ? `--md:${c[1]};--lg:${c[2]}` : ''}">${c[1] ? i + 1 : 'col-' + c[0]}</div>`).join('')}</div></div>`).join('');
+</script>
+</body>
+</html>

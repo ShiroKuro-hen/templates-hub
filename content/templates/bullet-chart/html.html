@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .card{padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:20px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .head p{margin:2px 0 0;color:var(--muted)}
+  .sw{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer}
+  .sw input{accent-color:var(--accent);margin:0}
+  .sw:has(:focus-visible){outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+  ul{list-style:none;margin:0;padding:0;display:grid;gap:20px}
+  .top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;margin-bottom:6px}
+  .name{font-weight:600}
+  .name small{margin-left:8px;color:var(--muted);font-weight:400}
+  .val{font-variant-numeric:tabular-nums;color:var(--muted)}
+  .val b{color:var(--text);font-size:16px}
+  .badge{display:inline-flex;align-items:center;gap:6px;margin-left:8px;padding:0 10px;border-radius:999px;font-size:12px;color:var(--text)}
+  .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+  .badge.ok{background:var(--ok-soft)}.badge.ok::before{background:var(--ok)}
+  .badge.warn{background:var(--warn-soft)}.badge.warn::before{background:var(--warn)}
+  .badge.err{background:var(--err-soft)}.badge.err::before{background:var(--err)}
+  svg.b{display:block;width:100%;height:28px;border-radius:4px;overflow:hidden}
+  .r1{fill:var(--muted);fill-opacity:.38}.r2{fill:var(--muted);fill-opacity:.22}.r3{fill:var(--muted);fill-opacity:.1}
+  .card:has(#rg:not(:checked)) svg.b rect[class^=r]{fill-opacity:0}
+  .bar{fill:var(--accent)}.bar.met{fill:url(#g)}
+  .tg{stroke:var(--text);stroke-width:3}
+  .key{display:flex;flex-wrap:wrap;gap:8px 20px;margin:20px 0 0;padding:12px 0 0;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+  .key span{display:inline-flex;align-items:center;gap:8px}
+  .key i{display:inline-block;width:20px;height:10px;border-radius:2px}
+  .key i.t{width:3px;height:16px;background:var(--text);border-radius:0}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs></svg>
+<section class="card" aria-labelledby="t">
+  <div class="head">
+    <div><h2 id="t">Objetivos del trimestre</h2><p>Valor actual frente a la meta, con rangos de desempeño.</p></div>
+    <label class="sw"><input type="checkbox" id="rg" checked>Mostrar rangos</label>
+  </div>
+  <ul id="ls"></ul>
+  <p class="key" aria-hidden="true">
+    <span><i style="background:var(--muted);opacity:.38"></i>Bajo</span>
+    <span><i style="background:var(--muted);opacity:.22"></i>Medio</span>
+    <span><i style="background:var(--muted);opacity:.1"></i>Alto</span>
+    <span><i style="background:var(--accent)"></i>Valor</span>
+    <span><i class="t"></i>Objetivo</span>
+  </p>
+</section>
+<script>
+  // r: límites de los rangos bajo / medio / alto (el último es el máximo de la escala)
+  const kpis = [
+    { n: 'Ingresos', u: 'miles USD', v: 270, t: 250, r: [150, 210, 300] },
+    { n: 'Clientes nuevos', u: 'altas', v: 182, t: 220, r: [120, 180, 260] },
+    { n: 'Satisfacción', u: 'NPS', v: 61, t: 55, r: [35, 50, 80] },
+    { n: 'Retención', u: '%', v: 91, t: 94, r: [80, 90, 100] },
+  ];
+  const f = (n) => n.toLocaleString('es');
+  ls.innerHTML = kpis.map((k) => {
+    const max = k.r[2], p = (x) => (x / max * 100).toFixed(2) + '%', pct = Math.round(k.v / k.t * 100);
+    const [cls, txt] = k.v >= k.t ? ['ok', 'Objetivo superado'] : k.v >= k.t * 0.9 ? ['warn', 'Cerca del objetivo'] : ['err', 'Por debajo'];
+    const aria = `${k.n}: ${f(k.v)} ${k.u}, objetivo ${f(k.t)}, ${pct} % del objetivo. ${txt}.`;
+    return `<li><div class="top"><span class="name">${k.n}<small>${k.u}</small></span><span class="val"><b>${f(k.v)}</b> de ${f(k.t)}<span class="badge ${cls}">${txt}, ${pct} %</span></span></div>
+      <svg class="b" role="img" aria-label="${aria}"><rect class="r3" width="100%" height="28"/><rect class="r2" width="${p(k.r[1])}" height="28"/><rect class="r1" width="${p(k.r[0])}" height="28"/>
+      <rect class="bar ${k.v >= k.t ? 'met' : ''}" y="10" width="${p(k.v)}" height="8" rx="2"/><line class="tg" x1="${p(k.t)}" x2="${p(k.t)}" y1="4" y2="24"/></svg></li>`;
+  }).join('');
+</script>
+</body>
+</html>

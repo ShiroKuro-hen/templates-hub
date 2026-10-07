@@ -1,0 +1,43 @@
+<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+  <section aria-labelledby="t" class="mx-auto max-w-2xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-slate-200 px-5 py-3.5 dark:border-slate-700">
+      <fieldset class="m-0 grid min-w-60 flex-1 grid-cols-3 gap-1.5 border-0 p-0">
+        <legend id="t" class="mb-1.5 p-0 font-semibold">Posición de los avisos</legend>
+        <label class="block cursor-pointer rounded-lg border border-slate-200 px-1 py-1.5 text-center text-xs hover:border-blue-500 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:has-[:checked]:bg-slate-800"><input class="sr-only" type="radio" name="pos" value="top-left">Arriba izquierda</label>
+        <label class="block cursor-pointer rounded-lg border border-slate-200 px-1 py-1.5 text-center text-xs hover:border-blue-500 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:has-[:checked]:bg-slate-800"><input class="sr-only" type="radio" name="pos" value="top-center">Arriba centro</label>
+        <label class="block cursor-pointer rounded-lg border border-slate-200 px-1 py-1.5 text-center text-xs hover:border-blue-500 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:has-[:checked]:bg-slate-800"><input class="sr-only" type="radio" name="pos" value="top-right">Arriba derecha</label>
+        <label class="block cursor-pointer rounded-lg border border-slate-200 px-1 py-1.5 text-center text-xs hover:border-blue-500 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:has-[:checked]:bg-slate-800"><input class="sr-only" type="radio" name="pos" value="bottom-left">Abajo izquierda</label>
+        <label class="block cursor-pointer rounded-lg border border-slate-200 px-1 py-1.5 text-center text-xs hover:border-blue-500 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:has-[:checked]:bg-slate-800"><input class="sr-only" type="radio" name="pos" value="bottom-center">Abajo centro</label>
+        <label class="block cursor-pointer rounded-lg border border-slate-200 px-1 py-1.5 text-center text-xs hover:border-blue-500 has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:font-semibold has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-blue-500 dark:border-slate-700 dark:has-[:checked]:bg-slate-800"><input class="sr-only" type="radio" name="pos" value="bottom-right" checked>Abajo derecha</label>
+      </fieldset>
+      <button id="go" type="button" class="cursor-pointer rounded-lg border border-blue-600 bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500">Mostrar aviso</button>
+    </div>
+    <div class="relative m-4 h-72 overflow-hidden rounded-lg border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-950">
+      <p class="m-0 p-3 text-slate-500 dark:text-slate-400">Vista previa de la pantalla</p>
+      <div id="box" role="region" aria-label="Notificaciones" aria-live="polite" class="pointer-events-none absolute m-3 flex w-60 flex-col gap-2"></div>
+    </div>
+  </section>
+</div>
+<script>
+  const POS = { 'top-left': 'top-0 left-0', 'top-center': 'top-0 inset-x-0 mx-auto', 'top-right': 'top-0 right-0',
+    'bottom-left': 'bottom-0 left-0 flex-col-reverse', 'bottom-center': 'bottom-0 inset-x-0 mx-auto flex-col-reverse', 'bottom-right': 'bottom-0 right-0 flex-col-reverse' };
+  const BASE = 'pointer-events-none absolute m-3 flex w-60 flex-col gap-2 ';
+  const MSG = [['✓', 'Cambios guardados', 'Se actualizó el proyecto Atlas.', 'bg-emerald-100 text-emerald-700'],
+    ['i', 'Nueva versión disponible', 'Recarga la página para ver las mejoras.', 'bg-sky-100 text-sky-700'],
+    ['!', 'Almacenamiento al 90 %', 'Libera espacio o amplía tu plan.', 'bg-amber-100 text-amber-700'],
+    ['×', 'No se pudo sincronizar', 'Revisa tu conexión y vuelve a intentarlo.', 'bg-rose-100 text-rose-700']];
+  let n = 0;
+  function show() {
+    const [ic, title, text, tone] = MSG[n++ % MSG.length], t = document.createElement('div');
+    t.className = 'pointer-events-auto relative flex gap-2.5 overflow-hidden rounded-lg border border-slate-200 bg-white px-3 py-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900';
+    t.innerHTML = `<span aria-hidden="true" class="grid size-[22px] flex-none place-items-center rounded-full text-xs font-bold ${tone}">${ic}</span><div class="min-w-0 flex-1"><b class="block">${title}</b><span class="text-[13px] text-slate-500 dark:text-slate-400">${text}</span></div><button type="button" aria-label="Cerrar aviso" class="size-6 cursor-pointer self-start rounded text-lg leading-none text-slate-500 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-500 dark:hover:text-slate-100">×</button><i class="absolute inset-x-0 bottom-0 h-0.5 origin-left animate-[shrink_5s_linear_forwards] bg-gradient-to-br from-cyan-400 to-blue-600"></i>`;
+    t.querySelector('button').onclick = () => t.remove();
+    box.append(t);
+    setTimeout(() => t.remove(), 5000);
+  }
+  go.onclick = show;
+  document.querySelectorAll('[name=pos]').forEach((r) => r.addEventListener('change', () => { box.className = BASE + POS[r.value]; show(); }));
+  box.className = BASE + POS['bottom-right'];
+  show();
+</script>
+<style>@keyframes shrink{to{transform:scaleX(0)}}@media (prefers-reduced-motion:reduce){i{animation:none!important}}</style>

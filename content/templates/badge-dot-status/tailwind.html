@@ -1,0 +1,36 @@
+<style>
+  @keyframes pulse{from{transform:scale(1);opacity:.55}to{transform:scale(2.8);opacity:0}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<section class="mx-auto max-w-xl rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" aria-labelledby="t">
+  <h2 id="t" class="text-lg font-semibold">Estado de los servicios</h2>
+  <p class="mb-4 mt-0.5 text-slate-500 dark:text-slate-400">Filtra por estado. Cada punto va acompañado de su nombre.</p>
+  <ul id="legend" class="flex flex-wrap gap-2"></ul>
+  <p id="live" role="status" class="mt-2 text-slate-500 dark:text-slate-400"></p>
+  <ul id="list"></ul>
+</section>
+<script>
+  const STATES = {
+    ok: ['Operativo', 'bg-emerald-600 dark:bg-emerald-400', 1.8], warn: ['Degradado', 'bg-amber-600 dark:bg-amber-400', 1.8],
+    err: ['Incidente', 'bg-rose-600 dark:bg-rose-400', 1.1], info: ['Mantenimiento', 'bg-cyan-600 dark:bg-sky-400', 0], idle: ['Pausado', 'bg-slate-500 dark:bg-slate-400', 0],
+  };
+  const SERVICES = [['API pública', 'ok', 'hace 1 min'], ['Panel web', 'ok', 'hace 3 min'], ['Pagos', 'warn', 'hace 12 min'], ['Correo transaccional', 'err', 'hace 4 min'], ['Base de datos', 'info', 'hace 25 min'], ['Webhooks', 'ok', 'hace 2 min'], ['Exportaciones', 'idle', 'hace 3 h']];
+  const dot = (k) => { const [, c, s] = STATES[k];
+    return `<span class="relative size-2 flex-none rounded-full ${c}" aria-hidden="true">${s ? `<span class="absolute inset-0 rounded-full ${c}" style="animation:pulse ${s}s ease-out infinite"></span>` : ''}</span>`; };
+  const CHIP = 'flex cursor-pointer items-center gap-2 rounded-full border border-slate-200 bg-white py-1 pl-2.5 pr-3 transition-colors hover:border-blue-500 aria-pressed:border-blue-500 aria-pressed:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:aria-pressed:bg-slate-800';
+  let filter = null;
+  function draw() {
+    const rows = SERVICES.filter((s) => !filter || s[1] === filter);
+    legend.innerHTML = Object.entries(STATES).map(([k, [name]]) =>
+      `<li><button type="button" data-k="${k}" aria-pressed="${filter === k}" class="${CHIP}">${dot(k)}${name} <b class="font-semibold tabular-nums text-slate-500 dark:text-slate-400">${SERVICES.filter((s) => s[1] === k).length}</b></button></li>`).join('');
+    list.innerHTML = rows.map(([n, k, t]) =>
+      `<li class="grid grid-cols-[8px_1fr_auto] items-center gap-3 border-t border-slate-200 py-3 first:mt-2 dark:border-slate-700">${dot(k)}<span>${n}</span><span class="flex flex-wrap justify-end gap-x-3 text-slate-500 dark:text-slate-400"><span>${STATES[k][0]}</span><time class="min-w-[7ch] text-right tabular-nums">${t}</time></span></li>`).join('');
+    live.textContent = filter ? `Mostrando ${rows.length} con estado ${STATES[filter][0].toLowerCase()}.` : `Mostrando los ${rows.length} servicios.`;
+  }
+  legend.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    filter = filter === b.dataset.k ? null : b.dataset.k; draw();
+    legend.querySelector(`[data-k="${b.dataset.k}"]`).focus();
+  });
+  draw();
+</script>

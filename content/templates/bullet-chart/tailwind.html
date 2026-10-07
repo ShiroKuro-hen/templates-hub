@@ -1,0 +1,41 @@
+<svg width="0" height="0" class="absolute" aria-hidden="true"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs></svg>
+<section class="group rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" aria-labelledby="t">
+  <div class="mb-5 flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h2 id="t" class="m-0 text-base font-semibold">Objetivos del trimestre</h2>
+      <p class="mt-0.5 text-slate-500 dark:text-slate-400">Valor actual frente a la meta, con rangos de desempeño.</p>
+    </div>
+    <label class="flex cursor-pointer items-center gap-2 text-slate-500 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-blue-500 dark:text-slate-400">
+      <input type="checkbox" id="rg" checked class="m-0 accent-blue-600">Mostrar rangos
+    </label>
+  </div>
+  <ul id="ls" class="m-0 grid list-none gap-5 p-0"></ul>
+  <p class="mb-0 mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t border-slate-200 pt-3 text-[13px] text-slate-500 dark:border-slate-700 dark:text-slate-400" aria-hidden="true">
+    <span class="inline-flex items-center gap-2"><i class="h-2.5 w-5 rounded-sm bg-slate-500/40"></i>Bajo</span>
+    <span class="inline-flex items-center gap-2"><i class="h-2.5 w-5 rounded-sm bg-slate-500/25"></i>Medio</span>
+    <span class="inline-flex items-center gap-2"><i class="h-2.5 w-5 rounded-sm bg-slate-500/10"></i>Alto</span>
+    <span class="inline-flex items-center gap-2"><i class="h-2.5 w-5 rounded-sm bg-blue-600 dark:bg-blue-400"></i>Valor</span>
+    <span class="inline-flex items-center gap-2"><i class="h-4 w-[3px] bg-slate-900 dark:bg-slate-100"></i>Objetivo</span>
+  </p>
+</section>
+<script>
+  const kpis = [
+    { n: 'Ingresos', u: 'miles USD', v: 270, t: 250, r: [150, 210, 300] },
+    { n: 'Clientes nuevos', u: 'altas', v: 182, t: 220, r: [120, 180, 260] },
+    { n: 'Satisfacción', u: 'NPS', v: 61, t: 55, r: [35, 50, 80] },
+    { n: 'Retención', u: '%', v: 91, t: 94, r: [80, 90, 100] },
+  ];
+  const f = (n) => n.toLocaleString('es');
+  const dot = { ok: 'bg-emerald-600 dark:bg-emerald-400', warn: 'bg-amber-600 dark:bg-amber-400', err: 'bg-rose-600 dark:bg-rose-400' };
+  const bg = { ok: 'bg-emerald-50 dark:bg-emerald-950', warn: 'bg-amber-50 dark:bg-amber-950', err: 'bg-rose-50 dark:bg-rose-950' };
+  const band = (o) => `group-has-[#rg:not(:checked)]:fill-transparent ${o}`;
+  ls.innerHTML = kpis.map((k) => {
+    const max = k.r[2], p = (x) => (x / max * 100).toFixed(2) + '%', pct = Math.round(k.v / k.t * 100);
+    const [cls, txt] = k.v >= k.t ? ['ok', 'Objetivo superado'] : k.v >= k.t * 0.9 ? ['warn', 'Cerca del objetivo'] : ['err', 'Por debajo'];
+    const aria = `${k.n}: ${f(k.v)} ${k.u}, objetivo ${f(k.t)}, ${pct} % del objetivo. ${txt}.`;
+    return `<li><div class="mb-1.5 flex flex-wrap items-baseline justify-between gap-x-3"><span class="font-semibold">${k.n}<small class="ml-2 font-normal text-slate-500 dark:text-slate-400">${k.u}</small></span>
+      <span class="tabular-nums text-slate-500 dark:text-slate-400"><b class="text-base text-slate-900 dark:text-slate-100">${f(k.v)}</b> de ${f(k.t)}<span class="ml-2 inline-flex items-center gap-1.5 rounded-full px-2.5 text-xs text-slate-900 dark:text-slate-100 ${bg[cls]}"><i class="size-1.5 rounded-full ${dot[cls]}"></i>${txt}, ${pct} %</span></span></div>
+      <svg class="block h-7 w-full overflow-hidden rounded" role="img" aria-label="${aria}"><rect class="${band('fill-slate-500/10')}" width="100%" height="28"/><rect class="${band('fill-slate-500/25')}" width="${p(k.r[1])}" height="28"/><rect class="${band('fill-slate-500/40')}" width="${p(k.r[0])}" height="28"/>
+      <rect class="${k.v >= k.t ? '' : 'fill-blue-600 dark:fill-blue-400'}" ${k.v >= k.t ? 'fill="url(#g)"' : ''} y="10" width="${p(k.v)}" height="8" rx="2"/><line class="stroke-slate-900 dark:stroke-slate-100" stroke-width="3" x1="${p(k.t)}" x2="${p(k.t)}" y1="4" y2="24"/></svg></li>`;
+  }).join('');
+</script>
