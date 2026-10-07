@@ -2,12 +2,19 @@
   "name": "templates-hub",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "validate": "node scripts/validate.mjs",
+    "audit": "node scripts/audit-previews.mjs",
+    "check": "npm run validate && npm run build"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/ibm-plex-sans": "^5.3.0",
     "@fontsource/space-grotesk": "^5.3.0",

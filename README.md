@@ -8,6 +8,16 @@ npm run dev      # http://localhost:4321
 npm run build
 ```
 
+[![CI y GitHub Pages](https://github.com/ShiroKuro-hen/templates-hub/actions/workflows/deploy.yml/badge.svg)](https://github.com/ShiroKuro-hen/templates-hub/actions/workflows/deploy.yml)
+
+## Calidad (CI)
+Cada push a `main` y cada PR ejecuta, antes de publicar:
+1. `npm run validate` — cada plantilla tiene sus 6 archivos, `meta.json` válido, categoría existente, tokens de tema oscuro, sin recursos externos ni estilo antiguo, y sintaxis de los `<script>` correcta.
+2. `npm run build` — el sitio compila.
+3. `npm run audit` — abre las vistas previas en un Chrome sin cabeza (tema claro y oscuro, 360 px) y falla ante errores de JavaScript, recursos que no cargan, tema sin aplicar o desbordes graves. Local: `npm run build && npm run preview` y, en otra terminal, `npm run audit -- http://localhost:4321/`.
+
+Solo si todo pasa y el evento es un push a `main`, se publica en GitHub Pages.
+
 ## Cómo funciona
 - Sidebar con todo el catálogo agrupado (Fundamentos, Componentes, Feedback, Navegación, Datos, Layout y páginas).
 - Paleta de comandos: `Ctrl/⌘ K` o `/` (busca componentes, categorías y acciones).

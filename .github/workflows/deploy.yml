@@ -1,32 +1,69 @@
-name: Deploy to GitHub Pages
+name: CI y GitHub Pages
+
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: true
+
 jobs:
+  # Valida contenido, compila y audita las vistas previas (JS, tema claro/oscuro, desbordes). Corre también en PRs.
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    concurrency:
+      group: validate-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Validar contenido (archivos, meta.json, categorías, tokens, sintaxis)
+        run: node scripts/validate.mjs
+      - name: Compilar
+        run: npm run build
+      - name: Auditar vistas previas en navegador
+        run: |
+          npx astro preview --port 4321 > preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://localhost:4321/ > /dev/null && break; sleep 1; done
+          node scripts/audit-previews.mjs http://localhost:4321/
+        env:
+          CHROME_BIN: /usr/bin/google-chrome
+
+  # Solo en main: genera el sitio con la ruta base de GitHub Pages y lo publica.
   build:
+    needs: validate
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     env:
       SITE: https://${{ github.repository_owner }}.github.io
       BASE: /${{ github.event.repository.name }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: withastro/action@v3
+      - uses: actions/checkout@v7
+      - uses: withastro/action@v6
         with:
           node-version: 24
+
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
-      url: ${{ steps.d.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: d
-        uses: actions/deploy-pages@v4
+      - id: deployment
+        uses: actions/deploy-pages@v5
