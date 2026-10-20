@@ -85,7 +85,7 @@ const preview = url(`/preview/${t.slug}.html`);
     <h2>Prompt</h2>
     <p>Pídele este componente a tu IA. Reemplaza lo que va entre llaves dobles.</p>
     <div class="prompt">
-      <div class="bar"><span class="pill">Español</span><button class="btn primary" type="button" data-copy={t.prompt}>Copiar prompt</button></div>
+      <div class="bar"><span class="pill">Español</span><button class="btn primary" type="button" data-copy={t.prompt} data-with-style>Copiar prompt</button></div>
       <pre>{parts.map((p) => (p.startsWith('{{') ? <mark>{p}</mark> : p))}</pre>
     </div>
   </section>
@@ -120,6 +120,7 @@ const preview = url(`/preview/${t.slug}.html`);
   import { copy } from '../../lib/copy';
   import { currentTheme, readState, saveState } from '../../lib/hub-theme';
   import { toParams, type Overrides } from '../../lib/customize';
+  import { stylePrompt } from '../../lib/style-prompt';
 
   const $ = <T extends Element>(s: string) => [...document.querySelectorAll<T>(s)];
 
@@ -146,7 +147,8 @@ const preview = url(`/preview/${t.slug}.html`);
     const panel = $<HTMLElement>('[data-panel]:not([hidden])')[0];
     copy(e.currentTarget as HTMLElement, applyTheme(panel.dataset.code!, currentTheme()));
   });
-  $<HTMLElement>('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b, b.dataset.copy!)));
+  const promptText = (b: HTMLElement) => b.dataset.copy! + (b.hasAttribute('data-with-style') ? stylePrompt(currentTheme()) : '');
+  $<HTMLElement>('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b, promptText(b))));
 
   const styleSelect = document.getElementById('style-select') as HTMLSelectElement | null;
   if (styleSelect) {

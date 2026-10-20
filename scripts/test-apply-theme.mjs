@@ -5,6 +5,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { applyTheme } from '../src/lib/apply-theme.ts';
 import { customize, toParams, fromParams } from '../src/lib/customize.ts';
+import { stylePrompt } from '../src/lib/style-prompt.ts';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const themes = JSON.parse(readFileSync(join(root, 'src', 'lib', 'themes.json'), 'utf8'));
@@ -63,5 +64,14 @@ const rounded = applyTheme(html, customize(ion, { radius: 12 }));
 const [roundedLight, roundedDark] = blocks(rounded);
 assert.ok(roundedLight.includes('--radius:12px'));
 assert.ok(roundedDark.includes('--radius:12px'));
+
+assert.equal(stylePrompt(ion), '');
+const brutalPrompt = stylePrompt(byId('brutal'));
+assert.ok(brutalPrompt.includes('Estilo visual: Brutal.'));
+assert.ok(brutalPrompt.includes('radio de esquina: 0px'));
+assert.ok(brutalPrompt.endsWith('en lugar de colores fijos.'));
+const custom = stylePrompt(customize(ion, { accent: '#ff0066', radius: 12 }));
+assert.ok(custom.includes('#ff0066') && custom.includes('12px'));
+assert.ok(stylePrompt(byId('terminal')).includes(`fuente: ${byId('terminal').font}`));
 
 console.log('applyTheme OK');
