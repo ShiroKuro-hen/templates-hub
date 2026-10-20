@@ -15,7 +15,7 @@ export function BulletChart({ kpis = KPIS }: { kpis?: Kpi[] }) {
   return (
     <section className="card" aria-labelledby="t">
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
       </svg>
       <div className="head">
         <div><h2 id="t">Objetivos del trimestre</h2><p>Valor actual frente a la meta, con rangos de desempeño.</p></div>

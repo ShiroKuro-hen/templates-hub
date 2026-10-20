@@ -26,7 +26,7 @@ export function FooterCta({ cols = COLS }: { cols?: Col[] }) {
           <div className="about">
             <a className="brand" href="#" aria-label="Nimbo, inicio">
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+                <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
                 <rect width="24" height="24" rx="6" fill="url(#g)" />
                 <path d="M7 16.5a3.5 3.5 0 0 1 .6-6.9A4.5 4.5 0 0 1 16.3 10a3.3 3.3 0 0 1 .7 6.5z" fill="#fff" />
               </svg>

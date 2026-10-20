@@ -57,7 +57,7 @@ export function ScatterPlot() {
       </figcaption>
       <div className="plot">
         <svg ref={ref} viewBox={`0 0 ${W} ${H}`} role="group" aria-label="Diagrama de dispersión de gasto y clientes nuevos" onPointerLeave={() => setTip(-1)}>
-          <defs><linearGradient id="tg"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="tg"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           {[0, 50, 100, 150, 200].map((t) => (
             <g key={t}><line className="gl" x1={L} x2={W - R} y1={y(t)} y2={y(t)} /><text className="ax" x={L - 8} y={y(t) + 4} textAnchor="end">{t}</text></g>
           ))}

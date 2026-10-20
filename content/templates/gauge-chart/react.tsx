@@ -42,7 +42,7 @@ export function GaugeChart({ data = DATA, limits = { warn: 70, crit: 90 } }: { d
   return (
     <figure>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <defs><linearGradient id="ion" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="ion" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
       </svg>
       <figcaption><strong>Uso de recursos</strong><span>Clúster de producción, últimos 5 minutos</span></figcaption>
       <div className="grid">{data.map((d) => <Gauge key={d.label} {...d} limits={limits} />)}</div>

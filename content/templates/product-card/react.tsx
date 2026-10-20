@@ -14,7 +14,7 @@ export function ProductCard({ p = DEMO, onAdd }: { p?: Product; onAdd?: () => vo
       <div className="media">
         <span className="badge">Nuevo</span>
         <svg viewBox="0 0 120 120" role="img" aria-label={p.nombre}>
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           <path d="M22 70V60a38 38 0 0 1 76 0v10" fill="none" stroke="url(#g)" strokeWidth="7" strokeLinecap="round" />
           <rect x="14" y="64" width="22" height="36" rx="8" fill="currentColor" />
           <rect x="84" y="64" width="22" height="36" rx="8" fill="currentColor" />

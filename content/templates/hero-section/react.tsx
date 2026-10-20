@@ -32,8 +32,8 @@ export function Hero({ badge, title, subtitle, primary, secondary, note }: HeroP
       <svg className="art" viewBox="0 0 320 260" role="img" aria-label="Tablero de tareas con tres columnas">
         <defs>
           <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#22d3ee" />
-            <stop offset="1" stopColor="#2f5bff" />
+            <stop offset="0" stopColor="var(--accent-2,#22d3ee)" />
+            <stop offset="1" stopColor="var(--accent,#2f5bff)" />
           </linearGradient>
         </defs>
         <rect className="win" x="6" y="6" width="308" height="244" rx="10" />

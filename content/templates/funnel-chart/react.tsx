@@ -20,7 +20,7 @@ export function FunnelChart({ stages = STAGES }: { stages?: [string, number][] }
       </figcaption>
       <div className="wrap">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className={hl >= 0 ? 'dim' : ''} style={{ height: n * 64 }} onPointerLeave={() => setHl(-1)}>
-          <defs><linearGradient id="fg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="fg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           {stages.map((s, i) => {
             const w0 = (s[1] / top) * 100, w1 = ((stages[i + 1] ? stages[i + 1][1] : s[1] * 0.8) / top) * 100, y0 = i * h + 0.8, y1 = (i + 1) * h - 0.8;
             return (

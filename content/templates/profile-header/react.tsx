@@ -17,7 +17,7 @@ export function ProfileHeader({ profile = DEFAULT }: { profile?: Profile }) {
     <article className="card" aria-labelledby="n">
       <svg className="cover" viewBox="0 0 800 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient>
           <pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" strokeOpacity=".18" /></pattern>
         </defs>
         <rect width="800" height="150" fill="url(#g)" />

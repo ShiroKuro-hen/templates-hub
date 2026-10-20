@@ -47,7 +47,7 @@ export function MagicLinkForm({ onSend }: { onSend?: (email: string) => Promise<
         <section aria-labelledby="t2">
           <div className="ring">
             <svg width="56" height="56" viewBox="0 0 56 56" fill="none" strokeWidth="3" strokeLinecap="round" aria-hidden="true">
-              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
               <circle className="track" cx="28" cy="28" r="24" />
               <circle className="bar" cx="28" cy="28" r="24" stroke="url(#g)" strokeDasharray="150.8" style={{ strokeDashoffset: C * (1 - left / N) }} />
             </svg>

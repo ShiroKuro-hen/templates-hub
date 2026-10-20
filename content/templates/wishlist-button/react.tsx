@@ -28,7 +28,7 @@ export function WishlistButton({ product = 'Reloj Orbit S2', price = '149,00 €
   return (
     <article className="card">
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
       </svg>
       <div className="img" aria-hidden="true" />
       <button className="fab" type="button" aria-pressed={on} aria-label={label} onClick={() => toggle()}><Heart /></button>

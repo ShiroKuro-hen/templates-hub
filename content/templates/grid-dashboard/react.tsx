@@ -29,7 +29,7 @@ function Ventas() {
   return (
     <svg ref={ref} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Ventas diarias de septiembre: suben de 2,1 a 5,2 miles de dólares en 14 días.">
       <defs>
-        <linearGradient id="lg"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient>
+        <linearGradient id="lg"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient>
         <linearGradient id="af" x1="0" x2="0" y1="0" y2="1"><stop offset="0" style={{ stopColor: 'var(--accent)', stopOpacity: 0.25 }} /><stop offset="1" style={{ stopColor: 'var(--accent)', stopOpacity: 0 }} /></linearGradient>
       </defs>
       {[0, 2, 4, 6].map((t) => (<g key={t}><line className="gl" x1={L} x2={W - 8} y1={y(t)} y2={y(t)} /><text className="ax" x={L - 6} y={y(t) + 4} textAnchor="end">{t}</text></g>))}

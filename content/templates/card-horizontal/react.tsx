@@ -23,7 +23,7 @@ const ARTICULOS: Articulo[] = [
 function Arte({ tipo, id }: { tipo: Articulo['arte']; id: string }) {
   return (
     <svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-      <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+      <defs><linearGradient id={id} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
       <rect className="bg" width="240" height="180" />
       {tipo === 'linea' ? (<>
         <path className="gl" d="M0 45H240M0 90H240M0 135H240M60 0V180M120 0V180M180 0V180" />

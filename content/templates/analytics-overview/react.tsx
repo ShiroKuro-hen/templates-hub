@@ -48,7 +48,7 @@ export function AnalyticsOverview({ data = DATA }: { data?: typeof DATA }) {
              aria-label={`Visitantes en ${range} días, de ${d.ticks[0]} a ${d.ticks[2]}. Tendencia ${trend}.`}>
           <defs>
             <linearGradient id="ao-g" gradientUnits="userSpaceOnUse" x1="0" x2="600">
-              <stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" />
+              <stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" />
             </linearGradient>
           </defs>
           <g className="grid">{[50, 100, 150, 200].map((y) => <line key={y} x1="0" x2="600" y1={y} y2={y} />)}</g>

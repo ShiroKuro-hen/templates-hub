@@ -25,7 +25,7 @@ export function KpiChartCards({ kpis = KPIS }: { kpis?: Kpi[] }) {
     <>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <defs>
-          <linearGradient id="kg"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient>
+          <linearGradient id="kg"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient>
         </defs>
       </svg>
       <section aria-labelledby="kc-t">

@@ -31,7 +31,7 @@ export function LandingSaas({ features = FEATURES }: { features?: Feature[] }) {
               <div className="main">
                 <div className="kpis"><div>Flujos<b>128</b></div><div>Horas<b>342</b></div><div>Errores<b>0,4 %</b></div></div>
                 <svg viewBox="0 0 300 80" preserveAspectRatio="none">
-                  <defs><linearGradient id="l"><stop stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+                  <defs><linearGradient id="l"><stop stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
                   <path d="M0 64 40 52 80 58 120 36 160 42 200 22 240 28 300 8" fill="none" stroke="url(#l)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>

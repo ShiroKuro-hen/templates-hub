@@ -36,7 +36,7 @@ export function MilestoneCelebration({
       </div>
       <div className="ring">
         <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           <circle className="track" cx="60" cy="60" r="52" />
           <circle className="arc" key={`a${run}`} cx="60" cy="60" r="52" />
         </svg>

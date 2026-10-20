@@ -21,7 +21,7 @@ export function HorizontalBarChart({ data = DATA, title = 'Productos más vendid
       <figcaption><strong>{title}</strong><span>{subtitle}</span></figcaption>
       <svg width="100%" height={rows.length * ROW - 12} role="img" aria-label={`Ranking de ventas: ${resumen}`}>
         <defs>
-          <linearGradient id="ion-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient>
+          <linearGradient id="ion-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient>
         </defs>
         {rows.map((r, i) => {
           const y = i * ROW;

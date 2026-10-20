@@ -11,9 +11,9 @@ Objetivo: **más estilos** y **más personalización**, sin romper lo que ya es 
 
 ## Estado
 - **Fase 1 — hecha:** 9 estilos, selector en el visor, verificador de contraste (`npm run themes`).
-- **Fase 2 — parcial:** "Copiar código" hornea el estilo elegido en HTML+CSS. Hechos también: degradado `--accent-2` y radios `min(var(--radius),Npx)` en ~200 previews. Falta: perillas (acento/radio/densidad), compartir por URL, prompt con variables.
-- **Vue:** su código no trae bloque `:root` (usa las variables de la app que lo recibe), así que el copiado con tema no le aplica.
-- **Tailwind/React:** sin cambios; opción A o B sigue pendiente (ver Riesgos).
+- **Fase 2:** "Copiar código" hornea el estilo elegido en HTML+CSS; degradado `--accent-2` y radios `min(var(--radius),Npx)` en los previews; panel "Personalizar" (acento, radio, sombra, fuente) con enlace compartible. Falta: densidad (ningún componente usa un token de espaciado todavía) y prompt con variables.
+- **Tailwind (opción A, hecha):** los 233 `tailwind.html` usan clases semánticas (`bg-surface`, `text-fg`, `border-line`, `text-accent`…) y no llevan `dark:` de color; el CSS de configuración está en `src/lib/tailwind-setup.css` (página `/tailwind/`). `validate` prohíbe volver a las clases de paleta. Excepción: la categoría `paleta-de-color`, donde los colores son el contenido.
+- **React y Vue:** no llevan paletas de color: usan nombres de clase propios y el CSS del snippet HTML+CSS, igual que Vue. Los tokens llegan por ese CSS, así que no necesitan conversión.
 
 ## Qué hace la competencia (y qué nos sirve)
 
@@ -45,7 +45,7 @@ Tokens de tema como datos y un selector en el visor.
 Inspirado en Radix/shadcn: pocas perillas, efecto global.
 - **Color de acento** (selector + escalas generadas con `color-mix()`/`oklch`, sin librería), **radio** (0 / 4 / 8 / 16 / pill), **densidad** (compacta/normal/cómoda → `--space`), **fuente** (3–4 pilas ya instaladas/sistema), **sombra** (ninguna/suave/dura).
 - Panel lateral "Personalizar" con vista previa en vivo en todos los componentes (la misma inyección de la Fase 1).
-- **Copiar con mi tema:** el botón de copiar reemplaza el bloque `:root{…}` por el del estilo elegido. Funciona hoy en HTML+CSS y Vue; en Tailwind y React depende de la decisión A/B de los riesgos (esos formatos usan paletas fijas). Aquí está la diferencia real frente a un catálogo estático.
+- **Copiar con mi tema:** el botón de copiar reemplaza el bloque `:root{…}` por el del estilo elegido. Funciona en HTML+CSS y en el CSS de configuración de Tailwind (React y Vue no traen bloque `:root`). Aquí está la diferencia real frente a un catálogo estático.
 - Compartir configuración por URL (`?t=brutal&a=%23ff5a36&r=12`), sin backend.
 - Prompt de IA con las variables ya rellenas (`{{estilo}}`, `{{acento}}`, `{{radio}}`).
 
@@ -78,7 +78,5 @@ Inspirado en Radix/shadcn: pocas perillas, efecto global.
 ## Riesgos
 - **Componentes con colores fijos:** si alguno no usa las variables, el estilo no le aplica. Mitigación: `validate.mjs` ya revisa tokens; agregar regla "sin colores literales fuera del bloque `:root`".
 - **Explosión de combinaciones** (estilos × acento × radio × densidad): el `audit` debe correr sobre una muestra (cada estilo × 2 temas), no sobre el producto cartesiano.
-- **Tailwind y React NO usan las variables (verificado en `alert-variants`):** usan clases de paleta fija (`bg-cyan-50`, `border-slate-200`, `blue-500`); solo HTML+CSS y Vue leen `var(--…)`. Los estilos de la Fase 1 se verán en la vista previa (que es el `html.html`), pero "copiar con mi tema" en Tailwind/React exige una decisión antes de la Fase 2:
-  - **A (recomendada):** migrar Tailwind/React a clases semánticas ligadas a los tokens (`bg-[--surface]` o colores `@theme` de Tailwind v4: `bg-surface text-muted`). Un script de migración + `validate` que prohíba paletas fijas. Es el trabajo grande del roadmap (237 × 2 archivos).
-  - **B (barata):** en Tailwind/React solo copiar con el acento/radio vía `tailwind.config` generado en "Mi tema"; el resto de estilos solo en HTML+CSS y Vue.
+- **Tailwind no se renderiza en el sitio** (la vista previa es el `html.html`): su fidelidad visual no la vigila el `audit`. La migración se verificó fuera del repo, compilando Tailwind v4 y comparando capturas antes/después (237 componentes × claro/oscuro, 0,69 % de diferencia media). Si el snippet Tailwind se edita a mano, hay que repetir esa comprobación.
 - **Estilos que rompen layouts** (fuentes más anchas, radios extremos): probar a 360 px, como ya hace el audit.

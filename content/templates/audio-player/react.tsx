@@ -44,7 +44,7 @@ export function AudioPlayer({ tracks = TRACKS }: { tracks?: Track[] }) {
       </div>
       <div className="wave">
         <svg viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
-          <defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" x2="240"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" x2="240"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           {Array.from({ length: N }, (_, k) => {
             const h = height(k, i);
             return <rect key={k} x={k * 4} y={(48 - h) / 2} width={2.4} height={h} rx={1.2} className={k / N < t / cur.d ? 'on' : undefined} />;

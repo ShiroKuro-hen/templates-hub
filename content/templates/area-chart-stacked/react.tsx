@@ -58,7 +58,7 @@ export function AreaChartStacked() {
       <div className="plot">
         <svg ref={ref} viewBox={`0 0 ${W} ${H}`} tabIndex={0} role="img" aria-label="Áreas apiladas de sesiones por dispositivo. Usa las flechas izquierda y derecha para explorar los meses."
              onKeyDown={onKey} onPointerMove={onMove} onPointerLeave={() => document.activeElement !== ref.current && setIdx(-1)} onBlur={() => setIdx(-1)}>
-          <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           {Array.from({ length: max / 40 + 1 }, (_, k) => k * 40).map((t) => (
             <g key={t}><line className="gl" x1={L} x2={W - R} y1={y(t)} y2={y(t)} /><text className="ax" x={L - 6} y={y(t) + 4} textAnchor="end">{t}</text></g>
           ))}

@@ -36,7 +36,7 @@ export function WorkspaceStatus() {
       <svg width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
         <defs>
           <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" />
+            <stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" />
           </linearGradient>
         </defs>
       </svg>

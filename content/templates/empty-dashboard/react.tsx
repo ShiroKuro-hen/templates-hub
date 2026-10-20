@@ -31,7 +31,7 @@ export function EmptyDashboard({ kpis = KPIS }: { kpis?: Kpi[] }) {
 
       <div className={`chart panel${demo ? ' demo' : ''}`}>
         <svg viewBox="0 0 600 210" preserveAspectRatio="none" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="#22d3ee" /><stop offset="1" stopColor="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stopColor="var(--accent-2,#22d3ee)" /><stop offset="1" stopColor="var(--accent,#2f5bff)" /></linearGradient></defs>
           <path className="grid" d="M0 50H600M0 100H600M0 150H600" />
           <path className="line" d="M20 150C80 140 110 90 170 100S260 150 320 110 420 50 480 70 560 40 585 30" />
         </svg>
