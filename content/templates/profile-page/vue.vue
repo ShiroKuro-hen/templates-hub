@@ -78,13 +78,13 @@ function onKey(e: KeyboardEvent, i: number) {
 </template>
 
 <style scoped>
-.page{max-width:1000px;margin:0 auto;color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.page{max-width:1000px;margin:0 auto;--grad:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 :is(a,button,[role=tab]):focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 .head{overflow:hidden}
 .cover{height:112px;background:repeating-linear-gradient(135deg,transparent 0 14px,var(--border) 14px 15px),linear-gradient(135deg,var(--accent-soft),var(--info-soft))}
 .info{display:flex;flex-wrap:wrap;align-items:flex-end;gap:16px 20px;padding:0 24px 16px}
-.ring{margin-top:-44px;padding:1px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+.ring{margin-top:-44px;padding:1px;border-radius:50%;background:var(--grad)}
 .av{display:grid;place-items:center;width:88px;height:88px;border-radius:50%;background:var(--accent-soft);box-shadow:inset 0 0 0 3px var(--surface);color:var(--accent);font-size:28px;font-weight:700}
 .who{flex:1;min-width:200px}
 h1{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;font-size:22px;letter-spacing:-.01em}
@@ -114,8 +114,8 @@ q{display:block;margin-top:6px;padding-left:12px;border-left:1px solid var(--bor
 .prj:last-child{border:0}
 progress{grid-column:1/-1;width:100%;height:6px;appearance:none;border:0;border-radius:999px;overflow:hidden;background:var(--border)}
 progress::-webkit-progress-bar{background:var(--border)}
-progress::-webkit-progress-value{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
-progress::-moz-progress-bar{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+progress::-webkit-progress-value{background:var(--grad)}
+progress::-moz-progress-bar{background:var(--grad)}
 aside .box{padding:16px;margin-bottom:16px}
 aside p{margin:0;color:var(--muted)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}

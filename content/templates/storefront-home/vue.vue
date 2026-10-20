@@ -1,31 +1,26 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue';
 
-type Product = { id: number; name: string; price: number; rating: number; reviews: number; shape: string };
-
-const eur = (n: number) => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
-const num = (n: number) => n.toLocaleString('es-ES');
-const uri = (shape: string) =>
-  'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="rgba(255,255,255,.95)" stroke="rgba(255,255,255,.95)" stroke-width="3" stroke-linejoin="round">${shape}</g></svg>`);
+type Product = { name: string; image: string; alt: string; price: string; rating: string; reviews: string };
 
 const PRODUCTS: Product[] = [
-  { id: 1, name: 'Taza de cerámica artesanal', price: 18.5, rating: 4.8, reviews: 214, shape: '<path d="M10 20h34v20a14 14 0 0 1-14 14H24A14 14 0 0 1 10 40z"/><path d="M44 27h4a7 7 0 0 1 0 14h-4" fill="none"/>' },
-  { id: 2, name: 'Lámpara de mesa de lino', price: 64, rating: 4.6, reviews: 97, shape: '<path d="M22 8h20l10 26H12z"/><rect x="30" y="34" width="4" height="16"/><rect x="20" y="50" width="24" height="4" rx="2"/>' },
-  { id: 3, name: 'Cuaderno de tapa dura A5', price: 12.9, rating: 4.9, reviews: 362, shape: '<rect x="16" y="8" width="32" height="48" rx="3"/><path d="M24 20h16M24 28h16M24 36h10" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2.5" stroke-linecap="round"/>' },
-  { id: 4, name: 'Auriculares inalámbricos Aura', price: 89, rating: 4.4, reviews: 1031, shape: '<path d="M14 38v-8a18 18 0 0 1 36 0v8" fill="none" stroke-width="5"/><rect x="9" y="36" width="11" height="18" rx="4"/><rect x="44" y="36" width="11" height="18" rx="4"/>' },
-  { id: 5, name: 'Mochila urbana 20 L', price: 49.95, rating: 4.5, reviews: 188, shape: '<rect x="18" y="14" width="28" height="40" rx="10"/><path d="M26 14V10h12v4" fill="none" stroke-width="3"/><rect x="24" y="34" width="16" height="10" rx="3" fill="rgba(0,0,0,.2)" stroke="none"/>' },
-  { id: 6, name: 'Set de velas de soja', price: 24.9, rating: 4.7, reviews: 426, shape: '<rect x="12" y="30" width="16" height="24" rx="2"/><rect x="36" y="22" width="16" height="32" rx="2"/><path d="M44 10q4 6 0 10" fill="none" stroke-width="3"/>' },
-  { id: 7, name: 'Zapatillas Ruta Ligera', price: 79.95, rating: 4.3, reviews: 655, shape: '<path d="M8 44V24h12l8 12 18 4 10 2v2z"/>' },
-  { id: 8, name: 'Botella térmica 750 ml', price: 22, rating: 4.6, reviews: 540, shape: '<rect x="24" y="6" width="16" height="8" rx="2"/><path d="M26 14h12v6l5 8v22a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V28l5-8z"/>' },
+  { name: 'Taza de cerámica vintage', image: '/stock/taza-vintage.webp', alt: 'Taza de cerámica roja con estampado vintage', price: '18,50 €', rating: '4,8', reviews: '214' },
+  { name: 'Café de tueste artesanal', image: '/stock/cafe-rojo.webp', alt: 'Taza de café sobre fondo rojo', price: '12,90 €', rating: '4,9', reviews: '362' },
+  { name: 'Libro de anticuario', image: '/stock/libro-abierto.webp', alt: 'Libro antiguo abierto', price: '24,00 €', rating: '4,6', reviews: '97' },
+  { name: 'Tocadiscos de vinilo', image: '/stock/tocadiscos.webp', alt: 'Aguja de un tocadiscos sobre el vinilo', price: '149,00 €', rating: '4,4', reviews: '1.031' },
+  { name: 'Tetera de cristal con flores', image: '/stock/tetera-flores.webp', alt: 'Tetera de cristal con flores amarillas', price: '34,90 €', rating: '4,5', reviews: '188' },
+  { name: 'Miel de azahar', image: '/stock/miel.webp', alt: 'Cuchara de miel en una taza blanca', price: '8,90 €', rating: '4,7', reviews: '426' },
+  { name: 'Cactus en maceta de barro', image: '/stock/cactus.webp', alt: 'Cactus redondo en una maceta', price: '12,50 €', rating: '4,3', reviews: '655' },
+  { name: 'Cámara vintage restaurada', image: '/stock/camara-vintage.webp', alt: 'Cámara vintage sobre teclas de piano', price: '89,00 €', rating: '4,6', reviews: '540' },
 ];
 
 const CATEGORIES = [
-  { name: 'Hogar', count: 128, icon: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>' },
-  { name: 'Cocina', count: 94, icon: '<path d="M4 11h16v3a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7zM8 7l1.5 2M16 7l-1.5 2"/>' },
-  { name: 'Moda', count: 212, icon: '<path d="M8 3l-5 3 2 4 2-1v12h10V9l2 1 2-4-5-3a4 4 0 0 1-8 0z"/>' },
-  { name: 'Tecnología', count: 76, icon: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>' },
-  { name: 'Deporte', count: 63, icon: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/>' },
-  { name: 'Papelería', count: 141, icon: '<path d="M4 20l4-1L19 8l-3-3L5 16z"/>' },
+  { name: 'Hogar', count: '128', image: '/stock/puerta-antigua.webp', alt: 'Puerta de madera antigua en un muro de piedra' },
+  { name: 'Café y té', count: '94', image: '/stock/cafe-rojo.webp', alt: 'Taza de café sobre fondo rojo' },
+  { name: 'Cocina', count: '212', image: '/stock/ingredientes.webp', alt: 'Tabla de cortar con verduras y pimientos' },
+  { name: 'Iluminación', count: '76', image: '/stock/luces-bokeh.webp', alt: 'Luces de colores desenfocadas' },
+  { name: 'Libros', count: '141', image: '/stock/libro-abierto.webp', alt: 'Libro antiguo abierto' },
+  { name: 'Exterior', count: '63', image: '/stock/bicicleta-granero.webp', alt: 'Bicicleta verde junto a un granero antiguo' },
 ];
 
 const FOOTER = [
@@ -41,28 +36,28 @@ const query = ref('');
 const count = ref(0);
 const toast = ref('');
 const newsMsg = ref('');
-const brand = ref<HTMLAnchorElement | null>(null);
+const brand = ref<HTMLAnchorElement>();
 const shown = computed(() => PRODUCTS.filter((p) => p.name.toLowerCase().includes(query.value.trim().toLowerCase())));
 
 let timer: ReturnType<typeof setTimeout> | undefined;
-function notify(msg: string) {
-  toast.value = msg;
+onUnmounted(() => clearTimeout(timer));
+
+function add(p: Product) {
+  count.value++;
+  toast.value = `Añadido: ${p.name}`;
   clearTimeout(timer);
   timer = setTimeout(() => (toast.value = ''), TOAST_MS);
 }
-function add(p: Product) {
-  count.value++;
-  notify(`Añadido: ${p.name}`);
-}
+
 function closePromo() {
   promo.value = false;
   brand.value?.focus();
 }
+
 function subscribe(e: SubmitEvent) {
   newsMsg.value = '¡Listo! Confirma tu suscripción en el correo que te enviamos.';
-  (e.target as HTMLFormElement).reset();
+  (e.currentTarget as HTMLFormElement).reset();
 }
-onUnmounted(() => clearTimeout(timer));
 </script>
 
 <template>
@@ -85,20 +80,23 @@ onUnmounted(() => clearTimeout(timer));
 
     <main>
       <section class="hero" aria-labelledby="hero-title">
-        <p class="eyebrow">Colección de otoño</p>
-        <h1 id="hero-title">Hasta un 30 % en textil y cocina para tu casa</h1>
-        <p>Piezas hechas a mano por artesanos españoles. Envío en 24 h a península.</p>
-        <div class="actions">
-          <a class="btn pri" href="#productos">Ver ofertas</a>
-          <a class="btn" href="#">Nuevas llegadas</a>
+        <div>
+          <p class="eyebrow">Colección de otoño · hasta un 30 %</p>
+          <h1 id="hero-title">Hogar, café y objetos con historia</h1>
+          <p class="lead">Piezas seleccionadas por artesanos españoles. Envío en 24 h a península.</p>
+          <div class="actions">
+            <a class="btn pri" href="#productos">Ver ofertas</a>
+            <a class="btn" href="#">Nuevas llegadas</a>
+          </div>
         </div>
+        <img src="/stock/cafeteria-mesa.webp" alt="Mesa larga de madera en una cafetería" width="800" height="533" fetchpriority="high">
       </section>
 
       <nav aria-label="Categorías">
         <ul class="cats">
           <li v-for="c in CATEGORIES" :key="c.name">
             <a href="#">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" v-html="c.icon" />
+              <img :src="c.image" :alt="c.alt" width="800" height="533" loading="lazy" decoding="async">
               <span>{{ c.name }}</span>
               <small>{{ c.count }} productos</small>
             </a>
@@ -106,19 +104,19 @@ onUnmounted(() => clearTimeout(timer));
         </ul>
       </nav>
 
-      <section id="productos" class="sec" aria-labelledby="prod-title">
+      <section class="sec" id="productos" aria-labelledby="prod-title">
         <div class="sec-head">
           <h2 id="prod-title">Más vendidos</h2>
           <a href="#">Ver todo</a>
         </div>
         <ul class="grid">
-          <li v-for="p in shown" :key="p.id" class="card">
-            <div class="thumb"><img :src="uri(p.shape)" alt="" width="96" height="96"></div>
+          <li v-for="p in shown" :key="p.name" class="card">
+            <img :src="p.image" :alt="p.alt" width="800" height="533" loading="lazy" decoding="async">
             <div class="info">
               <h3>{{ p.name }}</h3>
-              <p class="rating"><span class="star" aria-hidden="true">★</span> {{ num(p.rating) }} <span>({{ num(p.reviews) }} reseñas)</span></p>
+              <p class="rating"><span class="star" aria-hidden="true">★</span> {{ p.rating }} <span>({{ p.reviews }} reseñas)</span></p>
               <div class="buy">
-                <span class="price">{{ eur(p.price) }}</span>
+                <span class="price">{{ p.price }}</span>
                 <button type="button" class="add" :aria-label="`Añadir ${p.name} al carrito`" @click="add(p)">Añadir</button>
               </div>
             </div>
@@ -153,9 +151,7 @@ onUnmounted(() => clearTimeout(timer));
       <div class="cols">
         <div v-for="col in FOOTER" :key="col.title">
           <h3>{{ col.title }}</h3>
-          <ul>
-            <li v-for="l in col.links" :key="l"><a href="#">{{ l }}</a></li>
-          </ul>
+          <ul><li v-for="l in col.links" :key="l"><a href="#">{{ l }}</a></li></ul>
         </div>
       </div>
       <p class="legal">© 2026 Casa Ribera, S.L. · Precios con IVA incluido.</p>
@@ -170,16 +166,17 @@ onUnmounted(() => clearTimeout(timer));
   a{color:inherit;text-decoration:none}
   button,input{font:inherit;color:inherit}
   button{cursor:pointer}
+  p,h1,h2,h3{margin:0}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  [hidden]{display:none!important}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .btn{display:inline-block;padding:9px 16px;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,filter .14s}
-  .btn:hover{border-color:var(--accent)}
-  .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-  .btn.pri:hover{filter:brightness(1.08)}
+  .btn,.add{display:inline-block;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,filter .14s}
+  .btn{padding:9px 16px}
+  .btn:hover,.cats a:hover{border-color:var(--accent)}
+  .pri,.add{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .pri:hover,.add:hover{filter:brightness(1.08)}
   .promo{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;background:var(--accent);color:var(--accent-ink);font-size:13px;border-radius:var(--radius)}
-  .promo p{margin:0;text-align:center}
-  .promo button{flex:none;border:0;background:none;color:inherit;font-size:18px;line-height:1;padding:2px 6px;border-radius:min(var(--radius),6px)}
+  .promo p{text-align:center}
+  .promo button{flex:none;padding:2px 6px;border:0;background:none;color:inherit;font-size:18px;line-height:1;border-radius:min(var(--radius),6px)}
   .nav{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:16px 0;border-bottom:1px solid var(--border)}
   .brand{display:inline-flex;align-items:center;gap:8px;margin-right:auto;font-size:18px;font-weight:700;letter-spacing:-.01em}
   .brand i{width:24px;height:24px;border-radius:min(var(--radius),6px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
@@ -189,37 +186,33 @@ onUnmounted(() => clearTimeout(timer));
   .count{min-width:24px;padding:1px 7px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px;text-align:center;font-variant-numeric:tabular-nums}
   .count.bump{animation:bump .32s ease-out}
   @keyframes bump{40%{transform:scale(1.35)}}
-  .hero{position:relative;overflow:hidden;margin-top:20px;padding:clamp(28px,6vw,56px) clamp(20px,5vw,48px);background:var(--accent-soft);border:1px solid var(--border);border-radius:var(--radius)}
-  .hero::after{content:"";position:absolute;z-index:0;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));opacity:.35}
-  .hero>*{position:relative;z-index:1}
+  .hero{display:grid;gap:24px;align-items:center;margin-top:20px;padding:clamp(20px,5vw,40px);background:var(--accent-soft);border:1px solid var(--border);border-radius:var(--radius)}
+  .hero img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius)}
   .eyebrow{margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
   .hero h1{margin:0 0 12px;max-width:16ch;font-size:clamp(28px,5vw,44px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
-  .hero p{margin:0;max-width:52ch;color:var(--muted)}
+  .lead{max-width:52ch;color:var(--muted)}
   .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
   .cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:28px 0 0;padding:0;list-style:none}
-  .cats a{display:flex;flex-direction:column;align-items:flex-start;gap:6px;height:100%;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,background .14s}
-  .cats a:hover{border-color:var(--accent);background:var(--accent-soft)}
-  .cats svg{width:26px;height:26px;color:var(--accent)}
-  .cats span{font-weight:600}
-  .cats small{color:var(--muted);font-size:12px}
+  .cats a{display:flex;flex-direction:column;height:100%;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s}
+  .cats img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+  .cats span{padding:10px 12px 0;font-weight:600}
+  .cats small{padding:0 12px 12px;color:var(--muted);font-size:12px}
   .sec{margin-top:36px}
   .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
-  .sec-head h2{margin:0;font-size:20px;letter-spacing:-.01em}
+  .sec-head h2{font-size:20px;letter-spacing:-.01em}
   .sec-head a{color:var(--accent);font-weight:600;font-size:14px}
   .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
   .card{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .thumb{display:grid;place-items:center;aspect-ratio:1;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
-  .thumb img{display:block;width:56%;height:auto}
+  .card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
   .info{display:flex;flex:1;flex-direction:column;gap:6px;padding:12px}
-  .info h3{margin:0;font-size:14px;line-height:1.3}
-  .rating{margin:0;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .info h3{font-size:14px;line-height:1.3}
+  .rating{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
   .star{color:var(--warn)}
   .buy{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:6px}
   .price{font-weight:700;font-variant-numeric:tabular-nums}
-  .add{padding:7px 12px;font-size:13px;font-weight:600;background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);color:var(--accent-ink);transition:filter .14s}
-  .add:hover{filter:brightness(1.08)}
-  .none{grid-column:1/-1;margin:0;padding:24px;text-align:center;color:var(--muted)}
-  .toast{position:fixed;left:50%;bottom:20px;z-index:2;width:max-content;max-width:calc(100vw - 40px);margin:0;padding:10px 16px;background:var(--text);color:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);font-size:14px;font-weight:600;opacity:0;visibility:hidden;transform:translate(-50%,12px);transition:opacity .2s,transform .2s,visibility .2s}
+  .add{padding:7px 12px;font-size:13px}
+  .none{padding:24px;text-align:center;color:var(--muted)}
+  .toast{position:fixed;left:50%;bottom:20px;z-index:2;width:max-content;max-width:calc(100vw - 40px);padding:10px 16px;background:var(--text);color:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);font-size:14px;font-weight:600;opacity:0;visibility:hidden;transform:translate(-50%,12px);transition:opacity .2s,transform .2s,visibility .2s}
   .toast[data-show]{opacity:1;visibility:visible;transform:translate(-50%,0)}
   .benefits{display:grid;gap:10px;margin:28px 0 0;padding:0;list-style:none}
   .benefits li{display:flex;flex-direction:column;gap:2px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius)}
@@ -227,10 +220,10 @@ onUnmounted(() => clearTimeout(timer));
   .benefits span{color:var(--muted);font-size:13px}
   .news{display:grid;gap:16px;margin-top:36px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
   .news h2{margin:0 0 4px;font-size:18px}
-  .news p{margin:0;color:var(--muted)}
+  .news p{color:var(--muted)}
   .news form{display:flex;flex-wrap:wrap;gap:8px}
   .news input{flex:1 1 200px;min-width:0;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
-  .note{flex-basis:100%;color:var(--ok);font-weight:600}
+  .news .note{flex-basis:100%;color:var(--ok);font-weight:600}
   .foot{margin-top:40px;padding:28px 0 8px;border-top:1px solid var(--border)}
   .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
   .cols h3{margin:0 0 8px;font-size:14px}
@@ -241,6 +234,7 @@ onUnmounted(() => clearTimeout(timer));
   @media (min-width:768px){
     .brand{margin-right:0}
     .search{flex:1 1 auto;order:0;max-width:340px;margin-left:auto}
+    .hero{grid-template-columns:1fr 1fr}
     .cats{grid-template-columns:repeat(3,minmax(0,1fr))}
     .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
     .benefits{grid-template-columns:repeat(3,minmax(0,1fr))}

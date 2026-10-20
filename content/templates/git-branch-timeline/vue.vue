@@ -71,7 +71,7 @@ h2{margin:0;font-size:16px;font-weight:600}
 .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .scroll>svg{display:block;width:100%;height:auto;min-width:514px}
 .scroll:focus-visible{outline:2px solid var(--accent)}
-text{font:13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--text)}
+text{font-size:13px;line-height:1;fill:var(--text)}
 .hash{font:600 12px ui-monospace,Consolas,monospace}
 .meta{font-size:12px;fill:var(--muted)}
 .lane{fill:none;stroke:var(--c);stroke-width:3;transition:opacity .15s,stroke-width .15s}

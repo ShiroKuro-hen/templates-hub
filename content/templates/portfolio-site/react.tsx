@@ -1,17 +1,17 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react';
 
 type ProjectType = 'web' | 'app' | 'marca';
-type Project = { title: string; type: ProjectType; meta: string; alt: string; tone: string; cover: string };
+type Project = { title: string; type: ProjectType; meta: string; desc: string; alt: string; image: string };
 type Field = 'nombre' | 'correo' | 'mensaje';
 type Values = Record<Field, string> & { proyecto: string };
 
 const PROJECTS: Project[] = [
-  { title: 'Banca Abierta', type: 'web', meta: 'Web · 2025', tone: 'c1', alt: 'Vista previa del portal de inversiones Banca Abierta', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='white'%3E%3Ccircle cx='300' cy='90' r='70' fill-opacity='.18'/%3E%3Crect x='60' y='150' width='120' height='90' rx='12' fill-opacity='.9'/%3E%3Crect x='200' y='190' width='140' height='50' rx='12' fill-opacity='.45'/%3E%3C/g%3E%3C/svg%3E" },
-  { title: 'Nubla', type: 'app', meta: 'App · 2024', tone: 'c2', alt: 'Vista previa de la app de meditación Nubla', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='150' y='40' width='100' height='220' rx='18' fill='white' fill-opacity='.9'/%3E%3Ccircle cx='200' cy='150' r='28' fill='white' fill-opacity='.35'/%3E%3Crect x='170' y='208' width='60' height='8' rx='4' fill='white' fill-opacity='.6'/%3E%3C/svg%3E" },
-  { title: 'Café Ámbar', type: 'marca', meta: 'Marca · 2024', tone: 'c3', alt: 'Vista previa de la identidad de Café Ámbar', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Ccircle cx='200' cy='150' r='95' fill='white' fill-opacity='.2'/%3E%3Ccircle cx='200' cy='150' r='55' fill='white' fill-opacity='.9'/%3E%3C/svg%3E" },
-  { title: 'Atlas Clínico', type: 'web', meta: 'Web · 2023', tone: 'c4', alt: 'Vista previa del panel de historiales Atlas Clínico', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='40' y='40' width='100' height='70' rx='8' fill='white' fill-opacity='.9'/%3E%3Crect x='160' y='40' width='200' height='70' rx='8' fill='white' fill-opacity='.45'/%3E%3Crect x='40' y='130' width='320' height='130' rx='8' fill='white' fill-opacity='.3'/%3E%3C/svg%3E" },
-  { title: 'Ruta Verde', type: 'app', meta: 'App · 2023', tone: 'c5', alt: 'Vista previa del planificador de rutas Ruta Verde', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath d='M0 220C80 150 140 280 220 200S330 120 400 170V300H0Z' fill='white' fill-opacity='.35'/%3E%3Ccircle cx='220' cy='110' r='18' fill='white' fill-opacity='.9'/%3E%3C/svg%3E" },
-  { title: 'Revista Faro', type: 'marca', meta: 'Marca · 2022', tone: 'c6', alt: 'Vista previa del sistema tipográfico de la revista Faro', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='50' y='50' width='300' height='24' fill='white' fill-opacity='.9'/%3E%3Crect x='50' y='94' width='220' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='120' width='260' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='146' width='180' height='12' fill='white' fill-opacity='.6'/%3E%3Ccircle cx='300' cy='220' r='40' fill='white' fill-opacity='.35'/%3E%3C/svg%3E" },
+  { title: 'Banca Abierta', type: 'web', meta: 'Web · 2025', desc: 'Portal de inversiones para particulares', alt: 'Portátil sobre un escritorio con estantería', image: '/stock/escritorio-laptop.webp' },
+  { title: 'Atlas Clínico', type: 'web', meta: 'Web · 2023', desc: 'Panel de historiales para clínicas', alt: 'Escritorio visto desde arriba con teclado y tableta', image: '/stock/escritorio-cenital.webp' },
+  { title: 'Nubla', type: 'app', meta: 'App · 2024', desc: 'App de meditación con sesiones guiadas', alt: 'Escritorio cenital con materiales de diseño y un teléfono', image: '/stock/escritorio-diseno.webp' },
+  { title: 'Ruta Verde', type: 'app', meta: 'App · 2023', desc: 'Planificador de rutas a pie y en bici', alt: 'Calle de ciudad entre edificios', image: '/stock/calle-ciudad.webp' },
+  { title: 'Hilo Atelier', type: 'marca', meta: 'Marca · 2024', desc: 'Identidad y envases de accesorios', alt: 'Cartera, reloj y auriculares sobre fondo plano', image: '/stock/objetos-planos.webp' },
+  { title: 'Revista Faro', type: 'marca', meta: 'Marca · 2022', desc: 'Sistema tipográfico y portadas', alt: 'Luces de colores desenfocadas', image: '/stock/luces-bokeh.webp' },
 ];
 const FILTERS: { id: 'todos' | ProjectType; label: string }[] = [
   { id: 'todos', label: 'Todos' },
@@ -129,8 +129,8 @@ export function PortfolioSite({ projects = PROJECTS }: { projects?: Project[] })
             {visible.map((p) => (
               <li key={p.title}>
                 <a className="work" href="#proyectos">
-                  <img className={`cov ${p.tone}`} width={400} height={300} loading="lazy" alt={p.alt} src={p.cover} />
-                  <span className="cap"><small>{p.meta}</small><strong>{p.title}</strong></span>
+                  <img src={p.image} alt={p.alt} width={800} height={533} loading="lazy" decoding="async" />
+                  <span className="cap"><small>{p.meta}</small><strong>{p.title}</strong><span>{p.desc}</span></span>
                 </a>
               </li>
             ))}

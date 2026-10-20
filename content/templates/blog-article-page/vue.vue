@@ -10,9 +10,9 @@ const SECTIONS = [
   { id: 'resultados', label: 'Resultados' },
 ];
 const RELATED = [
-  { cover: '', title: 'Conciliación bancaria sin hojas de cálculo', meta: 'Producto · 4 min' },
-  { cover: 'c2', title: 'Siete alertas que todo equipo financiero debería tener', meta: 'Guías · 6 min' },
-  { cover: 'c3', title: 'Auditar un cierre sin frenar al equipo', meta: 'Seguridad · 7 min' },
+  { photo: 'escritorio-madera', alt: 'Portátil cerrado con gafas y ratón sobre una mesa de madera', title: 'Un escritorio limpio para cerrar sin prisas', meta: 'Productividad · 4 min' },
+  { photo: 'escritorio-teclado', alt: 'Persona escribiendo en un portátil sobre una mesa de madera', title: 'Escribir las reglas de conciliación paso a paso', meta: 'Guías · 6 min' },
+  { photo: 'escritorio-cafe', alt: 'Portátil con una taza de café sobre una mesa de madera', title: 'Pausas con café: el ritmo del cierre mensual', meta: 'Equipo · 5 min' },
 ];
 
 const frame = ref<HTMLDivElement | null>(null);
@@ -109,8 +109,8 @@ onBeforeUnmount(() => {
           <h3>Probar antes de activar</h3>
           <p>Cada regla se ejecuta primero en modo de vista previa sobre datos reales. Así comparamos el resultado con el cierre manual del mes anterior, sin tocar un solo asiento.</p>
           <figure>
-            <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20300'%3E%3Cpath%20d='M30%20260H610'%20stroke='rgba(255,255,255,.7)'%20stroke-width=2%20/%3E%3Cg%20fill='rgba(255,255,255,.6)'%3E%3Crect%20x=50%20y=44%20width=52%20height=216%20rx=6/%3E%3Crect%20x=134%20y=86%20width=52%20height=174%20rx=6/%3E%3Crect%20x=218%20y=137%20width=52%20height=123%20rx=6/%3E%3Crect%20x=302%20y=194%20width=52%20height=66%20rx=6/%3E%3Crect%20x=386%20y=224%20width=52%20height=36%20rx=6/%3E%3Crect%20x=470%20y=242%20width=52%20height=18%20rx=6/%3E%3Crect%20x=554%20y=251%20width=52%20height=9%20rx=6/%3E%3C/g%3E%3C/svg%3E" width="640" height="300" alt="Gráfico de barras: horas de cierre por mes, de 72 en marzo a 3 en septiembre">
-            <figcaption>Horas dedicadas al cierre mensual, de marzo a septiembre de 2026.</figcaption>
+            <img src="/stock/escritorio-notas.webp" alt="Portátil abierto junto a una libreta con notas sobre una mesa de madera" width="800" height="533" loading="lazy" />
+            <figcaption>Libreta con las reglas de conciliación, escritas antes de automatizarlas.</figcaption>
           </figure>
           <h2 id="codigo">Las reglas en código</h2>
           <p>La herramienta de línea de comandos lee el archivo de reglas y ejecuta el cierre en un entorno aislado. Este es el comando que usamos cada mes:</p>
@@ -127,6 +127,19 @@ onBeforeUnmount(() => {
           <aside class="callout"><b>Consejo</b><p>Empieza con una sola regla y compara dos meses antes de añadir la siguiente. Las tolerancias deben ser de tu negocio, no las que vienen por defecto.</p></aside>
           <h2 id="resultados">Resultados</h2>
           <p>En septiembre cerramos en tres horas y diecisiete minutos. El 96 % de los movimientos se concilió sin intervención, y la cola manual pasó de 4.100 casos a 160.</p>
+          <figure class="chart">
+            <svg viewBox="0 0 640 300" role="img" aria-label="Gráfico de barras: horas de cierre por mes, de 72 en marzo a 3 en septiembre">
+              <path d="M30 260H610" />
+              <rect x="50" y="44" width="52" height="216" rx="6" />
+              <rect x="134" y="86" width="52" height="174" rx="6" />
+              <rect x="218" y="137" width="52" height="123" rx="6" />
+              <rect x="302" y="194" width="52" height="66" rx="6" />
+              <rect x="386" y="224" width="52" height="36" rx="6" />
+              <rect x="470" y="242" width="52" height="18" rx="6" />
+              <rect x="554" y="251" width="52" height="9" rx="6" />
+            </svg>
+            <figcaption>Horas dedicadas al cierre mensual, de marzo a septiembre de 2026.</figcaption>
+          </figure>
           <p>Todavía queda trabajo: los pagos en moneda extranjera siguen necesitando revisión humana, y lo abordaremos el próximo trimestre.</p>
         </article>
       </div>
@@ -144,7 +157,7 @@ onBeforeUnmount(() => {
         <h2 id="rl">Sigue leyendo</h2>
         <ul class="rel">
           <li v-for="r in RELATED" :key="r.title" class="card">
-            <div :class="['cover', r.cover]" aria-hidden="true" />
+            <img class="cover" :src="'/stock/' + r.photo + '.webp'" :alt="r.alt" width="800" height="533" loading="lazy" />
             <div class="txt"><h3><a href="#">{{ r.title }}</a></h3><small>{{ r.meta }}</small></div>
           </li>
         </ul>
@@ -163,72 +176,73 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-  a{color:inherit}
-  .frame{height:600px;overflow-y:auto;scroll-behavior:smooth;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .frame:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .bar{position:sticky;top:0;z-index:2;height:4px;background:var(--border)}
-  .bar i{display:block;height:100%;transform:scaleX(var(--p,0));transform-origin:0 50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
-  .page{max-width:880px;margin:0 auto;padding:24px 28px 32px}
-  .crumbs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px;padding:0;list-style:none;font-size:13px;color:var(--muted)}
-  .crumbs li+li::before{content:"/";margin-right:6px}
-  h1{margin:0 0 12px;font-size:clamp(26px,4.4vw,38px);line-height:1.15;letter-spacing:-.02em}
-  .lead{margin:0 0 20px;max-width:62ch;font-size:16px;color:var(--muted)}
-  .byline{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
-  .byline b{display:block;font-size:14px;color:var(--text)}
-  .av{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700}
-  .layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;align-items:start}
-  .toc{position:sticky;top:16px}
-  .toc>summary{display:none;list-style:none;cursor:pointer}
-  .toc ol{margin:0;padding:0;list-style:none;border-left:1px solid var(--border)}
-  .toc a{position:relative;display:block;padding:4px 12px;font-size:13px;color:var(--muted);text-decoration:none;transition:color .14s}
-  .toc a[aria-current]{color:var(--accent);font-weight:600}
-  .toc a[aria-current]::before{content:"";position:absolute;left:-1px;top:4px;bottom:4px;width:3px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
-  .body{min-width:0;font-size:15px;line-height:1.7}
-  .body h2,.related h2,.comments h2{margin:36px 0 12px;font-size:20px;line-height:1.3;scroll-margin-top:16px}
-  .body h3{margin:24px 0 8px;font-size:16px;line-height:1.4}
-  .body p{margin:0 0 14px;max-width:68ch}
-  .body blockquote{margin:24px 0;padding:2px 0 2px 18px;border-left:3px solid var(--accent);font-size:17px;line-height:1.5}
-  .body blockquote p{margin:0}
-  .body blockquote footer{margin-top:8px;font-size:13px;color:var(--muted)}
-  .body figure{margin:24px 0}
-  figure img{display:block;width:100%;height:auto;aspect-ratio:640/300;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(135deg,var(--accent-soft),var(--info-soft))}
-  figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
-  .code{margin:18px 0;overflow:hidden;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
-  .code-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border)}
-  .tools{display:flex;align-items:center;gap:8px}
-  .note{font-size:12px;color:var(--muted)}
-  .btn{display:inline-flex;align-items:center;padding:6px 12px;font:inherit;font-size:13px;color:var(--text);text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:min(var(--radius),6px);cursor:pointer;transition:border-color .14s}
-  .btn:hover{border-color:var(--accent)}
-  .code pre{margin:0;padding:12px 14px;overflow-x:auto}
-  .code code{font:13px/1.6 ui-monospace,"Cascadia Code",Menlo,monospace}
-  .callout{margin:20px 0;padding:14px 16px;background:var(--info-soft);border:1px solid var(--border);border-left:3px solid var(--info);border-radius:var(--radius)}
-  .callout b{display:block;margin-bottom:4px}
-  .callout p{margin:0}
-  .author{display:flex;align-items:center;gap:14px;margin-top:32px;padding:18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .author .av{width:48px;height:48px;font-size:15px}
-  .author b{display:block}
-  .author p{margin:2px 0 0;font-size:13px;color:var(--muted)}
-  .share{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:24px;font-size:13px;color:var(--muted)}
-  .rel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:0;padding:0;list-style:none}
-  .card{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);transition:border-color .14s}
-  .card:hover{border-color:var(--accent)}
-  .card:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
-  .cover{height:96px;background:linear-gradient(135deg,var(--accent-soft),var(--info-soft))}
-  .c2{background:linear-gradient(135deg,var(--ok-soft),var(--warn-soft))}
-  .c3{background:linear-gradient(135deg,var(--warn-soft),var(--accent-soft))}
-  .txt{padding:12px 14px 14px}
-  .txt h3{margin:0;font-size:15px;line-height:1.35}
-  .txt h3 a{text-decoration:none}
-  .txt h3 a::after{content:"";position:absolute;inset:0}
-  .txt small{display:block;margin-top:6px;font-size:12px;color:var(--muted)}
-  .cform{display:grid;gap:8px}
-  .cform label{font-weight:600}
-  .cform p{margin:0}
-  textarea{font:inherit;padding:10px 12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);resize:vertical}
-  .row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
-  .hint{font-size:13px;color:var(--muted)}
-  .primary{font:inherit;font-weight:600;padding:8px 16px;color:var(--accent-ink);background:var(--accent);border:0;border-radius:var(--radius);cursor:pointer}
-  @media (max-width:759px){
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.frame,.author,.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.frame{--brand:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));height:600px;overflow-y:auto;scroll-behavior:smooth}
+.bar{position:sticky;top:0;z-index:2;height:4px;background:var(--border)}
+.bar i{display:block;height:100%;transform:scaleX(var(--p,0));transform-origin:0 50%;background:var(--brand)}
+.page{max-width:880px;margin:0 auto;padding:24px 28px 32px}
+.crumbs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 20px;padding:0;list-style:none;font-size:13px;color:var(--muted)}
+.crumbs li+li::before{content:"/";margin-right:6px}
+h1{margin:0 0 12px;font-size:clamp(26px,4.4vw,38px);line-height:1.15;letter-spacing:-.02em}
+.lead{margin:0 0 20px;max-width:62ch;font-size:16px;color:var(--muted)}
+.byline{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted)}
+.byline b{display:block;font-size:14px;color:var(--text)}
+.av{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:700}
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;align-items:start}
+.toc{position:sticky;top:16px}
+.toc>summary{display:none;list-style:none;cursor:pointer}
+.toc ol{margin:0;padding:0;list-style:none;border-left:1px solid var(--border)}
+.toc a{position:relative;display:block;padding:4px 12px;font-size:13px;color:var(--muted);transition:color .14s}
+.toc a[aria-current]{color:var(--accent);font-weight:600}
+.toc a[aria-current]::before{content:"";position:absolute;left:-1px;top:4px;bottom:4px;width:3px;border-radius:999px;background:var(--brand)}
+.body{min-width:0;font-size:15px;line-height:1.7}
+.body h2,.related h2,.comments h2{margin:36px 0 12px;font-size:20px;line-height:1.3;scroll-margin-top:16px}
+.body h3{margin:24px 0 8px;font-size:16px;line-height:1.4}
+.body p{margin:0 0 14px;max-width:68ch}
+.body blockquote{margin:24px 0;padding:2px 0 2px 18px;border-left:3px solid var(--accent);font-size:17px;line-height:1.5}
+.body blockquote p{margin:0}
+.body blockquote footer{margin-top:8px;font-size:13px;color:var(--muted)}
+.body figure{margin:24px 0}
+figure img{display:block;width:100%;height:auto;aspect-ratio:800/533;object-fit:cover;border:1px solid var(--border);border-radius:var(--radius)}
+figcaption{margin-top:8px;font-size:13px;color:var(--muted)}
+.chart svg{display:block;width:100%;height:auto}
+.chart rect{fill:var(--accent)}
+.chart path{stroke:var(--border);stroke-width:2}
+.code{margin:18px 0;overflow:hidden;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+.code-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 6px 6px 14px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--border)}
+.tools{display:flex;align-items:center;gap:8px}
+.note{font-size:12px;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;padding:6px 12px;font:inherit;font-size:13px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:min(var(--radius),6px);cursor:pointer;transition:border-color .14s}
+.btn:hover{border-color:var(--accent)}
+.code pre{margin:0;padding:12px 14px;overflow-x:auto}
+.code code{font:13px/1.6 ui-monospace,"Cascadia Code",Menlo,monospace}
+.callout{margin:20px 0;padding:14px 16px;background:var(--info-soft);border:1px solid var(--border);border-left:3px solid var(--info);border-radius:var(--radius)}
+.callout b{display:block;margin-bottom:4px}
+.callout p{margin:0}
+.author{display:flex;align-items:center;gap:14px;margin-top:32px;padding:18px}
+.author .av{width:48px;height:48px;font-size:15px}
+.author b{display:block}
+.author p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.share{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:24px;font-size:13px;color:var(--muted)}
+.rel{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.card{position:relative;overflow:hidden;transition:border-color .14s}
+.card:hover{border-color:var(--accent)}
+.card:has(a:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.cover{display:block;width:100%;height:96px;object-fit:cover}
+.txt{padding:12px 14px 14px}
+.txt h3{margin:0;font-size:15px;line-height:1.35}
+.txt h3 a::after{content:"";position:absolute;inset:0}
+.txt small{display:block;margin-top:6px;font-size:12px;color:var(--muted)}
+.cform{display:grid;gap:8px}
+.cform label{font-weight:600}
+.cform p{margin:0}
+textarea{font:inherit;padding:10px 12px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);resize:vertical}
+.row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.hint{font-size:13px;color:var(--muted)}
+.primary{font:inherit;font-weight:600;padding:8px 16px;color:var(--accent-ink);background:var(--accent);border:0;border-radius:var(--radius);cursor:pointer}
+@media (max-width:759px){
   .frame{height:560px}
   .page{padding:20px 16px 28px}
   .layout{grid-template-columns:minmax(0,1fr);gap:0}
@@ -237,6 +251,6 @@ onBeforeUnmount(() => {
   .toc ol{padding:0 0 8px;border-left:0}
   .toc a{padding:6px 14px}
   .rel{grid-template-columns:minmax(0,1fr)}
-  }
-  @media (prefers-reduced-motion:reduce){.frame{scroll-behavior:auto}}
+}
+@media (prefers-reduced-motion:reduce){.frame{scroll-behavior:auto}}
 </style>

@@ -14,24 +14,27 @@
   </header>
 
   <main>
-    <section aria-labelledby="hero-title" class="relative mt-5 overflow-hidden rounded-lg border border-line bg-accent-soft px-5 py-7 *:relative *:z-[1] sm:px-12 sm:py-14 after:absolute after:-right-[70px] after:-top-[70px] after:z-0 after:size-[260px] after:rounded-full after:bg-linear-135 after:from-accent-2 after:to-accent after:opacity-35 after:content-[''] after:pointer-events-none">
-      <p class="mb-2.5 text-[13px] font-semibold uppercase tracking-[.08em] text-accent">Colección de otoño</p>
-      <h1 id="hero-title" class="mb-3 max-w-[16ch] text-[clamp(28px,5vw,44px)] font-bold leading-[1.1] tracking-[-0.02em] text-balance">Hasta un 30 % en textil y cocina para tu casa</h1>
-      <p class="max-w-[52ch] text-muted">Piezas hechas a mano por artesanos españoles. Envío en 24 h a península.</p>
-      <div class="mt-[22px] flex flex-wrap gap-2.5">
-        <a href="#productos" class="inline-block rounded-lg border border-accent bg-accent px-4 py-[9px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver ofertas</a>
-        <a href="#" class="inline-block rounded-lg border border-line bg-surface px-4 py-[9px] font-semibold transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Nuevas llegadas</a>
+    <section aria-labelledby="hero-title" class="mt-5 grid items-center gap-6 overflow-hidden rounded-lg border border-line bg-accent-soft p-[clamp(20px,5vw,40px)] min-[768px]:grid-cols-2">
+      <div>
+        <p class="mb-2.5 text-[13px] font-semibold uppercase tracking-[.08em] text-accent">Colección de otoño · hasta un 30 %</p>
+        <h1 id="hero-title" class="mb-3 max-w-[16ch] text-[clamp(28px,5vw,44px)] font-bold leading-[1.1] tracking-[-0.02em] text-balance">Hogar, café y objetos con historia</h1>
+        <p class="max-w-[52ch] text-muted">Piezas seleccionadas por artesanos españoles. Envío en 24 h a península.</p>
+        <div class="mt-[22px] flex flex-wrap gap-2.5">
+          <a href="#productos" class="inline-block rounded-lg border border-accent bg-accent px-4 py-[9px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver ofertas</a>
+          <a href="#" class="inline-block rounded-lg border border-line bg-surface px-4 py-[9px] font-semibold transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Nuevas llegadas</a>
+        </div>
       </div>
+      <img src="/stock/cafeteria-mesa.webp" alt="Mesa larga de madera en una cafetería" width="800" height="533" fetchpriority="high" class="block aspect-4/3 w-full rounded-lg object-cover">
     </section>
 
     <nav aria-label="Categorías">
       <ul class="mt-7 grid list-none grid-cols-2 gap-2.5 p-0 min-[768px]:grid-cols-3 min-[1000px]:grid-cols-6">
-        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="font-semibold">Hogar</span><small class="text-xs text-muted">128 productos</small></a></li>
-        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M4 11h16v3a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7zM8 7l1.5 2M16 7l-1.5 2"/></svg><span class="font-semibold">Cocina</span><small class="text-xs text-muted">94 productos</small></a></li>
-        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M8 3l-5 3 2 4 2-1v12h10V9l2 1 2-4-5-3a4 4 0 0 1-8 0z"/></svg><span class="font-semibold">Moda</span><small class="text-xs text-muted">212 productos</small></a></li>
-        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span class="font-semibold">Tecnología</span><small class="text-xs text-muted">76 productos</small></a></li>
-        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg><span class="font-semibold">Deporte</span><small class="text-xs text-muted">63 productos</small></a></li>
-        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M4 20l4-1L19 8l-3-3L5 16z"/></svg><span class="font-semibold">Papelería</span><small class="text-xs text-muted">141 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><img src="/stock/puerta-antigua.webp" alt="Puerta de madera antigua en un muro de piedra" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover"><span class="px-3 pt-2.5 font-semibold">Hogar</span><small class="px-3 pb-3 text-xs text-muted">128 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><img src="/stock/cafe-rojo.webp" alt="Taza de café sobre fondo rojo" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover"><span class="px-3 pt-2.5 font-semibold">Café y té</span><small class="px-3 pb-3 text-xs text-muted">94 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><img src="/stock/ingredientes.webp" alt="Tabla de cortar con verduras y pimientos" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover"><span class="px-3 pt-2.5 font-semibold">Cocina</span><small class="px-3 pb-3 text-xs text-muted">212 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><img src="/stock/luces-bokeh.webp" alt="Luces de colores desenfocadas" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover"><span class="px-3 pt-2.5 font-semibold">Iluminación</span><small class="px-3 pb-3 text-xs text-muted">76 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><img src="/stock/libro-abierto.webp" alt="Libro antiguo abierto" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover"><span class="px-3 pt-2.5 font-semibold">Libros</span><small class="px-3 pb-3 text-xs text-muted">141 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col overflow-hidden rounded-lg border border-line bg-surface transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><img src="/stock/bicicleta-granero.webp" alt="Bicicleta verde junto a un granero antiguo" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover"><span class="px-3 pt-2.5 font-semibold">Exterior</span><small class="px-3 pb-3 text-xs text-muted">63 productos</small></a></li>
       </ul>
     </nav>
 
@@ -40,8 +43,97 @@
         <h2 id="prod-title" class="text-xl font-bold tracking-[-0.01em]">Más vendidos</h2>
         <a href="#" class="text-sm font-semibold text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver todo</a>
       </div>
-      <ul id="grid" class="m-0 grid list-none grid-cols-2 gap-3.5 p-0 min-[768px]:grid-cols-4"></ul>
-      <p id="none" hidden class="col-span-full m-0 p-6 text-center text-muted">No hay productos que coincidan con tu búsqueda.</p>
+      <ul id="grid" class="m-0 grid list-none grid-cols-2 gap-3.5 p-0 min-[768px]:grid-cols-4">
+        <li data-name="Taza de cerámica vintage" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/taza-vintage.webp" alt="Taza de cerámica roja con estampado vintage" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Taza de cerámica vintage</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,8 <span>(214 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">18,50 €</span>
+              <button type="button" aria-label="Añadir Taza de cerámica vintage al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Café de tueste artesanal" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/cafe-rojo.webp" alt="Taza de café sobre fondo rojo" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Café de tueste artesanal</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,9 <span>(362 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">12,90 €</span>
+              <button type="button" aria-label="Añadir Café de tueste artesanal al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Libro de anticuario" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/libro-abierto.webp" alt="Libro antiguo abierto" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Libro de anticuario</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,6 <span>(97 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">24,00 €</span>
+              <button type="button" aria-label="Añadir Libro de anticuario al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Tocadiscos de vinilo" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/tocadiscos.webp" alt="Aguja de un tocadiscos sobre el vinilo" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Tocadiscos de vinilo</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,4 <span>(1.031 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">149,00 €</span>
+              <button type="button" aria-label="Añadir Tocadiscos de vinilo al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Tetera de cristal con flores" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/tetera-flores.webp" alt="Tetera de cristal con flores amarillas" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Tetera de cristal con flores</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,5 <span>(188 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">34,90 €</span>
+              <button type="button" aria-label="Añadir Tetera de cristal con flores al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Miel de azahar" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/miel.webp" alt="Cuchara de miel en una taza blanca" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Miel de azahar</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,7 <span>(426 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">8,90 €</span>
+              <button type="button" aria-label="Añadir Miel de azahar al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Cactus en maceta de barro" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/cactus.webp" alt="Cactus redondo en una maceta" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Cactus en maceta de barro</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,3 <span>(655 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">12,50 €</span>
+              <button type="button" aria-label="Añadir Cactus en maceta de barro al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+        <li data-name="Cámara vintage restaurada" class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+          <img src="/stock/camara-vintage.webp" alt="Cámara vintage sobre teclas de piano" width="800" height="533" loading="lazy" decoding="async" class="block aspect-4/3 w-full object-cover">
+          <div class="flex flex-1 flex-col gap-1.5 p-3">
+            <h3 class="text-sm leading-[1.3] font-bold">Cámara vintage restaurada</h3>
+            <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> 4,6 <span>(540 reseñas)</span></p>
+            <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+              <span class="font-bold tabular-nums">89,00 €</span>
+              <button type="button" aria-label="Añadir Cámara vintage restaurada al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <p id="none" hidden class="m-0 p-6 text-center text-muted">No hay productos que coincidan con tu búsqueda.</p>
     </section>
 
     <ul aria-label="Ventajas de comprar aquí" class="m-0 mt-7 grid list-none gap-2.5 p-0 min-[768px]:grid-cols-3">
@@ -82,38 +174,8 @@
 </style>
 <script>
   const $ = (id) => document.getElementById(id);
-  const eur = (n) => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
-  const num = (n) => n.toLocaleString('es-ES');
-  const uri = (shape) => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="rgba(255,255,255,.95)" stroke="rgba(255,255,255,.95)" stroke-width="3" stroke-linejoin="round">${shape}</g></svg>`);
-  const PRODUCTS = [
-    { id: 1, name: 'Taza de cerámica artesanal', price: 18.5, rating: 4.8, reviews: 214, shape: '<path d="M10 20h34v20a14 14 0 0 1-14 14H24A14 14 0 0 1 10 40z"/><path d="M44 27h4a7 7 0 0 1 0 14h-4" fill="none"/>' },
-    { id: 2, name: 'Lámpara de mesa de lino', price: 64, rating: 4.6, reviews: 97, shape: '<path d="M22 8h20l10 26H12z"/><rect x="30" y="34" width="4" height="16"/><rect x="20" y="50" width="24" height="4" rx="2"/>' },
-    { id: 3, name: 'Cuaderno de tapa dura A5', price: 12.9, rating: 4.9, reviews: 362, shape: '<rect x="16" y="8" width="32" height="48" rx="3"/><path d="M24 20h16M24 28h16M24 36h10" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2.5" stroke-linecap="round"/>' },
-    { id: 4, name: 'Auriculares inalámbricos Aura', price: 89, rating: 4.4, reviews: 1031, shape: '<path d="M14 38v-8a18 18 0 0 1 36 0v8" fill="none" stroke-width="5"/><rect x="9" y="36" width="11" height="18" rx="4"/><rect x="44" y="36" width="11" height="18" rx="4"/>' },
-    { id: 5, name: 'Mochila urbana 20 L', price: 49.95, rating: 4.5, reviews: 188, shape: '<rect x="18" y="14" width="28" height="40" rx="10"/><path d="M26 14V10h12v4" fill="none" stroke-width="3"/><rect x="24" y="34" width="16" height="10" rx="3" fill="rgba(0,0,0,.2)" stroke="none"/>' },
-    { id: 6, name: 'Set de velas de soja', price: 24.9, rating: 4.7, reviews: 426, shape: '<rect x="12" y="30" width="16" height="24" rx="2"/><rect x="36" y="22" width="16" height="32" rx="2"/><path d="M44 10q4 6 0 10" fill="none" stroke-width="3"/>' },
-    { id: 7, name: 'Zapatillas Ruta Ligera', price: 79.95, rating: 4.3, reviews: 655, shape: '<path d="M8 44V24h12l8 12 18 4 10 2v2z"/>' },
-    { id: 8, name: 'Botella térmica 750 ml', price: 22, rating: 4.6, reviews: 540, shape: '<rect x="24" y="6" width="16" height="8" rx="2"/><path d="M26 14h12v6l5 8v22a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V28l5-8z"/>' },
-  ];
-  const card = (p) => `
-    <li class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
-      <div class="grid aspect-square place-items-center bg-linear-135 from-accent-2 to-accent"><img src="${uri(p.shape)}" alt="" width="96" height="96" class="block h-auto w-[56%]"></div>
-      <div class="flex flex-1 flex-col gap-1.5 p-3">
-        <h3 class="text-sm font-bold leading-[1.3]">${p.name}</h3>
-        <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> ${num(p.rating)} <span>(${num(p.reviews)} reseñas)</span></p>
-        <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
-          <span class="font-bold tabular-nums">${eur(p.price)}</span>
-          <button type="button" data-id="${p.id}" aria-label="Añadir ${p.name} al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
-        </div>
-      </div>
-    </li>`;
+  const cards = [...$('grid').children];
   let count = 0, timer;
-  function render() {
-    const q = $('q').value.trim().toLowerCase();
-    const shown = PRODUCTS.filter((p) => p.name.toLowerCase().includes(q));
-    $('grid').innerHTML = shown.map(card).join('');
-    $('none').hidden = shown.length > 0;
-  }
   function bump() {
     const c = $('count');
     c.classList.remove('bump');
@@ -123,19 +185,22 @@
   function notify(msg) {
     const t = $('toast');
     t.textContent = msg;
-    t.toggleAttribute('data-show', true);
+    t.setAttribute('data-show', '');
     clearTimeout(timer);
     timer = setTimeout(() => t.removeAttribute('data-show'), 2600);
   }
+  $('q').addEventListener('input', () => {
+    const q = $('q').value.trim().toLowerCase();
+    cards.forEach((c) => (c.hidden = !c.dataset.name.toLowerCase().includes(q)));
+    $('none').hidden = cards.some((c) => !c.hidden);
+  });
   $('grid').addEventListener('click', (e) => {
-    const b = e.target.closest('button[data-id]');
+    const b = e.target.closest('button');
     if (!b) return;
-    const p = PRODUCTS.find((x) => x.id === Number(b.dataset.id));
     $('count').textContent = ++count;
     bump();
-    notify(`Añadido: ${p.name}`);
+    notify(`Añadido: ${b.closest('li').dataset.name}`);
   });
-  $('q').addEventListener('input', render);
   $('search').addEventListener('submit', (e) => e.preventDefault());
   $('close-promo').addEventListener('click', () => {
     $('promo').hidden = true;
@@ -146,5 +211,4 @@
     $('news-msg').textContent = '¡Listo! Confirma tu suscripción en el correo que te enviamos.';
     e.target.reset();
   });
-  render();
 </script>

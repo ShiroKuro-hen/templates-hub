@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 
-const SOURCES = [
-  { name: 'vertical para móvil', media: '(max-width: 600px)', srcset: 'data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20300%20400%27%3E%3Crect%20width=%27300%27%20height=%27400%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27150%27%20cy=%27150%27%20r=%2760%27%20fill=%27%23f59e0b%27/%3E%3Crect%20y=%27250%27%20width=%27300%27%20height=%27150%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M150%20120v120h-40z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M100%20240h110l-18%2018H118z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 1x, data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20300%20400%27%3E%3Crect%20width=%27300%27%20height=%27400%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27150%27%20cy=%27150%27%20r=%2790%27%20fill=%27%23f59e0b%27%20opacity=%27.25%27/%3E%3Ccircle%20cx=%27150%27%20cy=%27150%27%20r=%2760%27%20fill=%27%23f59e0b%27/%3E%3Cpath%20d=%27M30%2060h50a20%2020%200%200%200-20-20%2025%2025%200%200%200-30%2020z%27%20fill=%27%23fff%27%20opacity=%27.8%27/%3E%3Crect%20y=%27250%27%20width=%27300%27%20height=%27150%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M0%20300q25-10%2050%200t50%200%2050%200%2050%200%2050%200%2050%200%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-opacity=%27.5%27%20stroke-width=%273%27/%3E%3Cpath%20d=%27M150%20120v120h-40z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M100%20240h110l-18%2018H118z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 2x' },
-  { name: 'panorámica para escritorio', media: '(min-width: 601px)', srcset: 'data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20840%20360%27%3E%3Crect%20width=%27840%27%20height=%27360%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27620%27%20cy=%27120%27%20r=%2758%27%20fill=%27%23f59e0b%27/%3E%3Crect%20y=%27220%27%20width=%27840%27%20height=%27140%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M420%20110v120h-70z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M410%20240h110l-18%2018H428z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 1x, data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20840%20360%27%3E%3Crect%20width=%27840%27%20height=%27360%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27620%27%20cy=%27120%27%20r=%2790%27%20fill=%27%23f59e0b%27%20opacity=%27.25%27/%3E%3Ccircle%20cx=%27620%27%20cy=%27120%27%20r=%2758%27%20fill=%27%23f59e0b%27/%3E%3Cpath%20d=%27M60%2070h80a30%2030%200%200%200-30-30%2040%2040%200%200%200-50%2030z%27%20fill=%27%23fff%27%20opacity=%27.8%27/%3E%3Crect%20y=%27220%27%20width=%27840%27%20height=%27140%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M0%20260q40-14%2080%200t80%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-opacity=%27.5%27%20stroke-width=%273%27/%3E%3Cpath%20d=%27M420%20110v120h-70z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M410%20240h110l-18%2018H428z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 2x' },
-];
-
-const sourceTags = SOURCES.map((s) => `<source media="${s.media}" srcset="${s.srcset}">`).join('');
+const SOURCES: Record<string, string> = {
+  'atardecer-vertical.webp': 'vertical para móvil',
+  'atardecer-panoramica.webp': 'panorámica para escritorio',
+};
 const REPORT_SCRIPT = `<script>const img=document.querySelector('img');const report=()=>parent.postMessage({pictureSrc:img.currentSrc,width:innerWidth,height:Math.ceil(img.getBoundingClientRect().height)},'*');img.addEventListener('load',report);addEventListener('resize',report);<\/script>`;
-const SRCDOC = `<!doctype html><html lang="es"><head><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden}img{display:block;width:100%;height:auto}</style></head><body><picture>${sourceTags}<img alt="Velero navegando al atardecer sobre el mar" width="840" height="360"></picture>${REPORT_SCRIPT}</body></html>`;
+const SRCDOC = `<!doctype html><html lang="es"><head><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden}img{display:block;width:100%;height:auto}</style></head><body><picture><source media="(max-width: 600px)" srcset="/stock/atardecer-vertical.webp"><img loading="lazy" src="/stock/atardecer-panoramica.webp" alt="Atardecer sobre un paisaje de colinas con el sol bajo el horizonte" width="1200" height="500"></picture>${REPORT_SCRIPT}</body></html>`;
 
 const frame = ref<HTMLIFrameElement>();
 const width = ref(640);
 const picture = ref({ active: 'cargando', viewport: 0, height: 240 });
 
 function sourceName(pictureSrc: string): string {
-  return SOURCES.find((s) => pictureSrc && s.srcset.includes(pictureSrc))?.name ?? 'cargando';
+  const file = Object.keys(SOURCES).find((f) => pictureSrc.endsWith(f));
+  return file ? SOURCES[file] : 'cargando';
 }
 
 function onReport(e: MessageEvent) {

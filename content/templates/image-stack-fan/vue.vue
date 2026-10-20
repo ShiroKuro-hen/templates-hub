@@ -4,10 +4,10 @@ import { ref } from 'vue';
 type Photo = { title: string; alt: string; src: string };
 
 const PHOTOS: Photo[] = [
-  { title: 'Montañas', alt: 'Montañas bajo un cielo anaranjado', src: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23ffd6a5%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%22110%22%20r%3D%2240%22%20fill%3D%22%23ff9770%22%2F%3E%3Cpath%20d%3D%22M0%20200L90%20110l60%2050%2070-70%20100%20110z%22%20fill%3D%22%236d597a%22%2F%3E%3C%2Fsvg%3E' },
-  { title: 'Olas', alt: 'Olas azules bajo un sol rosado', src: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23bde0fe%22%2F%3E%3Ccircle%20cx%3D%22250%22%20cy%3D%2250%22%20r%3D%2222%22%20fill%3D%22%23ffc8dd%22%2F%3E%3Cpath%20d%3D%22M0%20120q40-20%2080%200t80%200%2080%200%2080%200v80H0z%22%20fill%3D%22%233a86ff%22%2F%3E%3Cpath%20d%3D%22M0%20150q40-20%2080%200t80%200%2080%200%2080%200v50H0z%22%20fill%3D%22%231d4ed8%22%2F%3E%3C%2Fsvg%3E' },
-  { title: 'Bosque', alt: 'Bosque de pinos con hierba clara', src: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23d8f3dc%22%2F%3E%3Cpath%20d%3D%22M40%20170L70%2090l30%2080zM110%20170l30-110%2030%20110zM190%20170l30-85%2030%2085zM260%20170l25-65%2025%2065z%22%20fill%3D%22%232d6a4f%22%2F%3E%3Crect%20y%3D%22170%22%20width%3D%22320%22%20height%3D%2230%22%20fill%3D%22%2374c69d%22%2F%3E%3C%2Fsvg%3E' },
-  { title: 'Bloques', alt: 'Bloques de colores redondeados', src: 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23fde2e4%22%2F%3E%3Crect%20x%3D%2230%22%20y%3D%2230%22%20width%3D%22110%22%20height%3D%2270%22%20rx%3D%2212%22%20fill%3D%22%23e63946%22%2F%3E%3Crect%20x%3D%22160%22%20y%3D%2230%22%20width%3D%22130%22%20height%3D%2250%22%20rx%3D%2212%22%20fill%3D%22%23f4a261%22%2F%3E%3Crect%20x%3D%2230%22%20y%3D%22120%22%20width%3D%22260%22%20height%3D%2250%22%20rx%3D%2212%22%20fill%3D%22%23457b9d%22%2F%3E%3C%2Fsvg%3E' },
+  { title: 'Isla blanca', alt: 'Pueblo blanco griego junto al mar', src: '/stock/isla-blanca.webp' },
+  { title: 'Montañas nevadas', alt: 'Picos nevados bajo el cielo', src: '/stock/montana-nieve.webp' },
+  { title: 'Sendero verde', alt: 'Sendero de hierba entre el bosque', src: '/stock/sendero-verde.webp' },
+  { title: 'Embarcadero', alt: 'Muelle de madera que se adentra en el mar', src: '/stock/embarcadero.webp' },
 ];
 
 const STEPS: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
@@ -50,7 +50,7 @@ function onKeyDown(e: KeyboardEvent) {
         @keydown="onKeyDown"
       >
         <figure v-for="(photo, p) in order" :key="photo.title" class="card" :style="{ '--p': p }">
-          <img :src="photo.src" :alt="photo.alt" width="320" height="200" loading="lazy" />
+          <img :src="photo.src" :alt="photo.alt" width="800" height="533" loading="lazy" />
           <figcaption>{{ photo.title }}</figcaption>
         </figure>
       </div>

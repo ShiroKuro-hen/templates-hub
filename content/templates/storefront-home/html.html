@@ -10,79 +10,76 @@
   body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
   .page{max-width:1100px;margin:0 auto}
   a{color:inherit;text-decoration:none}
-  button,input{font:inherit;color:inherit}
-  button{cursor:pointer}
+  button,input{font:inherit;color:inherit;cursor:pointer}
+  p,h1,h2,h3{margin:0}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   [hidden]{display:none!important}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .btn{display:inline-block;padding:9px 16px;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,filter .14s}
-  .btn:hover{border-color:var(--accent)}
-  .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-  .btn.pri:hover{filter:brightness(1.08)}
+  .btn,.add,.cart,.cats a,.card,.benefits li,.news,.search input,.news input{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);transition:.14s}
+  .btn,.add{display:inline-block;font-weight:600}
+  .btn{padding:9px 16px}
+  .btn:hover,.cats a:hover{border-color:var(--accent)}
+  .pri,.add{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .pri:hover,.add:hover{filter:brightness(1.08)}
   .promo{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;background:var(--accent);color:var(--accent-ink);font-size:13px;border-radius:var(--radius)}
-  .promo p{margin:0;text-align:center}
-  .promo button{flex:none;border:0;background:none;color:inherit;font-size:18px;line-height:1;padding:2px 6px;border-radius:min(var(--radius),6px)}
+  .promo p{text-align:center}
+  .promo button{padding:2px 6px;border:0;background:none;color:inherit;font-size:18px;line-height:1;border-radius:6px}
   .nav{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:16px 0;border-bottom:1px solid var(--border)}
   .brand{display:inline-flex;align-items:center;gap:8px;margin-right:auto;font-size:18px;font-weight:700;letter-spacing:-.01em}
-  .brand i{width:24px;height:24px;border-radius:min(var(--radius),6px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+  .brand i{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   .search{flex:1 1 100%;order:3}
-  .search input{width:100%;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:999px}
-  .cart{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
-  .count{min-width:24px;padding:1px 7px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px;text-align:center;font-variant-numeric:tabular-nums}
+  .search input{width:100%;padding:9px 14px;border-radius:999px}
+  .cart{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;font-weight:600}
+  .count{min-width:24px;padding:1px 7px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px;text-align:center}
   .count.bump{animation:bump .32s ease-out}
   @keyframes bump{40%{transform:scale(1.35)}}
-  .hero{position:relative;overflow:hidden;margin-top:20px;padding:clamp(28px,6vw,56px) clamp(20px,5vw,48px);background:var(--accent-soft);border:1px solid var(--border);border-radius:var(--radius)}
-  .hero::after{content:"";position:absolute;z-index:0;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));opacity:.35}
-  .hero>*{position:relative;z-index:1}
-  .eyebrow{margin:0 0 10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
-  .hero h1{margin:0 0 12px;max-width:16ch;font-size:clamp(28px,5vw,44px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
-  .hero p{margin:0;max-width:52ch;color:var(--muted)}
+  .hero{display:grid;gap:24px;align-items:center;margin-top:20px;padding:clamp(20px,5vw,40px);background:var(--accent-soft);border:1px solid var(--border);border-radius:var(--radius)}
+  .hero h1{margin-bottom:12px;max-width:16ch;font-size:clamp(28px,5vw,44px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+  .hero img,.cats img,.card img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+  .hero img{border-radius:var(--radius)}
+  .eyebrow{margin-bottom:10px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .lead{max-width:52ch;color:var(--muted)}
   .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
   .cats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:28px 0 0;padding:0;list-style:none}
-  .cats a{display:flex;flex-direction:column;align-items:flex-start;gap:6px;height:100%;padding:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .14s,background .14s}
-  .cats a:hover{border-color:var(--accent);background:var(--accent-soft)}
-  .cats svg{width:26px;height:26px;color:var(--accent);fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .cats span{font-weight:600}
-  .cats small{color:var(--muted);font-size:12px}
+  .cats a{display:flex;flex-direction:column;height:100%;overflow:hidden}
+  .cats span{padding:10px 12px 0;font-weight:600}
+  .cats small{padding:0 12px 12px;color:var(--muted);font-size:12px}
   .sec{margin-top:36px}
   .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
-  .sec-head h2{margin:0;font-size:20px;letter-spacing:-.01em}
+  .sec-head h2{font-size:20px;letter-spacing:-.01em}
   .sec-head a{color:var(--accent);font-weight:600;font-size:14px}
   .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:0;padding:0;list-style:none}
-  .card{display:flex;flex-direction:column;min-width:0;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-  .thumb{display:grid;place-items:center;aspect-ratio:1;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
-  .thumb img{display:block;width:56%;height:auto}
-  .info{display:flex;flex:1;flex-direction:column;gap:6px;padding:12px}
-  .info h3{margin:0;font-size:14px;line-height:1.3}
-  .rating{margin:0;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .card{display:flex;flex-direction:column;min-width:0;overflow:hidden;box-shadow:var(--shadow)}
+  .card h3{padding:12px 12px 0;font-size:14px;line-height:1.3}
+  .rating{padding:4px 12px 0;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
   .star{color:var(--warn)}
-  .buy{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:6px}
-  .price{font-weight:700;font-variant-numeric:tabular-nums}
-  .add{padding:7px 12px;font-size:13px;font-weight:600;background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);color:var(--accent-ink);transition:filter .14s}
-  .add:hover{filter:brightness(1.08)}
-  .none{grid-column:1/-1;margin:0;padding:24px;text-align:center;color:var(--muted)}
-  .toast{position:fixed;left:50%;bottom:20px;z-index:2;width:max-content;max-width:calc(100vw - 40px);margin:0;padding:10px 16px;background:var(--text);color:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);font-size:14px;font-weight:600;opacity:0;visibility:hidden;transform:translate(-50%,12px);transition:opacity .2s,transform .2s,visibility .2s}
+  .buy{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding:8px 12px 12px}
+  .price{font-weight:700}
+  .add{padding:7px 12px;font-size:13px}
+  .none{padding:24px;text-align:center;color:var(--muted)}
+  .toast{position:fixed;left:50%;bottom:20px;z-index:2;width:max-content;max-width:calc(100vw - 40px);padding:10px 16px;background:var(--text);color:var(--bg);border-radius:var(--radius);box-shadow:var(--shadow);font-weight:600;opacity:0;visibility:hidden;transform:translate(-50%,12px);transition:.2s}
   .toast[data-show]{opacity:1;visibility:visible;transform:translate(-50%,0)}
   .benefits{display:grid;gap:10px;margin:28px 0 0;padding:0;list-style:none}
-  .benefits li{display:flex;flex-direction:column;gap:2px;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius)}
+  .benefits li{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-left:3px solid var(--accent)}
   .benefits b{font-size:15px}
   .benefits span{color:var(--muted);font-size:13px}
-  .news{display:grid;gap:16px;margin-top:36px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .news{display:grid;gap:16px;margin-top:36px;padding:24px}
   .news h2{margin:0 0 4px;font-size:18px}
-  .news p{margin:0;color:var(--muted)}
+  .news p{color:var(--muted)}
   .news form{display:flex;flex-wrap:wrap;gap:8px}
-  .news input{flex:1 1 200px;min-width:0;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
-  .note{flex-basis:100%;color:var(--ok);font-weight:600}
+  .news input{flex:1 1 200px;min-width:0;padding:9px 12px;background:var(--bg)}
+  .news .note{flex-basis:100%;color:var(--ok);font-weight:600}
   .foot{margin-top:40px;padding:28px 0 8px;border-top:1px solid var(--border)}
   .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
-  .cols h3{margin:0 0 8px;font-size:14px}
+  .cols h3{margin-bottom:8px;font-size:14px}
   .cols ul{margin:0;padding:0;list-style:none;color:var(--muted)}
   .cols li{padding:3px 0}
   .cols a:hover{color:var(--text);text-decoration:underline}
-  .legal{margin:24px 0 0;font-size:12px;color:var(--muted)}
+  .legal{margin-top:24px;font-size:12px;color:var(--muted)}
   @media (min-width:768px){
     .brand{margin-right:0}
     .search{flex:1 1 auto;order:0;max-width:340px;margin-left:auto}
+    .hero{grid-template-columns:1fr 1fr}
     .cats{grid-template-columns:repeat(3,minmax(0,1fr))}
     .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
     .benefits{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -95,140 +92,159 @@
 </head>
 <body>
 <div class="page">
-  <aside class="promo" id="promo" aria-label="Anuncio">
-    <p>Envío gratis desde 49 € · Devoluciones sin coste en 30 días</p>
-    <button type="button" id="close-promo" aria-label="Cerrar anuncio">×</button>
-  </aside>
+<aside class="promo" id="promo" aria-label="Anuncio">
+  <p>Envío gratis desde 49 € · Devoluciones sin coste en 30 días</p>
+  <button type="button" id="close-promo" aria-label="Cerrar anuncio">×</button>
+</aside>
 
-  <header class="nav">
-    <a class="brand" id="brand" href="#"><i aria-hidden="true"></i>Casa Ribera</a>
-    <form class="search" id="search" role="search">
-      <label class="sr" for="q">Buscar productos</label>
-      <input id="q" type="search" placeholder="Buscar productos…" autocomplete="off">
-    </form>
-    <button type="button" class="cart">Carrito <span class="count" id="count">0</span></button>
-  </header>
+<header class="nav">
+  <a class="brand" id="brand" href="#"><i aria-hidden="true"></i>Casa Ribera</a>
+  <form class="search" id="search" role="search">
+    <label class="sr" for="q">Buscar productos</label>
+    <input id="q" type="search" placeholder="Buscar productos…" autocomplete="off">
+  </form>
+  <button type="button" class="cart">Carrito <span class="count" id="count">0</span></button>
+</header>
 
-  <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <p class="eyebrow">Colección de otoño</p>
-      <h1 id="hero-title">Hasta un 30 % en textil y cocina para tu casa</h1>
-      <p>Piezas hechas a mano por artesanos españoles. Envío en 24 h a península.</p>
-      <div class="actions">
-        <a class="btn pri" href="#productos">Ver ofertas</a>
-        <a class="btn" href="#">Nuevas llegadas</a>
-      </div>
-    </section>
-
-    <nav aria-label="Categorías">
-      <ul class="cats">
-        <li><a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Hogar</span><small>128 productos</small></a></li>
-        <li><a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v3a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7zM8 7l1.5 2M16 7l-1.5 2"/></svg><span>Cocina</span><small>94 productos</small></a></li>
-        <li><a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3l-5 3 2 4 2-1v12h10V9l2 1 2-4-5-3a4 4 0 0 1-8 0z"/></svg><span>Moda</span><small>212 productos</small></a></li>
-        <li><a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span>Tecnología</span><small>76 productos</small></a></li>
-        <li><a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg><span>Deporte</span><small>63 productos</small></a></li>
-        <li><a href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1L19 8l-3-3L5 16z"/></svg><span>Papelería</span><small>141 productos</small></a></li>
-      </ul>
-    </nav>
-
-    <section class="sec" id="productos" aria-labelledby="prod-title">
-      <div class="sec-head">
-        <h2 id="prod-title">Más vendidos</h2>
-        <a href="#">Ver todo</a>
-      </div>
-      <ul class="grid" id="grid"></ul>
-      <p class="none" id="none" hidden>No hay productos que coincidan con tu búsqueda.</p>
-    </section>
-
-    <ul class="benefits" aria-label="Ventajas de comprar aquí">
-      <li><b>Envío en 24 h</b><span>Gratis a partir de 49 €</span></li>
-      <li><b>Devoluciones fáciles</b><span>Hasta 30 días, sin preguntas</span></li>
-      <li><b>Pago seguro</b><span>Tarjeta, PayPal y Bizum</span></li>
-    </ul>
-
-    <section class="news" aria-labelledby="news-title">
-      <div>
-        <h2 id="news-title">Ofertas antes que nadie</h2>
-        <p>Un correo al mes con novedades y códigos exclusivos. Sin spam.</p>
-      </div>
-      <div>
-        <form id="news">
-          <label class="sr" for="mail">Correo electrónico</label>
-          <input id="mail" type="email" required placeholder="tu@correo.com" autocomplete="email">
-          <button class="btn pri" type="submit">Suscribirme</button>
-          <p class="note" id="news-msg" role="status"></p>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="foot">
-    <div class="cols">
-      <div><h3>Tienda</h3><ul><li><a href="#">Novedades</a></li><li><a href="#">Ofertas</a></li><li><a href="#">Regalos</a></li></ul></div>
-      <div><h3>Ayuda</h3><ul><li><a href="#">Envíos y plazos</a></li><li><a href="#">Devoluciones</a></li><li><a href="#">Contacto</a></li></ul></div>
-      <div><h3>Casa Ribera</h3><ul><li><a href="#">Sobre nosotros</a></li><li><a href="#">Nuestros artesanos</a></li><li><a href="#">Aviso legal</a></li></ul></div>
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div>
+    <p class="eyebrow">Colección de otoño · hasta un 30 %</p>
+    <h1 id="hero-title">Hogar, café y objetos con historia</h1>
+    <p class="lead">Piezas seleccionadas por artesanos españoles. Envío en 24 h a península.</p>
+    <div class="actions">
+      <a class="btn pri" href="#productos">Ver ofertas</a>
+      <a class="btn" href="#">Nuevas llegadas</a>
     </div>
-    <p class="legal">© 2026 Casa Ribera, S.L. · Precios con IVA incluido.</p>
-  </footer>
+  </div>
+  <img src="/stock/cafeteria-mesa.webp" alt="Mesa larga de madera en una cafetería" width="800" height="533" fetchpriority="high">
+</section>
 
-  <p class="toast" id="toast" aria-live="polite"></p>
+<nav aria-label="Categorías">
+  <ul class="cats">
+    <li><a href="#"><img src="/stock/puerta-antigua.webp" alt="Puerta antigua de madera" width="800" height="533" loading="lazy"><span>Hogar</span><small>128 productos</small></a></li>
+    <li><a href="#"><img src="/stock/cafe-rojo.webp" alt="Taza de café sobre fondo rojo" width="800" height="533" loading="lazy"><span>Café y té</span><small>94 productos</small></a></li>
+    <li><a href="#"><img src="/stock/ingredientes.webp" alt="Tabla con verduras y pimientos" width="800" height="533" loading="lazy"><span>Cocina</span><small>212 productos</small></a></li>
+    <li><a href="#"><img src="/stock/luces-bokeh.webp" alt="Luces de colores desenfocadas" width="800" height="533" loading="lazy"><span>Iluminación</span><small>76 productos</small></a></li>
+    <li><a href="#"><img src="/stock/libro-abierto.webp" alt="Libro antiguo abierto" width="800" height="533" loading="lazy"><span>Libros</span><small>141 productos</small></a></li>
+    <li><a href="#"><img src="/stock/bicicleta-granero.webp" alt="Bicicleta verde junto a un granero" width="800" height="533" loading="lazy"><span>Exterior</span><small>63 productos</small></a></li>
+  </ul>
+</nav>
+
+<section class="sec" id="productos" aria-labelledby="prod-title">
+  <div class="sec-head">
+    <h2 id="prod-title">Más vendidos</h2>
+    <a href="#">Ver todo</a>
+  </div>
+  <ul class="grid" id="grid">
+    <li class="card" data-name="Taza de cerámica vintage">
+      <img src="/stock/taza-vintage.webp" alt="Taza roja con estampado vintage" width="800" height="533" loading="lazy">
+      <h3>Taza de cerámica vintage</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,8 <span>(214 reseñas)</span></p>
+      <div class="buy"><span class="price">18,50 €</span><button type="button" class="add" aria-label="Añadir Taza de cerámica vintage al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Café de tueste artesanal">
+      <img src="/stock/cafe-rojo.webp" alt="Taza de café sobre fondo rojo" width="800" height="533" loading="lazy">
+      <h3>Café de tueste artesanal</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,9 <span>(362 reseñas)</span></p>
+      <div class="buy"><span class="price">12,90 €</span><button type="button" class="add" aria-label="Añadir Café de tueste artesanal al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Libro de anticuario">
+      <img src="/stock/libro-abierto.webp" alt="Libro antiguo abierto" width="800" height="533" loading="lazy">
+      <h3>Libro de anticuario</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,6 <span>(97 reseñas)</span></p>
+      <div class="buy"><span class="price">24,00 €</span><button type="button" class="add" aria-label="Añadir Libro de anticuario al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Tocadiscos de vinilo">
+      <img src="/stock/tocadiscos.webp" alt="Aguja de tocadiscos sobre vinilo" width="800" height="533" loading="lazy">
+      <h3>Tocadiscos de vinilo</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,4 <span>(1.031 reseñas)</span></p>
+      <div class="buy"><span class="price">149,00 €</span><button type="button" class="add" aria-label="Añadir Tocadiscos de vinilo al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Tetera de cristal con flores">
+      <img src="/stock/tetera-flores.webp" alt="Tetera de cristal con flores" width="800" height="533" loading="lazy">
+      <h3>Tetera de cristal con flores</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,5 <span>(188 reseñas)</span></p>
+      <div class="buy"><span class="price">34,90 €</span><button type="button" class="add" aria-label="Añadir Tetera de cristal con flores al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Miel de azahar">
+      <img src="/stock/miel.webp" alt="Cuchara de miel en taza blanca" width="800" height="533" loading="lazy">
+      <h3>Miel de azahar</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,7 <span>(426 reseñas)</span></p>
+      <div class="buy"><span class="price">8,90 €</span><button type="button" class="add" aria-label="Añadir Miel de azahar al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Cactus en maceta de barro">
+      <img src="/stock/cactus.webp" alt="Cactus redondo en maceta" width="800" height="533" loading="lazy">
+      <h3>Cactus en maceta de barro</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,3 <span>(655 reseñas)</span></p>
+      <div class="buy"><span class="price">12,50 €</span><button type="button" class="add" aria-label="Añadir Cactus en maceta de barro al carrito">Añadir</button></div>
+    </li>
+    <li class="card" data-name="Cámara vintage restaurada">
+      <img src="/stock/camara-vintage.webp" alt="Cámara vintage sobre teclas de piano" width="800" height="533" loading="lazy">
+      <h3>Cámara vintage restaurada</h3>
+      <p class="rating"><span class="star" aria-hidden="true">★</span> 4,6 <span>(540 reseñas)</span></p>
+      <div class="buy"><span class="price">89,00 €</span><button type="button" class="add" aria-label="Añadir Cámara vintage restaurada al carrito">Añadir</button></div>
+    </li>
+  </ul>
+  <p class="none" id="none" hidden>No hay productos que coincidan con tu búsqueda.</p>
+</section>
+
+<ul class="benefits" aria-label="Ventajas de comprar aquí">
+  <li><b>Envío en 24 h</b><span>Gratis a partir de 49 €</span></li>
+  <li><b>Devoluciones fáciles</b><span>Hasta 30 días, sin preguntas</span></li>
+  <li><b>Pago seguro</b><span>Tarjeta, PayPal y Bizum</span></li>
+</ul>
+
+<section class="news" aria-labelledby="news-title">
+  <div>
+    <h2 id="news-title">Ofertas antes que nadie</h2>
+    <p>Un correo al mes con novedades y códigos exclusivos. Sin spam.</p>
+  </div>
+  <div>
+    <form id="news">
+      <label class="sr" for="mail">Correo electrónico</label>
+      <input id="mail" type="email" required placeholder="tu@correo.com" autocomplete="email">
+      <button class="btn pri" type="submit">Suscribirme</button>
+      <p class="note" id="news-msg" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="cols">
+    <div><h3>Tienda</h3><ul><li><a href="#">Novedades</a></li><li><a href="#">Ofertas</a></li><li><a href="#">Regalos</a></li></ul></div>
+    <div><h3>Ayuda</h3><ul><li><a href="#">Envíos y plazos</a></li><li><a href="#">Devoluciones</a></li><li><a href="#">Contacto</a></li></ul></div>
+    <div><h3>Casa Ribera</h3><ul><li><a href="#">Sobre nosotros</a></li><li><a href="#">Nuestros artesanos</a></li><li><a href="#">Aviso legal</a></li></ul></div>
+  </div>
+  <p class="legal">© 2026 Casa Ribera, S.L. · Precios con IVA incluido.</p>
+</footer>
+
+<p class="toast" id="toast" aria-live="polite"></p>
 </div>
 <script>
   const $ = (id) => document.getElementById(id);
-  const eur = (n) => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
-  const num = (n) => n.toLocaleString('es-ES');
-  const uri = (shape) => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="rgba(255,255,255,.95)" stroke="rgba(255,255,255,.95)" stroke-width="3" stroke-linejoin="round">${shape}</g></svg>`);
-  const PRODUCTS = [
-    { id: 1, name: 'Taza de cerámica artesanal', price: 18.5, rating: 4.8, reviews: 214, shape: '<path d="M10 20h34v20a14 14 0 0 1-14 14H24A14 14 0 0 1 10 40z"/><path d="M44 27h4a7 7 0 0 1 0 14h-4" fill="none"/>' },
-    { id: 2, name: 'Lámpara de mesa de lino', price: 64, rating: 4.6, reviews: 97, shape: '<path d="M22 8h20l10 26H12z"/><rect x="30" y="34" width="4" height="16"/><rect x="20" y="50" width="24" height="4" rx="2"/>' },
-    { id: 3, name: 'Cuaderno de tapa dura A5', price: 12.9, rating: 4.9, reviews: 362, shape: '<rect x="16" y="8" width="32" height="48" rx="3"/><path d="M24 20h16M24 28h16M24 36h10" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2.5" stroke-linecap="round"/>' },
-    { id: 4, name: 'Auriculares inalámbricos Aura', price: 89, rating: 4.4, reviews: 1031, shape: '<path d="M14 38v-8a18 18 0 0 1 36 0v8" fill="none" stroke-width="5"/><rect x="9" y="36" width="11" height="18" rx="4"/><rect x="44" y="36" width="11" height="18" rx="4"/>' },
-    { id: 5, name: 'Mochila urbana 20 L', price: 49.95, rating: 4.5, reviews: 188, shape: '<rect x="18" y="14" width="28" height="40" rx="10"/><path d="M26 14V10h12v4" fill="none" stroke-width="3"/><rect x="24" y="34" width="16" height="10" rx="3" fill="rgba(0,0,0,.2)" stroke="none"/>' },
-    { id: 6, name: 'Set de velas de soja', price: 24.9, rating: 4.7, reviews: 426, shape: '<rect x="12" y="30" width="16" height="24" rx="2"/><rect x="36" y="22" width="16" height="32" rx="2"/><path d="M44 10q4 6 0 10" fill="none" stroke-width="3"/>' },
-    { id: 7, name: 'Zapatillas Ruta Ligera', price: 79.95, rating: 4.3, reviews: 655, shape: '<path d="M8 44V24h12l8 12 18 4 10 2v2z"/>' },
-    { id: 8, name: 'Botella térmica 750 ml', price: 22, rating: 4.6, reviews: 540, shape: '<rect x="24" y="6" width="16" height="8" rx="2"/><path d="M26 14h12v6l5 8v22a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V28l5-8z"/>' },
-  ];
-  const card = (p) => `
-    <li class="card">
-      <div class="thumb"><img src="${uri(p.shape)}" alt="" width="96" height="96"></div>
-      <div class="info">
-        <h3>${p.name}</h3>
-        <p class="rating"><span class="star" aria-hidden="true">★</span> ${num(p.rating)} <span>(${num(p.reviews)} reseñas)</span></p>
-        <div class="buy">
-          <span class="price">${eur(p.price)}</span>
-          <button type="button" class="add" data-id="${p.id}" aria-label="Añadir ${p.name} al carrito">Añadir</button>
-        </div>
-      </div>
-    </li>`;
-  let count = 0, timer;
-  function render() {
-    const q = $('q').value.trim().toLowerCase();
-    const shown = PRODUCTS.filter((p) => p.name.toLowerCase().includes(q));
-    $('grid').innerHTML = shown.map(card).join('');
-    $('none').hidden = shown.length > 0;
-  }
-  function bump() {
-    const c = $('count');
-    c.classList.remove('bump');
-    void c.offsetWidth;
-    c.classList.add('bump');
-  }
-  function notify(msg) {
+  const cards = [...$('grid').children];
+  let total = 0, timer;
+  $('q').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    cards.forEach((c) => (c.hidden = !c.dataset.name.toLowerCase().includes(q)));
+    $('none').hidden = cards.some((c) => !c.hidden);
+  });
+  $('grid').addEventListener('click', (e) => {
+    const b = e.target.closest('button.add');
+    if (!b) return;
+    const badge = $('count');
+    badge.textContent = ++total;
+    badge.classList.remove('bump');
+    void badge.offsetWidth;
+    badge.classList.add('bump');
     const t = $('toast');
-    t.textContent = msg;
-    t.toggleAttribute('data-show', true);
+    t.textContent = `Añadido: ${b.closest('.card').dataset.name}`;
+    t.setAttribute('data-show', '');
     clearTimeout(timer);
     timer = setTimeout(() => t.removeAttribute('data-show'), 2600);
-  }
-  $('grid').addEventListener('click', (e) => {
-    const b = e.target.closest('button[data-id]');
-    if (!b) return;
-    const p = PRODUCTS.find((x) => x.id === Number(b.dataset.id));
-    $('count').textContent = ++count;
-    bump();
-    notify(`Añadido: ${p.name}`);
   });
-  $('q').addEventListener('input', render);
   $('search').addEventListener('submit', (e) => e.preventDefault());
   $('close-promo').addEventListener('click', () => {
     $('promo').hidden = true;
@@ -239,7 +255,6 @@
     $('news-msg').textContent = '¡Listo! Confirma tu suscripción en el correo que te enviamos.';
     e.target.reset();
   });
-  render();
 </script>
 </body>
 </html>

@@ -2,17 +2,17 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 
 type ProjectType = 'web' | 'app' | 'marca';
-type Project = { title: string; type: ProjectType; meta: string; alt: string; tone: string; cover: string };
+type Project = { title: string; type: ProjectType; meta: string; desc: string; alt: string; image: string };
 type Field = 'nombre' | 'correo' | 'mensaje';
 type Values = Record<Field, string> & { proyecto: string };
 
 const projects: Project[] = [
-  { title: 'Banca Abierta', type: 'web', meta: 'Web · 2025', tone: 'c1', alt: 'Vista previa del portal de inversiones Banca Abierta', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='white'%3E%3Ccircle cx='300' cy='90' r='70' fill-opacity='.18'/%3E%3Crect x='60' y='150' width='120' height='90' rx='12' fill-opacity='.9'/%3E%3Crect x='200' y='190' width='140' height='50' rx='12' fill-opacity='.45'/%3E%3C/g%3E%3C/svg%3E" },
-  { title: 'Nubla', type: 'app', meta: 'App · 2024', tone: 'c2', alt: 'Vista previa de la app de meditación Nubla', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='150' y='40' width='100' height='220' rx='18' fill='white' fill-opacity='.9'/%3E%3Ccircle cx='200' cy='150' r='28' fill='white' fill-opacity='.35'/%3E%3Crect x='170' y='208' width='60' height='8' rx='4' fill='white' fill-opacity='.6'/%3E%3C/svg%3E" },
-  { title: 'Café Ámbar', type: 'marca', meta: 'Marca · 2024', tone: 'c3', alt: 'Vista previa de la identidad de Café Ámbar', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Ccircle cx='200' cy='150' r='95' fill='white' fill-opacity='.2'/%3E%3Ccircle cx='200' cy='150' r='55' fill='white' fill-opacity='.9'/%3E%3C/svg%3E" },
-  { title: 'Atlas Clínico', type: 'web', meta: 'Web · 2023', tone: 'c4', alt: 'Vista previa del panel de historiales Atlas Clínico', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='40' y='40' width='100' height='70' rx='8' fill='white' fill-opacity='.9'/%3E%3Crect x='160' y='40' width='200' height='70' rx='8' fill='white' fill-opacity='.45'/%3E%3Crect x='40' y='130' width='320' height='130' rx='8' fill='white' fill-opacity='.3'/%3E%3C/svg%3E" },
-  { title: 'Ruta Verde', type: 'app', meta: 'App · 2023', tone: 'c5', alt: 'Vista previa del planificador de rutas Ruta Verde', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath d='M0 220C80 150 140 280 220 200S330 120 400 170V300H0Z' fill='white' fill-opacity='.35'/%3E%3Ccircle cx='220' cy='110' r='18' fill='white' fill-opacity='.9'/%3E%3C/svg%3E" },
-  { title: 'Revista Faro', type: 'marca', meta: 'Marca · 2022', tone: 'c6', alt: 'Vista previa del sistema tipográfico de la revista Faro', cover: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='50' y='50' width='300' height='24' fill='white' fill-opacity='.9'/%3E%3Crect x='50' y='94' width='220' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='120' width='260' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='146' width='180' height='12' fill='white' fill-opacity='.6'/%3E%3Ccircle cx='300' cy='220' r='40' fill='white' fill-opacity='.35'/%3E%3C/svg%3E" },
+  { title: 'Banca Abierta', type: 'web', meta: 'Web · 2025', desc: 'Portal de inversiones para particulares', alt: 'Portátil sobre un escritorio con estantería', image: '/stock/escritorio-laptop.webp' },
+  { title: 'Atlas Clínico', type: 'web', meta: 'Web · 2023', desc: 'Panel de historiales para clínicas', alt: 'Escritorio visto desde arriba con teclado y tableta', image: '/stock/escritorio-cenital.webp' },
+  { title: 'Nubla', type: 'app', meta: 'App · 2024', desc: 'App de meditación con sesiones guiadas', alt: 'Escritorio cenital con materiales de diseño y un teléfono', image: '/stock/escritorio-diseno.webp' },
+  { title: 'Ruta Verde', type: 'app', meta: 'App · 2023', desc: 'Planificador de rutas a pie y en bici', alt: 'Calle de ciudad entre edificios', image: '/stock/calle-ciudad.webp' },
+  { title: 'Hilo Atelier', type: 'marca', meta: 'Marca · 2024', desc: 'Identidad y envases de accesorios', alt: 'Cartera, reloj y auriculares sobre fondo plano', image: '/stock/objetos-planos.webp' },
+  { title: 'Revista Faro', type: 'marca', meta: 'Marca · 2022', desc: 'Sistema tipográfico y portadas', alt: 'Luces de colores desenfocadas', image: '/stock/luces-bokeh.webp' },
 ];
 const filters: { id: 'todos' | ProjectType; label: string }[] = [
   { id: 'todos', label: 'Todos' },
@@ -110,8 +110,8 @@ function onSubmit() {
         <ul class="works">
           <li v-for="p in visible" :key="p.title">
             <a class="work" href="#proyectos">
-              <img :class="['cov', p.tone]" width="400" height="300" loading="lazy" :alt="p.alt" :src="p.cover">
-              <span class="cap"><small>{{ p.meta }}</small><strong>{{ p.title }}</strong></span>
+              <img :src="p.image" :alt="p.alt" width="800" height="533" loading="lazy" decoding="async">
+              <span class="cap"><small>{{ p.meta }}</small><strong>{{ p.title }}</strong><span>{{ p.desc }}</span></span>
             </a>
           </li>
         </ul>
@@ -187,7 +187,8 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .page{max-width:1100px;margin:0 auto}
 section[id]{scroll-margin-top:72px}
-h1,h2,h3{margin:0;line-height:1.1;letter-spacing:-.02em}
+p,h1,h2,h3{margin:0}
+h1,h2,h3{line-height:1.1;letter-spacing:-.02em}
 .nav{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:14px 0;background:var(--bg);border-bottom:1px solid var(--border)}
 .name{margin-right:auto;font-size:17px;font-weight:700}
 .nav ul{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;padding:0;list-style:none}
@@ -209,22 +210,17 @@ h1{margin-bottom:16px;font-size:clamp(32px,6vw,58px);letter-spacing:-.035em}
 .sec{padding:48px 0;border-top:1px solid var(--border)}
 .sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:24px}
 h2{font-size:clamp(24px,4vw,34px)}
-.sec-head p{max-width:40ch;margin:0;color:var(--muted)}
+.sec-head p{max-width:40ch;color:var(--muted)}
 .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
 .filters button{font:inherit;font-weight:600;padding:6px 14px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:999px;cursor:pointer}
 .filters button[aria-pressed=true]{color:var(--accent);background:var(--accent-soft);border-color:var(--accent)}
 .works{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin:0;padding:0;list-style:none}
 .work{position:relative;display:block;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-.cov{display:block;width:100%;height:auto;aspect-ratio:4/3}
+.work img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
 .cap{position:absolute;left:12px;right:12px;bottom:12px;display:grid;gap:2px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:min(var(--radius),6px);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s}
 .cap small{font-size:12px;color:var(--muted)}
+.cap>span{font-size:13px;color:var(--muted)}
 .work:hover .cap,.work:focus-visible .cap{opacity:1;transform:none}
-.c1{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent))}
-.c2{background:linear-gradient(135deg,var(--ok),var(--info))}
-.c3{background:linear-gradient(135deg,var(--warn),var(--err))}
-.c4{background:linear-gradient(135deg,var(--accent),var(--info))}
-.c5{background:linear-gradient(135deg,var(--info),var(--ok))}
-.c6{background:linear-gradient(135deg,var(--err),var(--accent))}
 .about{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
 .about p{margin:0 0 20px;font-size:15px;color:var(--muted)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
@@ -242,10 +238,9 @@ h2{font-size:clamp(24px,4vw,34px)}
 .field input,.field select,.field textarea{width:100%;box-sizing:border-box;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px}
 .field textarea{min-height:120px;resize:vertical}
 .field [aria-invalid=true]{border-color:var(--err)}
-.error{margin:0;font-size:13px;color:var(--err)}
+.error{font-size:13px;color:var(--err)}
 .done{padding:24px;background:var(--ok-soft);border:1px solid var(--ok);border-radius:var(--radius)}
 .done h3{margin-bottom:6px}
-.done p{margin:0}
 footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding:20px 0;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
 footer ul{display:flex;gap:18px;margin:0;padding:0;list-style:none}
 @media (max-width:760px){.hero,.about,.row{grid-template-columns:1fr}.hero{padding-top:36px}}

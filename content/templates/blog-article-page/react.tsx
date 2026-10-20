@@ -9,9 +9,9 @@ const SECTIONS = [
   { id: 'resultados', label: 'Resultados' },
 ];
 const RELATED = [
-  { cover: '', title: 'Conciliación bancaria sin hojas de cálculo', meta: 'Producto · 4 min' },
-  { cover: 'c2', title: 'Siete alertas que todo equipo financiero debería tener', meta: 'Guías · 6 min' },
-  { cover: 'c3', title: 'Auditar un cierre sin frenar al equipo', meta: 'Seguridad · 7 min' },
+  { photo: 'escritorio-madera', alt: 'Portátil cerrado con gafas y ratón sobre una mesa de madera', title: 'Un escritorio limpio para cerrar sin prisas', meta: 'Productividad · 4 min' },
+  { photo: 'escritorio-teclado', alt: 'Persona escribiendo en un portátil sobre una mesa de madera', title: 'Escribir las reglas de conciliación paso a paso', meta: 'Guías · 6 min' },
+  { photo: 'escritorio-cafe', alt: 'Portátil con una taza de café sobre una mesa de madera', title: 'Pausas con café: el ritmo del cierre mensual', meta: 'Equipo · 5 min' },
 ];
 
 async function copy(text: string): Promise<string> {
@@ -110,8 +110,8 @@ export function BlogArticlePage() {
             <h3>Probar antes de activar</h3>
             <p>Cada regla se ejecuta primero en modo de vista previa sobre datos reales. Así comparamos el resultado con el cierre manual del mes anterior, sin tocar un solo asiento.</p>
             <figure>
-              <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20300'%3E%3Cpath%20d='M30%20260H610'%20stroke='rgba(255,255,255,.7)'%20stroke-width=2%20/%3E%3Cg%20fill='rgba(255,255,255,.6)'%3E%3Crect%20x=50%20y=44%20width=52%20height=216%20rx=6/%3E%3Crect%20x=134%20y=86%20width=52%20height=174%20rx=6/%3E%3Crect%20x=218%20y=137%20width=52%20height=123%20rx=6/%3E%3Crect%20x=302%20y=194%20width=52%20height=66%20rx=6/%3E%3Crect%20x=386%20y=224%20width=52%20height=36%20rx=6/%3E%3Crect%20x=470%20y=242%20width=52%20height=18%20rx=6/%3E%3Crect%20x=554%20y=251%20width=52%20height=9%20rx=6/%3E%3C/g%3E%3C/svg%3E" width="640" height="300" alt="Gráfico de barras: horas de cierre por mes, de 72 en marzo a 3 en septiembre" />
-              <figcaption>Horas dedicadas al cierre mensual, de marzo a septiembre de 2026.</figcaption>
+              <img src="/stock/escritorio-notas.webp" alt="Portátil abierto junto a una libreta con notas sobre una mesa de madera" width={800} height={533} loading="lazy" />
+              <figcaption>Libreta con las reglas de conciliación, escritas antes de automatizarlas.</figcaption>
             </figure>
             <h2 id="codigo">Las reglas en código</h2>
             <p>La herramienta de línea de comandos lee el archivo de reglas y ejecuta el cierre en un entorno aislado. Este es el comando que usamos cada mes:</p>
@@ -128,6 +128,19 @@ export function BlogArticlePage() {
             <aside className="callout"><b>Consejo</b><p>Empieza con una sola regla y compara dos meses antes de añadir la siguiente. Las tolerancias deben ser de tu negocio, no las que vienen por defecto.</p></aside>
             <h2 id="resultados">Resultados</h2>
             <p>En septiembre cerramos en tres horas y diecisiete minutos. El 96 % de los movimientos se concilió sin intervención, y la cola manual pasó de 4.100 casos a 160.</p>
+            <figure className="chart">
+              <svg viewBox="0 0 640 300" role="img" aria-label="Gráfico de barras: horas de cierre por mes, de 72 en marzo a 3 en septiembre">
+                <path d="M30 260H610" />
+                <rect x={50} y={44} width={52} height={216} rx={6} />
+                <rect x={134} y={86} width={52} height={174} rx={6} />
+                <rect x={218} y={137} width={52} height={123} rx={6} />
+                <rect x={302} y={194} width={52} height={66} rx={6} />
+                <rect x={386} y={224} width={52} height={36} rx={6} />
+                <rect x={470} y={242} width={52} height={18} rx={6} />
+                <rect x={554} y={251} width={52} height={9} rx={6} />
+              </svg>
+              <figcaption>Horas dedicadas al cierre mensual, de marzo a septiembre de 2026.</figcaption>
+            </figure>
             <p>Todavía queda trabajo: los pagos en moneda extranjera siguen necesitando revisión humana, y lo abordaremos el próximo trimestre.</p>
           </article>
         </div>
@@ -146,7 +159,7 @@ export function BlogArticlePage() {
           <ul className="rel">
             {RELATED.map((r) => (
               <li className="card" key={r.title}>
-                <div className={`cover ${r.cover}`} aria-hidden="true" />
+                <img className="cover" src={`/stock/${r.photo}.webp`} alt={r.alt} width={800} height={533} loading="lazy" />
                 <div className="txt"><h3><a href="#">{r.title}</a></h3><small>{r.meta}</small></div>
               </li>
             ))}

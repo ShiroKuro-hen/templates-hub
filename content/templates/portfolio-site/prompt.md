@@ -1,4 +1,4 @@
-Crea un portafolio de una sola página para {{producto}}, una diseñadora de {{especialidad}}, con navegación fija que marque la sección visible, un hero con nombre y frase de presentación, y una galería de seis proyectos con imágenes SVG.
+Crea un portafolio de una sola página para {{producto}}, una diseñadora de {{especialidad}}, con navegación fija que marque la sección visible, un hero con nombre y frase de presentación, y una galería de seis proyectos con fotos.
 La galería tiene filtros por tipo (Todos, Web, App, Marca) con aria-pressed; cada proyecto muestra su descripción al pasar el cursor o al enfocarlo con el teclado.
 Incluye una sección "Sobre mí" con biografía corta, chips de habilidades y una línea de experiencia, y un formulario de contacto con etiquetas, validación en línea con mensajes de error y un estado de éxito.
 Responsivo a 360, 768 y 1200 px, sin desbordamiento horizontal, respeta prefers-reduced-motion, con contraste AA. Estilo editorial y sobrio: bordes finos de 1px, radio 8px, acento azul, tokens CSS con tema claro y oscuro, contraste AA, sin librerías.
