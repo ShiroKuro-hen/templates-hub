@@ -12,7 +12,7 @@ import pixelmatch from 'pixelmatch';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const templates = join(root, 'content', 'templates');
-const MAX_DIFF = 0.05;
+const MAX_DIFF = 0.06;
 const MAX_OVERFLOW = 1;
 const PAGE_PADDING = 20;
 const [size, narrow] = [{ width: 900, height: 600 }, { width: 360, height: 640 }];

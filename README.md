@@ -22,9 +22,9 @@ Solo si todo pasa y el evento es un push a `main`, se publica en GitHub Pages.
 La vista previa es el `html.html`; el `tailwind.html` no se renderiza en el sitio, así que se comprueba aparte:
 
 ```
-npm run verify:tailwind -- slug1,slug2 --probe --out capturas   # o "all" para los 277
+npm run verify:tailwind -- slug1,slug2 --probe --out capturas   # o "all" para todo el catálogo
 ```
-Compila Tailwind v4 desde el repo, dibuja cada fragmento junto a su `html.html` en claro y oscuro, y falla si difiere más de un 5 %, si desborda a 360 px o (con `--probe`) si lanza un error al pulsar sus controles. Con `--out` guarda las capturas para revisarlas a ojo. No va en el CI porque tarda unos minutos con todo el catálogo; ejecútalo para los componentes que cambies.
+Compila Tailwind v4 desde el repo, dibuja cada fragmento junto a su `html.html` en claro y oscuro, y falla si difiere más de un 6 % (los degradados y el desenfoque dejan hasta ~6 % de ruido), si desborda a 360 px o (con `--probe`) si lanza un error al pulsar sus controles. Con `--out` guarda las capturas para revisarlas a ojo. No va en el CI porque tarda unos minutos con todo el catálogo; ejecútalo para los componentes que cambies.
 
 ## Cómo funciona
 - Sidebar con todo el catálogo agrupado (Fundamentos, Componentes, Feedback, Navegación, Datos, Layout y páginas).
