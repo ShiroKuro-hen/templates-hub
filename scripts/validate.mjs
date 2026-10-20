@@ -66,6 +66,9 @@ for (const slug of slugs) {
   syntax('vue.vue <script setup>', vue.match(/<script[^>]*>([\s\S]*?)<\/script>/)?.[1] ?? '', 'ts');
   for (const [name, txt] of [['html.html', html], ['tailwind.html', tw], ['react.tsx', react], ['vue.vue', vue]]) {
     if (OLD_STYLE.test(txt)) err(slug, `${name} contiene estilo antiguo (colores/sombras previos a Ion)`);
+    for (const [, file] of txt.matchAll(/\/stock\/([\w.-]+)/g)) {
+      if (!existsSync(join(root, 'public', 'stock', file))) err(slug, `${name} referencia /stock/${file}, que no existe en public/stock`);
+    }
   }
 
   if (EMPTY_CLASSLIST.test(tw)) err(slug, 'tailwind.html llama a classList con una clase vacía (lanza SyntaxError)');

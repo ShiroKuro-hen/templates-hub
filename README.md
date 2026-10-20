@@ -40,6 +40,8 @@ Crea `content/templates/<slug>/` con:
 
 Los estilos usan los tokens "Ion" (`--bg`, `--surface`, `--accent`, `--radius`…) con `:root[data-theme=dark]`; el sitio inyecta el tema en la vista previa, no hay que escribir ese script. Así el selector de estilos y el panel «Personalizar» cambian todos los componentes: usa `var(--token)` (degradado de marca: `var(--accent-2,#22d3ee)` → `var(--accent,#2f5bff)`; radios pequeños: `min(var(--radius),6px)`), nunca colores fijos.
 
+**Fotos:** las fotos de ejemplo están en `public/stock/` (Unsplash vía Lorem Picsum; créditos en `public/stock/CREDITS.md`, se regeneran con `node scripts/fetch-stock.mjs`). Úsalas como marcado estático, no creadas por JavaScript: `<img src="/stock/costa-azul.webp" alt="…" width="800" height="533" loading="lazy" decoding="async">`. La vista previa antepone sola la base de la web a `/stock/`, y `validate` falla si referencias una foto que no existe. El código que copia el usuario lleva `/stock/…` como marcador: solo tiene que cambiar el `src`.
+
 Convenciones del `tailwind.html`: es un fragmento con **solo el contenido** (el `body{padding:20px}` del HTML es relleno de la demo, no lo dupliques con un `p-5` raíz), con clases semánticas (`bg-surface`, `text-fg`, `border-line`, `text-accent`…; la configuración está en `/tailwind/`) y sin `dark:` de color. Categorías, grupos y lenguajes se declaran en `src/lib/data.ts`. Una carpeta sin `meta.json` válido se ignora.
 
 ## Publicar (gratis)

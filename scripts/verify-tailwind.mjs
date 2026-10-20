@@ -3,6 +3,7 @@
 //   --probe  pulsa los controles de cada fragmento y falla ante errores de JavaScript.
 //   --out    guarda capturas html/tailwind de cada componente para revisarlas a ojo.
 import { execFileSync } from 'node:child_process';
+import { createServer } from 'node:http';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -53,6 +54,20 @@ const css = readFileSync(output, 'utf8');
 const tokens = setup.match(/:root\{[^}]*\}\s*:root\[data-theme=dark\]\{[^}]*\}/)[0];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// Sirve la página y public/ desde el mismo origen: así /stock/ carga como en el sitio
+// (desde about:blank el navegador bloquea las peticiones a 127.0.0.1).
+const pub = join(root, 'public');
+let currentPage = '';
+const server = createServer((req, res) => {
+  const path = decodeURIComponent(req.url.split('?')[0]);
+  if (path === '/__page') { res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' }).end(currentPage); return; }
+  const file = join(pub, path);
+  if (!file.startsWith(pub) || !existsSync(file)) { res.writeHead(404).end(); return; }
+  res.writeHead(200, { 'Content-Type': 'image/webp' }).end(readFileSync(file));
+});
+await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+const pageUrl = `http://127.0.0.1:${server.address().port}/__page`;
+
 const browser = await puppeteer.launch({ executablePath, headless: 'new', args: ['--no-sandbox'] });
 const tab = await browser.newPage();
 let pageErrors = [];
@@ -60,8 +75,12 @@ tab.on('pageerror', (e) => pageErrors.push(e.message.split('\n')[0].slice(0, 110
 
 async function render(page, viewport) {
   await tab.setViewport(viewport);
-  await tab.goto('about:blank');
-  await tab.setContent(page);
+  currentPage = page;
+  await tab.goto(pageUrl);
+  await tab.evaluate(() => Promise.race([
+    Promise.all([...document.images].map((i) => { i.loading = 'eager'; return i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; }); })),
+    new Promise((r) => setTimeout(r, 3000)),
+  ]));
   await sleep(250);
 }
 const htmlPage = (slug, mode) => readFileSync(join(templates, slug, 'html.html'), 'utf8').replace('<html', `<html data-theme="${mode}"`);
@@ -109,6 +128,7 @@ async function measure(slug) {
 const results = [];
 for (const slug of selected) results.push(await measure(slug));
 await browser.close();
+server.close();
 rmSync(work, { recursive: true, force: true });
 
 // Las paletas muestran colores de Tailwind a propósito: se informan, pero no fallan.
