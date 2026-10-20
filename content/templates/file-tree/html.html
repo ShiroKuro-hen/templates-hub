@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explorador de archivos</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .explorer{width:100%;max-width:340px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .head{margin:0;padding:10px 12px;border-bottom:1px solid var(--border);font-size:14px;font-weight:600}
+  .tree{margin:0;padding:6px;list-style:none;max-height:320px;overflow:auto}
+  .tree ul{margin:0 0 0 14px;padding:0 0 0 6px;list-style:none;border-left:1px solid var(--border)}
+  .row{position:relative;display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:min(var(--radius),6px);cursor:pointer;user-select:none}
+  .row:hover{background:var(--accent-soft)}
+  [role=treeitem]{outline:none}
+  [role=treeitem]:focus-visible>.row{outline:2px solid var(--accent);outline-offset:-2px}
+  [aria-selected=true]>.row{background:var(--accent-soft);font-weight:600}
+  [aria-selected=true]>.row::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:2px;border-radius:2px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+  .chev,.ic{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .chev{flex:none;width:12px;height:12px;color:var(--muted);transition:transform .14s}
+  [aria-expanded=true]>.row>.chev{transform:rotate(90deg)}
+  .sp{flex:none;width:12px}
+  .ic{flex:none;width:16px;height:16px}
+  .folder{color:var(--accent)}
+  .ts{color:var(--info)}
+  .css{color:var(--ok)}
+  .json{color:var(--warn)}
+  .md{color:var(--muted)}
+  .img{color:var(--err)}
+  .name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .cap{margin:0;padding:8px 12px;border-top:1px solid var(--border);color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="explorer" aria-labelledby="ttl">
+  <h2 class="head" id="ttl">Proyecto web</h2>
+  <ul class="tree" id="tree" role="tree" aria-label="Archivos del proyecto"></ul>
+  <p class="cap" id="sel" role="status" aria-live="polite"></p>
+</section>
+<script>
+  const TREE = [
+    { n: 'src', c: [
+      { n: 'components', c: [{ n: 'button.ts' }, { n: 'card.css' }] },
+      { n: 'styles', c: [{ n: 'tokens.css' }] },
+      { n: 'index.ts' },
+    ] },
+    { n: 'public', c: [{ n: 'logo.svg' }, { n: 'hero.jpg' }] },
+    { n: 'docs', c: [{ n: 'leeme.md' }] },
+    { n: 'package.json' },
+    { n: 'tsconfig.json' },
+  ];
+  const KIND = { ts: 'ts', css: 'css', json: 'json', md: 'md', svg: 'img', jpg: 'img' };
+  const FOLDER = 'M2 4.5a1 1 0 0 1 1-1h3.2l1.5 1.5H13a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z';
+  const FILE = 'M4 1.5h5l3.5 3.5v8.5a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2.5a1 1 0 0 1 1-1z';
+  const GLYPH = { ts: 'M6 8.5 4.5 10 6 11.5M10 8.5l1.5 1.5L10 11.5', css: 'M5.5 8.5h5M5.5 10.5h5M5.5 12.5h3', json: 'M6 8.5h-.5v3H6M10 8.5h.5v3h-.5', md: 'M5 11.5v-3l1.5 2 1.5-2v3M10.5 8.5v3', img: 'M5 11.5l2-2.5 1.5 1.8 1-1.2 1.5 1.9z' };
+  const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
+  const icon = (k) => `<svg class="ic ${k}" viewBox="0 0 16 16" aria-hidden="true"><path d="${k === 'folder' ? FOLDER : FILE}"/>${k === 'folder' ? '' : `<path d="${GLYPH[k]}"/>`}</svg>`;
+
+  const state = { open: new Set(['src']), sel: 'src/index.ts', focus: 'src/index.ts' };
+  const tree = document.getElementById('tree'), caption = document.getElementById('sel');
+
+  function nodes(list, level, base) {
+    return list.map((n) => {
+      const path = base ? `${base}/${n.n}` : n.n;
+      const dir = Boolean(n.c), open = state.open.has(path);
+      const kids = dir && open ? `<ul role="group">${nodes(n.c, level + 1, path)}</ul>` : '';
+      return `<li role="treeitem" aria-level="${level}"${dir ? ` aria-expanded="${open}"` : ''} aria-selected="${state.sel === path}" aria-label="${n.n}" data-path="${path}" tabindex="${state.focus === path ? 0 : -1}"><div class="row">${dir ? CHEV : '<span class="sp"></span>'}${icon(dir ? 'folder' : KIND[n.n.split('.').pop()])}<span class="name">${n.n}</span></div>${kids}</li>`;
+    }).join('');
+  }
+  function draw(focus) {
+    tree.innerHTML = nodes(TREE, 1, '');
+    caption.textContent = `Seleccionado: ${state.sel}`;
+    tree.querySelector(`[data-path="${focus}"]`)?.focus();
+  }
+  function toggle(path) {
+    if (state.open.has(path)) state.open.delete(path);
+    else state.open.add(path);
+  }
+  function focusOn(path) {
+    state.focus = path;
+    draw(path);
+  }
+  function activate(li) {
+    const path = li.dataset.path;
+    state.sel = path;
+    if (li.hasAttribute('aria-expanded')) toggle(path);
+    focusOn(path);
+  }
+  function typeahead(items, i, ch) {
+    const order = [...items.slice(i + 1), ...items.slice(0, i + 1)];
+    return order.find((el) => el.getAttribute('aria-label').toLowerCase().startsWith(ch.toLowerCase()));
+  }
+
+  tree.addEventListener('keydown', (e) => {
+    const li = e.target.closest('[role=treeitem]');
+    if (!li) return;
+    const path = li.dataset.path, dir = li.hasAttribute('aria-expanded'), open = state.open.has(path);
+    const items = [...tree.querySelectorAll('[role=treeitem]')], i = items.indexOf(li);
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      activate(li);
+      return;
+    }
+    const expand = e.key === 'ArrowRight', horizontal = expand || e.key === 'ArrowLeft';
+    if (horizontal && dir && expand !== open) {
+      e.preventDefault();
+      toggle(path);
+      focusOn(path);
+      return;
+    }
+    const targets = {
+      ArrowDown: items[i + 1], ArrowUp: items[i - 1], Home: items[0], End: items[items.length - 1],
+      ArrowRight: li.querySelector('[role=treeitem]'), ArrowLeft: li.parentElement.closest('[role=treeitem]'),
+    };
+    const target = targets[e.key] ?? (e.key.length === 1 ? typeahead(items, i, e.key) : undefined);
+    if (!target) return;
+    e.preventDefault();
+    focusOn(target.dataset.path);
+  });
+  tree.addEventListener('click', (e) => {
+    const li = e.target.closest('[role=treeitem]');
+    if (li) activate(li);
+  });
+  draw();
+</script>
+</body>
+</html>

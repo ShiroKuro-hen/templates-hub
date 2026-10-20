@@ -1,0 +1,168 @@
+<main class="mx-auto max-w-[760px] overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+  <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-line px-3 py-2.5">
+    <p id="count" class="m-0 font-semibold tabular-nums">0 cambios</p>
+    <div class="flex gap-2">
+      <button type="button" id="undo" disabled class="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 font-semibold transition-colors enabled:hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-45">Deshacer último</button>
+      <button type="button" id="discard" disabled class="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 font-semibold transition-colors enabled:hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-45">Descartar todo</button>
+    </div>
+  </div>
+  <div role="region" tabindex="0" aria-label="Datos del personal, desplazable horizontalmente" class="overflow-x-auto focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent">
+    <div role="grid" id="grid" aria-label="Personal del equipo" class="min-w-[640px]"></div>
+  </div>
+  <p id="live" aria-live="polite" class="m-0 border-t border-line px-3 py-2 text-[13px] text-muted">Enter o doble clic para editar. Flechas para moverte.</p>
+</main>
+<script>
+  const COLS = [
+    { key: 'nombre', label: 'Nombre', type: 'text', check: (v) => (v.trim() ? '' : 'Escribe un nombre para la fila.') },
+    { key: 'email', label: 'Correo', type: 'email', check: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Usa un formato como nombre@empresa.com.') },
+    { key: 'cantidad', label: 'Cantidad', type: 'number', num: true, check: (v) => (v !== '' && Number(v) >= 0 ? '' : 'La cantidad debe ser un número igual o mayor que 0.') },
+    { key: 'estado', label: 'Estado', options: ['Activo', 'Pendiente', 'Inactivo'], check: () => '' },
+    { key: 'fecha', label: 'Fecha', type: 'date', check: (v) => (v ? '' : 'Elige una fecha.') },
+  ];
+  const DATA = [
+    { nombre: 'Ana Pérez', email: 'ana.perez@meridian.pe', cantidad: '1240', estado: 'Activo', fecha: '2026-03-14' },
+    { nombre: 'Luis Gómez', email: 'luis.gomez@meridian.pe', cantidad: '310', estado: 'Pendiente', fecha: '2026-04-02' },
+    { nombre: 'Marta Ruiz', email: 'marta.ruiz@norte.cloud', cantidad: '2890', estado: 'Activo', fecha: '2026-02-21' },
+    { nombre: 'Carlos Díaz', email: 'carlos.diaz@andes.pe', cantidad: '760', estado: 'Inactivo', fecha: '2025-11-30' },
+    { nombre: 'Lucía Ferrer', email: 'lucia.ferrer@norte.cloud', cantidad: '415', estado: 'Activo', fecha: '2026-06-09' },
+    { nombre: 'Jorge Salas', email: 'jorge.salas@andes.pe', cantidad: '0', estado: 'Pendiente', fecha: '2026-07-18' },
+  ];
+  const MOVES = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+  const ROW = 'grid grid-cols-[1.3fr_1.7fr_0.8fr_1fr_1fr] border-b border-line last:border-b-0';
+  const HEAD = 'border-r border-line bg-page px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted last:border-r-0';
+  const CELL = 'relative min-w-0 cursor-cell border-r border-line px-3 py-2.5 transition-colors last:border-r-0 focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent data-[changed]:bg-accent-soft data-[changed]:shadow-[inset_3px_0_0_var(--accent)]';
+  const EDITOR = 'h-8 w-full rounded-[min(var(--radius),6px)] border border-accent bg-surface px-2 text-sm text-fg aria-invalid:border-err aria-invalid:shadow-[0_0_0_2px_var(--err-soft)]';
+
+  const grid = document.getElementById('grid'), live = document.getElementById('live');
+  const count = document.getElementById('count'), undo = document.getElementById('undo'), discard = document.getElementById('discard');
+  const rows = DATA.map((row) => ({ ...row })), original = DATA.map((row) => ({ ...row })), history = [];
+
+  const headCells = COLS.map((col) => `<div role="columnheader" class="${HEAD}${col.num ? ' text-right' : ''}">${col.label}</div>`).join('');
+  const bodyRows = rows.map((_, r) => `<div role="row" class="${ROW}">${COLS.map((col, c) => `<div role="gridcell" tabindex="-1" data-r="${r}" data-c="${c}" class="${CELL}${col.num ? ' text-right tabular-nums' : ''}"><span class="v block truncate"></span><small class="mt-1 block text-xs text-err" id="m-${r}-${c}" hidden></small></div>`).join('')}</div>`).join('');
+  grid.innerHTML = `<div role="row" class="${ROW}">${headCells}</div>${bodyRows}`;
+
+  const cellAt = (r, c) => grid.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+  const pos = (cell) => [Number(cell.dataset.r), Number(cell.dataset.c)];
+  const clamp = (n, max) => Math.min(Math.max(n, 0), max - 1);
+  const focusAt = (r, c) => cellAt(clamp(r, rows.length), clamp(c, COLS.length)).focus();
+
+  function paint() {
+    let changes = 0;
+    grid.querySelectorAll('[role=gridcell]').forEach((cell) => {
+      const [r, c] = pos(cell), key = COLS[c].key, changed = rows[r][key] !== original[r][key];
+      if (changed) changes++;
+      cell.querySelector('.v').textContent = rows[r][key];
+      cell.toggleAttribute('data-changed', changed);
+    });
+    count.textContent = `${changes} ${changes === 1 ? 'cambio' : 'cambios'}`;
+    undo.disabled = !history.length;
+    discard.disabled = !changes;
+  }
+
+  function setActive(cell) {
+    grid.querySelectorAll('[role=gridcell]').forEach((el) => (el.tabIndex = el === cell ? 0 : -1));
+  }
+
+  function startEdit(cell) {
+    if (cell.hasAttribute('data-editing')) return;
+    const [r, c] = pos(cell), col = COLS[c];
+    const input = document.createElement(col.options ? 'select' : 'input');
+    input.className = EDITOR;
+    if (col.options) input.innerHTML = col.options.map((o) => `<option>${o}</option>`).join('');
+    else input.type = col.type;
+    input.value = rows[r][col.key];
+    input.setAttribute('aria-label', `${col.label}, fila ${r + 1}`);
+    input.setAttribute('aria-describedby', `m-${r}-${c}`);
+    cell.setAttribute('data-editing', '');
+    cell.querySelector('.v').hidden = true;
+    cell.append(input);
+    input.focus();
+  }
+
+  function leave(cell) {
+    cell.querySelector('input, select').remove();
+    cell.querySelector('small').hidden = true;
+    cell.querySelector('.v').hidden = false;
+    cell.removeAttribute('data-editing');
+  }
+
+  function commit(cell) {
+    const [r, c] = pos(cell), col = COLS[c], input = cell.querySelector('input, select');
+    const error = col.check(input.value), msg = cell.querySelector('small'), label = col.label.toLowerCase();
+    if (error) {
+      msg.textContent = error;
+      msg.hidden = false;
+      input.setAttribute('aria-invalid', 'true');
+      live.textContent = `Error en ${label}, fila ${r + 1}: ${error}`;
+      return false;
+    }
+    if (rows[r][col.key] !== input.value) {
+      history.push({ r, c, prev: rows[r][col.key] });
+      rows[r][col.key] = input.value;
+      live.textContent = `Guardado: ${label} de la fila ${r + 1}.`;
+    } else {
+      live.textContent = 'Sin cambios.';
+    }
+    leave(cell);
+    paint();
+    return true;
+  }
+
+  function onEditKey(e, cell) {
+    const [r, c] = pos(cell);
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      leave(cell);
+      cell.focus();
+      live.textContent = 'Edición cancelada.';
+    } else if (e.key === 'Enter' || e.key === 'Tab') {
+      e.preventDefault();
+      if (commit(cell)) focusAt(e.key === 'Enter' ? r + 1 : r, e.key === 'Tab' ? c + (e.shiftKey ? -1 : 1) : c);
+    }
+  }
+
+  function onCellKey(e, cell) {
+    const [r, c] = pos(cell), step = MOVES[e.key];
+    if (step) {
+      e.preventDefault();
+      focusAt(r + step[0], c + step[1]);
+    } else if (e.key === 'Enter' || e.key === 'F2') {
+      e.preventDefault();
+      startEdit(cell);
+    }
+  }
+
+  grid.addEventListener('keydown', (e) => {
+    const cell = e.target.closest('[role=gridcell]');
+    if (!cell) return;
+    if (cell.hasAttribute('data-editing')) onEditKey(e, cell);
+    else onCellKey(e, cell);
+  });
+  grid.addEventListener('focusin', (e) => {
+    const cell = e.target.closest('[role=gridcell]');
+    if (!cell) return;
+    grid.querySelectorAll('[data-editing]').forEach((el) => el !== cell && leave(el));
+    setActive(cell);
+  });
+  grid.addEventListener('dblclick', (e) => {
+    const cell = e.target.closest('[role=gridcell]');
+    if (cell) startEdit(cell);
+  });
+  undo.addEventListener('click', () => {
+    const { r, c, prev } = history.pop();
+    rows[r][COLS[c].key] = prev;
+    paint();
+    focusAt(r, c);
+    live.textContent = 'Deshecho el último cambio.';
+  });
+  discard.addEventListener('click', () => {
+    rows.forEach((row, r) => Object.assign(row, original[r]));
+    history.length = 0;
+    paint();
+    focusAt(0, 0);
+    live.textContent = 'Se descartaron todos los cambios.';
+  });
+
+  setActive(cellAt(0, 0));
+  paint();
+</script>

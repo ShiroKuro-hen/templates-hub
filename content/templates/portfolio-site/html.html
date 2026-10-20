@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laura Méndez · Portafolio</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  html{scroll-behavior:smooth}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .page{max-width:1100px;margin:0 auto}
+  section[id]{scroll-margin-top:72px}
+  h1,h2,h3{margin:0;line-height:1.1;letter-spacing:-.02em}
+  .nav{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;padding:14px 0;background:var(--bg);border-bottom:1px solid var(--border)}
+  .name{margin-right:auto;font-size:17px;font-weight:700}
+  .nav ul{display:flex;flex-wrap:wrap;gap:4px 18px;margin:0;padding:0;list-style:none}
+  .nav ul a{position:relative;padding:4px 0;color:var(--muted)}
+  .nav ul a[aria-current]{color:var(--text)}
+  .nav ul a[aria-current]::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;border-radius:2px;background:var(--accent)}
+  .hero{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;padding:64px 0 48px}
+  .eyebrow{margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  h1{margin-bottom:16px;font-size:clamp(32px,6vw,58px);letter-spacing:-.035em}
+  .lead{max-width:52ch;margin:0 0 28px;font-size:16px;color:var(--muted)}
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-block;padding:9px 18px;font-weight:600;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:border-color .15s}
+  .btn:hover{border-color:var(--accent)}
+  .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin:0;overflow:hidden;background:var(--border);border:1px solid var(--border);border-radius:var(--radius)}
+  .stats div{padding:18px;background:var(--surface)}
+  .stats dt{font-size:12px;color:var(--muted)}
+  .stats dd{margin:4px 0 0;font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .sec{padding:48px 0;border-top:1px solid var(--border)}
+  .sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:24px}
+  h2{font-size:clamp(24px,4vw,34px)}
+  .sec-head p{max-width:40ch;margin:0;color:var(--muted)}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+  .filters button{font:inherit;font-weight:600;padding:6px 14px;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:999px;cursor:pointer}
+  .filters button[aria-pressed=true]{color:var(--accent);background:var(--accent-soft);border-color:var(--accent)}
+  .works{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin:0;padding:0;list-style:none}
+  .work{position:relative;display:block;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .cov{display:block;width:100%;height:auto;aspect-ratio:4/3}
+  .cap{position:absolute;left:12px;right:12px;bottom:12px;display:grid;gap:2px;padding:12px 14px;background:var(--surface);border:1px solid var(--border);border-radius:min(var(--radius),6px);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s}
+  .cap small{font-size:12px;color:var(--muted)}
+  .work:hover .cap,.work:focus-visible .cap{opacity:1;transform:none}
+  .c1{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent))}
+  .c2{background:linear-gradient(135deg,var(--ok),var(--info))}
+  .c3{background:linear-gradient(135deg,var(--warn),var(--err))}
+  .c4{background:linear-gradient(135deg,var(--accent),var(--info))}
+  .c5{background:linear-gradient(135deg,var(--info),var(--ok))}
+  .c6{background:linear-gradient(135deg,var(--err),var(--accent))}
+  .about{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:start}
+  .about p{margin:0 0 20px;font-size:15px;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+  .chips li{padding:4px 12px;font-size:13px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px}
+  .tl-title{margin:0 0 16px;font-size:15px}
+  .tl{display:grid;gap:20px;margin:0;padding:0 0 0 20px;list-style:none;border-left:2px solid var(--border)}
+  .tl li{position:relative}
+  .tl li::before{content:"";position:absolute;left:-25px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--bg)}
+  .tl time{display:block;font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .tl strong{display:block}
+  .form{display:grid;gap:16px;max-width:600px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .field{display:grid;gap:6px}
+  .field label{font-weight:600}
+  .field input,.field select,.field textarea{width:100%;box-sizing:border-box;font:inherit;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px}
+  .field textarea{min-height:120px;resize:vertical}
+  .field [aria-invalid=true]{border-color:var(--err)}
+  .error{margin:0;font-size:13px;color:var(--err)}
+  .done{padding:24px;background:var(--ok-soft);border:1px solid var(--ok);border-radius:var(--radius)}
+  .done h3{margin-bottom:6px}
+  .done p{margin:0}
+  footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding:20px 0;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+  footer ul{display:flex;gap:18px;margin:0;padding:0;list-style:none}
+  @media (max-width:760px){.hero,.about,.row{grid-template-columns:1fr}.hero{padding-top:36px}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="nav">
+    <a class="name" href="#inicio">Laura Méndez</a>
+    <nav aria-label="Principal">
+      <ul>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="inicio" aria-labelledby="h1">
+      <div>
+        <p class="eyebrow">Diseñadora de producto · Madrid</p>
+        <h1 id="h1">Interfaces claras, útiles y con carácter.</h1>
+        <p class="lead">Ayudo a equipos de producto y a marcas a convertir ideas complejas en experiencias sencillas. Nueve años de oficio, desde la investigación hasta el código.</p>
+        <div class="btns"><a class="btn pri" href="#proyectos">Ver proyectos</a><a class="btn" href="#contacto">Escribirme</a></div>
+      </div>
+      <dl class="stats">
+        <div><dt>Años de experiencia</dt><dd>9</dd></div>
+        <div><dt>Proyectos entregados</dt><dd>60+</dd></div>
+        <div><dt>Clientes recurrentes</dt><dd>24</dd></div>
+        <div><dt>Premios de diseño</dt><dd>3</dd></div>
+      </dl>
+    </section>
+
+    <section class="sec" id="proyectos" aria-labelledby="h-proy">
+      <div class="sec-head">
+        <h2 id="h-proy">Proyectos seleccionados</h2>
+        <p>Trabajos de los últimos cuatro años. Pasa el cursor o usa el teclado para ver los detalles.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrar por tipo">
+        <button type="button" data-filter="todos" aria-pressed="true">Todos</button>
+        <button type="button" data-filter="web" aria-pressed="false">Web</button>
+        <button type="button" data-filter="app" aria-pressed="false">App</button>
+        <button type="button" data-filter="marca" aria-pressed="false">Marca</button>
+      </div>
+      <ul class="works">
+        <li data-type="web">
+          <a class="work" href="#proyectos">
+            <img class="cov c1" width="400" height="300" loading="lazy" alt="Vista previa del portal de inversiones Banca Abierta" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='white'%3E%3Ccircle cx='300' cy='90' r='70' fill-opacity='.18'/%3E%3Crect x='60' y='150' width='120' height='90' rx='12' fill-opacity='.9'/%3E%3Crect x='200' y='190' width='140' height='50' rx='12' fill-opacity='.45'/%3E%3C/g%3E%3C/svg%3E">
+            <span class="cap"><small>Web · 2025</small><strong>Banca Abierta</strong></span>
+          </a>
+        </li>
+        <li data-type="app">
+          <a class="work" href="#proyectos">
+            <img class="cov c2" width="400" height="300" loading="lazy" alt="Vista previa de la app de meditación Nubla" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='150' y='40' width='100' height='220' rx='18' fill='white' fill-opacity='.9'/%3E%3Ccircle cx='200' cy='150' r='28' fill='white' fill-opacity='.35'/%3E%3Crect x='170' y='208' width='60' height='8' rx='4' fill='white' fill-opacity='.6'/%3E%3C/svg%3E">
+            <span class="cap"><small>App · 2024</small><strong>Nubla</strong></span>
+          </a>
+        </li>
+        <li data-type="marca">
+          <a class="work" href="#proyectos">
+            <img class="cov c3" width="400" height="300" loading="lazy" alt="Vista previa de la identidad de Café Ámbar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Ccircle cx='200' cy='150' r='95' fill='white' fill-opacity='.2'/%3E%3Ccircle cx='200' cy='150' r='55' fill='white' fill-opacity='.9'/%3E%3C/svg%3E">
+            <span class="cap"><small>Marca · 2024</small><strong>Café Ámbar</strong></span>
+          </a>
+        </li>
+        <li data-type="web">
+          <a class="work" href="#proyectos">
+            <img class="cov c4" width="400" height="300" loading="lazy" alt="Vista previa del panel de historiales Atlas Clínico" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='40' y='40' width='100' height='70' rx='8' fill='white' fill-opacity='.9'/%3E%3Crect x='160' y='40' width='200' height='70' rx='8' fill='white' fill-opacity='.45'/%3E%3Crect x='40' y='130' width='320' height='130' rx='8' fill='white' fill-opacity='.3'/%3E%3C/svg%3E">
+            <span class="cap"><small>Web · 2023</small><strong>Atlas Clínico</strong></span>
+          </a>
+        </li>
+        <li data-type="app">
+          <a class="work" href="#proyectos">
+            <img class="cov c5" width="400" height="300" loading="lazy" alt="Vista previa del planificador de rutas Ruta Verde" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath d='M0 220C80 150 140 280 220 200S330 120 400 170V300H0Z' fill='white' fill-opacity='.35'/%3E%3Ccircle cx='220' cy='110' r='18' fill='white' fill-opacity='.9'/%3E%3C/svg%3E">
+            <span class="cap"><small>App · 2023</small><strong>Ruta Verde</strong></span>
+          </a>
+        </li>
+        <li data-type="marca">
+          <a class="work" href="#proyectos">
+            <img class="cov c6" width="400" height="300" loading="lazy" alt="Vista previa del sistema tipográfico de la revista Faro" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='50' y='50' width='300' height='24' fill='white' fill-opacity='.9'/%3E%3Crect x='50' y='94' width='220' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='120' width='260' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='146' width='180' height='12' fill='white' fill-opacity='.6'/%3E%3Ccircle cx='300' cy='220' r='40' fill='white' fill-opacity='.35'/%3E%3C/svg%3E">
+            <span class="cap"><small>Marca · 2022</small><strong>Revista Faro</strong></span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="sec" id="sobre-mi" aria-labelledby="h-sobre">
+      <div class="about">
+        <div>
+          <h2 id="h-sobre">Sobre mí</h2>
+          <p>Trabajo entre el diseño de producto y la identidad de marca. Me interesan los detalles que nadie nota cuando están bien hechos: el espaciado, el texto de un error, la transición que orienta. Colaboro con startups y estudios desde Madrid y doy talleres de accesibilidad.</p>
+          <ul class="chips" aria-label="Habilidades">
+            <li>Figma</li><li>Sistemas de diseño</li><li>Accesibilidad WCAG</li><li>Investigación de usuarios</li><li>HTML y CSS</li><li>Tipografía</li><li>Prototipado</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="tl-title">Experiencia</h3>
+          <ol class="tl">
+            <li><time>2023 – hoy</time><strong>Diseñadora senior</strong><span>Lumbre Software</span></li>
+            <li><time>2020 – 2023</time><strong>Diseñadora de producto</strong><span>Estudio Norte</span></li>
+            <li><time>2017 – 2020</time><strong>Diseñadora gráfica</strong><span>Taller Azulejo</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="contacto" aria-labelledby="h-contacto">
+      <h2 id="h-contacto">Hablemos de tu proyecto</h2>
+      <p class="lead">Cuéntame qué necesitas y te respondo en menos de dos días laborables.</p>
+      <form class="form" id="form" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" required autocomplete="name" aria-describedby="err-nombre">
+            <p class="error" id="err-nombre"></p>
+          </div>
+          <div class="field">
+            <label for="correo">Correo electrónico</label>
+            <input id="correo" name="correo" type="email" required autocomplete="email" aria-describedby="err-correo">
+            <p class="error" id="err-correo"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="proyecto">Tipo de proyecto</label>
+          <select id="proyecto" name="proyecto">
+            <option>Web</option><option>App</option><option>Marca</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" required aria-describedby="err-mensaje"></textarea>
+          <p class="error" id="err-mensaje"></p>
+        </div>
+        <div><button class="btn pri" type="submit">Enviar mensaje</button></div>
+      </form>
+      <div class="done" id="done" role="status" tabindex="-1" hidden>
+        <h3>¡Mensaje enviado!</h3>
+        <p id="done-text"></p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <span>© 2026 Laura Méndez · Diseño con calma</span>
+    <ul>
+      <li><a href="#contacto">Correo</a></li>
+      <li><a href="#sobre-mi">Descargar CV</a></li>
+    </ul>
+  </footer>
+</div>
+<script>
+  const filters = [...document.querySelectorAll('[data-filter]')];
+  const items = [...document.querySelectorAll('.works li')];
+  filters.forEach((btn) => btn.addEventListener('click', () => {
+    filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    items.forEach((li) => (li.hidden = btn.dataset.filter !== 'todos' && li.dataset.type !== btn.dataset.filter));
+  }));
+
+  const navLinks = [...document.querySelectorAll('.nav ul a')];
+  const spy = new IntersectionObserver((entries) => {
+    entries.filter((e) => e.isIntersecting).forEach(({ target }) => {
+      navLinks.forEach((a) => (a.getAttribute('href') === '#' + target.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
+
+  const form = document.getElementById('form');
+  const rules = {
+    nombre: (v) => v.trim().length >= 2 || 'Escribe tu nombre (mínimo 2 letras).',
+    correo: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Introduce un correo válido, por ejemplo nombre@correo.com.',
+    mensaje: (v) => v.trim().length >= 20 || 'Cuéntame un poco más (mínimo 20 caracteres).',
+  };
+  const check = (input) => {
+    const result = rules[input.name](input.value);
+    document.getElementById('err-' + input.name).textContent = result === true ? '' : result;
+    input.setAttribute('aria-invalid', String(result !== true));
+    return result === true;
+  };
+  const inputs = Object.keys(rules).map((name) => form.elements[name]);
+  inputs.forEach((input) => input.addEventListener('input', () => input.getAttribute('aria-invalid') === 'true' && check(input)));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const results = inputs.map(check);
+    const firstInvalid = inputs[results.indexOf(false)];
+    if (firstInvalid) return firstInvalid.focus();
+    document.getElementById('done-text').textContent = `Gracias, ${form.elements.nombre.value.trim()}. He recibido tu mensaje y te escribiré pronto.`;
+    form.hidden = true;
+    const done = document.getElementById('done');
+    done.hidden = false;
+    done.focus();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<div class="mx-auto max-w-[1100px] text-fg">
+  <aside class="flex items-center justify-center gap-2.5 rounded-lg bg-accent px-3 py-2 text-[13px] text-accent-ink" id="promo" aria-label="Anuncio">
+    <p class="m-0 text-center">Envío gratis desde 49 € · Devoluciones sin coste en 30 días</p>
+    <button type="button" id="close-promo" aria-label="Cerrar anuncio" class="shrink-0 rounded-md px-1.5 py-0.5 text-lg leading-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-ink">×</button>
+  </aside>
+
+  <header class="flex flex-wrap items-center gap-x-4 gap-y-3 border-b border-line py-4">
+    <a id="brand" href="#" class="mr-auto inline-flex items-center gap-2 text-lg font-bold tracking-[-0.01em] min-[768px]:mr-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><i aria-hidden="true" class="size-6 rounded-md bg-linear-135 from-accent-2 to-accent"></i>Casa Ribera</a>
+    <form id="search" role="search" class="order-3 w-full min-[768px]:order-none min-[768px]:ml-auto min-[768px]:max-w-[340px] min-[768px]:flex-1">
+      <label class="sr-only" for="q">Buscar productos</label>
+      <input id="q" type="search" placeholder="Buscar productos…" autocomplete="off" class="w-full rounded-full border border-line bg-surface px-3.5 py-[9px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+    </form>
+    <button type="button" class="inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Carrito <span id="count" class="min-w-6 rounded-full bg-accent px-[7px] py-px text-center text-xs tabular-nums text-accent-ink">0</span></button>
+  </header>
+
+  <main>
+    <section aria-labelledby="hero-title" class="relative mt-5 overflow-hidden rounded-lg border border-line bg-accent-soft px-5 py-7 *:relative *:z-[1] sm:px-12 sm:py-14 after:absolute after:-right-[70px] after:-top-[70px] after:z-0 after:size-[260px] after:rounded-full after:bg-linear-135 after:from-accent-2 after:to-accent after:opacity-35 after:content-[''] after:pointer-events-none">
+      <p class="mb-2.5 text-[13px] font-semibold uppercase tracking-[.08em] text-accent">Colección de otoño</p>
+      <h1 id="hero-title" class="mb-3 max-w-[16ch] text-[clamp(28px,5vw,44px)] font-bold leading-[1.1] tracking-[-0.02em] text-balance">Hasta un 30 % en textil y cocina para tu casa</h1>
+      <p class="max-w-[52ch] text-muted">Piezas hechas a mano por artesanos españoles. Envío en 24 h a península.</p>
+      <div class="mt-[22px] flex flex-wrap gap-2.5">
+        <a href="#productos" class="inline-block rounded-lg border border-accent bg-accent px-4 py-[9px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver ofertas</a>
+        <a href="#" class="inline-block rounded-lg border border-line bg-surface px-4 py-[9px] font-semibold transition-[border-color] duration-[140ms] hover:border-accent motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Nuevas llegadas</a>
+      </div>
+    </section>
+
+    <nav aria-label="Categorías">
+      <ul class="mt-7 grid list-none grid-cols-2 gap-2.5 p-0 min-[768px]:grid-cols-3 min-[1000px]:grid-cols-6">
+        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="font-semibold">Hogar</span><small class="text-xs text-muted">128 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M4 11h16v3a7 7 0 0 1-7 7h-2a7 7 0 0 1-7-7zM8 7l1.5 2M16 7l-1.5 2"/></svg><span class="font-semibold">Cocina</span><small class="text-xs text-muted">94 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M8 3l-5 3 2 4 2-1v12h10V9l2 1 2-4-5-3a4 4 0 0 1-8 0z"/></svg><span class="font-semibold">Moda</span><small class="text-xs text-muted">212 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span class="font-semibold">Tecnología</span><small class="text-xs text-muted">76 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 0 1 0 18M12 3a13 13 0 0 0 0 18"/></svg><span class="font-semibold">Deporte</span><small class="text-xs text-muted">63 productos</small></a></li>
+        <li><a href="#" class="flex h-full flex-col items-start gap-1.5 rounded-lg border border-line bg-surface p-3.5 transition-[border-color,background-color] duration-[140ms] hover:border-accent hover:bg-accent-soft motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="size-[26px] text-accent"><path d="M4 20l4-1L19 8l-3-3L5 16z"/></svg><span class="font-semibold">Papelería</span><small class="text-xs text-muted">141 productos</small></a></li>
+      </ul>
+    </nav>
+
+    <section id="productos" aria-labelledby="prod-title" class="mt-9">
+      <div class="mb-3.5 flex items-baseline justify-between gap-3">
+        <h2 id="prod-title" class="text-xl font-bold tracking-[-0.01em]">Más vendidos</h2>
+        <a href="#" class="text-sm font-semibold text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver todo</a>
+      </div>
+      <ul id="grid" class="m-0 grid list-none grid-cols-2 gap-3.5 p-0 min-[768px]:grid-cols-4"></ul>
+      <p id="none" hidden class="col-span-full m-0 p-6 text-center text-muted">No hay productos que coincidan con tu búsqueda.</p>
+    </section>
+
+    <ul aria-label="Ventajas de comprar aquí" class="m-0 mt-7 grid list-none gap-2.5 p-0 min-[768px]:grid-cols-3">
+      <li class="flex flex-col gap-0.5 rounded-lg border border-line border-l-3 border-l-accent bg-surface p-3.5"><b class="text-[15px]">Envío en 24 h</b><span class="text-[13px] text-muted">Gratis a partir de 49 €</span></li>
+      <li class="flex flex-col gap-0.5 rounded-lg border border-line border-l-3 border-l-accent bg-surface p-3.5"><b class="text-[15px]">Devoluciones fáciles</b><span class="text-[13px] text-muted">Hasta 30 días, sin preguntas</span></li>
+      <li class="flex flex-col gap-0.5 rounded-lg border border-line border-l-3 border-l-accent bg-surface p-3.5"><b class="text-[15px]">Pago seguro</b><span class="text-[13px] text-muted">Tarjeta, PayPal y Bizum</span></li>
+    </ul>
+
+    <section aria-labelledby="news-title" class="mt-9 grid items-center gap-4 rounded-lg border border-line bg-surface p-6 min-[768px]:grid-cols-2">
+      <div>
+        <h2 id="news-title" class="mb-1 text-lg font-bold">Ofertas antes que nadie</h2>
+        <p class="m-0 text-muted">Un correo al mes con novedades y códigos exclusivos. Sin spam.</p>
+      </div>
+      <form id="news" class="flex flex-wrap gap-2">
+        <label class="sr-only" for="mail">Correo electrónico</label>
+        <input id="mail" type="email" required placeholder="tu@correo.com" autocomplete="email" class="min-w-0 flex-[1_1_200px] rounded-lg border border-line bg-page px-3 py-[9px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <button type="submit" class="rounded-lg border border-accent bg-accent px-4 py-[9px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Suscribirme</button>
+        <p id="news-msg" role="status" class="m-0 basis-full font-semibold text-ok"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="mt-10 border-t border-line pb-2 pt-7">
+    <div class="grid grid-cols-2 gap-6 min-[768px]:grid-cols-3">
+      <div><h3 class="mb-2 text-sm font-bold">Tienda</h3><ul class="m-0 list-none p-0 text-muted"><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Novedades</a></li><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ofertas</a></li><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Regalos</a></li></ul></div>
+      <div><h3 class="mb-2 text-sm font-bold">Ayuda</h3><ul class="m-0 list-none p-0 text-muted"><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Envíos y plazos</a></li><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Devoluciones</a></li><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Contacto</a></li></ul></div>
+      <div><h3 class="mb-2 text-sm font-bold">Casa Ribera</h3><ul class="m-0 list-none p-0 text-muted"><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Sobre nosotros</a></li><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Nuestros artesanos</a></li><li class="py-[3px]"><a href="#" class="hover:text-fg hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Aviso legal</a></li></ul></div>
+    </div>
+    <p class="mt-6 text-xs text-muted">© 2026 Casa Ribera, S.L. · Precios con IVA incluido.</p>
+  </footer>
+
+  <p id="toast" aria-live="polite" class="fixed bottom-5 left-1/2 z-[2] m-0 w-max max-w-[calc(100vw-40px)] -translate-x-1/2 translate-y-3 rounded-lg bg-fg px-4 py-2.5 text-sm font-semibold text-page opacity-0 invisible shadow-sm transition-[opacity,translate,visibility] duration-200 motion-reduce:transition-none data-[show]:visible data-[show]:translate-y-0 data-[show]:opacity-100"></p>
+</div>
+<style>
+  @keyframes bump{40%{transform:scale(1.35)}}
+  #count.bump{animation:bump .32s ease-out}
+  @media (prefers-reduced-motion:reduce){#count.bump{animation:none}}
+</style>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const eur = (n) => n.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+  const num = (n) => n.toLocaleString('es-ES');
+  const uri = (shape) => 'data:image/svg+xml,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><g fill="rgba(255,255,255,.95)" stroke="rgba(255,255,255,.95)" stroke-width="3" stroke-linejoin="round">${shape}</g></svg>`);
+  const PRODUCTS = [
+    { id: 1, name: 'Taza de cerámica artesanal', price: 18.5, rating: 4.8, reviews: 214, shape: '<path d="M10 20h34v20a14 14 0 0 1-14 14H24A14 14 0 0 1 10 40z"/><path d="M44 27h4a7 7 0 0 1 0 14h-4" fill="none"/>' },
+    { id: 2, name: 'Lámpara de mesa de lino', price: 64, rating: 4.6, reviews: 97, shape: '<path d="M22 8h20l10 26H12z"/><rect x="30" y="34" width="4" height="16"/><rect x="20" y="50" width="24" height="4" rx="2"/>' },
+    { id: 3, name: 'Cuaderno de tapa dura A5', price: 12.9, rating: 4.9, reviews: 362, shape: '<rect x="16" y="8" width="32" height="48" rx="3"/><path d="M24 20h16M24 28h16M24 36h10" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="2.5" stroke-linecap="round"/>' },
+    { id: 4, name: 'Auriculares inalámbricos Aura', price: 89, rating: 4.4, reviews: 1031, shape: '<path d="M14 38v-8a18 18 0 0 1 36 0v8" fill="none" stroke-width="5"/><rect x="9" y="36" width="11" height="18" rx="4"/><rect x="44" y="36" width="11" height="18" rx="4"/>' },
+    { id: 5, name: 'Mochila urbana 20 L', price: 49.95, rating: 4.5, reviews: 188, shape: '<rect x="18" y="14" width="28" height="40" rx="10"/><path d="M26 14V10h12v4" fill="none" stroke-width="3"/><rect x="24" y="34" width="16" height="10" rx="3" fill="rgba(0,0,0,.2)" stroke="none"/>' },
+    { id: 6, name: 'Set de velas de soja', price: 24.9, rating: 4.7, reviews: 426, shape: '<rect x="12" y="30" width="16" height="24" rx="2"/><rect x="36" y="22" width="16" height="32" rx="2"/><path d="M44 10q4 6 0 10" fill="none" stroke-width="3"/>' },
+    { id: 7, name: 'Zapatillas Ruta Ligera', price: 79.95, rating: 4.3, reviews: 655, shape: '<path d="M8 44V24h12l8 12 18 4 10 2v2z"/>' },
+    { id: 8, name: 'Botella térmica 750 ml', price: 22, rating: 4.6, reviews: 540, shape: '<rect x="24" y="6" width="16" height="8" rx="2"/><path d="M26 14h12v6l5 8v22a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4V28l5-8z"/>' },
+  ];
+  const card = (p) => `
+    <li class="flex min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+      <div class="grid aspect-square place-items-center bg-linear-135 from-accent-2 to-accent"><img src="${uri(p.shape)}" alt="" width="96" height="96" class="block h-auto w-[56%]"></div>
+      <div class="flex flex-1 flex-col gap-1.5 p-3">
+        <h3 class="text-sm font-bold leading-[1.3]">${p.name}</h3>
+        <p class="m-0 text-[13px] tabular-nums text-muted"><span aria-hidden="true" class="text-warn">★</span> ${num(p.rating)} <span>(${num(p.reviews)} reseñas)</span></p>
+        <div class="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1.5">
+          <span class="font-bold tabular-nums">${eur(p.price)}</span>
+          <button type="button" data-id="${p.id}" aria-label="Añadir ${p.name} al carrito" class="rounded-lg border border-accent bg-accent px-3 py-[7px] text-[13px] font-semibold text-accent-ink transition-[filter] duration-[140ms] hover:brightness-[1.08] motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Añadir</button>
+        </div>
+      </div>
+    </li>`;
+  let count = 0, timer;
+  function render() {
+    const q = $('q').value.trim().toLowerCase();
+    const shown = PRODUCTS.filter((p) => p.name.toLowerCase().includes(q));
+    $('grid').innerHTML = shown.map(card).join('');
+    $('none').hidden = shown.length > 0;
+  }
+  function bump() {
+    const c = $('count');
+    c.classList.remove('bump');
+    void c.offsetWidth;
+    c.classList.add('bump');
+  }
+  function notify(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.toggleAttribute('data-show', true);
+    clearTimeout(timer);
+    timer = setTimeout(() => t.removeAttribute('data-show'), 2600);
+  }
+  $('grid').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-id]');
+    if (!b) return;
+    const p = PRODUCTS.find((x) => x.id === Number(b.dataset.id));
+    $('count').textContent = ++count;
+    bump();
+    notify(`Añadido: ${p.name}`);
+  });
+  $('q').addEventListener('input', render);
+  $('search').addEventListener('submit', (e) => e.preventDefault());
+  $('close-promo').addEventListener('click', () => {
+    $('promo').hidden = true;
+    $('brand').focus();
+  });
+  $('news').addEventListener('submit', (e) => {
+    e.preventDefault();
+    $('news-msg').textContent = '¡Listo! Confirma tu suscripción en el correo que te enviamos.';
+    e.target.reset();
+  });
+  render();
+</script>

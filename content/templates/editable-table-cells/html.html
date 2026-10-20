@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabla editable</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  [hidden] { display:none !important; }
+  .sheet { max-width:760px; margin:0 auto; overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 12px; padding:10px 12px; border-bottom:1px solid var(--border); }
+  .count { margin:0; font-weight:600; font-variant-numeric:tabular-nums; }
+  .actions { display:flex; gap:8px; }
+  .btn { font:inherit; font-weight:600; padding:6px 12px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:border-color .14s; }
+  .btn:hover:not(:disabled) { border-color:var(--accent); }
+  .btn:disabled { opacity:.45; cursor:not-allowed; }
+  .scroll { overflow-x:auto; }
+  .scroll:focus-visible { outline-offset:-2px; }
+  [role=grid] { min-width:640px; }
+  [role=row] { display:grid; grid-template-columns:1.3fr 1.7fr .8fr 1fr 1fr; border-bottom:1px solid var(--border); }
+  [role=row]:last-child { border-bottom:0; }
+  [role=columnheader] { padding:8px 12px; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); background:var(--bg); border-right:1px solid var(--border); }
+  [role=gridcell] { position:relative; min-width:0; padding:10px 12px; border-right:1px solid var(--border); cursor:cell; transition:background .14s; }
+  [role=columnheader]:last-child, [role=gridcell]:last-child { border-right:0; }
+  [role=gridcell]:focus-visible { outline-offset:-2px; }
+  [role=gridcell][data-changed] { background:var(--accent-soft); box-shadow:inset 3px 0 0 var(--accent); }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .v { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  [role=gridcell] input, [role=gridcell] select { width:100%; height:32px; padding:0 8px; font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--accent); border-radius:min(var(--radius),6px); }
+  [role=gridcell] input[aria-invalid=true] { border-color:var(--err); box-shadow:0 0 0 2px var(--err-soft); }
+  .msg { display:block; margin-top:4px; font-size:12px; color:var(--err); }
+  .status { margin:0; padding:8px 12px; font-size:13px; color:var(--muted); border-top:1px solid var(--border); }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <div class="bar">
+    <p class="count" id="count">0 cambios</p>
+    <div class="actions">
+      <button type="button" class="btn" id="undo" disabled>Deshacer último</button>
+      <button type="button" class="btn" id="discard" disabled>Descartar todo</button>
+    </div>
+  </div>
+  <div class="scroll" role="region" tabindex="0" aria-label="Datos del personal, desplazable horizontalmente">
+    <div role="grid" id="grid" aria-label="Personal del equipo"></div>
+  </div>
+  <p class="status" id="live" aria-live="polite">Enter o doble clic para editar. Flechas para moverte.</p>
+</main>
+<script>
+  const COLS = [
+    { key: 'nombre', label: 'Nombre', type: 'text', check: (v) => (v.trim() ? '' : 'Escribe un nombre para la fila.') },
+    { key: 'email', label: 'Correo', type: 'email', check: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Usa un formato como nombre@empresa.com.') },
+    { key: 'cantidad', label: 'Cantidad', type: 'number', num: true, check: (v) => (v !== '' && Number(v) >= 0 ? '' : 'La cantidad debe ser un número igual o mayor que 0.') },
+    { key: 'estado', label: 'Estado', options: ['Activo', 'Pendiente', 'Inactivo'], check: () => '' },
+    { key: 'fecha', label: 'Fecha', type: 'date', check: (v) => (v ? '' : 'Elige una fecha.') },
+  ];
+  const DATA = [
+    { nombre: 'Ana Pérez', email: 'ana.perez@meridian.pe', cantidad: '1240', estado: 'Activo', fecha: '2026-03-14' },
+    { nombre: 'Luis Gómez', email: 'luis.gomez@meridian.pe', cantidad: '310', estado: 'Pendiente', fecha: '2026-04-02' },
+    { nombre: 'Marta Ruiz', email: 'marta.ruiz@norte.cloud', cantidad: '2890', estado: 'Activo', fecha: '2026-02-21' },
+    { nombre: 'Carlos Díaz', email: 'carlos.diaz@andes.pe', cantidad: '760', estado: 'Inactivo', fecha: '2025-11-30' },
+    { nombre: 'Lucía Ferrer', email: 'lucia.ferrer@norte.cloud', cantidad: '415', estado: 'Activo', fecha: '2026-06-09' },
+    { nombre: 'Jorge Salas', email: 'jorge.salas@andes.pe', cantidad: '0', estado: 'Pendiente', fecha: '2026-07-18' },
+  ];
+  const MOVES = { ArrowUp: [-1, 0], ArrowDown: [1, 0], ArrowLeft: [0, -1], ArrowRight: [0, 1] };
+
+  const grid = document.getElementById('grid'), live = document.getElementById('live');
+  const count = document.getElementById('count'), undo = document.getElementById('undo'), discard = document.getElementById('discard');
+  const rows = DATA.map((row) => ({ ...row })), original = DATA.map((row) => ({ ...row })), history = [];
+
+  const headCells = COLS.map((col) => `<div role="columnheader"${col.num ? ' class="num"' : ''}>${col.label}</div>`).join('');
+  const bodyRows = rows.map((_, r) => `<div role="row">${COLS.map((col, c) => `<div role="gridcell" tabindex="-1" data-r="${r}" data-c="${c}"${col.num ? ' class="num"' : ''}><span class="v"></span><small class="msg" id="m-${r}-${c}" hidden></small></div>`).join('')}</div>`).join('');
+  grid.innerHTML = `<div role="row">${headCells}</div>${bodyRows}`;
+
+  const cellAt = (r, c) => grid.querySelector(`[data-r="${r}"][data-c="${c}"]`);
+  const pos = (cell) => [Number(cell.dataset.r), Number(cell.dataset.c)];
+  const clamp = (n, max) => Math.min(Math.max(n, 0), max - 1);
+  const focusAt = (r, c) => cellAt(clamp(r, rows.length), clamp(c, COLS.length)).focus();
+
+  function paint() {
+    let changes = 0;
+    grid.querySelectorAll('[role=gridcell]').forEach((cell) => {
+      const [r, c] = pos(cell), key = COLS[c].key, changed = rows[r][key] !== original[r][key];
+      if (changed) changes++;
+      cell.querySelector('.v').textContent = rows[r][key];
+      cell.toggleAttribute('data-changed', changed);
+    });
+    count.textContent = `${changes} ${changes === 1 ? 'cambio' : 'cambios'}`;
+    undo.disabled = !history.length;
+    discard.disabled = !changes;
+  }
+
+  function setActive(cell) {
+    grid.querySelectorAll('[role=gridcell]').forEach((el) => (el.tabIndex = el === cell ? 0 : -1));
+  }
+
+  function startEdit(cell) {
+    if (cell.hasAttribute('data-editing')) return;
+    const [r, c] = pos(cell), col = COLS[c];
+    const input = document.createElement(col.options ? 'select' : 'input');
+    if (col.options) input.innerHTML = col.options.map((o) => `<option>${o}</option>`).join('');
+    else input.type = col.type;
+    input.value = rows[r][col.key];
+    input.setAttribute('aria-label', `${col.label}, fila ${r + 1}`);
+    input.setAttribute('aria-describedby', `m-${r}-${c}`);
+    cell.setAttribute('data-editing', '');
+    cell.querySelector('.v').hidden = true;
+    cell.append(input);
+    input.focus();
+  }
+
+  function leave(cell) {
+    cell.querySelector('input, select').remove();
+    cell.querySelector('.msg').hidden = true;
+    cell.querySelector('.v').hidden = false;
+    cell.removeAttribute('data-editing');
+  }
+
+  function commit(cell) {
+    const [r, c] = pos(cell), col = COLS[c], input = cell.querySelector('input, select');
+    const error = col.check(input.value), msg = cell.querySelector('.msg'), label = col.label.toLowerCase();
+    if (error) {
+      msg.textContent = error;
+      msg.hidden = false;
+      input.setAttribute('aria-invalid', 'true');
+      live.textContent = `Error en ${label}, fila ${r + 1}: ${error}`;
+      return false;
+    }
+    if (rows[r][col.key] !== input.value) {
+      history.push({ r, c, prev: rows[r][col.key] });
+      rows[r][col.key] = input.value;
+      live.textContent = `Guardado: ${label} de la fila ${r + 1}.`;
+    } else {
+      live.textContent = 'Sin cambios.';
+    }
+    leave(cell);
+    paint();
+    return true;
+  }
+
+  function onEditKey(e, cell) {
+    const [r, c] = pos(cell);
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      leave(cell);
+      cell.focus();
+      live.textContent = 'Edición cancelada.';
+    } else if (e.key === 'Enter' || e.key === 'Tab') {
+      e.preventDefault();
+      if (commit(cell)) focusAt(e.key === 'Enter' ? r + 1 : r, e.key === 'Tab' ? c + (e.shiftKey ? -1 : 1) : c);
+    }
+  }
+
+  function onCellKey(e, cell) {
+    const [r, c] = pos(cell), step = MOVES[e.key];
+    if (step) {
+      e.preventDefault();
+      focusAt(r + step[0], c + step[1]);
+    } else if (e.key === 'Enter' || e.key === 'F2') {
+      e.preventDefault();
+      startEdit(cell);
+    }
+  }
+
+  grid.addEventListener('keydown', (e) => {
+    const cell = e.target.closest('[role=gridcell]');
+    if (!cell) return;
+    if (cell.hasAttribute('data-editing')) onEditKey(e, cell);
+    else onCellKey(e, cell);
+  });
+  grid.addEventListener('focusin', (e) => {
+    const cell = e.target.closest('[role=gridcell]');
+    if (!cell) return;
+    grid.querySelectorAll('[data-editing]').forEach((el) => el !== cell && leave(el));
+    setActive(cell);
+  });
+  grid.addEventListener('dblclick', (e) => {
+    const cell = e.target.closest('[role=gridcell]');
+    if (cell) startEdit(cell);
+  });
+  undo.addEventListener('click', () => {
+    const { r, c, prev } = history.pop();
+    rows[r][COLS[c].key] = prev;
+    paint();
+    focusAt(r, c);
+    live.textContent = 'Deshecho el último cambio.';
+  });
+  discard.addEventListener('click', () => {
+    rows.forEach((row, r) => Object.assign(row, original[r]));
+    history.length = 0;
+    paint();
+    focusAt(0, 0);
+    live.textContent = 'Se descartaron todos los cambios.';
+  });
+
+  setActive(cellAt(0, 0));
+  paint();
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campana de notificaciones</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  [hidden] { display:none !important; }
+  .sr { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .top { display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:720px; margin:0 auto; padding:12px 14px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .top h1 { margin:0; font-size:15px; letter-spacing:-.01em; }
+  .top p { margin:0; font-size:13px; color:var(--muted); }
+  .wrap { position:relative; flex:none; }
+  .bell { position:relative; display:grid; place-items:center; width:40px; height:40px; padding:0; color:var(--text); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:border-color .14s; }
+  .bell:hover, .bell[aria-expanded=true] { border-color:var(--accent); }
+  .bell svg { width:20px; height:20px; }
+  .badge { position:absolute; top:-7px; right:-7px; min-width:20px; height:20px; padding:0 6px; display:grid; place-items:center; font-size:11px; font-weight:600; line-height:1; color:var(--accent-ink); background:var(--err); border:2px solid var(--surface); border-radius:999px; font-variant-numeric:tabular-nums; }
+  .pop { position:absolute; right:0; top:calc(100% + 8px); z-index:10; width:min(360px, calc(100vw - 32px)); overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); transform-origin:top right; animation:pop-in .16s ease-out; }
+  @keyframes pop-in { from { opacity:0; transform:translateY(-4px) scale(.98); } }
+  .head { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:12px 14px; border-bottom:1px solid var(--border); }
+  .head strong { font-size:15px; }
+  .link { font:inherit; font-size:13px; font-weight:600; padding:4px 2px; color:var(--accent); background:none; border:0; cursor:pointer; }
+  .link:hover:not(:disabled) { text-decoration:underline; }
+  .link:disabled { color:var(--muted); cursor:not-allowed; }
+  .tabs { display:flex; gap:4px; padding:6px; background:var(--bg); border-bottom:1px solid var(--border); }
+  .tab { flex:1; font:inherit; font-size:13px; font-weight:600; padding:6px 8px; color:var(--muted); background:none; border:1px solid transparent; border-radius:min(var(--radius),6px); cursor:pointer; }
+  .tab[aria-selected=true] { color:var(--text); background:var(--surface); border-color:var(--border); }
+  .tab .n { margin-left:4px; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .list { list-style:none; margin:0; padding:4px; max-height:320px; overflow-y:auto; }
+  .item { display:flex; align-items:flex-start; gap:10px; width:100%; padding:10px; font:inherit; color:var(--muted); text-align:left; background:none; border:0; border-radius:min(var(--radius),6px); cursor:pointer; }
+  .item:hover { background:var(--accent-soft); }
+  .item[data-unread] { color:var(--text); font-weight:600; }
+  .item:not([data-unread]) .sr { display:none; }
+  .ico { flex:none; display:grid; place-items:center; width:28px; height:28px; border-radius:50%; background:var(--accent-soft); color:var(--accent); font-size:13px; font-weight:700; }
+  .ico.ok { background:var(--ok-soft); color:var(--ok); }
+  .ico.warn { background:var(--warn-soft); color:var(--warn); }
+  .ico.info { background:var(--info-soft); color:var(--info); }
+  .txt { flex:1; min-width:0; }
+  .time { display:block; font-size:12px; font-weight:400; color:var(--muted); }
+  .dot { flex:none; align-self:center; width:8px; height:8px; border-radius:50%; background:var(--accent); }
+  .item:not([data-unread]) .dot { display:none; }
+  .empty { padding:24px 16px; text-align:center; color:var(--muted); }
+  .empty b { display:block; font-size:15px; color:var(--text); }
+  .check { display:inline-grid; place-items:center; width:36px; height:36px; margin-bottom:6px; border-radius:50%; background:var(--ok-soft); color:var(--ok); font-weight:700; }
+  @media (prefers-reduced-motion:reduce) { .pop { animation:none; } * { transition:none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div>
+    <h1>Panel de control</h1>
+    <p>Actividad de tu equipo hoy</p>
+  </div>
+  <div class="wrap" id="wrap">
+    <button type="button" class="bell" id="bell" aria-label="Notificaciones" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      <span class="badge" id="badge" aria-hidden="true"></span>
+    </button>
+    <span class="sr" id="count" aria-live="polite"></span>
+    <div class="pop" id="pop" role="dialog" aria-label="Notificaciones" hidden>
+      <div class="head">
+        <strong>Notificaciones</strong>
+        <button type="button" class="link" id="mark-all">Marcar todas como leídas</button>
+      </div>
+      <div class="tabs" role="tablist" id="tablist">
+        <button type="button" role="tab" id="t-todas" data-filter="todas" aria-controls="panel" class="tab">Todas</button>
+        <button type="button" role="tab" id="t-sin-leer" data-filter="sin-leer" aria-controls="panel" class="tab">Sin leer <span class="n" id="n-sin-leer"></span></button>
+      </div>
+      <div role="tabpanel" id="panel" aria-labelledby="t-todas">
+        <ul class="list" id="list"></ul>
+        <div class="empty" id="empty" hidden>
+          <span class="check" aria-hidden="true">✓</span>
+          <b>Estás al día</b>
+          No tienes notificaciones sin leer.
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<script>
+  const NOTES = [
+    { kind: 'mention', text: 'Lucía Ferrer te mencionó en «Presupuesto Q3».', min: 4, read: false },
+    { kind: 'ok', text: 'Tu exportación de informes ya está lista para descargar.', min: 25, read: false },
+    { kind: 'warn', text: 'Tu plan vence en 3 días. Renueva para no perder el acceso.', min: 120, read: false },
+    { kind: 'edit', text: 'Marta Ruiz comentó en la revisión de contratos.', min: 200, read: true },
+    { kind: 'info', text: 'Hay una nueva versión 2.4 con mejoras de velocidad.', min: 600, read: false },
+    { kind: 'mention', text: 'Carlos Díaz te asignó una tarea del equipo.', min: 1500, read: true },
+    { kind: 'ok', text: 'Se completó la importación de 340 contactos.', min: 3000, read: true },
+    { kind: 'edit', text: 'Jorge Salas editó el documento «Política de viajes».', min: 5000, read: false },
+  ];
+  const ICON = { mention: '@', ok: '✓', warn: '!', info: 'i', edit: '✎' };
+  const RTF = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+  const ago = (min) => (min < 60 ? RTF.format(-min, 'minute') : min < 1440 ? RTF.format(-Math.round(min / 60), 'hour') : RTF.format(-Math.round(min / 1440), 'day'));
+
+  const wrap = document.getElementById('wrap'), bell = document.getElementById('bell'), pop = document.getElementById('pop');
+  const badge = document.getElementById('badge'), count = document.getElementById('count'), markAll = document.getElementById('mark-all');
+  const tablist = document.getElementById('tablist'), tabs = [...tablist.querySelectorAll('[role=tab]')], panel = document.getElementById('panel');
+  const list = document.getElementById('list'), empty = document.getElementById('empty'), sinLeerCount = document.getElementById('n-sin-leer');
+  let filter = 'todas';
+
+  list.innerHTML = NOTES.map((note, i) => `<li><button type="button" class="item" data-i="${i}"><span class="ico ${note.kind}" aria-hidden="true">${ICON[note.kind]}</span><span class="txt"><span class="sr">Sin leer: </span>${note.text}<time class="time">${ago(note.min)}</time></span><span class="dot" aria-hidden="true"></span></button></li>`).join('');
+
+  function paint() {
+    const unread = NOTES.filter((note) => !note.read).length;
+    list.querySelectorAll('.item').forEach((btn) => btn.toggleAttribute('data-unread', !NOTES[btn.dataset.i].read));
+    badge.textContent = unread;
+    badge.hidden = !unread;
+    count.textContent = unread ? `${unread} sin leer` : 'Sin notificaciones sin leer';
+    sinLeerCount.textContent = unread;
+    markAll.disabled = !unread;
+  }
+
+  function applyFilter() {
+    list.querySelectorAll('li').forEach((li) => (li.hidden = filter === 'sin-leer' && NOTES[li.firstElementChild.dataset.i].read));
+    empty.hidden = list.querySelector('li:not([hidden])') !== null;
+  }
+
+  function select(tab) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+    });
+    filter = tab.dataset.filter;
+    panel.setAttribute('aria-labelledby', tab.id);
+    applyFilter();
+  }
+
+  function open() {
+    pop.hidden = false;
+    bell.setAttribute('aria-expanded', 'true');
+    tablist.querySelector('[aria-selected=true]').focus();
+  }
+
+  function close(returnFocus) {
+    pop.hidden = true;
+    bell.setAttribute('aria-expanded', 'false');
+    if (returnFocus) bell.focus();
+  }
+
+  bell.addEventListener('click', () => (pop.hidden ? open() : close(true)));
+  wrap.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pop.hidden) close(true); });
+  document.addEventListener('click', (e) => { if (!pop.hidden && !wrap.contains(e.target)) close(false); });
+  tablist.addEventListener('click', (e) => { const tab = e.target.closest('[role=tab]'); if (tab) select(tab); });
+  tablist.addEventListener('keydown', (e) => {
+    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = tabs[(tabs.indexOf(e.target) + step + tabs.length) % tabs.length];
+    select(next);
+    next.focus();
+  });
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.item');
+    if (!btn) return;
+    NOTES[btn.dataset.i].read = true;
+    paint();
+  });
+  markAll.addEventListener('click', () => {
+    NOTES.forEach((note) => (note.read = true));
+    paint();
+    applyFilter();
+    tablist.querySelector('[aria-selected=true]').focus();
+  });
+
+  paint();
+  select(tabs[0]);
+</script>
+</body>
+</html>

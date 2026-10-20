@@ -1,0 +1,133 @@
+<style>
+  .crumbs li+li::before{content:"/";margin-right:6px}
+</style>
+<div id="frame" tabindex="0" role="region" aria-label="Artículo: cierre mensual en tres horas" class="h-[600px] overflow-y-auto scroll-smooth motion-reduce:scroll-auto rounded-lg border border-line bg-surface shadow-sm max-[759px]:h-[560px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+  <div id="bar" role="progressbar" aria-label="Progreso de lectura" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" class="sticky top-0 z-[2] h-1 bg-line"><i class="block h-full origin-left bg-gradient-to-br from-accent-2 to-accent [transform:scaleX(var(--p,0))]"></i></div>
+  <div class="mx-auto max-w-[880px] px-7 pt-6 pb-8 max-[759px]:px-4 max-[759px]:pt-5 max-[759px]:pb-7">
+    <nav aria-label="Ruta">
+      <ol class="crumbs mb-5 flex list-none flex-wrap gap-1.5 p-0 text-[13px] text-muted"><li><a href="#" class="no-underline">Blog</a></li><li><a href="#" class="no-underline">Ingeniería</a></li><li aria-current="page">Cierre mensual</li></ol>
+    </nav>
+    <header>
+      <h1 class="mb-3 text-[clamp(26px,4.4vw,38px)] leading-[1.15] font-bold tracking-[-.02em]">Cómo redujimos el cierre mensual de tres días a tres horas</h1>
+      <p class="mb-5 max-w-[62ch] text-base text-muted">Automatizamos las conciliaciones, separamos los pasos que bloqueaban al equipo y medimos cada cambio antes de publicarlo.</p>
+      <div class="mb-6 flex items-center gap-3 border-b border-line pb-5 text-[13px] text-muted">
+        <span aria-hidden="true" class="grid h-9 w-9 flex-none place-items-center rounded-full bg-accent-soft text-xs font-bold text-accent">CT</span>
+        <div><b class="block text-sm text-fg">Camila Torres</b><time datetime="2026-10-02">2 oct 2026</time> · <span>9 min de lectura</span></div>
+      </div>
+    </header>
+    <div class="grid grid-cols-[200px_minmax(0,1fr)] items-start gap-8 max-[759px]:grid-cols-[minmax(0,1fr)] max-[759px]:gap-0">
+      <details id="toc" open class="sticky top-4 max-[759px]:static max-[759px]:mb-5 max-[759px]:rounded-lg max-[759px]:border max-[759px]:border-line max-[759px]:bg-page">
+        <summary class="hidden cursor-pointer list-none max-[759px]:block max-[759px]:px-3.5 max-[759px]:py-2.5 max-[759px]:font-semibold">En este artículo</summary>
+        <ol class="m-0 list-none border-l border-line p-0 max-[759px]:border-l-0 max-[759px]:pb-2">
+          <li><a href="#contexto" class="relative block px-3 py-1 text-[13px] text-muted no-underline max-[759px]:px-3.5 max-[759px]:py-1.5 aria-[current]:font-semibold aria-[current]:text-accent aria-[current]:before:absolute aria-[current]:before:-left-px aria-[current]:before:top-1 aria-[current]:before:bottom-1 aria-[current]:before:w-[3px] aria-[current]:before:rounded-full aria-[current]:before:content-[''] aria-[current]:before:bg-gradient-to-br aria-[current]:before:from-accent-2 aria-[current]:before:to-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">El problema</a></li>
+          <li><a href="#plan" class="relative block px-3 py-1 text-[13px] text-muted no-underline max-[759px]:px-3.5 max-[759px]:py-1.5 aria-[current]:font-semibold aria-[current]:text-accent aria-[current]:before:absolute aria-[current]:before:-left-px aria-[current]:before:top-1 aria-[current]:before:bottom-1 aria-[current]:before:w-[3px] aria-[current]:before:rounded-full aria-[current]:before:content-[''] aria-[current]:before:bg-gradient-to-br aria-[current]:before:from-accent-2 aria-[current]:before:to-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">El plan</a></li>
+          <li><a href="#codigo" class="relative block px-3 py-1 text-[13px] text-muted no-underline max-[759px]:px-3.5 max-[759px]:py-1.5 aria-[current]:font-semibold aria-[current]:text-accent aria-[current]:before:absolute aria-[current]:before:-left-px aria-[current]:before:top-1 aria-[current]:before:bottom-1 aria-[current]:before:w-[3px] aria-[current]:before:rounded-full aria-[current]:before:content-[''] aria-[current]:before:bg-gradient-to-br aria-[current]:before:from-accent-2 aria-[current]:before:to-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Las reglas en código</a></li>
+          <li><a href="#resultados" class="relative block px-3 py-1 text-[13px] text-muted no-underline max-[759px]:px-3.5 max-[759px]:py-1.5 aria-[current]:font-semibold aria-[current]:text-accent aria-[current]:before:absolute aria-[current]:before:-left-px aria-[current]:before:top-1 aria-[current]:before:bottom-1 aria-[current]:before:w-[3px] aria-[current]:before:rounded-full aria-[current]:before:content-[''] aria-[current]:before:bg-gradient-to-br aria-[current]:before:from-accent-2 aria-[current]:before:to-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Resultados</a></li>
+        </ol>
+      </details>
+      <article class="min-w-0 text-[15px] leading-[1.7]">
+        <h2 id="contexto" class="mt-9 mb-3 scroll-mt-4 text-xl leading-[1.3] font-bold">El problema</h2>
+        <p class="mb-3.5 max-w-[68ch]">Cada fin de mes, el equipo de finanzas cruzaba a mano más de cuarenta mil movimientos entre el banco, el ERP y las hojas de cálculo. Un error de un solo dígito obligaba a repetir el proceso entero.</p>
+        <p class="mb-3.5 max-w-[68ch]">Durante seis meses medimos dónde se perdía el tiempo: tres de cada cuatro horas eran de copiar, pegar y esperar.</p>
+        <blockquote class="my-6 border-l-[3px] border-accent py-0.5 pl-[18px] text-[17px] leading-[1.5]">
+          <p class="m-0 max-w-[68ch]">Pasamos de revisar todo a revisar solo lo que no cuadra. Esa fue la decisión que lo cambió todo.</p>
+          <footer class="mt-2 text-[13px] text-muted">Valeria Rojas, directora de finanzas</footer>
+        </blockquote>
+        <h2 id="plan" class="mt-9 mb-3 scroll-mt-4 text-xl leading-[1.3] font-bold">El plan</h2>
+        <p class="mb-3.5 max-w-[68ch]">Definimos tres reglas de conciliación con tolerancias explícitas. Lo que cumple la regla se cierra solo; lo demás pasa a una cola con el motivo escrito.</p>
+        <h3 class="mt-6 mb-2 text-base leading-[1.4] font-bold">Probar antes de activar</h3>
+        <p class="mb-3.5 max-w-[68ch]">Cada regla se ejecuta primero en modo de vista previa sobre datos reales. Así comparamos el resultado con el cierre manual del mes anterior, sin tocar un solo asiento.</p>
+        <figure class="my-6">
+          <img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20640%20300'%3E%3Cpath%20d='M30%20260H610'%20stroke='rgba(255,255,255,.7)'%20stroke-width=2%20/%3E%3Cg%20fill='rgba(255,255,255,.6)'%3E%3Crect%20x=50%20y=44%20width=52%20height=216%20rx=6/%3E%3Crect%20x=134%20y=86%20width=52%20height=174%20rx=6/%3E%3Crect%20x=218%20y=137%20width=52%20height=123%20rx=6/%3E%3Crect%20x=302%20y=194%20width=52%20height=66%20rx=6/%3E%3Crect%20x=386%20y=224%20width=52%20height=36%20rx=6/%3E%3Crect%20x=470%20y=242%20width=52%20height=18%20rx=6/%3E%3Crect%20x=554%20y=251%20width=52%20height=9%20rx=6/%3E%3C/g%3E%3C/svg%3E" width="640" height="300" alt="Gráfico de barras: horas de cierre por mes, de 72 en marzo a 3 en septiembre" class="block aspect-[640/300] h-auto w-full rounded-lg border border-line bg-gradient-to-br from-accent-soft to-info-soft">
+          <figcaption class="mt-2 text-[13px] text-muted">Horas dedicadas al cierre mensual, de marzo a septiembre de 2026.</figcaption>
+        </figure>
+        <h2 id="codigo" class="mt-9 mb-3 scroll-mt-4 text-xl leading-[1.3] font-bold">Las reglas en código</h2>
+        <p class="mb-3.5 max-w-[68ch]">La herramienta de línea de comandos lee el archivo de reglas y ejecuta el cierre en un entorno aislado. Este es el comando que usamos cada mes:</p>
+        <div class="my-[18px] overflow-hidden rounded-lg border border-line bg-page">
+          <div class="flex items-center justify-between gap-2 border-b border-line py-1.5 pr-1.5 pl-3.5 text-xs text-muted">
+            <span>Terminal</span>
+            <span class="flex items-center gap-2"><span id="code-note" role="status" class="text-xs text-muted"></span><button type="button" id="copy-code" class="inline-flex cursor-pointer items-center rounded-[min(var(--radius),6px)] border border-line bg-surface px-3 py-1.5 text-[13px] text-fg transition hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Copiar</button></span>
+          </div>
+          <pre class="m-0 overflow-x-auto px-3.5 py-3"><code id="cmd" class="font-mono text-[13px] leading-[1.6] [font-family:ui-monospace,'Cascadia_Code',Menlo,monospace]">nimbo cierre aplicar --reglas conciliacion.yml --mes 2026-09 --vista-previa</code></pre>
+        </div>
+        <aside class="my-5 rounded-lg border border-line border-l-[3px] border-l-info bg-info-soft px-4 py-3.5"><b class="mb-1 block">Consejo</b><p class="m-0 max-w-[68ch]">Empieza con una sola regla y compara dos meses antes de añadir la siguiente. Las tolerancias deben ser de tu negocio, no las que vienen por defecto.</p></aside>
+        <h2 id="resultados" class="mt-9 mb-3 scroll-mt-4 text-xl leading-[1.3] font-bold">Resultados</h2>
+        <p class="mb-3.5 max-w-[68ch]">En septiembre cerramos en tres horas y diecisiete minutos. El 96 % de los movimientos se concilió sin intervención, y la cola manual pasó de 4.100 casos a 160.</p>
+        <p class="mb-3.5 max-w-[68ch]">Todavía queda trabajo: los pagos en moneda extranjera siguen necesitando revisión humana, y lo abordaremos el próximo trimestre.</p>
+      </article>
+    </div>
+    <section aria-label="Sobre la autora" class="mt-8 flex items-center gap-3.5 rounded-lg border border-line bg-surface p-[18px] shadow-sm">
+      <span aria-hidden="true" class="grid h-12 w-12 flex-none place-items-center rounded-full bg-accent-soft text-[15px] font-bold text-accent">CT</span>
+      <div><b class="block">Camila Torres</b><p class="mt-0.5 text-[13px] text-muted">Ingeniera de plataforma en Nimbo. Escribe sobre automatización financiera y sobre cómo ayudar a los equipos a confiar en sus datos.</p></div>
+    </section>
+    <div role="group" aria-label="Compartir artículo" class="mt-6 flex flex-wrap items-center gap-2 text-[13px] text-muted">
+      <span>Compartir</span>
+      <button type="button" id="copy-link" class="inline-flex cursor-pointer items-center rounded-[min(var(--radius),6px)] border border-line bg-surface px-3 py-1.5 text-[13px] text-fg transition hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Copiar enlace</button>
+      <a href="mailto:?subject=C%C3%B3mo%20redujimos%20el%20cierre%20mensual" class="inline-flex items-center rounded-[min(var(--radius),6px)] border border-line bg-surface px-3 py-1.5 text-[13px] text-fg no-underline transition hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Enviar por correo</a>
+      <span id="link-note" role="status" class="text-xs text-muted"></span>
+    </div>
+    <section aria-labelledby="rl">
+      <h2 id="rl" class="mt-9 mb-3 scroll-mt-4 text-xl leading-[1.3] font-bold">Sigue leyendo</h2>
+      <ul class="m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-3.5 p-0 max-[759px]:grid-cols-[minmax(0,1fr)]">
+        <li class="relative overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition hover:border-accent has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent"><div aria-hidden="true" class="h-24 bg-gradient-to-br from-accent-soft to-info-soft"></div><div class="px-3.5 pt-3 pb-3.5"><h3 class="m-0 text-[15px] leading-[1.35] font-bold"><a href="#" class="text-fg no-underline after:absolute after:inset-0 after:content-['']">Conciliación bancaria sin hojas de cálculo</a></h3><small class="mt-1.5 block text-xs text-muted">Producto · 4 min</small></div></li>
+        <li class="relative overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition hover:border-accent has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent"><div aria-hidden="true" class="h-24 bg-gradient-to-br from-ok-soft to-warn-soft"></div><div class="px-3.5 pt-3 pb-3.5"><h3 class="m-0 text-[15px] leading-[1.35] font-bold"><a href="#" class="text-fg no-underline after:absolute after:inset-0 after:content-['']">Siete alertas que todo equipo financiero debería tener</a></h3><small class="mt-1.5 block text-xs text-muted">Guías · 6 min</small></div></li>
+        <li class="relative overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition hover:border-accent has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-accent"><div aria-hidden="true" class="h-24 bg-gradient-to-br from-warn-soft to-accent-soft"></div><div class="px-3.5 pt-3 pb-3.5"><h3 class="m-0 text-[15px] leading-[1.35] font-bold"><a href="#" class="text-fg no-underline after:absolute after:inset-0 after:content-['']">Auditar un cierre sin frenar al equipo</a></h3><small class="mt-1.5 block text-xs text-muted">Seguridad · 7 min</small></div></li>
+      </ul>
+    </section>
+    <section aria-labelledby="cm">
+      <h2 id="cm" class="mt-9 mb-3 scroll-mt-4 text-xl leading-[1.3] font-bold">Comentarios</h2>
+      <form id="cf" class="grid gap-2">
+        <label for="ct" class="font-semibold">Deja tu comentario</label>
+        <textarea id="ct" rows="3" placeholder="¿Qué harías distinto en tu equipo?" class="resize-y rounded-lg border border-line bg-page px-3 py-2.5 text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"></textarea>
+        <div class="flex flex-wrap items-center justify-between gap-2"><span class="text-[13px] text-muted">Los comentarios se revisan antes de publicarse.</span><button type="submit" class="cursor-pointer rounded-lg border-0 bg-accent px-4 py-2 font-semibold text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Comentar</button></div>
+        <p id="cs" role="status" class="m-0 text-xs text-muted"></p>
+      </form>
+    </section>
+  </div>
+</div>
+<script>
+  const frame = document.getElementById('frame'), bar = document.getElementById('bar'), toc = document.getElementById('toc');
+  const mobile = matchMedia('(max-width:759px)');
+  const fitToc = () => { toc.open = !mobile.matches; };
+  fitToc();
+  mobile.addEventListener('change', fitToc);
+  const updateProgress = () => {
+    const max = frame.scrollHeight - frame.clientHeight, p = max > 0 ? frame.scrollTop / max : 0;
+    bar.style.setProperty('--p', p);
+    bar.setAttribute('aria-valuenow', Math.round(p * 100));
+  };
+  frame.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+  const links = [...toc.querySelectorAll('a')];
+  const heads = [...frame.querySelectorAll('article h2')];
+  const markCurrent = (id) => links.forEach((a) => (a.hash === '#' + id ? a.setAttribute('aria-current', 'location') : a.removeAttribute('aria-current')));
+  const visible = new Set();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+    const current = heads.find((h) => visible.has(h));
+    if (current) markCurrent(current.id);
+  }, { root: frame, rootMargin: '0px 0px -70% 0px' });
+  heads.forEach((h) => io.observe(h));
+  markCurrent(heads[0].id);
+  const copyText = async (text, note) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      note.textContent = 'Copiado';
+    } catch {
+      note.textContent = 'No se pudo copiar. Selecciona el texto y cópialo a mano.';
+    }
+  };
+  document.getElementById('copy-code').addEventListener('click', () => copyText(document.getElementById('cmd').textContent, document.getElementById('code-note')));
+  document.getElementById('copy-link').addEventListener('click', () => copyText('https://blog.ejemplo.com/cierre-mensual-en-tres-horas', document.getElementById('link-note')));
+  document.getElementById('cf').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = document.getElementById('ct'), status = document.getElementById('cs');
+    if (!text.value.trim()) {
+      status.textContent = 'Escribe un comentario antes de enviarlo.';
+      text.focus();
+      return;
+    }
+    text.value = '';
+    status.textContent = 'Gracias. Tu comentario quedó en revisión.';
+  });
+</script>

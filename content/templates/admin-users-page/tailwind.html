@@ -1,0 +1,361 @@
+<div id="app" class="group grid min-h-[calc(100vh-40px)] grid-cols-[220px_minmax(0,1fr)] overflow-hidden rounded-lg border border-line bg-page text-sm leading-normal text-fg shadow-sm transition-[grid-template-columns] duration-150 data-[rail=true]:grid-cols-[64px_minmax(0,1fr)] max-[520px]:grid-cols-[minmax(0,1fr)] max-[520px]:data-[rail=true]:grid-cols-[minmax(0,1fr)] motion-reduce:transition-none">
+  <svg width="0" height="0" class="absolute" aria-hidden="true">
+    <symbol id="i-inicio" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></symbol>
+    <symbol id="i-usuarios" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.5-1.5-4.6-3.5-5.5"/></symbol>
+    <symbol id="i-informes" viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></symbol>
+    <symbol id="i-ajustes" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-buscar" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></symbol>
+    <symbol id="i-mas" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+    <symbol id="i-cerrar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  </svg>
+  <nav id="side" aria-label="Principal" class="flex flex-col gap-[18px] overflow-hidden border-r border-line bg-surface px-2.5 py-4 max-[520px]:group-data-[rail=true]:flex-row max-[520px]:group-data-[rail=true]:items-center max-[520px]:group-data-[rail=true]:gap-2 max-[520px]:group-data-[rail=true]:overflow-x-auto max-[520px]:group-data-[rail=true]:border-b max-[520px]:group-data-[rail=true]:border-r-0 max-[520px]:group-data-[rail=true]:px-2.5 max-[520px]:group-data-[rail=true]:py-2">
+    <div class="flex items-center gap-2.5 whitespace-nowrap px-1.5 text-base font-bold group-data-[rail=true]:justify-center group-data-[rail=true]:px-0 max-[520px]:group-data-[rail=true]:px-0">
+      <span aria-hidden="true" class="size-[26px] flex-none rounded-md bg-gradient-to-br from-accent-2 to-accent"></span>
+      <span class="group-data-[rail=true]:sr-only">Nimbo</span>
+    </div>
+    <ul class="m-0 grid list-none gap-0.5 p-0 max-[520px]:group-data-[rail=true]:flex">
+      <li><a href="#" class="relative flex h-9 items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 font-medium text-muted transition-colors hover:bg-page hover:text-fg aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent before:hidden before:absolute before:-left-2.5 before:top-2 before:bottom-2 before:w-[3px] before:rounded-r-[3px] before:bg-accent before:content-[''] aria-[current=page]:before:block group-data-[rail=true]:justify-center group-data-[rail=true]:px-0 max-[520px]:group-data-[rail=true]:w-[38px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-inicio"/></svg><span class="group-data-[rail=true]:sr-only">Inicio</span></a></li>
+      <li><a href="#" aria-current="page" class="relative flex h-9 items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 font-medium text-muted transition-colors hover:bg-page hover:text-fg aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent before:hidden before:absolute before:-left-2.5 before:top-2 before:bottom-2 before:w-[3px] before:rounded-r-[3px] before:bg-accent before:content-[''] aria-[current=page]:before:block group-data-[rail=true]:justify-center group-data-[rail=true]:px-0 max-[520px]:group-data-[rail=true]:w-[38px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-usuarios"/></svg><span class="group-data-[rail=true]:sr-only">Usuarios</span></a></li>
+      <li><a href="#" class="relative flex h-9 items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 font-medium text-muted transition-colors hover:bg-page hover:text-fg aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent before:hidden before:absolute before:-left-2.5 before:top-2 before:bottom-2 before:w-[3px] before:rounded-r-[3px] before:bg-accent before:content-[''] aria-[current=page]:before:block group-data-[rail=true]:justify-center group-data-[rail=true]:px-0 max-[520px]:group-data-[rail=true]:w-[38px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-informes"/></svg><span class="group-data-[rail=true]:sr-only">Informes</span></a></li>
+      <li><a href="#" class="relative flex h-9 items-center gap-2.5 whitespace-nowrap rounded-md px-2.5 font-medium text-muted transition-colors hover:bg-page hover:text-fg aria-[current=page]:bg-accent-soft aria-[current=page]:text-accent before:hidden before:absolute before:-left-2.5 before:top-2 before:bottom-2 before:w-[3px] before:rounded-r-[3px] before:bg-accent before:content-[''] aria-[current=page]:before:block group-data-[rail=true]:justify-center group-data-[rail=true]:px-0 max-[520px]:group-data-[rail=true]:w-[38px] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-ajustes"/></svg><span class="group-data-[rail=true]:sr-only">Ajustes</span></a></li>
+    </ul>
+  </nav>
+  <div class="flex min-w-0 flex-col">
+    <header class="flex flex-wrap items-center gap-3 border-b border-line bg-surface px-6 py-2.5 max-[859px]:gap-2 max-[859px]:px-4">
+      <button id="collapse" type="button" data-do="collapse" aria-expanded="true" aria-controls="side" aria-label="Contraer menú" class="grid size-[34px] flex-none place-items-center rounded-lg border border-line bg-surface text-muted hover:border-accent hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-menu"/></svg></button>
+      <div role="search" class="relative min-w-0 max-w-[420px] flex-1 max-[859px]:order-1 max-[859px]:max-w-none max-[859px]:basis-full">
+        <svg class="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 fill-none stroke-current stroke-2 text-muted [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-buscar"/></svg>
+        <input id="q" type="search" placeholder="Buscar por nombre, correo o rol" aria-label="Buscar usuarios por nombre, correo o rol" class="h-9 w-full rounded-lg border border-line bg-page py-0 pl-[34px] pr-3 text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      </div>
+      <div class="ml-auto flex items-center gap-3">
+        <button type="button" aria-label="Notificaciones, 2 sin leer" class="grid size-[34px] flex-none place-items-center rounded-lg border border-line bg-surface text-muted hover:border-accent hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bell"/></svg></button>
+        <button type="button" aria-label="Cuenta de Laura Méndez" class="size-[34px] flex-none rounded-full bg-accent-soft text-[13px] font-semibold text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">LM</button>
+      </div>
+    </header>
+    <main class="grid grid-cols-[minmax(0,1fr)] content-start gap-4 px-6 py-[22px] max-[859px]:px-4">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div><h1 id="title" tabindex="-1" class="text-[22px] font-bold leading-tight focus:outline-none">Usuarios</h1><p class="mt-0.5 text-muted">12 personas tienen acceso a este espacio de trabajo.</p></div>
+        <button type="button" data-do="invite" class="inline-flex h-[34px] items-center gap-1.5 rounded-lg border border-accent bg-accent px-3.5 font-semibold text-accent-ink hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plus"/></svg>Invitar usuario</button>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-[18px] gap-y-2.5">
+        <label class="flex items-center gap-2 text-muted">Rol
+          <select id="role" class="h-[34px] rounded-lg border border-line bg-surface px-2.5 text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <option value="">Todos los roles</option>
+            <option>Administrador</option>
+            <option>Editor</option>
+            <option>Analista</option>
+            <option>Lector</option>
+          </select>
+        </label>
+        <div role="group" aria-label="Filtrar por estado" class="flex flex-wrap gap-1.5">
+          <button type="button" data-do="chip" data-v="all" aria-pressed="true" class="h-[30px] rounded-full border border-line bg-surface px-3 text-[13px] text-muted hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Todos<span class="ml-1 tabular-nums opacity-75"></span></button>
+          <button type="button" data-do="chip" data-v="activo" aria-pressed="false" class="h-[30px] rounded-full border border-line bg-surface px-3 text-[13px] text-muted hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Activos<span class="ml-1 tabular-nums opacity-75"></span></button>
+          <button type="button" data-do="chip" data-v="invitado" aria-pressed="false" class="h-[30px] rounded-full border border-line bg-surface px-3 text-[13px] text-muted hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Invitados<span class="ml-1 tabular-nums opacity-75"></span></button>
+          <button type="button" data-do="chip" data-v="suspendido" aria-pressed="false" class="h-[30px] rounded-full border border-line bg-surface px-3 text-[13px] text-muted hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Suspendidos<span class="ml-1 tabular-nums opacity-75"></span></button>
+        </div>
+      </div>
+      <p id="msg" role="status" class="min-h-5 text-[13px] text-muted"></p>
+      <section aria-label="Listado de usuarios" class="rounded-lg border border-line bg-surface shadow-sm">
+        <div id="bulk" class="flex min-h-[50px] flex-wrap items-center gap-x-2.5 gap-y-2 rounded-t-lg border-b border-line bg-accent-soft px-3.5 py-2">
+          <span id="count" aria-live="polite" class="min-w-[26px] rounded-full bg-accent px-2 py-px text-center font-semibold tabular-nums text-accent-ink">0</span><span>seleccionados</span>
+          <div id="acts" class="ml-auto flex flex-wrap items-center gap-2">
+            <button type="button" data-do="pend" data-v="suspend" class="inline-flex h-[34px] items-center rounded-lg border border-line bg-surface px-3.5 font-medium text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Suspender</button>
+            <button type="button" data-do="pend" data-v="delete" class="inline-flex h-[34px] items-center rounded-lg border border-line bg-surface px-3.5 font-medium text-err hover:border-err hover:bg-err-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Eliminar</button>
+          </div>
+          <div id="confirm" class="ml-auto flex flex-wrap items-center gap-2" hidden>
+            <span id="ctext"></span>
+            <button id="cancel" type="button" data-do="cancel" class="inline-flex h-[34px] items-center rounded-lg border border-line bg-surface px-3.5 font-medium text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Cancelar</button>
+            <button type="button" data-do="apply" class="inline-flex h-[34px] items-center rounded-lg border border-err bg-err px-3.5 font-semibold text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Confirmar</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto max-[859px]:overflow-visible">
+          <table class="w-full min-w-[640px] border-collapse text-left max-[859px]:block max-[859px]:min-w-0">
+            <caption class="sr-only">Usuarios del espacio de trabajo. Marca filas para aplicar acciones en bloque.</caption>
+            <thead class="max-[859px]:sr-only">
+              <tr>
+                <th scope="col" class="w-11 py-2.5 pl-3 pr-0 text-left text-[13px] font-semibold text-muted"><input type="checkbox" id="all" aria-label="Seleccionar todos los usuarios de esta página" class="m-0 size-4 cursor-pointer accent-accent"></th>
+                <th scope="col" class="border-b border-line px-3 py-2.5 text-left text-[13px] font-semibold text-muted">Usuario</th>
+                <th scope="col" class="border-b border-line px-3 py-2.5 text-left text-[13px] font-semibold text-muted">Rol</th>
+                <th scope="col" class="border-b border-line px-3 py-2.5 text-left text-[13px] font-semibold text-muted">Estado</th>
+                <th scope="col" class="border-b border-line px-3 py-2.5 text-left text-[13px] font-semibold text-muted">Última actividad</th>
+                <th scope="col" class="w-14 border-b border-line px-3 py-2.5 text-[13px] font-semibold text-muted"><span class="sr-only">Acciones</span></th>
+              </tr>
+            </thead>
+            <tbody id="rows" class="max-[859px]:grid max-[859px]:gap-2.5 max-[859px]:p-2.5 [&>tr:last-child>*]:border-b-0"></tbody>
+          </table>
+        </div>
+        <p id="empty" hidden class="m-0 px-4 py-7 text-center text-muted">No hay usuarios con esos filtros. <button type="button" data-do="reset" class="cursor-pointer border-0 bg-transparent p-0 text-accent underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Limpiar filtros</button></p>
+        <div class="flex flex-wrap items-center justify-between gap-2.5 border-t border-line px-3 py-2.5 text-[13px] text-muted max-[859px]:justify-center">
+          <span id="range" aria-live="polite"></span>
+          <div class="flex items-center gap-2">
+            <button id="prev" type="button" data-do="page" data-v="-1" aria-label="Página anterior" class="grid size-[34px] place-items-center rounded-lg border border-line bg-surface p-0 text-muted hover:border-accent hover:text-fg disabled:cursor-default disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-prev"/></svg></button>
+            <span id="pinfo"></span>
+            <button id="next" type="button" data-do="page" data-v="1" aria-label="Página siguiente" class="grid size-[34px] place-items-center rounded-lg border border-line bg-surface p-0 text-muted hover:border-accent hover:text-fg disabled:cursor-default disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-next"/></svg></button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<dialog id="drawer" aria-labelledby="dname" class="fixed inset-y-0 right-0 left-auto m-0 hidden h-full w-[min(400px,100%)] max-w-full flex-col border-0 border-l border-line bg-surface p-0 text-fg shadow-sm open:flex backdrop:bg-[rgba(8,12,22,.45)]">
+  <div class="flex items-center gap-3 border-b border-line px-5 py-4">
+    <span id="dav" aria-hidden="true" class="grid size-[34px] flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold text-accent"></span>
+    <div class="min-w-0 flex-1"><h2 id="dname" class="m-0 text-[17px] font-semibold [overflow-wrap:anywhere]"></h2><p id="dmail" class="m-0 text-[13px] text-muted [overflow-wrap:anywhere]"></p></div>
+    <button type="button" data-do="close" aria-label="Cerrar detalle" class="grid size-[34px] flex-none place-items-center rounded-lg border border-line bg-surface text-muted hover:border-accent hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-cerrar"/></svg></button>
+  </div>
+  <div id="tabs" role="tablist" aria-label="Secciones del usuario" class="flex gap-1 border-b border-line px-3">
+    <button id="t-perfil" type="button" role="tab" data-do="tab" data-v="perfil" aria-selected="true" aria-controls="p-perfil" class="-mb-px border-0 border-b-2 border-transparent bg-transparent px-3 py-2.5 font-semibold text-muted hover:text-fg aria-selected:border-accent aria-selected:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Perfil</button>
+    <button id="t-act" type="button" role="tab" data-do="tab" data-v="act" aria-selected="false" aria-controls="p-act" tabindex="-1" class="-mb-px border-0 border-b-2 border-transparent bg-transparent px-3 py-2.5 font-semibold text-muted hover:text-fg aria-selected:border-accent aria-selected:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Actividad</button>
+  </div>
+  <div class="flex-1 overflow-auto px-5 py-4">
+    <section id="p-perfil" role="tabpanel" aria-labelledby="t-perfil">
+      <dl class="m-0 grid grid-cols-[auto_minmax(0,1fr)] gap-x-[18px] gap-y-3 [&_dd]:m-0 [&_dd]:[overflow-wrap:anywhere] [&_dt]:text-muted">
+        <dt>Rol</dt><dd id="fr"></dd>
+        <dt>Estado</dt><dd id="fs"></dd>
+        <dt>Último acceso</dt><dd id="fl"></dd>
+        <dt>Miembro desde</dt><dd id="fd"></dd>
+      </dl>
+    </section>
+    <section id="p-act" role="tabpanel" aria-labelledby="t-act" hidden>
+      <ol id="tl" class="m-0 grid list-none gap-3 p-0"></ol>
+    </section>
+  </div>
+</dialog>
+<script>
+(() => {
+  const PER = 5;
+  const LABEL = { activo: 'Activo', invitado: 'Invitado', suspendido: 'Suspendido' };
+  const STATUS = {
+    activo: 'before:bg-ok',
+    invitado: 'before:bg-warn',
+    suspendido: 'before:bg-err',
+  };
+  const ASK = { suspend: (n) => `¿Suspender a ${n} ${noun(n)}?`, delete: (n) => `¿Eliminar ${n} ${noun(n)}? No se puede deshacer.` };
+  const DONE = { suspend: 'suspendido', delete: 'eliminado' };
+  let users = [
+    { id: 1, n: 'Laura Méndez', e: 'laura.mendez@nimbo.es', r: 'Administrador', s: 'activo', a: 'Hace 12 min', d: 'Marzo de 2024' },
+    { id: 2, n: 'Mateo Ruiz', e: 'mateo.ruiz@nimbo.es', r: 'Editor', s: 'activo', a: 'Hace 2 h', d: 'Junio de 2024' },
+    { id: 3, n: 'Lucía Fernández', e: 'lucia.fernandez@nimbo.es', r: 'Analista', s: 'activo', a: 'Ayer', d: 'Septiembre de 2024' },
+    { id: 4, n: 'Javier Ortiz', e: 'javier.ortiz@nimbo.es', r: 'Lector', s: 'suspendido', a: '28 ago 2026', d: 'Enero de 2025' },
+    { id: 5, n: 'Carmen Vidal', e: 'carmen.vidal@nimbo.es', r: 'Editor', s: 'activo', a: 'Hace 35 min', d: 'Febrero de 2025' },
+    { id: 6, n: 'Diego Herrera', e: 'diego.herrera@nimbo.es', r: 'Analista', s: 'invitado', a: 'Sin acceso todavía', d: 'Octubre de 2026' },
+    { id: 7, n: 'Elena Castro', e: 'elena.castro@nimbo.es', r: 'Lector', s: 'activo', a: '17 oct 2026', d: 'Abril de 2025' },
+    { id: 8, n: 'Pablo Navarro', e: 'pablo.navarro@nimbo.es', r: 'Administrador', s: 'activo', a: 'Ayer', d: 'Enero de 2024' },
+    { id: 9, n: 'Sofía Iglesias', e: 'sofia.iglesias@nimbo.es', r: 'Editor', s: 'invitado', a: 'Sin acceso todavía', d: 'Octubre de 2026' },
+    { id: 10, n: 'Andrés Molina', e: 'andres.molina@nimbo.es', r: 'Lector', s: 'suspendido', a: '2 sep 2026', d: 'Julio de 2025' },
+    { id: 11, n: 'Marta Domínguez', e: 'marta.dominguez@nimbo.es', r: 'Analista', s: 'activo', a: 'Hace 4 h', d: 'Mayo de 2025' },
+    { id: 12, n: 'Raúl Gallego', e: 'raul.gallego@nimbo.es', r: 'Editor', s: 'activo', a: '15 oct 2026', d: 'Noviembre de 2025' },
+  ];
+  const S = { q: '', role: '', status: 'all', page: 1, sel: new Set(), pending: null };
+  let trigger = null;
+
+  const $ = (id) => document.getElementById(id);
+  const noun = (n) => (n === 1 ? 'usuario' : 'usuarios');
+  const initials = (n) => n.split(' ').slice(0, 2).map((p) => p[0]).join('');
+  const byId = (id) => users.find((u) => u.id === id);
+  const msg = (t) => { $('msg').textContent = t; };
+
+  const filtered = () => users.filter((u) =>
+    (!S.role || u.r === S.role) && (S.status === 'all' || u.s === S.status) && `${u.n} ${u.e} ${u.r}`.toLowerCase().includes(S.q));
+
+  function view() {
+    const list = filtered();
+    const pages = Math.max(1, Math.ceil(list.length / PER));
+    S.page = Math.min(S.page, pages);
+    const from = (S.page - 1) * PER;
+    return { list, pages, from, items: list.slice(from, from + PER) };
+  }
+
+  const row = (u) => {
+    const on = S.sel.has(u.id);
+    return `<tr class="${on ? 'bg-accent-soft' : 'bg-surface hover:bg-page'} max-[859px]:grid max-[859px]:grid-cols-[auto_minmax(0,1fr)_auto] max-[859px]:items-center max-[859px]:gap-x-3 max-[859px]:gap-y-2 max-[859px]:rounded-lg max-[859px]:border max-[859px]:border-line max-[859px]:p-3">
+      <td class="w-11 border-b border-line py-2.5 pl-3 pr-0 align-middle max-[859px]:row-start-1 max-[859px]:col-start-1 max-[859px]:w-auto max-[859px]:self-start max-[859px]:border-0 max-[859px]:p-0 max-[859px]:pt-0.5"><input type="checkbox" data-k="sel-${u.id}" data-sel="${u.id}" ${on ? 'checked' : ''} aria-label="Seleccionar a ${u.n}" class="m-0 size-4 cursor-pointer accent-accent"></td>
+      <th scope="row" class="border-b border-line px-3 py-2.5 text-left align-middle text-[13px] font-semibold text-muted max-[859px]:col-start-2 max-[859px]:row-start-1 max-[859px]:min-w-0 max-[859px]:border-0 max-[859px]:p-0"><div class="flex min-w-0 items-center gap-2.5"><span aria-hidden="true" class="grid size-[34px] flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold text-accent">${initials(u.n)}</span><span class="min-w-0"><button type="button" data-do="open" data-id="${u.id}" class="block cursor-pointer border-0 bg-transparent p-0 text-left text-[13px] font-semibold text-fg hover:text-accent hover:underline">${u.n}</button><span class="block text-[13px] font-normal text-muted max-[859px]:[overflow-wrap:anywhere]">${u.e}</span></span></div></th>
+      <td data-label="Rol" class="border-b border-line px-3 py-2.5 text-left align-middle max-[859px]:col-[2/4] max-[859px]:flex max-[859px]:items-center max-[859px]:justify-between max-[859px]:gap-3 max-[859px]:border-0 max-[859px]:p-0 max-[859px]:text-[13px] max-[859px]:before:text-muted max-[859px]:before:content-[attr(data-label)]"><span class="inline-block rounded-full border border-line px-[9px] py-px text-xs font-semibold">${u.r}</span></td>
+      <td data-label="Estado" class="border-b border-line px-3 py-2.5 text-left align-middle max-[859px]:col-[2/4] max-[859px]:flex max-[859px]:items-center max-[859px]:justify-between max-[859px]:gap-3 max-[859px]:border-0 max-[859px]:p-0 max-[859px]:text-[13px] max-[859px]:before:text-muted max-[859px]:before:content-[attr(data-label)]"><span class="inline-flex items-center gap-[7px] whitespace-nowrap before:size-2 before:rounded-full before:content-[''] ${STATUS[u.s]}">${LABEL[u.s]}</span></td>
+      <td data-label="Última actividad" class="border-b border-line px-3 py-2.5 text-left align-middle max-[859px]:col-[2/4] max-[859px]:flex max-[859px]:items-center max-[859px]:justify-between max-[859px]:gap-3 max-[859px]:border-0 max-[859px]:p-0 max-[859px]:text-[13px] max-[859px]:before:text-muted max-[859px]:before:content-[attr(data-label)]"><span class="whitespace-nowrap text-muted">${u.a}</span></td>
+      <td class="relative w-14 border-b border-line px-3 py-2.5 text-right align-middle max-[859px]:col-start-3 max-[859px]:row-start-1 max-[859px]:w-auto max-[859px]:border-0 max-[859px]:p-0">
+        <button type="button" data-k="more-${u.id}" data-do="menu" data-id="${u.id}" aria-expanded="false" aria-controls="m-${u.id}" aria-label="Acciones de ${u.n}" class="inline-grid size-8 cursor-pointer place-items-center rounded-lg border border-transparent p-0 text-muted hover:border-line hover:bg-page hover:text-fg aria-expanded:border-line aria-expanded:bg-page aria-expanded:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><svg class="size-[18px] flex-none fill-none stroke-current stroke-[1.8] [stroke-linecap:round] [stroke-linejoin:round]" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mas"/></svg></button>
+        <div id="m-${u.id}" data-menu hidden class="absolute right-2.5 top-full z-[2] grid min-w-[180px] rounded-lg border border-line bg-surface p-1.5 text-left shadow-sm max-[859px]:right-0">
+          <button type="button" data-do="open" data-id="${u.id}" class="cursor-pointer rounded-md border-0 bg-transparent px-2.5 py-1.5 text-left text-[13px] text-fg hover:bg-accent-soft hover:text-accent">Ver perfil</button>
+          <button type="button" data-do="toggle" data-id="${u.id}" class="cursor-pointer rounded-md border-0 bg-transparent px-2.5 py-1.5 text-left text-[13px] text-fg hover:bg-accent-soft hover:text-accent">${u.s === 'suspendido' ? 'Reactivar' : 'Suspender'}</button>
+        </div>
+      </td>
+    </tr>`;
+  };
+
+  function renderBulk() {
+    const n = S.sel.size;
+    $('bulk').hidden = !n;
+    $('count').textContent = n;
+    $('acts').hidden = Boolean(S.pending);
+    $('confirm').hidden = !S.pending;
+    if (S.pending) $('ctext').textContent = ASK[S.pending](n);
+  }
+
+  function renderChips() {
+    document.querySelectorAll('[data-do="chip"]').forEach((c) => {
+      const v = c.dataset.v;
+      c.setAttribute('aria-pressed', String(S.status === v));
+      c.querySelector('span').textContent = v === 'all' ? users.length : users.filter((u) => u.s === v).length;
+    });
+  }
+
+  function render(focusKey) {
+    const { list, pages, from, items } = view();
+    $('rows').innerHTML = items.map(row).join('');
+    const picked = items.filter((u) => S.sel.has(u.id)).length;
+    const all = $('all');
+    all.checked = items.length > 0 && picked === items.length;
+    all.indeterminate = picked > 0 && picked < items.length;
+    all.disabled = !items.length;
+    $('range').textContent = list.length ? `Mostrando ${from + 1}–${from + items.length} de ${list.length}` : 'Sin resultados';
+    $('pinfo').textContent = `Página ${S.page} de ${pages}`;
+    $('prev').disabled = S.page === 1;
+    $('next').disabled = S.page === pages;
+    $('empty').hidden = list.length > 0;
+    renderBulk();
+    renderChips();
+    if (focusKey) document.querySelector(`[data-k="${focusKey}"]`)?.focus();
+  }
+
+  function closeMenus() {
+    document.querySelectorAll('[data-do="menu"][aria-expanded="true"]').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+    document.querySelectorAll('[data-menu]').forEach((m) => { m.hidden = true; });
+  }
+
+  function toggleMenu(t) {
+    const wasOpen = t.getAttribute('aria-expanded') === 'true';
+    closeMenus();
+    if (wasOpen) return;
+    t.setAttribute('aria-expanded', 'true');
+    document.getElementById(t.getAttribute('aria-controls')).hidden = false;
+  }
+
+  function selectTab(v) {
+    document.querySelectorAll('[role="tab"]').forEach((b) => {
+      const on = b.dataset.v === v;
+      b.setAttribute('aria-selected', String(on));
+      b.tabIndex = on ? 0 : -1;
+      $('p-' + b.dataset.v).hidden = !on;
+    });
+  }
+
+  function openDrawer(id, from) {
+    const u = byId(id);
+    trigger = from;
+    $('dav').textContent = initials(u.n);
+    $('dname').textContent = u.n;
+    $('dmail').textContent = u.e;
+    $('fr').textContent = u.r;
+    $('fs').textContent = LABEL[u.s];
+    $('fl').textContent = u.a;
+    $('fd').textContent = u.d;
+    $('tl').innerHTML = [['Inició sesión', u.a], ['Exportó el informe de septiembre', '3 oct 2026'], ['Editó el panel de Ventas', '1 oct 2026']]
+      .map(([t, w]) => `<li class="grid gap-0.5 border-l-2 border-line pl-3.5"><span>${t}</span><small class="text-muted">${w}</small></li>`).join('');
+    selectTab('perfil');
+    $('drawer').showModal();
+    $('app').inert = true;
+  }
+
+  function setRail(on) {
+    $('app').dataset.rail = String(on);
+    $('collapse').setAttribute('aria-expanded', String(!on));
+    $('collapse').setAttribute('aria-label', on ? 'Expandir menú' : 'Contraer menú');
+  }
+
+  const ACT = {
+    open: (t) => openDrawer(Number(t.dataset.id), t.closest('[data-menu]') ? t.closest('tr').querySelector('[data-do="menu"]') : t),
+    toggle: (t) => {
+      const u = byId(Number(t.dataset.id));
+      u.s = u.s === 'suspendido' ? 'activo' : 'suspendido';
+      msg(`Estado de ${u.n}: ${LABEL[u.s]}.`);
+      render(`more-${u.id}`);
+    },
+    chip: (t) => { S.status = t.dataset.v; S.page = 1; render(); },
+    page: (t) => {
+      S.page += Number(t.dataset.v);
+      render();
+      if (t.disabled) (Number(t.dataset.v) < 0 ? $('next') : $('prev')).focus();
+    },
+    pend: (t) => { S.pending = t.dataset.v; render(); $('cancel').focus(); },
+    cancel: () => {
+      const v = S.pending;
+      S.pending = null;
+      render();
+      document.querySelector(`[data-do="pend"][data-v="${v}"]`).focus();
+    },
+    apply: () => {
+      const n = S.sel.size, kind = S.pending;
+      if (kind === 'delete') users = users.filter((u) => !S.sel.has(u.id));
+      else users.forEach((u) => { if (S.sel.has(u.id)) u.s = 'suspendido'; });
+      msg(`${n} ${noun(n)} ${DONE[kind]}${n === 1 ? '' : 's'}.`);
+      S.sel.clear();
+      S.pending = null;
+      render();
+      $('title').focus();
+    },
+    reset: () => {
+      Object.assign(S, { q: '', role: '', status: 'all', page: 1 });
+      $('q').value = '';
+      $('role').value = '';
+      render();
+      $('q').focus();
+    },
+    invite: () => msg('Escribe el correo del nuevo usuario para enviar la invitación.'),
+    collapse: () => setRail(!($('app').dataset.rail === 'true')),
+    close: () => $('drawer').close(),
+    tab: (t) => selectTab(t.dataset.v),
+  };
+
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-do]');
+    if (t?.dataset.do === 'menu') return toggleMenu(t);
+    closeMenus();
+    if (t) ACT[t.dataset.do](t);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const open = document.querySelector('[data-do="menu"][aria-expanded="true"]');
+    if (e.key === 'Escape' && open) { closeMenus(); open.focus(); }
+  });
+
+  $('rows').addEventListener('change', (e) => {
+    const id = Number(e.target.dataset.sel);
+    if (e.target.checked) S.sel.add(id); else S.sel.delete(id);
+    S.pending = null;
+    render(`sel-${id}`);
+  });
+
+  $('all').addEventListener('change', (e) => {
+    view().items.forEach((u) => (e.target.checked ? S.sel.add(u.id) : S.sel.delete(u.id)));
+    S.pending = null;
+    render();
+  });
+
+  $('q').addEventListener('input', (e) => { S.q = e.target.value.trim().toLowerCase(); S.page = 1; render(); });
+  $('role').addEventListener('change', (e) => { S.role = e.target.value; S.page = 1; render(); });
+
+  $('t-perfil').parentElement.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const tabs = [...document.querySelectorAll('[role="tab"]')];
+    const step = e.key === 'ArrowRight' ? 1 : -1;
+    const next = tabs[(tabs.indexOf(document.activeElement) + step + tabs.length) % tabs.length];
+    selectTab(next.dataset.v);
+    next.focus();
+  });
+
+  $('drawer').addEventListener('close', () => {
+    $('app').inert = false;
+    trigger?.focus();
+  });
+
+  setRail(matchMedia('(max-width:520px)').matches);
+  render();
+})();
+</script>

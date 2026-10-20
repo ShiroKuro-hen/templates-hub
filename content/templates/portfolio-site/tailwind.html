@@ -1,0 +1,183 @@
+<style>
+  html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:72px}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+<div class="mx-auto max-w-[1100px]">
+  <header class="sticky top-0 z-[5] flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line bg-page py-3.5">
+    <a href="#inicio" class="mr-auto text-[17px] font-bold no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Laura Méndez</a>
+    <nav aria-label="Principal">
+      <ul class="m-0 flex list-none flex-wrap gap-x-[18px] gap-y-1 p-0">
+        <li><a href="#proyectos" class="relative py-1 text-muted no-underline aria-[current]:text-fg aria-[current]:after:absolute aria-[current]:after:inset-x-0 aria-[current]:after:-bottom-[2px] aria-[current]:after:h-0.5 aria-[current]:after:rounded-sm aria-[current]:after:bg-accent aria-[current]:after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Proyectos</a></li>
+        <li><a href="#sobre-mi" class="relative py-1 text-muted no-underline aria-[current]:text-fg aria-[current]:after:absolute aria-[current]:after:inset-x-0 aria-[current]:after:-bottom-[2px] aria-[current]:after:h-0.5 aria-[current]:after:rounded-sm aria-[current]:after:bg-accent aria-[current]:after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Sobre mí</a></li>
+        <li><a href="#contacto" class="relative py-1 text-muted no-underline aria-[current]:text-fg aria-[current]:after:absolute aria-[current]:after:inset-x-0 aria-[current]:after:-bottom-[2px] aria-[current]:after:h-0.5 aria-[current]:after:rounded-sm aria-[current]:after:bg-accent aria-[current]:after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="inicio" aria-labelledby="h1" class="grid items-end gap-10 pb-12 pt-16 min-[761px]:grid-cols-[1.3fr_1fr] max-[760px]:pt-9">
+      <div>
+        <p class="mb-3.5 text-xs font-semibold uppercase tracking-[0.08em] text-accent">Diseñadora de producto · Madrid</p>
+        <h1 id="h1" class="mb-4 text-[clamp(32px,6vw,58px)] font-bold leading-[1.1] tracking-[-0.035em]">Interfaces claras, útiles y con carácter.</h1>
+        <p class="mb-7 max-w-[52ch] text-base text-muted">Ayudo a equipos de producto y a marcas a convertir ideas complejas en experiencias sencillas. Nueve años de oficio, desde la investigación hasta el código.</p>
+        <div class="flex flex-wrap gap-2.5"><a href="#proyectos" class="inline-block rounded-lg border border-accent bg-accent px-[18px] py-[9px] font-semibold text-accent-ink no-underline transition-[border-color] duration-150 hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver proyectos</a><a href="#contacto" class="inline-block rounded-lg border border-line bg-surface px-[18px] py-[9px] font-semibold no-underline transition-[border-color] duration-150 hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Escribirme</a></div>
+      </div>
+      <dl class="m-0 grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-line bg-line">
+        <div class="bg-surface p-[18px]"><dt class="text-xs text-muted">Años de experiencia</dt><dd class="mt-1 text-[28px] font-bold tracking-[-0.02em] tabular-nums">9</dd></div>
+        <div class="bg-surface p-[18px]"><dt class="text-xs text-muted">Proyectos entregados</dt><dd class="mt-1 text-[28px] font-bold tracking-[-0.02em] tabular-nums">60+</dd></div>
+        <div class="bg-surface p-[18px]"><dt class="text-xs text-muted">Clientes recurrentes</dt><dd class="mt-1 text-[28px] font-bold tracking-[-0.02em] tabular-nums">24</dd></div>
+        <div class="bg-surface p-[18px]"><dt class="text-xs text-muted">Premios de diseño</dt><dd class="mt-1 text-[28px] font-bold tracking-[-0.02em] tabular-nums">3</dd></div>
+      </dl>
+    </section>
+
+    <section id="proyectos" aria-labelledby="h-proy" class="border-t border-line py-12">
+      <div class="mb-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+        <h2 id="h-proy" class="text-[clamp(24px,4vw,34px)] font-bold leading-[1.1] tracking-[-0.02em]">Proyectos seleccionados</h2>
+        <p class="max-w-[40ch] text-muted">Trabajos de los últimos cuatro años. Pasa el cursor o usa el teclado para ver los detalles.</p>
+      </div>
+      <div role="group" aria-label="Filtrar por tipo" class="mb-5 flex flex-wrap gap-2">
+        <button type="button" data-filter="todos" aria-pressed="true" class="cursor-pointer rounded-full border border-line bg-surface px-3.5 py-1.5 font-semibold text-muted aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Todos</button>
+        <button type="button" data-filter="web" aria-pressed="false" class="cursor-pointer rounded-full border border-line bg-surface px-3.5 py-1.5 font-semibold text-muted aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Web</button>
+        <button type="button" data-filter="app" aria-pressed="false" class="cursor-pointer rounded-full border border-line bg-surface px-3.5 py-1.5 font-semibold text-muted aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">App</button>
+        <button type="button" data-filter="marca" aria-pressed="false" class="cursor-pointer rounded-full border border-line bg-surface px-3.5 py-1.5 font-semibold text-muted aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Marca</button>
+      </div>
+      <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5 p-0">
+        <li data-type="web">
+          <a href="#proyectos" class="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <img class="block aspect-[4/3] w-full bg-linear-135 from-accent-2 to-accent" width="400" height="300" loading="lazy" alt="Vista previa del portal de inversiones Banca Abierta" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cg fill='white'%3E%3Ccircle cx='300' cy='90' r='70' fill-opacity='.18'/%3E%3Crect x='60' y='150' width='120' height='90' rx='12' fill-opacity='.9'/%3E%3Crect x='200' y='190' width='140' height='50' rx='12' fill-opacity='.45'/%3E%3C/g%3E%3C/svg%3E">
+            <span class="absolute inset-x-3 bottom-3 grid translate-y-2 gap-0.5 rounded-md border border-line bg-surface px-3.5 py-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none"><small class="text-xs text-muted">Web · 2025</small><strong>Banca Abierta</strong></span>
+          </a>
+        </li>
+        <li data-type="app">
+          <a href="#proyectos" class="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <img class="block aspect-[4/3] w-full bg-linear-135 from-ok to-info" width="400" height="300" loading="lazy" alt="Vista previa de la app de meditación Nubla" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='150' y='40' width='100' height='220' rx='18' fill='white' fill-opacity='.9'/%3E%3Ccircle cx='200' cy='150' r='28' fill='white' fill-opacity='.35'/%3E%3Crect x='170' y='208' width='60' height='8' rx='4' fill='white' fill-opacity='.6'/%3E%3C/svg%3E">
+            <span class="absolute inset-x-3 bottom-3 grid translate-y-2 gap-0.5 rounded-md border border-line bg-surface px-3.5 py-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none"><small class="text-xs text-muted">App · 2024</small><strong>Nubla</strong></span>
+          </a>
+        </li>
+        <li data-type="marca">
+          <a href="#proyectos" class="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <img class="block aspect-[4/3] w-full bg-linear-135 from-warn to-err" width="400" height="300" loading="lazy" alt="Vista previa de la identidad de Café Ámbar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Ccircle cx='200' cy='150' r='95' fill='white' fill-opacity='.2'/%3E%3Ccircle cx='200' cy='150' r='55' fill='white' fill-opacity='.9'/%3E%3C/svg%3E">
+            <span class="absolute inset-x-3 bottom-3 grid translate-y-2 gap-0.5 rounded-md border border-line bg-surface px-3.5 py-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none"><small class="text-xs text-muted">Marca · 2024</small><strong>Café Ámbar</strong></span>
+          </a>
+        </li>
+        <li data-type="web">
+          <a href="#proyectos" class="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <img class="block aspect-[4/3] w-full bg-linear-135 from-accent to-info" width="400" height="300" loading="lazy" alt="Vista previa del panel de historiales Atlas Clínico" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='40' y='40' width='100' height='70' rx='8' fill='white' fill-opacity='.9'/%3E%3Crect x='160' y='40' width='200' height='70' rx='8' fill='white' fill-opacity='.45'/%3E%3Crect x='40' y='130' width='320' height='130' rx='8' fill='white' fill-opacity='.3'/%3E%3C/svg%3E">
+            <span class="absolute inset-x-3 bottom-3 grid translate-y-2 gap-0.5 rounded-md border border-line bg-surface px-3.5 py-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none"><small class="text-xs text-muted">Web · 2023</small><strong>Atlas Clínico</strong></span>
+          </a>
+        </li>
+        <li data-type="app">
+          <a href="#proyectos" class="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <img class="block aspect-[4/3] w-full bg-linear-135 from-info to-ok" width="400" height="300" loading="lazy" alt="Vista previa del planificador de rutas Ruta Verde" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath d='M0 220C80 150 140 280 220 200S330 120 400 170V300H0Z' fill='white' fill-opacity='.35'/%3E%3Ccircle cx='220' cy='110' r='18' fill='white' fill-opacity='.9'/%3E%3C/svg%3E">
+            <span class="absolute inset-x-3 bottom-3 grid translate-y-2 gap-0.5 rounded-md border border-line bg-surface px-3.5 py-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none"><small class="text-xs text-muted">App · 2023</small><strong>Ruta Verde</strong></span>
+          </a>
+        </li>
+        <li data-type="marca">
+          <a href="#proyectos" class="group relative block overflow-hidden rounded-lg border border-line bg-surface shadow-sm no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <img class="block aspect-[4/3] w-full bg-linear-135 from-err to-accent" width="400" height="300" loading="lazy" alt="Vista previa del sistema tipográfico de la revista Faro" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect x='50' y='50' width='300' height='24' fill='white' fill-opacity='.9'/%3E%3Crect x='50' y='94' width='220' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='120' width='260' height='12' fill='white' fill-opacity='.6'/%3E%3Crect x='50' y='146' width='180' height='12' fill='white' fill-opacity='.6'/%3E%3Ccircle cx='300' cy='220' r='40' fill='white' fill-opacity='.35'/%3E%3C/svg%3E">
+            <span class="absolute inset-x-3 bottom-3 grid translate-y-2 gap-0.5 rounded-md border border-line bg-surface px-3.5 py-3 opacity-0 transition-[opacity,transform] duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 motion-reduce:transition-none"><small class="text-xs text-muted">Marca · 2022</small><strong>Revista Faro</strong></span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="sobre-mi" aria-labelledby="h-sobre" class="border-t border-line py-12">
+      <div class="grid items-start gap-10 min-[761px]:grid-cols-[1.2fr_1fr]">
+      <div>
+        <h2 id="h-sobre" class="text-[clamp(24px,4vw,34px)] font-bold leading-[1.1] tracking-[-0.02em]">Sobre mí</h2>
+        <p class="mb-5 text-[15px] text-muted">Trabajo entre el diseño de producto y la identidad de marca. Me interesan los detalles que nadie nota cuando están bien hechos: el espaciado, el texto de un error, la transición que orienta. Colaboro con startups y estudios desde Madrid y doy talleres de accesibilidad.</p>
+        <ul aria-label="Habilidades" class="m-0 flex list-none flex-wrap gap-2 p-0"><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">Figma</li><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">Sistemas de diseño</li><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">Accesibilidad WCAG</li><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">Investigación de usuarios</li><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">HTML y CSS</li><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">Tipografía</li><li class="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent">Prototipado</li></ul>
+      </div>
+      <div>
+        <h3 class="mb-4 text-[15px] font-bold leading-[1.1] tracking-[-0.02em]">Experiencia</h3>
+        <ol class="m-0 grid list-none gap-5 border-l-2 border-line p-0 pl-5">
+          <li class="relative before:absolute before:-left-[25px] before:top-[5px] before:size-2.5 before:rounded-full before:bg-accent before:shadow-[0_0_0_4px_var(--bg)] before:content-['']"><time class="block text-xs tabular-nums text-muted">2023 – hoy</time><strong class="block">Diseñadora senior</strong><span>Lumbre Software</span></li>
+          <li class="relative before:absolute before:-left-[25px] before:top-[5px] before:size-2.5 before:rounded-full before:bg-accent before:shadow-[0_0_0_4px_var(--bg)] before:content-['']"><time class="block text-xs tabular-nums text-muted">2020 – 2023</time><strong class="block">Diseñadora de producto</strong><span>Estudio Norte</span></li>
+          <li class="relative before:absolute before:-left-[25px] before:top-[5px] before:size-2.5 before:rounded-full before:bg-accent before:shadow-[0_0_0_4px_var(--bg)] before:content-['']"><time class="block text-xs tabular-nums text-muted">2017 – 2020</time><strong class="block">Diseñadora gráfica</strong><span>Taller Azulejo</span></li>
+        </ol>
+      </div>
+      </div>
+    </section>
+
+    <section id="contacto" aria-labelledby="h-contacto" class="border-t border-line py-12">
+      <h2 id="h-contacto" class="text-[clamp(24px,4vw,34px)] font-bold leading-[1.1] tracking-[-0.02em]">Hablemos de tu proyecto</h2>
+      <p class="mb-7 max-w-[52ch] text-base text-muted">Cuéntame qué necesitas y te respondo en menos de dos días laborables.</p>
+      <form id="form" novalidate class="grid max-w-[600px] gap-4">
+        <div class="grid gap-4 min-[761px]:grid-cols-2">
+          <div class="grid gap-1.5">
+            <label for="nombre" class="font-semibold">Nombre</label>
+            <input id="nombre" name="nombre" required autocomplete="name" aria-describedby="err-nombre" class="box-border w-full rounded-lg border border-line bg-surface px-3 py-[9px] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <p id="err-nombre" class="m-0 text-[13px] text-err"></p>
+          </div>
+          <div class="grid gap-1.5">
+            <label for="correo" class="font-semibold">Correo electrónico</label>
+            <input id="correo" name="correo" type="email" required autocomplete="email" aria-describedby="err-correo" class="box-border w-full rounded-lg border border-line bg-surface px-3 py-[9px] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <p id="err-correo" class="m-0 text-[13px] text-err"></p>
+          </div>
+        </div>
+        <div class="grid gap-1.5">
+          <label for="proyecto" class="font-semibold">Tipo de proyecto</label>
+          <select id="proyecto" name="proyecto" class="box-border w-full rounded-lg border border-line bg-surface px-3 py-[9px] text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+            <option>Web</option><option>App</option><option>Marca</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="grid gap-1.5">
+          <label for="mensaje" class="font-semibold">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" required aria-describedby="err-mensaje" class="box-border min-h-[120px] w-full resize-y rounded-lg border border-line bg-surface px-3 py-[9px] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"></textarea>
+          <p id="err-mensaje" class="m-0 text-[13px] text-err"></p>
+        </div>
+        <div><button type="submit" class="cursor-pointer rounded-lg border border-accent bg-accent px-[18px] py-[9px] font-semibold text-accent-ink transition-[border-color] duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Enviar mensaje</button></div>
+      </form>
+      <div id="done" role="status" tabindex="-1" hidden class="rounded-lg border border-ok bg-ok-soft p-6 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <h3 class="mb-1.5 text-base font-bold text-fg">¡Mensaje enviado!</h3>
+        <p id="done-text" class="m-0"></p>
+      </div>
+    </section>
+  </main>
+  <footer class="flex flex-wrap justify-between gap-x-6 gap-y-2 border-t border-line py-5 text-[13px] text-muted">
+    <span>© 2026 Laura Méndez · Diseño con calma</span>
+    <ul class="m-0 flex list-none gap-[18px] p-0"><li><a href="#contacto" class="no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Correo</a></li><li><a href="#sobre-mi" class="no-underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Descargar CV</a></li></ul>
+  </footer>
+</div>
+<script>
+  const filters = [...document.querySelectorAll('[data-filter]')];
+  const items = [...document.querySelectorAll('#proyectos ul > li')];
+  filters.forEach((btn) => btn.addEventListener('click', () => {
+    filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    items.forEach((li) => (li.hidden = btn.dataset.filter !== 'todos' && li.dataset.type !== btn.dataset.filter));
+  }));
+
+  const navLinks = [...document.querySelectorAll('header nav a')];
+  const spy = new IntersectionObserver((entries) => {
+    entries.filter((e) => e.isIntersecting).forEach(({ target }) => {
+      navLinks.forEach((a) => (a.getAttribute('href') === '#' + target.id ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current')));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
+
+  const form = document.getElementById('form');
+  const rules = {
+    nombre: (v) => v.trim().length >= 2 || 'Escribe tu nombre (mínimo 2 letras).',
+    correo: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || 'Introduce un correo válido, por ejemplo nombre@correo.com.',
+    mensaje: (v) => v.trim().length >= 20 || 'Cuéntame un poco más (mínimo 20 caracteres).',
+  };
+  const check = (input) => {
+    const result = rules[input.name](input.value);
+    document.getElementById('err-' + input.name).textContent = result === true ? '' : result;
+    input.setAttribute('aria-invalid', String(result !== true));
+    return result === true;
+  };
+  const inputs = Object.keys(rules).map((name) => form.elements[name]);
+  inputs.forEach((input) => input.addEventListener('input', () => input.getAttribute('aria-invalid') === 'true' && check(input)));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const results = inputs.map(check);
+    const firstInvalid = inputs[results.indexOf(false)];
+    if (firstInvalid) return firstInvalid.focus();
+    document.getElementById('done-text').textContent = `Gracias, ${form.elements.nombre.value.trim()}. He recibido tu mensaje y te escribiré pronto.`;
+    form.hidden = true;
+    const done = document.getElementById('done');
+    done.hidden = false;
+    done.focus();
+  });
+</script>

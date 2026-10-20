@@ -1,0 +1,205 @@
+<style>
+  [data-s=ok]{--c:var(--ok);--t:var(--ok-soft)}
+  [data-s=info]{--c:var(--info);--t:var(--info-soft)}
+  [data-s=warn]{--c:var(--warn);--t:var(--warn-soft)}
+  [data-s=err]{--c:var(--err);--t:var(--err-soft)}
+  .ico::before{content:"✓"}
+  .banner[data-s=warn] .ico::before{content:"!"}
+  .banner[data-s=err] .ico::before{content:"✕"}
+  .banner:not([data-s=ok]) .ico{animation:ring 2s ease-out infinite}
+  @keyframes ring{from{box-shadow:0 0 0 0 var(--c)}to{box-shadow:0 0 0 8px transparent}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+<main class="mx-auto max-w-[760px]">
+  <header class="mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1.5">
+    <h1 class="m-0 text-[26px] leading-tight font-bold tracking-tight">Estado de Nimbo</h1>
+    <p class="m-0 text-[13px] text-muted">Actualizado hoy a las 09:42</p>
+  </header>
+  <div id="banner" role="status" aria-live="polite" class="flex items-center gap-3.5 rounded-lg border border-line border-l-4 border-l-[var(--c)] bg-[var(--t)] px-4.5 py-4 shadow-sm">
+    <span class="ico grid size-8 flex-none place-items-center rounded-full bg-[var(--c)] font-bold text-accent-ink" aria-hidden="true"></span>
+    <div><p id="bt" class="m-0 text-[17px] font-semibold"></p><p id="bs" class="mt-0.5 text-muted"></p></div>
+  </div>
+  <section class="mt-7" aria-labelledby="svc-t">
+    <div class="mb-1.5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
+      <h2 id="svc-t" class="m-0 text-xs font-semibold tracking-[.08em] text-muted uppercase">Servicios</h2>
+      <ul class="m-0 flex list-none flex-wrap gap-x-3.5 gap-y-1.5 p-0 text-xs text-muted">
+        <li data-s="ok" class="inline-flex items-center gap-1.5"><i aria-hidden="true" class="size-2 flex-none rounded-full bg-[var(--c)]"></i>Operativo</li>
+        <li data-s="warn" class="inline-flex items-center gap-1.5"><i aria-hidden="true" class="size-2 flex-none rounded-full bg-[var(--c)]"></i>Degradado</li>
+        <li data-s="err" class="inline-flex items-center gap-1.5"><i aria-hidden="true" class="size-2 flex-none rounded-full bg-[var(--c)]"></i>Incidencia</li>
+      </ul>
+    </div>
+    <p class="mb-1.5 text-[13px] text-muted">Cada barra es un día. Con el teclado, usa las flechas para recorrerlas.</p>
+    <ul id="svcs" class="m-0 list-none p-0"></ul>
+  </section>
+  <section class="mt-7" aria-labelledby="inc-t">
+    <h2 id="inc-t" class="m-0 text-xs font-semibold tracking-[.08em] text-muted uppercase">Incidencias de los últimos 7 días</h2>
+    <ul id="incs" class="m-0 list-none p-0"></ul>
+  </section>
+  <section class="mt-7 rounded-lg border border-line bg-surface p-5 shadow-sm" aria-labelledby="sub-t">
+    <h2 id="sub-t" class="m-0 text-xs font-semibold tracking-[.08em] text-muted uppercase">Suscríbete a las actualizaciones</h2>
+    <form id="sub" novalidate class="mt-3">
+      <label for="em" class="mb-1.5 block font-medium">Correo electrónico</label>
+      <div class="flex flex-wrap gap-2">
+        <input id="em" type="email" name="email" autocomplete="email" placeholder="tu@empresa.com" required aria-describedby="em-hint em-err" class="min-w-0 flex-[1_1_220px] rounded-lg border border-line bg-page px-3 py-[9px] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <button type="submit" class="cursor-pointer rounded-lg border border-accent bg-accent px-4 py-[9px] font-semibold text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Suscribirme</button>
+      </div>
+      <p id="em-err" role="alert" hidden class="mt-1.5 text-[13px] text-err"></p>
+      <p id="em-hint" class="mt-2 text-[13px] text-muted">Te avisamos al abrir, actualizar y cerrar una incidencia. Sin spam.</p>
+    </form>
+    <p id="done" role="status" tabindex="-1" hidden class="rounded-lg border border-ok bg-ok-soft px-3.5 py-3 focus-visible:outline-2 focus-visible:outline-accent"></p>
+  </section>
+</main>
+<div id="tip" role="tooltip" hidden class="fixed z-10 max-w-[260px] pointer-events-none rounded-md bg-fg px-2.5 py-1.5 text-xs text-page shadow-sm"></div>
+<script>
+  const TODAY = new Date(2026, 9, 20), DAYS = 90;
+  const RANK = { ok: 0, warn: 1, err: 2 };
+  const STATE = { ok: 'Operativo', warn: 'Degradado', err: 'Incidencia' };
+  const STEP = { investigating: ['Investigando', 'warn'], monitoring: ['En observación', 'info'], resolved: ['Resuelto', 'ok'] };
+  const SVCS = ['API pública', 'Web', 'Base de datos', 'Correo', 'Autenticación', 'Almacenamiento', 'Pagos', 'Webhooks'];
+  const INCIDENTS = [
+    { svc: 7, ago: 0, level: 'warn', title: 'Entregas de webhooks con retraso', updates: [
+      ['07:48', 'investigating', 'Algunos webhooks se entregan con retraso. Revisamos la cola de reintentos.'] ] },
+    { svc: 1, ago: 1, level: 'warn', title: 'Carga lenta del panel desde Europa', updates: [
+      ['11:02', 'investigating', 'Algunos usuarios de Europa notan tiempos de carga superiores a 6 segundos.'],
+      ['12:18', 'resolved', 'Una caché defectuosa ralentizaba el panel. Está corregida y los tiempos son los habituales.'] ] },
+    { svc: 3, ago: 3, level: 'warn', title: 'Retrasos en el envío de correos', updates: [
+      ['14:20', 'investigating', 'Los correos de verificación tardan hasta 15 minutos en llegar.'],
+      ['15:55', 'monitoring', 'Reducimos la cola de envíos. Los tiempos vuelven a estar por debajo de 2 minutos.'] ] },
+    { svc: 6, ago: 5, level: 'err', title: 'Cobros rechazados con tarjetas internacionales', updates: [
+      ['08:12', 'investigating', 'Detectamos un aumento de rechazos al cobrar con tarjetas emitidas fuera de la UE.'],
+      ['09:05', 'monitoring', 'Identificamos la causa en un proveedor externo. Aplicamos un ajuste y vigilamos las transacciones.'],
+      ['10:40', 'resolved', 'Los cobros se procesan con normalidad. Reintentaremos los pagos rechazados de las últimas horas.'] ] },
+  ];
+  const CLS = {
+    svc: 'border-t border-line py-4',
+    head: 'flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5',
+    stat: 'flex items-center gap-3',
+    pct: 'font-semibold tabular-nums',
+    pill: 'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-[var(--t)] px-2.5 py-0.5 text-xs font-semibold',
+    dot: 'size-2 flex-none rounded-full bg-[var(--c)]',
+    bar: 'mt-2.5 grid h-8 grid-flow-col auto-cols-[minmax(4px,1fr)] gap-0.5 overflow-x-auto p-0.5 [scrollbar-width:thin]',
+    cell: 'min-w-0 cursor-default rounded-[2px] border-0 bg-[var(--c)] p-0 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent',
+    foot: 'mt-1.5 flex justify-between text-xs text-muted',
+    h3: 'm-0 text-[15px] font-semibold',
+    inc: 'border-t border-line py-4',
+    incMeta: 'mt-0.5 text-[13px] text-muted',
+    tl: 'mt-3 border-l-2 border-line p-0 pl-[18px] list-none',
+    tlItem: 'relative pb-3 last:pb-0 before:absolute before:-left-6 before:top-1 before:size-2.5 before:rounded-full before:bg-[var(--c)] before:shadow-[0_0_0_3px_var(--bg)] before:content-[\'\']',
+    tlHead: 'flex items-center gap-2',
+    time: 'text-[13px] font-semibold tabular-nums',
+    tlText: 'mt-0.5 text-muted',
+  };
+
+  function rng(seed) {
+    return () => {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const pct = (v) => `${v.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} %`;
+  const fecha = (ago) => { const d = new Date(TODAY); d.setDate(d.getDate() - ago); return d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }); };
+  const uptime = (s, r) => (s === 'ok' ? 100 - r * 0.05 : s === 'warn' ? 98.5 + r * 1.2 : 90 + r * 6);
+
+  function history(seed, incidents) {
+    const next = rng(seed);
+    const days = Array.from({ length: DAYS }, (_, i) => {
+      const r = next();
+      const s = i < DAYS - 7 ? (r < 0.006 ? 'err' : r < 0.04 ? 'warn' : 'ok') : 'ok';
+      return { s, up: uptime(s, next()) };
+    });
+    incidents.forEach(({ ago, level }) => { days[DAYS - 1 - ago] = { s: level, up: uptime(level, next()) }; });
+    return days;
+  }
+
+  const services = SVCS.map((name, svc) => {
+    const days = history(svc * 7919 + 17, INCIDENTS.filter((x) => x.svc === svc));
+    const up = days.reduce((sum, d) => sum + d.up, 0) / DAYS;
+    return { name, days, up, state: days[DAYS - 1].s };
+  });
+  const worst = services.reduce((w, s) => (RANK[s.state] > RANK[w] ? s.state : w), 'ok');
+  const hit = services.filter((s) => s.state !== 'ok').length;
+  const BANNER = {
+    ok: ['Todos los sistemas operativos', 'No hay incidencias abiertas.'],
+    warn: ['Rendimiento degradado', `${hit === 1 ? '1 servicio afectado' : `${hit} servicios afectados`}. Seguimos trabajando en ello.`],
+    err: ['Incidencia en curso', `${hit === 1 ? '1 servicio' : `${hit} servicios`} con interrupciones. Te avisaremos al resolverla.`],
+  };
+
+  const cell = (d, i) => {
+    const label = `${fecha(DAYS - 1 - i)}: ${pct(d.up)} disponible, ${STATE[d.s]}`;
+    return `<button type="button" data-s="${d.s}" data-tip="${label}" aria-label="${label}" tabindex="${i === DAYS - 1 ? 0 : -1}" class="${CLS.cell}"></button>`;
+  };
+  document.getElementById('svcs').innerHTML = services.map((s) => `
+    <li class="${CLS.svc}">
+      <div class="${CLS.head}"><h3 class="${CLS.h3}">${s.name}</h3>
+        <p class="${CLS.stat}"><span class="${CLS.pct}">${pct(s.up)}</span><span data-s="${s.state}" class="${CLS.pill}"><i aria-hidden="true" class="${CLS.dot}"></i>${STATE[s.state]}</span></p></div>
+      <div class="${CLS.bar}" role="group" aria-label="Disponibilidad de ${s.name} en los últimos 90 días">${s.days.map(cell).join('')}</div>
+      <div class="${CLS.foot}"><span>Hace 90 días</span><span>Hoy</span></div>
+    </li>`).join('');
+
+  document.getElementById('incs').innerHTML = INCIDENTS.map((x) => `
+    <li class="${CLS.inc}">
+      <h3 class="${CLS.h3}">${x.title}</h3>
+      <p class="${CLS.incMeta}">${SVCS[x.svc]} · ${fecha(x.ago)}</p>
+      <ol class="${CLS.tl}">${x.updates.map(([hora, st, texto]) => `
+        <li data-s="${STEP[st][1]}" class="${CLS.tlItem}"><div class="${CLS.tlHead}"><time class="${CLS.time}">${hora}</time><span class="${CLS.pill}"><i aria-hidden="true" class="${CLS.dot}"></i>${STEP[st][0]}</span></div><p class="${CLS.tlText}">${texto}</p></li>`).join('')}
+      </ol>
+    </li>`).join('');
+
+  const banner = document.getElementById('banner');
+  banner.dataset.s = worst;
+  document.getElementById('bt').textContent = BANNER[worst][0];
+  document.getElementById('bs').textContent = BANNER[worst][1];
+
+  const svcs = document.getElementById('svcs'), tip = document.getElementById('tip');
+  function showTip(c) {
+    tip.textContent = c.dataset.tip;
+    tip.hidden = false;
+    const r = c.getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight;
+    const top = r.top - h - 8 < 0 ? r.bottom + 8 : r.top - h - 8;
+    tip.style.left = `${Math.min(Math.max(8, r.left + r.width / 2 - w / 2), innerWidth - w - 8)}px`;
+    tip.style.top = `${top}px`;
+  }
+  const hideTip = () => { tip.hidden = true; };
+  svcs.addEventListener('pointerover', (e) => e.target.matches('[data-tip]') && showTip(e.target));
+  svcs.addEventListener('pointerout', hideTip);
+  svcs.addEventListener('focusin', (e) => e.target.matches('[data-tip]') && showTip(e.target));
+  svcs.addEventListener('focusout', hideTip);
+  svcs.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') return hideTip();
+    if (!e.target.matches('[data-tip]')) return;
+    const cells = [...e.target.parentElement.children];
+    const i = cells.indexOf(e.target);
+    const next = { ArrowLeft: i - 1, ArrowRight: i + 1, Home: 0, End: cells.length - 1 }[e.key];
+    if (next === undefined) return;
+    e.preventDefault();
+    const j = Math.min(Math.max(next, 0), cells.length - 1);
+    cells.forEach((c) => (c.tabIndex = -1));
+    cells[j].tabIndex = 0;
+    cells[j].focus();
+  });
+
+  const form = document.getElementById('sub'), em = document.getElementById('em');
+  const emErr = document.getElementById('em-err'), done = document.getElementById('done');
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = em.value.trim();
+    const msg = !v ? 'Escribe tu correo para suscribirte.'
+      : EMAIL.test(v) ? '' : 'Revisa el correo: debe tener @ y un dominio, por ejemplo ana@empresa.com.';
+    emErr.textContent = msg;
+    emErr.hidden = !msg;
+    em.setAttribute('aria-invalid', String(!!msg));
+    if (msg) return em.focus();
+    form.hidden = true;
+    done.textContent = `Listo. Te enviamos un enlace a ${v} para confirmar la suscripción.`;
+    done.hidden = false;
+    done.focus();
+  });
+  em.addEventListener('input', () => {
+    if (emErr.hidden) return;
+    emErr.hidden = true;
+    em.setAttribute('aria-invalid', 'false');
+  });
+</script>

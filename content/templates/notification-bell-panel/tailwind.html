@@ -1,0 +1,135 @@
+<style>
+  @keyframes pop-in { from { opacity:0; transform:translateY(-4px) scale(.98); } }
+</style>
+<header class="mx-auto flex max-w-[720px] items-center justify-between gap-3 rounded-lg border border-line bg-surface px-3.5 py-3 shadow-sm">
+  <div>
+    <h1 class="m-0 text-[15px] font-semibold tracking-tight">Panel de control</h1>
+    <p class="m-0 text-[13px] text-muted">Actividad de tu equipo hoy</p>
+  </div>
+  <div id="wrap" class="relative flex-none">
+    <button type="button" id="bell" aria-label="Notificaciones" aria-haspopup="dialog" aria-expanded="false" aria-controls="pop" class="relative grid h-10 w-10 cursor-pointer place-items-center rounded-lg border border-line bg-page p-0 text-fg transition-colors enabled:hover:border-accent aria-expanded:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="h-5 w-5"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      <span id="badge" aria-hidden="true" class="absolute -top-[7px] -right-[7px] grid h-5 min-w-5 place-items-center rounded-full border-2 border-surface bg-err px-1.5 text-[11px] leading-none font-semibold text-accent-ink tabular-nums"></span>
+    </button>
+    <span id="count" aria-live="polite" class="sr-only"></span>
+    <div id="pop" role="dialog" aria-label="Notificaciones" hidden class="absolute top-[calc(100%+8px)] right-0 z-10 w-[min(360px,calc(100vw-32px))] origin-top-right overflow-hidden rounded-lg border border-line bg-surface shadow-sm [animation:pop-in_.16s_ease-out] motion-reduce:[animation:none]">
+      <div class="flex items-center justify-between gap-2 border-b border-line px-3.5 py-3">
+        <strong class="text-[15px] font-bold">Notificaciones</strong>
+        <button type="button" id="mark-all" class="cursor-pointer border-0 bg-transparent px-0.5 py-1 text-[13px] font-semibold text-accent enabled:hover:underline disabled:cursor-not-allowed disabled:text-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Marcar todas como leídas</button>
+      </div>
+      <div role="tablist" id="tablist" class="flex gap-1 border-b border-line bg-page p-1.5">
+        <button type="button" role="tab" id="t-todas" data-filter="todas" aria-controls="panel" class="flex-1 cursor-pointer rounded-[min(var(--radius),6px)] border border-transparent bg-transparent px-2 py-1.5 text-[13px] font-semibold text-muted aria-selected:border-line aria-selected:bg-surface aria-selected:text-fg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent">Todas</button>
+        <button type="button" role="tab" id="t-sin-leer" data-filter="sin-leer" aria-controls="panel" class="flex-1 cursor-pointer rounded-[min(var(--radius),6px)] border border-transparent bg-transparent px-2 py-1.5 text-[13px] font-semibold text-muted aria-selected:border-line aria-selected:bg-surface aria-selected:text-fg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent">Sin leer <span id="n-sin-leer" class="ml-1 text-accent tabular-nums"></span></button>
+      </div>
+      <div role="tabpanel" id="panel" aria-labelledby="t-todas">
+        <ul id="list" class="m-0 max-h-80 list-none overflow-y-auto p-1"></ul>
+        <div id="empty" hidden class="px-4 py-6 text-center text-muted">
+          <span aria-hidden="true" class="mb-1.5 inline-grid h-9 w-9 place-items-center rounded-full bg-ok-soft font-bold text-ok">✓</span>
+          <b class="block text-[15px] text-fg">Estás al día</b>
+          No tienes notificaciones sin leer.
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<script>
+  const NOTES = [
+    { kind: 'mention', text: 'Lucía Ferrer te mencionó en «Presupuesto Q3».', min: 4, read: false },
+    { kind: 'ok', text: 'Tu exportación de informes ya está lista para descargar.', min: 25, read: false },
+    { kind: 'warn', text: 'Tu plan vence en 3 días. Renueva para no perder el acceso.', min: 120, read: false },
+    { kind: 'edit', text: 'Marta Ruiz comentó en la revisión de contratos.', min: 200, read: true },
+    { kind: 'info', text: 'Hay una nueva versión 2.4 con mejoras de velocidad.', min: 600, read: false },
+    { kind: 'mention', text: 'Carlos Díaz te asignó una tarea del equipo.', min: 1500, read: true },
+    { kind: 'ok', text: 'Se completó la importación de 340 contactos.', min: 3000, read: true },
+    { kind: 'edit', text: 'Jorge Salas editó el documento «Política de viajes».', min: 5000, read: false },
+  ];
+  const ICON = { mention: '@', ok: '✓', warn: '!', info: 'i', edit: '✎' };
+  const ICO = {
+    mention: 'bg-accent-soft text-accent',
+    ok: 'bg-ok-soft text-ok',
+    warn: 'bg-warn-soft text-warn',
+    info: 'bg-info-soft text-info',
+    edit: 'bg-accent-soft text-accent',
+  };
+  const RTF = new Intl.RelativeTimeFormat('es', { numeric: 'auto' });
+  const ago = (min) => (min < 60 ? RTF.format(-min, 'minute') : min < 1440 ? RTF.format(-Math.round(min / 60), 'hour') : RTF.format(-Math.round(min / 1440), 'day'));
+
+  const wrap = document.getElementById('wrap'), bell = document.getElementById('bell'), pop = document.getElementById('pop');
+  const badge = document.getElementById('badge'), count = document.getElementById('count'), markAll = document.getElementById('mark-all');
+  const tablist = document.getElementById('tablist'), tabs = [...tablist.querySelectorAll('[role=tab]')], panel = document.getElementById('panel');
+  const list = document.getElementById('list'), empty = document.getElementById('empty'), sinLeerCount = document.getElementById('n-sin-leer');
+  let filter = 'todas';
+
+  list.innerHTML = NOTES.map((note, i) => `<li><button type="button" data-i="${i}" class="flex w-full cursor-pointer items-start gap-2.5 rounded-[min(var(--radius),6px)] p-2.5 text-left text-muted hover:bg-accent-soft focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent data-[unread]:font-semibold data-[unread]:text-fg"><span aria-hidden="true" class="grid h-7 w-7 flex-none place-items-center rounded-full text-[13px] font-bold ${ICO[note.kind]}">${ICON[note.kind]}</span><span class="min-w-0 flex-1"><span class="sr-only">Sin leer: </span>${note.text}<time class="block text-xs font-normal text-muted">${ago(note.min)}</time></span><span aria-hidden="true" class="size-2 flex-none self-center rounded-full bg-accent"></span></button></li>`).join('');
+
+  function paint() {
+    const unread = NOTES.filter((note) => !note.read).length;
+    list.querySelectorAll('button').forEach((btn) => {
+      const isUnread = !NOTES[btn.dataset.i].read;
+      btn.toggleAttribute('data-unread', isUnread);
+      btn.querySelector('.sr-only').hidden = !isUnread;
+      btn.lastElementChild.hidden = !isUnread;
+    });
+    badge.textContent = unread;
+    badge.hidden = !unread;
+    count.textContent = unread ? `${unread} sin leer` : 'Sin notificaciones sin leer';
+    sinLeerCount.textContent = unread;
+    markAll.disabled = !unread;
+  }
+
+  function applyFilter() {
+    list.querySelectorAll('li').forEach((li) => (li.hidden = filter === 'sin-leer' && NOTES[li.firstElementChild.dataset.i].read));
+    empty.hidden = list.querySelector('li:not([hidden])') !== null;
+  }
+
+  function select(tab) {
+    tabs.forEach((t) => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+    });
+    filter = tab.dataset.filter;
+    panel.setAttribute('aria-labelledby', tab.id);
+    applyFilter();
+  }
+
+  function open() {
+    pop.hidden = false;
+    bell.setAttribute('aria-expanded', 'true');
+    tablist.querySelector('[aria-selected=true]').focus();
+  }
+
+  function close(returnFocus) {
+    pop.hidden = true;
+    bell.setAttribute('aria-expanded', 'false');
+    if (returnFocus) bell.focus();
+  }
+
+  bell.addEventListener('click', () => (pop.hidden ? open() : close(true)));
+  wrap.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pop.hidden) close(true); });
+  document.addEventListener('click', (e) => { if (!pop.hidden && !wrap.contains(e.target)) close(false); });
+  tablist.addEventListener('click', (e) => { const tab = e.target.closest('[role=tab]'); if (tab) select(tab); });
+  tablist.addEventListener('keydown', (e) => {
+    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!step) return;
+    e.preventDefault();
+    const next = tabs[(tabs.indexOf(e.target) + step + tabs.length) % tabs.length];
+    select(next);
+    next.focus();
+  });
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    NOTES[btn.dataset.i].read = true;
+    paint();
+  });
+  markAll.addEventListener('click', () => {
+    NOTES.forEach((note) => (note.read = true));
+    paint();
+    applyFilter();
+    tablist.querySelector('[aria-selected=true]').focus();
+  });
+
+  paint();
+  select(tabs[0]);
+</script>
