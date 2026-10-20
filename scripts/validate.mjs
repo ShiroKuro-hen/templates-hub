@@ -1,8 +1,9 @@
-// Valida el contenido de content/templates antes de compilar. Sin dependencias: `node scripts/validate.mjs`.
+// Valida el contenido de content/templates antes de compilar: `node scripts/validate.mjs`.
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { transformSync } from 'esbuild';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const dir = join(root, 'content', 'templates');
@@ -60,6 +61,9 @@ for (const slug of slugs) {
   if (EXTERNAL.test(html)) err(slug, 'html.html carga recursos externos (la vista previa no debe usar red)');
   if (!/export\s/.test(react)) err(slug, 'react.tsx sin export');
   if (!/<template>/.test(vue) || !/<script setup/.test(vue)) err(slug, 'vue.vue debe tener <script setup> y <template>');
+  const syntax = (name, code, loader) => { try { transformSync(code, { loader }); } catch (e) { err(slug, `${name}: error de sintaxis: ${e.errors?.[0]?.text ?? e.message}`); } };
+  syntax('react.tsx', react, 'tsx');
+  syntax('vue.vue <script setup>', vue.match(/<script[^>]*>([\s\S]*?)<\/script>/)?.[1] ?? '', 'ts');
   for (const [name, txt] of [['html.html', html], ['tailwind.html', tw], ['react.tsx', react], ['vue.vue', vue]]) {
     if (OLD_STYLE.test(txt)) err(slug, `${name} contiene estilo antiguo (colores/sombras previos a Ion)`);
   }
