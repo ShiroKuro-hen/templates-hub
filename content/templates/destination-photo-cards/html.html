@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Destinos con fotos y favoritos</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .wrap{max-width:960px;margin:0 auto}
+  .head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+  .kicker{margin:0 0 4px;color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  h1{margin:0;font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+  .favs{margin:0;color:var(--muted)}
+  .favs output{color:var(--text);font-weight:700;font-variant-numeric:tabular-nums}
+  .tools{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .tools label{color:var(--muted);font-weight:600}
+  select{font:inherit;padding:6px 10px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin:0;padding:0;list-style:none}
+  .card{height:100%;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);transition:border-color .2s ease}
+  .card:hover{border-color:var(--accent)}
+  .photo{position:relative;margin:0;aspect-ratio:3/2;overflow:hidden;border-bottom:1px solid var(--border)}
+  .photo img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .card:hover .photo img,.card:focus-within .photo img{transform:scale(1.06)}
+  .fav{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:36px;height:36px;padding:0;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:50%;cursor:pointer}
+  .fav svg{width:18px;height:18px}
+  .fav[aria-pressed=true]{color:var(--err)}
+  .fav[aria-pressed=true] path{fill:currentColor}
+  .body{padding:14px 16px 16px}
+  h2{margin:0;font-size:1.05rem;font-weight:600}
+  .place{margin:2px 0 12px;color:var(--muted);font-size:13px}
+  .meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .price{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
+  .rating{margin:0;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+  .rating span{color:var(--warn)}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover .photo img,.card:focus-within .photo img{transform:none}}
+</style>
+</head>
+<body>
+<main class="wrap" aria-labelledby="h">
+  <header class="head">
+    <div>
+      <p class="kicker">Escapadas</p>
+      <h1 id="h">Destinos para escaparte</h1>
+    </div>
+    <p class="favs">Favoritos: <output id="favs">0</output></p>
+  </header>
+  <div class="tools">
+    <label for="sort">Ordenar por</label>
+    <select id="sort">
+      <option value="precio-asc" selected>Precio ↑</option>
+      <option value="precio-desc">Precio ↓</option>
+      <option value="valoracion">Valoración</option>
+    </select>
+    <p class="sr" id="sort-live" aria-live="polite"></p>
+  </div>
+  <ul class="grid" id="grid">
+    <li data-price="280" data-rating="4.6">
+      <article class="card">
+        <figure class="photo">
+          <img src="/stock/sendero-verde.webp" alt="Sendero de hierba que atraviesa el bosque" width="800" height="533" loading="lazy" decoding="async">
+          <button type="button" class="fav" aria-pressed="false" aria-label="Guardar Selva Negra en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="body">
+          <h2>Selva Negra</h2>
+          <p class="place">Alemania</p>
+          <div class="meta">
+            <p class="price">desde 280 €</p>
+            <p class="rating"><span aria-hidden="true">★</span> 4,6<span class="sr"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="350" data-rating="4.7">
+      <article class="card">
+        <figure class="photo">
+          <img src="/stock/canon-verde.webp" alt="Cañón verde con un arroyo" width="800" height="533" loading="lazy" decoding="async">
+          <button type="button" class="fav" aria-pressed="false" aria-label="Guardar Cañón del Tara en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="body">
+          <h2>Cañón del Tara</h2>
+          <p class="place">Montenegro</p>
+          <div class="meta">
+            <p class="price">desde 350 €</p>
+            <p class="rating"><span aria-hidden="true">★</span> 4,7<span class="sr"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="420" data-rating="4.5">
+      <article class="card">
+        <figure class="photo">
+          <img src="/stock/embarcadero.webp" alt="Muelle de madera que se adentra en el mar" width="800" height="533" loading="lazy" decoding="async">
+          <button type="button" class="fav" aria-pressed="false" aria-label="Guardar Costa Cántabra en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="body">
+          <h2>Costa Cántabra</h2>
+          <p class="place">España</p>
+          <div class="meta">
+            <p class="price">desde 420 €</p>
+            <p class="rating"><span aria-hidden="true">★</span> 4,5<span class="sr"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="460" data-rating="4.4">
+      <article class="card">
+        <figure class="photo">
+          <img src="/stock/costa-azul.webp" alt="Costa con pinos frente al mar" width="800" height="533" loading="lazy" decoding="async">
+          <button type="button" class="fav" aria-pressed="false" aria-label="Guardar Cassis en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="body">
+          <h2>Cassis</h2>
+          <p class="place">Francia</p>
+          <div class="meta">
+            <p class="price">desde 460 €</p>
+            <p class="rating"><span aria-hidden="true">★</span> 4,4<span class="sr"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="540" data-rating="4.8">
+      <article class="card">
+        <figure class="photo">
+          <img src="/stock/montana-nieve.webp" alt="Picos nevados bajo un cielo despejado" width="800" height="533" loading="lazy" decoding="async">
+          <button type="button" class="fav" aria-pressed="false" aria-label="Guardar Zermatt en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="body">
+          <h2>Zermatt</h2>
+          <p class="place">Suiza</p>
+          <div class="meta">
+            <p class="price">desde 540 €</p>
+            <p class="rating"><span aria-hidden="true">★</span> 4,8<span class="sr"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="690" data-rating="4.9">
+      <article class="card">
+        <figure class="photo">
+          <img src="/stock/isla-blanca.webp" alt="Pueblo blanco griego junto al mar" width="800" height="533" loading="lazy" decoding="async">
+          <button type="button" class="fav" aria-pressed="false" aria-label="Guardar Santorini en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="body">
+          <h2>Santorini</h2>
+          <p class="place">Grecia</p>
+          <div class="meta">
+            <p class="price">desde 690 €</p>
+            <p class="rating"><span aria-hidden="true">★</span> 4,9<span class="sr"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+  </ul>
+</main>
+<script>
+  const grid = document.getElementById('grid'), sort = document.getElementById('sort');
+  const favs = document.getElementById('favs'), live = document.getElementById('sort-live');
+  const SORTS = {
+    'precio-asc': ['price', 1, 'precio, de menor a mayor'],
+    'precio-desc': ['price', -1, 'precio, de mayor a menor'],
+    valoracion: ['rating', -1, 'valoración, de mayor a menor'],
+  };
+  sort.addEventListener('change', () => {
+    const [key, dir, label] = SORTS[sort.value];
+    [...grid.children]
+      .sort((a, b) => dir * (a.dataset[key] - b.dataset[key]))
+      .forEach((li) => grid.append(li));
+    live.textContent = `Ordenado por ${label}.`;
+  });
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.fav'); if (!btn) return;
+    btn.setAttribute('aria-pressed', String(btn.getAttribute('aria-pressed') !== 'true'));
+    favs.textContent = grid.querySelectorAll('.fav[aria-pressed="true"]').length;
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agenda diaria con solapes</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .cal{--h:56px;max-width:560px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 12px;padding:14px 16px;border-bottom:1px solid var(--border)}
+  h2{margin:0;font-size:17px;font-weight:600}
+  .sub{margin:2px 0 0;color:var(--muted);font-size:13px}
+  .tools{display:flex;flex-wrap:wrap;gap:6px}
+  button,input{font:inherit;color:var(--text);transition:background .14s,border-color .14s}
+  button{background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:min(var(--radius),6px);background:var(--surface);font-weight:500}
+  .btn:hover{border-color:var(--muted)}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.main:hover{border-color:var(--accent)}
+  .scroller{max-height:420px;overflow-y:auto}
+  .body{display:flex;padding:8px 12px}
+  .hours,.day{margin:0;padding:0;list-style:none;height:calc(11 * var(--h))}
+  .hours{position:relative;flex:none;width:44px}
+  .hours li{position:absolute;right:6px;top:calc(var(--s) * var(--h));transform:translateY(-50%);color:var(--muted);font-size:12px;line-height:1;font-variant-numeric:tabular-nums}
+  .day{position:relative;flex:1;min-width:0;border-left:1px solid var(--border);background:repeating-linear-gradient(to bottom,var(--border) 0 1px,transparent 1px var(--h))}
+  .slot,.ev,.now{position:absolute;margin:0;list-style:none}
+  .slot{left:0;right:0;top:calc(var(--s) * var(--h));height:var(--h)}
+  .slot button{display:block;width:100%;height:100%}
+  .slot button:hover{background:var(--accent-soft)}
+  .ev{z-index:1;top:calc(var(--s) * var(--h) + 2px);height:calc(var(--d) * var(--h) - 4px);left:calc(var(--i) * 100% / var(--n) + 3px);width:calc(100% / var(--n) - 6px)}
+  .ev button{display:block;width:100%;height:100%;overflow:hidden;padding:4px 8px;text-align:left;font-size:12px;line-height:1.25;background:var(--cs);border:1px solid var(--c);border-left-width:3px;border-radius:min(var(--radius),6px)}
+  .ev button:hover{box-shadow:var(--shadow)}
+  .ev b,.ev time{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ev time{color:var(--muted)}
+  .ev.sh time{display:none}
+  .reunion{--c:var(--accent);--cs:var(--accent-soft)}
+  .personal{--c:var(--ok);--cs:var(--ok-soft)}
+  .viaje{--c:var(--info);--cs:var(--info-soft)}
+  .now{z-index:0;left:0;right:0;top:calc(var(--s) * var(--h));height:2px;margin-top:-1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));pointer-events:none}
+  .now::before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:999px;background:var(--accent)}
+  .status{margin:0;min-height:40px;padding:10px 16px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+  .detail{padding:14px 16px;border-top:1px solid var(--border);background:var(--bg)}
+  .detail h3{margin:0;font-size:15px;font-weight:600}
+  .detail p{margin:2px 0 0;color:var(--muted);font-size:13px}
+  .detail dl{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:12px 0;font-size:13px}
+  .detail dt{color:var(--muted)}
+  .detail dd{margin:0}
+  .people{display:flex;flex-wrap:wrap;gap:6px 10px;margin:0;padding:0;list-style:none}
+  .people li{display:flex;align-items:center;gap:6px}
+  .av{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600}
+  dialog{width:min(calc(100vw - 32px),360px);padding:20px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  dialog::backdrop{background:rgba(10,15,28,.5)}
+  dialog h3{margin:0 0 12px;font-size:16px}
+  label{display:grid;gap:4px;margin-bottom:10px;font-weight:500}
+  input{padding:8px 10px;background:var(--bg);border:1px solid var(--border);border-radius:min(var(--radius),6px)}
+  input[aria-invalid=true]{border-color:var(--err)}
+  .err{margin:0;color:var(--err);font-size:12px}
+  .err:empty{display:none}
+  .acts{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+  @media (max-width:480px){
+    .ahora,.hours,.slot,.now{display:none}
+    .body{padding:8px 12px}
+    .day{display:flex;flex-direction:column;gap:8px;height:auto;padding:0;border:0;background:none}
+    .ev{position:static;width:auto;height:auto}
+    .ev button{height:auto;padding:8px 10px}
+    .ev.sh time{display:block}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="cal" aria-labelledby="title">
+  <header class="top">
+    <div>
+      <h2 id="title"></h2>
+      <p class="sub" id="sub"></p>
+    </div>
+    <div class="tools">
+      <button type="button" class="btn" id="prev" aria-label="Día anterior">‹</button>
+      <button type="button" class="btn" id="next" aria-label="Día siguiente">›</button>
+      <button type="button" class="btn ahora" id="now">Ahora</button>
+      <button type="button" class="btn main" id="add">Añadir evento</button>
+    </div>
+  </header>
+  <div class="scroller" id="scroller" tabindex="0" role="region" aria-label="Agenda del día, desplazable">
+    <div class="body">
+      <ol class="hours" id="hours" aria-hidden="true"></ol>
+      <ol class="day" id="day" aria-label="Eventos del día"></ol>
+    </div>
+  </div>
+  <section class="detail" id="detail" aria-label="Detalle del evento" hidden></section>
+  <p class="status" id="status" role="status"></p>
+</section>
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <form id="form" novalidate>
+    <h3 id="dlg-title">Nuevo evento</h3>
+    <label>Título <input id="f-title" name="title" maxlength="60" aria-describedby="e-title"></label>
+    <p class="err" id="e-title"></p>
+    <label>Inicio <input id="f-start" type="time" step="900" aria-describedby="e-start"></label>
+    <p class="err" id="e-start"></p>
+    <label>Duración (minutos) <input id="f-dur" type="number" min="15" max="240" step="15" value="60" aria-describedby="e-dur"></label>
+    <p class="err" id="e-dur"></p>
+    <div class="acts">
+      <button type="button" class="btn" id="cancel">Cancelar</button>
+      <button type="submit" class="btn main">Añadir</button>
+    </div>
+  </form>
+</dialog>
+<script>
+  const START = 480, END = 1140, NOW = 640;
+  const $ = (id) => document.getElementById(id);
+  const fmtDay = new Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric', month: 'long' });
+  const pad = (n) => String(n).padStart(2, '0');
+  const hm = (min) => `${pad(Math.floor(min / 60))}:${pad(min % 60)}`;
+  const toMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+  const initials = (name) => name.split(' ').map((w) => w[0]).slice(0, 2).join('');
+  const dayLabel = (d) => { const t = fmtDay.format(d); return t[0].toUpperCase() + t.slice(1); };
+  const FIELDS = { title: $('f-title'), start: $('f-start'), dur: $('f-dur') };
+
+  const DAYS = [
+    { date: new Date(2026, 9, 20), events: [
+      { title: 'Standup de equipo', start: 540, dur: 30, cat: 'reunion', place: 'Sala Ámbar', who: ['Ana Ruiz', 'Luis Gómez', 'Marta Sanz'] },
+      { title: 'Revisión de diseño', start: 600, dur: 90, cat: 'reunion', place: 'Sala Cobalto', who: ['Ana Ruiz', 'Irene Pardo'] },
+      { title: 'Llamada con proveedor', start: 630, dur: 60, cat: 'reunion', place: 'Videollamada', who: ['Pablo Díaz', 'Luis Gómez'] },
+      { title: 'Comida con Lucía', start: 810, dur: 60, cat: 'personal', place: 'Restaurante Olivo', who: ['Lucía Mena'] },
+      { title: 'Entrega del informe', start: 960, dur: 60, cat: 'reunion', place: 'Despacho 3B', who: ['Ana Ruiz', 'Carlos Vega'] },
+      { title: 'Gimnasio', start: 1020, dur: 60, cat: 'personal', place: 'Club Norte', who: ['Tú'] },
+    ] },
+    { date: new Date(2026, 9, 21), events: [
+      { title: 'Taller de accesibilidad', start: 570, dur: 120, cat: 'reunion', place: 'Sala Norte', who: ['Marta Sanz', 'Irene Pardo', 'Tú'] },
+      { title: 'Entrevista UX', start: 660, dur: 60, cat: 'reunion', place: 'Videollamada', who: ['Irene Pardo', 'Carlos Vega'] },
+      { title: 'Almuerzo de equipo', start: 840, dur: 60, cat: 'personal', place: 'Cantina Sur', who: ['Ana Ruiz', 'Luis Gómez'] },
+      { title: 'Traslado al aeropuerto', start: 1020, dur: 90, cat: 'viaje', place: 'Terminal 1', who: ['Tú'] },
+    ] },
+    { date: new Date(2026, 9, 22), events: [
+      { title: 'Vuelo a Lisboa', start: 480, dur: 150, cat: 'viaje', place: 'Aeropuerto de Barajas', who: ['Tú'] },
+      { title: 'Revisión de presupuesto', start: 660, dur: 60, cat: 'reunion', place: 'Sala Cobalto', who: ['Carlos Vega', 'Ana Ruiz'] },
+      { title: 'Llamada familiar', start: 780, dur: 30, cat: 'personal', place: 'Videollamada', who: ['Mamá'] },
+      { title: 'Reunión con cliente', start: 795, dur: 75, cat: 'reunion', place: 'Oficinas Atlas', who: ['Pablo Díaz', 'Tú'] },
+      { title: 'Entrevista de candidatos', start: 990, dur: 45, cat: 'reunion', place: 'Sala Ámbar', who: ['Irene Pardo', 'Marta Sanz'] },
+    ] },
+  ];
+
+  const list = $('day'), scroller = $('scroller'), dlg = $('dlg'), form = $('form');
+  let current = 0, openId = null;
+
+  function layout(events) {
+    const sorted = events.map((ev, id) => ({ ...ev, id })).sort((a, b) => a.start - b.start || b.dur - a.dur);
+    const out = [];
+    let group = [], groupEnd = 0, lanes = [];
+    const flush = () => {
+      group.forEach((ev) => { ev.n = lanes.length; });
+      out.push(...group);
+      group = [];
+      lanes = [];
+    };
+    for (const ev of sorted) {
+      if (ev.start >= groupEnd) flush();
+      let i = lanes.findIndex((end) => end <= ev.start);
+      if (i === -1) i = lanes.push(0) - 1;
+      lanes[i] = ev.start + ev.dur;
+      ev.i = i;
+      groupEnd = Math.max(groupEnd, ev.start + ev.dur);
+      group.push(ev);
+    }
+    flush();
+    return out;
+  }
+
+  const SLOTS = Array.from({ length: 11 }, (_, k) => `<li class="slot" style="--s:${k}"><button type="button" data-min="${START + k * 60}" aria-label="Añadir evento a las ${hm(START + k * 60)}"></button></li>`).join('');
+  const NOW_LINE = `<li class="now" style="--s:${(NOW - START) / 60}" aria-hidden="true"></li>`;
+  const eventHtml = (ev) => `<li class="ev ${ev.cat}${ev.dur < 60 ? ' sh' : ''}" style="--s:${(ev.start - START) / 60};--d:${ev.dur / 60};--i:${ev.i};--n:${ev.n}"><button type="button" data-id="${ev.id}"><b>${esc(ev.title)}</b><time>${hm(ev.start)} – ${hm(ev.start + ev.dur)}</time></button></li>`;
+
+  function renderDay() {
+    const day = DAYS[current], events = layout(day.events);
+    $('title').textContent = dayLabel(day.date);
+    $('sub').textContent = `${current === 0 ? 'Hoy · ' : ''}${events.length} ${events.length === 1 ? 'evento' : 'eventos'}`;
+    list.innerHTML = SLOTS + events.map(eventHtml).join('') + (current === 0 ? NOW_LINE : '');
+    closeDetail();
+  }
+
+  function say(msg) { $('status').textContent = msg; }
+
+  function shiftDay(n) {
+    current = (current + n + DAYS.length) % DAYS.length;
+    renderDay();
+    say(`Mostrando ${dayLabel(DAYS[current].date).toLowerCase()}.`);
+  }
+
+  function showNow() {
+    if (current !== 0) { current = 0; renderDay(); }
+    const now = list.querySelector('.now');
+    const top = now.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop;
+    const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    scroller.scrollTo({ top: top - scroller.clientHeight / 2, behavior });
+    say('Ahora son las 10:40.');
+  }
+
+  function openDetail(id) {
+    const day = DAYS[current], ev = day.events[id], detail = $('detail');
+    openId = id;
+    detail.innerHTML = `<h3 tabindex="-1">${esc(ev.title)}</h3>
+      <p>${dayLabel(day.date)} · ${hm(ev.start)} – ${hm(ev.start + ev.dur)}</p>
+      <dl><dt>Lugar</dt><dd>${esc(ev.place)}</dd><dt>Asistentes</dt><dd><ul class="people">${ev.who.map((w) => `<li><span class="av" aria-hidden="true">${esc(initials(w))}</span>${esc(w)}</li>`).join('')}</ul></dd></dl>
+      <button type="button" class="btn" data-close>Cerrar detalle</button>`;
+    detail.hidden = false;
+    detail.querySelector('h3').focus();
+  }
+
+  function closeDetail() { $('detail').hidden = true; }
+
+  function closeFromDetail() {
+    closeDetail();
+    list.querySelector(`[data-id="${openId}"]`)?.focus();
+  }
+
+  function openAdd(min = 720) {
+    form.reset();
+    showErrors({});
+    FIELDS.start.value = hm(min);
+    dlg.showModal();
+  }
+
+  function check(title, time, dur) {
+    const errors = {};
+    if (!title) errors.title = 'Escribe un título.';
+    const at = /^\d{2}:\d{2}$/.test(time) ? toMin(time) : NaN;
+    if (!(at >= START && at < END)) errors.start = 'Elige una hora entre 08:00 y 18:59.';
+    if (!Number.isInteger(dur) || dur < 15 || dur > 240 || dur % 15) errors.dur = 'Usa de 15 a 240 minutos, en tramos de 15.';
+    else if (!errors.start && at + dur > END) errors.dur = 'El evento debe terminar antes de las 19:00.';
+    return errors;
+  }
+
+  function showErrors(errors) {
+    for (const [key, input] of Object.entries(FIELDS)) {
+      $('e-' + key).textContent = errors[key] ?? '';
+      input.setAttribute('aria-invalid', String(key in errors));
+    }
+    const first = Object.keys(errors)[0];
+    if (first) FIELDS[first].focus();
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const title = FIELDS.title.value.trim(), time = FIELDS.start.value, dur = Number(FIELDS.dur.value);
+    const errors = check(title, time, dur);
+    showErrors(errors);
+    if (Object.keys(errors).length) return;
+    const at = toMin(time), day = DAYS[current];
+    day.events.push({ title, start: at, dur, cat: 'personal', place: 'Por definir', who: ['Tú'] });
+    dlg.close();
+    renderDay();
+    list.querySelector(`[data-id="${day.events.length - 1}"]`).focus();
+    say(`Evento "${title}" añadido a las ${hm(at)}.`);
+  });
+
+  list.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.id) openDetail(Number(b.dataset.id));
+    else openAdd(Number(b.dataset.min));
+  });
+  $('detail').addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeFromDetail(); });
+  $('detail').addEventListener('keydown', (e) => { if (e.key === 'Escape') closeFromDetail(); });
+  $('prev').onclick = () => shiftDay(-1);
+  $('next').onclick = () => shiftDay(1);
+  $('now').onclick = showNow;
+  $('add').onclick = () => openAdd();
+  $('cancel').onclick = () => dlg.close();
+
+  $('hours').innerHTML = Array.from({ length: 12 }, (_, k) => `<li style="--s:${k}">${hm(START + k * 60)}</li>`).join('');
+  renderDay();
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<main class="mx-auto max-w-[960px]" aria-labelledby="h">
+  <header class="mb-4 flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <p class="mb-1 text-xs leading-normal font-bold tracking-[0.08em] text-accent uppercase">Escapadas</p>
+      <h1 id="h" class="text-2xl leading-normal font-bold tracking-[-0.02em]">Destinos para escaparte</h1>
+    </div>
+    <p class="m-0 text-muted">Favoritos: <output id="favs" class="font-bold text-fg tabular-nums">0</output></p>
+  </header>
+  <div class="mb-4 flex items-center gap-2.5">
+    <label for="sort" class="font-semibold text-muted">Ordenar por</label>
+    <select id="sort" class="rounded-lg border border-line bg-surface px-2.5 py-1.5 text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      <option value="precio-asc" selected>Precio ↑</option>
+      <option value="precio-desc">Precio ↓</option>
+      <option value="valoracion">Valoración</option>
+    </select>
+    <p class="sr-only" id="sort-live" aria-live="polite"></p>
+  </div>
+  <ul class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-4 p-0" id="grid">
+    <li data-price="280" data-rating="4.6">
+      <article class="group h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm motion-safe:transition-[border-color] motion-safe:duration-200 hover:border-accent">
+        <figure class="relative m-0 aspect-[3/2] overflow-hidden border-b border-line">
+          <img src="/stock/sendero-verde.webp" alt="Sendero de hierba que atraviesa el bosque" width="800" height="533" loading="lazy" decoding="async" class="block h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-within:scale-[1.06]">
+          <button type="button" class="fav absolute top-2.5 right-2.5 grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface p-0 text-fg aria-pressed:text-err aria-pressed:[&_path]:fill-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-pressed="false" aria-label="Guardar Selva Negra en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-[18px]"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="px-4 pt-3.5 pb-4">
+          <h2 class="m-0 text-[1.05rem] font-semibold">Selva Negra</h2>
+          <p class="mt-0.5 mb-3 text-[13px] text-muted">Alemania</p>
+          <div class="flex items-center justify-between gap-2">
+            <p class="m-0 font-bold tabular-nums">desde 280 €</p>
+            <p class="m-0 text-[13px] text-muted tabular-nums"><span aria-hidden="true" class="text-warn">★</span> 4,6<span class="sr-only"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="350" data-rating="4.7">
+      <article class="group h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm motion-safe:transition-[border-color] motion-safe:duration-200 hover:border-accent">
+        <figure class="relative m-0 aspect-[3/2] overflow-hidden border-b border-line">
+          <img src="/stock/canon-verde.webp" alt="Cañón verde con un arroyo" width="800" height="533" loading="lazy" decoding="async" class="block h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-within:scale-[1.06]">
+          <button type="button" class="fav absolute top-2.5 right-2.5 grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface p-0 text-fg aria-pressed:text-err aria-pressed:[&_path]:fill-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-pressed="false" aria-label="Guardar Cañón del Tara en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-[18px]"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="px-4 pt-3.5 pb-4">
+          <h2 class="m-0 text-[1.05rem] font-semibold">Cañón del Tara</h2>
+          <p class="mt-0.5 mb-3 text-[13px] text-muted">Montenegro</p>
+          <div class="flex items-center justify-between gap-2">
+            <p class="m-0 font-bold tabular-nums">desde 350 €</p>
+            <p class="m-0 text-[13px] text-muted tabular-nums"><span aria-hidden="true" class="text-warn">★</span> 4,7<span class="sr-only"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="420" data-rating="4.5">
+      <article class="group h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm motion-safe:transition-[border-color] motion-safe:duration-200 hover:border-accent">
+        <figure class="relative m-0 aspect-[3/2] overflow-hidden border-b border-line">
+          <img src="/stock/embarcadero.webp" alt="Muelle de madera que se adentra en el mar" width="800" height="533" loading="lazy" decoding="async" class="block h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-within:scale-[1.06]">
+          <button type="button" class="fav absolute top-2.5 right-2.5 grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface p-0 text-fg aria-pressed:text-err aria-pressed:[&_path]:fill-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-pressed="false" aria-label="Guardar Costa Cántabra en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-[18px]"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="px-4 pt-3.5 pb-4">
+          <h2 class="m-0 text-[1.05rem] font-semibold">Costa Cántabra</h2>
+          <p class="mt-0.5 mb-3 text-[13px] text-muted">España</p>
+          <div class="flex items-center justify-between gap-2">
+            <p class="m-0 font-bold tabular-nums">desde 420 €</p>
+            <p class="m-0 text-[13px] text-muted tabular-nums"><span aria-hidden="true" class="text-warn">★</span> 4,5<span class="sr-only"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="460" data-rating="4.4">
+      <article class="group h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm motion-safe:transition-[border-color] motion-safe:duration-200 hover:border-accent">
+        <figure class="relative m-0 aspect-[3/2] overflow-hidden border-b border-line">
+          <img src="/stock/costa-azul.webp" alt="Costa con pinos frente al mar" width="800" height="533" loading="lazy" decoding="async" class="block h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-within:scale-[1.06]">
+          <button type="button" class="fav absolute top-2.5 right-2.5 grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface p-0 text-fg aria-pressed:text-err aria-pressed:[&_path]:fill-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-pressed="false" aria-label="Guardar Cassis en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-[18px]"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="px-4 pt-3.5 pb-4">
+          <h2 class="m-0 text-[1.05rem] font-semibold">Cassis</h2>
+          <p class="mt-0.5 mb-3 text-[13px] text-muted">Francia</p>
+          <div class="flex items-center justify-between gap-2">
+            <p class="m-0 font-bold tabular-nums">desde 460 €</p>
+            <p class="m-0 text-[13px] text-muted tabular-nums"><span aria-hidden="true" class="text-warn">★</span> 4,4<span class="sr-only"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="540" data-rating="4.8">
+      <article class="group h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm motion-safe:transition-[border-color] motion-safe:duration-200 hover:border-accent">
+        <figure class="relative m-0 aspect-[3/2] overflow-hidden border-b border-line">
+          <img src="/stock/montana-nieve.webp" alt="Picos nevados bajo un cielo despejado" width="800" height="533" loading="lazy" decoding="async" class="block h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-within:scale-[1.06]">
+          <button type="button" class="fav absolute top-2.5 right-2.5 grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface p-0 text-fg aria-pressed:text-err aria-pressed:[&_path]:fill-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-pressed="false" aria-label="Guardar Zermatt en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-[18px]"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="px-4 pt-3.5 pb-4">
+          <h2 class="m-0 text-[1.05rem] font-semibold">Zermatt</h2>
+          <p class="mt-0.5 mb-3 text-[13px] text-muted">Suiza</p>
+          <div class="flex items-center justify-between gap-2">
+            <p class="m-0 font-bold tabular-nums">desde 540 €</p>
+            <p class="m-0 text-[13px] text-muted tabular-nums"><span aria-hidden="true" class="text-warn">★</span> 4,8<span class="sr-only"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+    <li data-price="690" data-rating="4.9">
+      <article class="group h-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm motion-safe:transition-[border-color] motion-safe:duration-200 hover:border-accent">
+        <figure class="relative m-0 aspect-[3/2] overflow-hidden border-b border-line">
+          <img src="/stock/isla-blanca.webp" alt="Pueblo blanco griego junto al mar" width="800" height="533" loading="lazy" decoding="async" class="block h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.06] motion-safe:group-focus-within:scale-[1.06]">
+          <button type="button" class="fav absolute top-2.5 right-2.5 grid size-9 cursor-pointer place-items-center rounded-full border border-line bg-surface p-0 text-fg aria-pressed:text-err aria-pressed:[&_path]:fill-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" aria-pressed="false" aria-label="Guardar Santorini en favoritos"><svg viewBox="0 0 24 24" aria-hidden="true" class="size-[18px]"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+        </figure>
+        <div class="px-4 pt-3.5 pb-4">
+          <h2 class="m-0 text-[1.05rem] font-semibold">Santorini</h2>
+          <p class="mt-0.5 mb-3 text-[13px] text-muted">Grecia</p>
+          <div class="flex items-center justify-between gap-2">
+            <p class="m-0 font-bold tabular-nums">desde 690 €</p>
+            <p class="m-0 text-[13px] text-muted tabular-nums"><span aria-hidden="true" class="text-warn">★</span> 4,9<span class="sr-only"> de 5</span></p>
+          </div>
+        </div>
+      </article>
+    </li>
+  </ul>
+</main>
+<script>
+  const grid = document.getElementById('grid'), sort = document.getElementById('sort');
+  const favs = document.getElementById('favs'), live = document.getElementById('sort-live');
+  const SORTS = {
+    'precio-asc': ['price', 1, 'precio, de menor a mayor'],
+    'precio-desc': ['price', -1, 'precio, de mayor a menor'],
+    valoracion: ['rating', -1, 'valoración, de mayor a menor'],
+  };
+  sort.addEventListener('change', () => {
+    const [key, dir, label] = SORTS[sort.value];
+    [...grid.children]
+      .sort((a, b) => dir * (a.dataset[key] - b.dataset[key]))
+      .forEach((li) => grid.append(li));
+    live.textContent = `Ordenado por ${label}.`;
+  });
+  grid.addEventListener('click', (e) => {
+    const btn = e.target.closest('.fav'); if (!btn) return;
+    btn.setAttribute('aria-pressed', String(btn.getAttribute('aria-pressed') !== 'true'));
+    favs.textContent = grid.querySelectorAll('.fav[aria-pressed="true"]').length;
+  });
+</script>
