@@ -38,7 +38,7 @@
   <p id="msg" role="status"></p>
 </section>
 <script>
-  const SCALE = {50:'#f0f4ff',100:'#dee5ff',200:'#bccbff',300:'#97adff',400:'#6384ff',500:'var(--accent,#2f5bff)',600:'#2a50e1',700:'#2444bf',800:'#1d3594',900:'#16276d'};
+  const SCALE = {50:'#f0f4ff',100:'#dee5ff',200:'#bccbff',300:'#97adff',400:'#6384ff',500:'#2f5bff',600:'#2a50e1',700:'#2444bf',800:'#1d3594',900:'#16276d'};
   const INK = '#0e1726', WHITE = '#ffffff';
   const lum = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255)
     .map((v) => (v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4))

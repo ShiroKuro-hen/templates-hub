@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 
 const MUESTRAS = [
-  ['Ultramar', 'var(--accent,#2f5bff)'], ['Cian', '#0891b2'], ['Esmeralda', '#0e9f6e'], ['Ámbar', '#b7791f'],
+  ['Ultramar', '#2f5bff'], ['Cian', '#0891b2'], ['Esmeralda', '#0e9f6e'], ['Ámbar', '#b7791f'],
   ['Coral', '#d92d4a'], ['Violeta', '#7c3aed'], ['Pizarra', '#334155'], ['Grafito', '#0e1726'],
 ];
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -16,8 +16,8 @@ const ratio = (a: number[], b: number[]) => {
   return (p + 0.05) / (q + 0.05);
 };
 
-const hex = ref('var(--accent,#2f5bff)');
-const texto = ref('var(--accent,#2f5bff)');
+const hex = ref('#2f5bff');
+const texto = ref('#2f5bff');
 const error = ref(false);
 const v = computed(() => [1, 3, 5].map((i) => parseInt(hex.value.slice(i, i + 2), 16)));
 const contrastes = computed(() =>
@@ -56,7 +56,7 @@ function onBlur() {
       </div>
       <p class="rgb">rgb({{ v.join(', ') }})</p>
     </div>
-    <p id="xe" class="err" role="alert">{{ error ? 'Escribe un HEX de 6 dígitos, como var(--accent,#2f5bff).' : '' }}</p>
+    <p id="xe" class="err" role="alert">{{ error ? 'Escribe un HEX de 6 dígitos, como #2f5bff.' : '' }}</p>
     <fieldset class="sws">
       <legend>Muestras</legend>
       <button v-for="[n, h] in MUESTRAS" :key="h" type="button" class="sw" :style="{ '--c': h }"

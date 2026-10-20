@@ -45,14 +45,14 @@
     <li>Texto negro <b id="rk"></b> <span class="badge" id="bk"></span></li>
   </ul>
   <div class="ctl">
-    <input type="color" id="c" aria-label="Elegir color" value="var(--accent,#2f5bff)">
+    <input type="color" id="c" aria-label="Elegir color" value="#2f5bff">
     <div class="f"><label for="x">Valor HEX</label><input id="x" maxlength="7" spellcheck="false" autocomplete="off" aria-describedby="xe"></div>
     <p class="rgb" id="rgb"></p>
   </div>
   <p class="err" id="xe" role="alert"></p>
   <fieldset class="sws">
     <legend>Muestras</legend>
-    <button type="button" class="sw" style="--c:var(--accent,#2f5bff)" data-hex="var(--accent,#2f5bff)" aria-label="Ultramar var(--accent,#2f5bff)"></button>
+    <button type="button" class="sw" style="--c:#2f5bff" data-hex="#2f5bff" aria-label="Ultramar #2F5BFF"></button>
     <button type="button" class="sw" style="--c:#0891b2" data-hex="#0891b2" aria-label="Cian #0891B2"></button>
     <button type="button" class="sw" style="--c:#0e9f6e" data-hex="#0e9f6e" aria-label="Esmeralda #0E9F6E"></button>
     <button type="button" class="sw" style="--c:#b7791f" data-hex="#b7791f" aria-label="Ámbar #B7791F"></button>
@@ -84,10 +84,10 @@
   x.onblur = () => {
     let v = x.value; if (/^#[0-9a-f]{3}$/i.test(v)) v = '#' + [...v.slice(1)].map((d) => d + d).join('');
     const ok = HEX.test(v); if (ok) set(v);
-    x.setAttribute('aria-invalid', !ok); $('xe').textContent = ok ? '' : 'Escribe un HEX de 6 dígitos, como var(--accent,#2f5bff).';
+    x.setAttribute('aria-invalid', !ok); $('xe').textContent = ok ? '' : 'Escribe un HEX de 6 dígitos, como #2f5bff.';
   };
   document.querySelectorAll('.sw').forEach((b) => (b.onclick = () => set(b.dataset.hex)));
-  set('var(--accent,#2f5bff)');
+  set('#2f5bff');
 </script>
 </body>
 </html>

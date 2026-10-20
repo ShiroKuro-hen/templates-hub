@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 const SCALE: Record<number, string> = {
   50: '#f0f4ff', 100: '#dee5ff', 200: '#bccbff', 300: '#97adff', 400: '#6384ff',
-  500: 'var(--accent,#2f5bff)', 600: '#2a50e1', 700: '#2444bf', 800: '#1d3594', 900: '#16276d',
+  500: '#2f5bff', 600: '#2a50e1', 700: '#2444bf', 800: '#1d3594', 900: '#16276d',
 };
 const INK = '#0e1726', WHITE = '#ffffff';
 const lum = (h: string) =>

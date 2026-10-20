@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const MUESTRAS = [
-  ['Ultramar', 'var(--accent,#2f5bff)'], ['Cian', '#0891b2'], ['Esmeralda', '#0e9f6e'], ['Ámbar', '#b7791f'],
+  ['Ultramar', '#2f5bff'], ['Cian', '#0891b2'], ['Esmeralda', '#0e9f6e'], ['Ámbar', '#b7791f'],
   ['Coral', '#d92d4a'], ['Violeta', '#7c3aed'], ['Pizarra', '#334155'], ['Grafito', '#0e1726'],
 ] as const;
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -17,8 +17,8 @@ const ratio = (a: number[], b: number[]) => {
 };
 
 export function ColorPicker() {
-  const [hex, setHex] = useState('var(--accent,#2f5bff)');
-  const [texto, setTexto] = useState('var(--accent,#2f5bff)');
+  const [hex, setHex] = useState('#2f5bff');
+  const [texto, setTexto] = useState('#2f5bff');
   const [error, setError] = useState(false);
   const v = rgb(hex);
 
@@ -56,7 +56,7 @@ export function ColorPicker() {
         </div>
         <p className="rgb">rgb({v.join(', ')})</p>
       </div>
-      <p className="err" id="xe" role="alert">{error ? 'Escribe un HEX de 6 dígitos, como var(--accent,#2f5bff).' : ''}</p>
+      <p className="err" id="xe" role="alert">{error ? 'Escribe un HEX de 6 dígitos, como #2f5bff.' : ''}</p>
       <fieldset className="sws">
         <legend>Muestras</legend>
         {MUESTRAS.map(([n, h]) => (
