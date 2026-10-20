@@ -1,0 +1,21 @@
+<style>
+  @keyframes drift{to{transform:translate3d(8%,-6%,0) scale(1.12)}}
+  .blob{animation:drift 18s ease-in-out infinite alternate}
+  .blob.b2{animation-duration:22s;animation-delay:-6s}
+  .blob.b3{animation-duration:26s;animation-delay:-12s}
+  @media (prefers-reduced-motion:reduce){.blob{animation:none}}
+</style>
+<section class="relative isolate mx-auto max-w-[720px] overflow-hidden rounded-lg border border-line bg-page px-7 py-14 text-center shadow-sm" aria-labelledby="aurora-title">
+  <div class="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+    <span class="blob absolute left-[-12%] top-[-30%] aspect-square w-[60%] rounded-full bg-accent opacity-40 blur-[56px]"></span>
+    <span class="blob b2 absolute right-[-14%] top-[-6%] aspect-square w-[60%] rounded-full bg-gradient-to-br from-accent-2 to-info opacity-40 blur-[56px]"></span>
+    <span class="blob b3 absolute bottom-[-38%] left-[22%] aspect-square w-[60%] rounded-full bg-info opacity-40 blur-[56px]"></span>
+  </div>
+  <p class="mb-3.5 inline-block rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs font-semibold">Novedad: panel de equipo</p>
+  <h1 id="aurora-title" class="mx-auto max-w-[18ch] text-[clamp(26px,6vw,40px)] font-bold leading-tight tracking-tight text-fg">Todo tu equipo, en una sola vista</h1>
+  <p class="mx-auto mt-3.5 mb-6 max-w-[50ch] text-fg">Reúne proyectos, plazos y avisos en un solo panel. Empieza en minutos y invita a tus compañeros cuando quieras.</p>
+  <div class="flex flex-wrap justify-center gap-3">
+    <button type="button" class="rounded-lg border border-accent bg-accent px-4.5 py-2.5 font-semibold text-accent-ink hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Empezar gratis</button>
+    <button type="button" class="rounded-lg border border-line bg-surface px-4.5 py-2.5 font-semibold text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ver demo</button>
+  </div>
+</section>

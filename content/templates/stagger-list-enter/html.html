@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lista con entrada escalonada</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .app{max-width:560px;margin:0 auto}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .btn{padding:7px 14px;font:inherit;font-weight:600;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer}
+  .btn:hover{filter:brightness(1.08)}
+  .btn:focus-visible,.rm:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .list{margin:0;padding:0;list-style:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .item{animation:enter .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 80ms)}
+  .item:not(:first-child) .row{border-top:1px solid var(--border)}
+  .wrap{display:grid;grid-template-rows:1fr;transition:grid-template-rows .3s ease}
+  .leaving .wrap{grid-template-rows:0fr}
+  .inner{min-height:0;overflow:hidden}
+  .row{display:flex;align-items:center;gap:12px;padding:12px 14px}
+  .dot{flex:none;width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+  .txt{flex:1;min-width:0}
+  .txt b{display:block;font-weight:600}
+  .txt span{color:var(--muted);font-size:13px}
+  .rm{flex:none;width:28px;height:28px;font:inherit;font-size:18px;line-height:1;color:var(--muted);background:none;border:0;border-radius:var(--radius);cursor:pointer}
+  .rm:hover{background:var(--bg);color:var(--text)}
+  @keyframes enter{from{opacity:0;transform:translateY(-8px)}}
+  @media (prefers-reduced-motion:reduce){.item{animation:none}.wrap{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="toolbar">
+    <h2>Tareas pendientes</h2>
+    <button class="btn" id="add" type="button">Agregar</button>
+  </div>
+  <ul class="list" id="list"></ul>
+</div>
+<script>
+  const PENDIENTES = [
+    ['Revisar el presupuesto', 'Vence hoy a las 18:00'],
+    ['Responder a Ana Pérez', 'Pidió confirmar la reunión'],
+    ['Subir el informe mensual', 'Pendiente de aprobación'],
+    ['Actualizar la política de accesos', 'Asignada por Luis Gómez'],
+  ];
+  const NUEVAS = [
+    ['Llamar al proveedor', 'Confirmar la entrega del lunes'],
+    ['Firmar el contrato', 'Enviado por Marta Ruiz'],
+    ['Revisar comentarios', '3 nuevos en el documento'],
+    ['Preparar la demo', 'Jueves a las 10:00'],
+  ];
+  const list = document.getElementById('list'), add = document.getElementById('add');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let seq = 0;
+
+  function createItem([title, detail], i) {
+    const li = document.createElement('li');
+    li.className = 'item';
+    li.style.setProperty('--i', i);
+    li.innerHTML = `<div class="wrap"><div class="inner"><div class="row"><span class="dot" aria-hidden="true"></span><div class="txt"><b>${title}</b><span>${detail}</span></div><button class="rm" type="button" aria-label="Quitar: ${title}">×</button></div></div></div>`;
+    li.querySelector('.rm').addEventListener('click', () => remove(li));
+    return li;
+  }
+  function remove(li) {
+    add.focus();
+    if (calm) return li.remove();
+    li.classList.add('leaving');
+    li.querySelector('.wrap').addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'grid-template-rows') li.remove();
+    }, { once: true });
+  }
+  add.addEventListener('click', () => {
+    list.prepend(createItem(NUEVAS[seq++ % NUEVAS.length], 0));
+  });
+  PENDIENTES.forEach((task, i) => list.append(createItem(task, i)));
+</script>
+</body>
+</html>

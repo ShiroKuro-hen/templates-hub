@@ -1,0 +1,1 @@
+{ "title": "Imagen responsive con dirección de arte", "category": "imagenes", "description": "Picture con fuente vertical para móvil y panorámica para escritorio, y srcset por densidad.", "tags": ["picture", "srcset", "responsive", "art direction", "a11y"] }

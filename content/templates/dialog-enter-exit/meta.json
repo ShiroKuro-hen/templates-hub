@@ -1,0 +1,1 @@
+{ "title": "Diálogo con entrada y salida animadas", "category": "transiciones", "description": "Modal nativo con dialog que anima entrada, salida y fondo con @starting-style y allow-discrete.", "tags": ["diálogo", "modal", "animación", "accesibilidad"] }

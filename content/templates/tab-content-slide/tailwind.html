@@ -1,0 +1,62 @@
+<style>
+  html{--d:1}
+  #panel{view-transition-name:panel}
+  ::view-transition-old(panel){animation:out .2s ease both}
+  ::view-transition-new(panel){animation:in .3s ease both}
+  @keyframes out{to{opacity:0}}
+  @keyframes in{from{opacity:0;transform:translateX(calc(var(--d) * 40px))}}
+  @media (prefers-reduced-motion:reduce){::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}}
+</style>
+<div class="mx-auto max-w-[560px] text-sm text-fg">
+  <div id="tabs" role="tablist" aria-label="Secciones" class="mb-3 flex gap-1 border-b border-line">
+    <button id="t0" role="tab" type="button" aria-controls="panel" class="relative rounded-t-lg px-3.5 py-2 font-semibold text-muted transition-colors hover:text-fg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-selected:text-fg after:absolute after:inset-x-2.5 after:-bottom-px after:h-0.5 after:bg-gradient-to-br after:from-accent-2 after:to-accent after:opacity-0 aria-selected:after:opacity-100 motion-reduce:transition-none">Resumen</button>
+    <button id="t1" role="tab" type="button" aria-controls="panel" class="relative rounded-t-lg px-3.5 py-2 font-semibold text-muted transition-colors hover:text-fg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-selected:text-fg after:absolute after:inset-x-2.5 after:-bottom-px after:h-0.5 after:bg-gradient-to-br after:from-accent-2 after:to-accent after:opacity-0 aria-selected:after:opacity-100 motion-reduce:transition-none">Equipo</button>
+    <button id="t2" role="tab" type="button" aria-controls="panel" class="relative rounded-t-lg px-3.5 py-2 font-semibold text-muted transition-colors hover:text-fg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent aria-selected:text-fg after:absolute after:inset-x-2.5 after:-bottom-px after:h-0.5 after:bg-gradient-to-br after:from-accent-2 after:to-accent after:opacity-0 aria-selected:after:opacity-100 motion-reduce:transition-none">Facturación</button>
+  </div>
+  <section id="panel" role="tabpanel" tabindex="0" class="rounded-lg border border-line bg-surface p-5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"></section>
+</div>
+<script>
+  const PANELS = [
+    ['Resumen del equipo', 'Actividad de las últimas 24 horas en todos tus proyectos.', ['Despliegues: 18', 'Incidencias abiertas: 2', 'Cobertura de pruebas: 91 %']],
+    ['Miembros del equipo', 'Personas con acceso a este espacio de trabajo.', ['Ana Pérez · Administradora', 'Luis Gómez · Editor', 'Marta Ruiz · Lectora']],
+    ['Facturación', 'Plan y próximos cobros de tu organización.', ['Plan: Profesional (anual)', 'Próximo cobro: 5 de enero', 'Pago con tarjeta terminada en 4821']],
+  ];
+  const tabs = [...document.querySelectorAll('[role=tab]')], panel = document.getElementById('panel');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches, native = 'startViewTransition' in document;
+  let cur = 0;
+
+  function render(k) {
+    const [t, p, items] = PANELS[k];
+    panel.setAttribute('aria-labelledby', tabs[k].id);
+    panel.innerHTML = `<h2 class="text-base font-semibold">${t}</h2><p class="mb-3 mt-1 text-muted">${p}</p><ul class="m-0 list-none p-0">${items.map((x) => `<li class="border-t border-line py-2.5">${x}</li>`).join('')}</ul>`;
+    tabs.forEach((b, j) => {
+      b.setAttribute('aria-selected', j === k);
+      b.tabIndex = j === k ? 0 : -1;
+    });
+  }
+  function select(k) {
+    if (k === cur) return;
+    const dir = Math.sign(k - cur), show = () => render(k);
+    cur = k;
+    document.documentElement.style.setProperty('--d', dir);
+    if (calm) show();
+    else if (native) document.startViewTransition(show);
+    else {
+      show();
+      panel.animate([{ opacity: 0, transform: `translateX(${dir * 24}px)` }, { opacity: 1, transform: 'none' }], { duration: 240, easing: 'ease' });
+    }
+  }
+  function targetIndex(key) {
+    const n = tabs.length;
+    return { ArrowRight: (cur + 1) % n, ArrowLeft: (cur + n - 1) % n, Home: 0, End: n - 1 }[key];
+  }
+  document.getElementById('tabs').addEventListener('keydown', (e) => {
+    const k = targetIndex(e.key);
+    if (k === undefined) return;
+    e.preventDefault();
+    select(k);
+    tabs[k].focus();
+  });
+  tabs.forEach((b, k) => b.addEventListener('click', () => select(k)));
+  render(0);
+</script>

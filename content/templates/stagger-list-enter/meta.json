@@ -1,0 +1,1 @@
+{ "title": "Lista con entrada escalonada", "category": "transiciones", "description": "Tareas que entran en cascada, se añaden con transición y se quitan colapsando su altura.", "tags": ["lista", "animación escalonada", "accesibilidad"] }

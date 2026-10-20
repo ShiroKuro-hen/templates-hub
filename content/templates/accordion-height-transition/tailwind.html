@@ -1,0 +1,46 @@
+<style>
+  .acc { --dur:260ms; --ease:cubic-bezier(.2,.7,.2,1); }
+  .panel { display:grid; grid-template-rows:0fr; transition:grid-template-rows var(--dur) var(--ease); }
+  .panel.open { grid-template-rows:1fr; }
+  .panel > div { min-height:0; overflow:hidden; visibility:hidden; transition:visibility var(--dur); }
+  .panel.open > div { visibility:visible; }
+  .trigger[aria-expanded=true] .chev { transform:rotate(180deg); color:var(--accent); }
+  .chev { transition:transform var(--dur) var(--ease), color var(--dur) var(--ease); }
+  @media (prefers-reduced-motion:reduce) { .panel, .panel > div, .chev { transition:none; } }
+</style>
+<div class="mx-auto max-w-[640px] p-5 text-sm leading-normal text-fg">
+  <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
+    <h1 class="m-0 text-xl font-semibold tracking-[-0.01em]">Preguntas frecuentes</h1>
+    <label class="inline-flex cursor-pointer items-center gap-2 text-muted"><input type="checkbox" id="single" checked> Abrir uno a la vez</label>
+  </div>
+  <div class="acc grid gap-2" id="acc">
+    <section class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+      <h2 class="m-0"><button type="button" class="trigger flex w-full cursor-pointer items-center justify-between gap-3 bg-transparent px-4 py-3 text-left font-semibold text-fg focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent" aria-expanded="true" aria-controls="p1">¿Cuánto tarda la migración?<svg class="chev size-[18px] flex-none text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></button></h2>
+      <div class="panel open" id="p1"><div><p class="m-0 px-4 pb-3.5 text-muted">Entre 2 y 5 días hábiles según el volumen de datos. Te avisamos antes de cada corte.</p></div></div>
+    </section>
+    <section class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+      <h2 class="m-0"><button type="button" class="trigger flex w-full cursor-pointer items-center justify-between gap-3 bg-transparent px-4 py-3 text-left font-semibold text-fg focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent" aria-expanded="false" aria-controls="p2">¿Mis datos se conservan?<svg class="chev size-[18px] flex-none text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></button></h2>
+      <div class="panel" id="p2"><div><p class="m-0 px-4 pb-3.5 text-muted">Sí. Hacemos una copia completa antes de empezar y puedes restaurarla durante 30 días.</p></div></div>
+    </section>
+    <section class="overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+      <h2 class="m-0"><button type="button" class="trigger flex w-full cursor-pointer items-center justify-between gap-3 bg-transparent px-4 py-3 text-left font-semibold text-fg focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent" aria-expanded="false" aria-controls="p3">¿Necesito detener mi equipo?<svg class="chev size-[18px] flex-none text-muted" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></button></h2>
+      <div class="panel" id="p3"><div><p class="m-0 px-4 pb-3.5 text-muted">No. Trabajamos en horario de bajo tráfico y el servicio se mantiene disponible.</p></div></div>
+    </section>
+  </div>
+</div>
+<script>
+  const acc = document.getElementById('acc'), single = document.getElementById('single');
+  const setOpen = (btn, open) => {
+    btn.setAttribute('aria-expanded', String(open));
+    document.getElementById(btn.getAttribute('aria-controls')).classList.toggle('open', open);
+  };
+  acc.addEventListener('click', (e) => {
+    const btn = e.target.closest('.trigger');
+    if (!btn) return;
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    if (open && single.checked) {
+      acc.querySelectorAll('.trigger').forEach((other) => { if (other !== btn) setOpen(other, false); });
+    }
+    setOpen(btn, open);
+  });
+</script>

@@ -1,0 +1,109 @@
+<style>
+  [hidden] { display:none !important; }
+  .detail { transform-origin:0 0; }
+  .card, .card:hover { transition:border-color .14s; }
+  @media (prefers-reduced-motion:reduce) { .card { transition:none; } }
+</style>
+<main class="mx-auto max-w-[720px] p-5 text-sm leading-normal text-fg">
+  <h1 class="m-0 text-xl font-semibold tracking-[-0.01em]">Proyectos</h1>
+  <p class="mb-4 text-muted">Pulsa una tarjeta para ver su detalle.</p>
+  <ul id="cards" class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-3 p-0">
+    <li><button type="button" data-tpl="tpl-nube" aria-haspopup="dialog" class="card grid w-full gap-2.5 rounded-lg border border-line bg-surface px-4 py-3.5 text-left shadow-sm hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      <span class="block font-semibold leading-snug">Migración a la nube</span>
+      <span class="block text-[13px] text-muted">Responsable: Marta Ruiz</span>
+      <span class="justify-self-start rounded-full bg-info-soft px-2.5 text-xs font-semibold">En curso</span>
+      <span class="flex items-center gap-2.5 text-[13px] tabular-nums text-muted"><i class="h-1.5 flex-1 overflow-hidden rounded-full bg-accent-soft"><b class="block h-full w-[68%] rounded-full bg-gradient-to-br from-accent-2 to-accent"></b></i>68% completado</span>
+    </button></li>
+    <li><button type="button" data-tpl="tpl-panel" aria-haspopup="dialog" class="card grid w-full gap-2.5 rounded-lg border border-line bg-surface px-4 py-3.5 text-left shadow-sm hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      <span class="block font-semibold leading-snug">Rediseño del panel de clientes</span>
+      <span class="block text-[13px] text-muted">Responsable: Luis Gómez</span>
+      <span class="justify-self-start rounded-full bg-warn-soft px-2.5 text-xs font-semibold">En riesgo</span>
+      <span class="flex items-center gap-2.5 text-[13px] tabular-nums text-muted"><i class="h-1.5 flex-1 overflow-hidden rounded-full bg-accent-soft"><b class="block h-full w-[41%] rounded-full bg-gradient-to-br from-accent-2 to-accent"></b></i>41% completado</span>
+    </button></li>
+    <li><button type="button" data-tpl="tpl-audit" aria-haspopup="dialog" class="card grid w-full gap-2.5 rounded-lg border border-line bg-surface px-4 py-3.5 text-left shadow-sm hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      <span class="block font-semibold leading-snug">Auditoría de seguridad anual</span>
+      <span class="block text-[13px] text-muted">Responsable: Carlos Díaz</span>
+      <span class="justify-self-start rounded-full bg-ok-soft px-2.5 text-xs font-semibold">Completado</span>
+      <span class="flex items-center gap-2.5 text-[13px] tabular-nums text-muted"><i class="h-1.5 flex-1 overflow-hidden rounded-full bg-accent-soft"><b class="block h-full w-full rounded-full bg-gradient-to-br from-accent-2 to-accent"></b></i>100% completado</span>
+    </button></li>
+  </ul>
+</main>
+
+<div id="layer" hidden class="fixed inset-0 z-10 grid place-items-center bg-black/45 p-4">
+  <section id="detail" role="dialog" aria-modal="true" aria-labelledby="detail-title" class="detail max-h-full w-[min(520px,100%)] overflow-auto rounded-lg border border-line bg-surface p-5 shadow-sm"></section>
+</div>
+
+<template id="tpl-nube">
+  <div class="mb-3.5 flex items-start justify-between gap-3">
+    <div><h2 id="detail-title" class="m-0 text-lg font-semibold">Migración a la nube</h2><span class="block text-[13px] text-muted">Responsable: Marta Ruiz</span></div>
+    <button type="button" data-close aria-label="Cerrar" class="size-8 flex-none rounded-lg text-xl leading-none text-muted hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">×</button>
+  </div>
+  <p class="mb-3.5 text-muted">Traslado de servidores y bases de datos a la nube, por fases y sin cortes de servicio.</p>
+  <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-x-4 gap-y-2.5"><div><dt class="text-[13px] text-muted">Entrega</dt><dd class="m-0 font-semibold tabular-nums">30 abr 2026</dd></div><div><dt class="text-[13px] text-muted">Presupuesto</dt><dd class="m-0 font-semibold tabular-nums">S/ 84.000</dd></div><div><dt class="text-[13px] text-muted">Equipo</dt><dd class="m-0 font-semibold tabular-nums">7 personas</dd></div></dl>
+</template>
+<template id="tpl-panel">
+  <div class="mb-3.5 flex items-start justify-between gap-3">
+    <div><h2 id="detail-title" class="m-0 text-lg font-semibold">Rediseño del panel de clientes</h2><span class="block text-[13px] text-muted">Responsable: Luis Gómez</span></div>
+    <button type="button" data-close aria-label="Cerrar" class="size-8 flex-none rounded-lg text-xl leading-none text-muted hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">×</button>
+  </div>
+  <p class="mb-3.5 text-muted">Nueva vista de cuentas y actividad para el equipo comercial, con filtros por región.</p>
+  <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-x-4 gap-y-2.5"><div><dt class="text-[13px] text-muted">Entrega</dt><dd class="m-0 font-semibold tabular-nums">18 may 2026</dd></div><div><dt class="text-[13px] text-muted">Presupuesto</dt><dd class="m-0 font-semibold tabular-nums">S/ 52.500</dd></div><div><dt class="text-[13px] text-muted">Equipo</dt><dd class="m-0 font-semibold tabular-nums">4 personas</dd></div></dl>
+</template>
+<template id="tpl-audit">
+  <div class="mb-3.5 flex items-start justify-between gap-3">
+    <div><h2 id="detail-title" class="m-0 text-lg font-semibold">Auditoría de seguridad anual</h2><span class="block text-[13px] text-muted">Responsable: Carlos Díaz</span></div>
+    <button type="button" data-close aria-label="Cerrar" class="size-8 flex-none rounded-lg text-xl leading-none text-muted hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">×</button>
+  </div>
+  <p class="mb-3.5 text-muted">Revisión de accesos, dependencias y configuración, con informe final firmado.</p>
+  <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(120px,1fr))] gap-x-4 gap-y-2.5"><div><dt class="text-[13px] text-muted">Entrega</dt><dd class="m-0 font-semibold tabular-nums">28 feb 2026</dd></div><div><dt class="text-[13px] text-muted">Presupuesto</dt><dd class="m-0 font-semibold tabular-nums">S/ 31.200</dd></div><div><dt class="text-[13px] text-muted">Equipo</dt><dd class="m-0 font-semibold tabular-nums">3 personas</dd></div></dl>
+</template>
+<script>
+  const page = document.querySelector('main'), cards = document.getElementById('cards'), layer = document.getElementById('layer'), detail = document.getElementById('detail');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const EASE = 'cubic-bezier(.2,.7,.2,1)';
+  let active = null;
+
+  const mapTo = (src, dst) =>
+    `translate(${dst.left - src.left}px, ${dst.top - src.top}px) scale(${dst.width / src.width}, ${dst.height / src.height})`;
+  const animate = (keyframes) => detail.animate(keyframes, { duration: reduce.matches ? 0 : 320, easing: EASE });
+
+  function open(card) {
+    detail.getAnimations().forEach((a) => a.cancel());
+    const first = card.getBoundingClientRect();
+    detail.replaceChildren(document.getElementById(card.dataset.tpl).content.cloneNode(true));
+    layer.hidden = false;
+    page.toggleAttribute('inert', true);
+    active = card;
+    card.style.visibility = 'hidden';
+    const last = detail.getBoundingClientRect();
+    animate([{ transform: mapTo(last, first), opacity: 0.6 }, { transform: 'none', opacity: 1 }]);
+    detail.querySelector('[data-close]').focus();
+  }
+
+  function close() {
+    if (!active) return;
+    const card = active;
+    active = null;
+    detail.getAnimations().forEach((a) => a.cancel());
+    const first = detail.getBoundingClientRect();
+    card.style.visibility = '';
+    const last = card.getBoundingClientRect();
+    animate([{ transform: 'none', opacity: 1 }, { transform: mapTo(first, last), opacity: 0 }]).onfinish = () => {
+      layer.hidden = true;
+      detail.replaceChildren();
+      page.toggleAttribute('inert', false);
+      card.focus();
+    };
+  }
+
+  cards.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-tpl]');
+    if (card) open(card);
+  });
+  layer.addEventListener('click', (e) => {
+    if (e.target === layer || e.target.closest('[data-close]')) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+</script>

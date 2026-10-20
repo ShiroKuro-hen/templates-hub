@@ -1,0 +1,77 @@
+<figure class="mx-auto max-w-[440px] rounded-lg border border-line bg-surface p-4 text-sm text-fg shadow-sm">
+  <figcaption>
+    <h1 class="m-0 text-base font-semibold">Aprobación de pedidos</h1>
+    <p class="mt-0.5 mb-3 text-[13px] text-muted">Pasa el ratón o el foco sobre un nodo para ver su camino.</p>
+  </figcaption>
+  <svg id="flow" viewBox="0 0 400 540" role="img" aria-labelledby="flow-t flow-d" class="block h-auto w-full">
+    <title id="flow-t">Flujo de aprobación de pedidos</title>
+    <desc id="flow-d">El pedido se valida. Si faltan datos, se piden al cliente y se vuelve a validar. Si el importe supera 1.000 euros, lo aprueba el gerente; en otro caso queda aprobado.</desc>
+    <defs>
+      <marker id="ah" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path class="arrow fill-muted" d="M0 0L9 5L0 10z"/></marker>
+      <marker id="ah-hot" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path class="arrow hot fill-accent" d="M0 0L9 5L0 10z"/></marker>
+    </defs>
+    <path class="edge" data-from="inicio" data-to="validar" d="M150 50V88"/>
+    <path class="edge" data-from="validar" data-to="datos" d="M150 132V160"/>
+    <path class="edge" data-from="datos" data-to="importe" d="M150 240V270"/>
+    <path class="edge" data-from="datos" data-to="reenviar" d="M250 200H280"/>
+    <path class="edge" data-from="reenviar" data-to="validar" d="M335 174V110H260"/>
+    <path class="edge" data-from="importe" data-to="gerente" d="M150 350V388"/>
+    <path class="edge" data-from="importe" data-to="fin" d="M250 310H320V500H260"/>
+    <path class="edge" data-from="gerente" data-to="fin" d="M150 432V480"/>
+    <text class="lbl fill-muted" data-from="datos" data-to="importe" x="160" y="255">Sí</text>
+    <text class="lbl fill-muted" data-from="datos" data-to="reenviar" x="265" y="188" text-anchor="middle">No</text>
+    <text class="lbl fill-muted" data-from="reenviar" data-to="validar" x="297" y="99" text-anchor="middle">Reenviar</text>
+    <text class="lbl fill-muted" data-from="importe" data-to="gerente" x="160" y="369">Sí</text>
+    <text class="lbl fill-muted" data-from="importe" data-to="fin" x="285" y="298" text-anchor="middle">No</text>
+    <g class="node term" data-node="inicio" tabindex="0" role="group" aria-label="Inicio: pedido recibido">
+      <rect x="40" y="10" width="220" height="40" rx="20" class="fill-ok-soft stroke-ok stroke-[1.5px]"/><text x="150" y="30" class="fill-fg">Inicio: pedido recibido</text>
+    </g>
+    <g class="node" data-node="validar" tabindex="0" role="group" aria-label="Validar datos del pedido">
+      <rect x="40" y="88" width="220" height="44" rx="6" class="fill-surface stroke-line stroke-[1.5px]"/><text x="150" y="110" class="fill-fg">Validar datos del pedido</text>
+    </g>
+    <g class="node dec" data-node="datos" tabindex="0" role="group" aria-label="¿Datos completos?">
+      <polygon points="150,160 250,200 150,240 50,200" class="fill-warn-soft stroke-warn stroke-[1.5px]"/><text x="150" y="200" class="fill-fg">¿Datos completos?</text>
+    </g>
+    <g class="node" data-node="reenviar" tabindex="0" role="group" aria-label="Pedir datos al cliente">
+      <rect x="280" y="174" width="110" height="52" rx="6" class="fill-surface stroke-line stroke-[1.5px]"/><text x="335" y="192" class="fill-fg">Pedir datos</text><text x="335" y="208" class="fill-fg">al cliente</text>
+    </g>
+    <g class="node dec" data-node="importe" tabindex="0" role="group" aria-label="¿Importe mayor de 1.000 €?">
+      <polygon points="150,270 250,310 150,350 50,310" class="fill-warn-soft stroke-warn stroke-[1.5px]"/><text x="150" y="310" class="fill-fg">¿Importe &gt; 1.000 €?</text>
+    </g>
+    <g class="node" data-node="gerente" tabindex="0" role="group" aria-label="Aprobación del gerente">
+      <rect x="40" y="388" width="220" height="44" rx="6" class="fill-surface stroke-line stroke-[1.5px]"/><text x="150" y="410" class="fill-fg">Aprobación del gerente</text>
+    </g>
+    <g class="node term" data-node="fin" tabindex="0" role="group" aria-label="Fin: pedido aprobado">
+      <rect x="40" y="480" width="220" height="40" rx="20" class="fill-ok-soft stroke-ok stroke-[1.5px]"/><text x="150" y="500" class="fill-fg">Fin: pedido aprobado</text>
+    </g>
+  </svg>
+</figure>
+<style>
+  .edge{fill:none;stroke:var(--muted);stroke-width:1.5;marker-end:url(#ah);transition:stroke .14s,opacity .14s}
+  .edge.hot{stroke:var(--accent);stroke-width:2.5;marker-end:url(#ah-hot)}
+  .lbl{font:12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;dominant-baseline:middle;transition:opacity .14s}
+  .lbl.hot{fill:var(--accent);font-weight:600}
+  .node{outline:none;transition:opacity .14s}
+  .node text{font:13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;text-anchor:middle;dominant-baseline:middle}
+  .node.hot rect,.node.hot polygon{stroke:var(--accent);stroke-width:2.5}
+  .node:focus-visible rect,.node:focus-visible polygon{stroke:var(--accent);stroke-width:3}
+  .active .node:not(.hot),.active .edge:not(.hot),.active .lbl:not(.hot){opacity:.3}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script>
+  const flow = document.getElementById('flow');
+  const edges = flow.querySelectorAll('[data-from]');
+  const nodes = flow.querySelectorAll('[data-node]');
+  const light = (id) => {
+    const touches = (e) => e.dataset.from === id || e.dataset.to === id;
+    const linked = new Set([id, ...[...edges].filter(touches).flatMap((e) => [e.dataset.from, e.dataset.to])]);
+    flow.classList.toggle('active', Boolean(id));
+    edges.forEach((e) => e.classList.toggle('hot', touches(e)));
+    nodes.forEach((n) => n.classList.toggle('hot', linked.has(n.dataset.node)));
+  };
+  const nodeOf = (e) => e.target.closest('[data-node]')?.dataset.node ?? null;
+  flow.addEventListener('pointerover', (e) => light(nodeOf(e)));
+  flow.addEventListener('focusin', (e) => light(nodeOf(e)));
+  flow.addEventListener('pointerleave', () => light(null));
+  flow.addEventListener('focusout', () => light(null));
+</script>

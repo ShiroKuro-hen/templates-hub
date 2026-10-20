@@ -1,0 +1,45 @@
+<div class="bg-page p-5 text-sm text-fg">
+  <main class="mx-auto max-w-[720px]">
+    <h2 class="mb-3 text-lg font-semibold">Portada del evento</h2>
+    <div class="mb-3 flex flex-wrap items-center gap-3">
+      <label for="range" class="text-muted">Ancho de la vista previa</label>
+      <input id="range" type="range" min="320" max="960" step="10" value="640" aria-valuetext="640 px" class="min-w-0 flex-[1_1_160px] accent-accent">
+      <output id="w" for="range" class="min-w-16 font-semibold tabular-nums">640 px</output>
+    </div>
+    <div id="stage" class="max-w-full overflow-hidden rounded-lg border border-line bg-surface shadow-sm transition-[width] duration-200 motion-reduce:transition-none">
+      <iframe id="preview" title="Vista previa del picture" class="block h-60 w-full border-0"></iframe>
+    </div>
+    <p class="mt-3 text-[13px] text-muted" aria-live="polite">Fuente activa: <b id="src" class="font-semibold text-fg">cargando</b> · ancho del marco <span id="vp"></span> px</p>
+    <p class="mt-3 text-[13px] text-muted">El atributo media de source responde al ancho del viewport, no al del contenedor. Por eso la vista previa es un iframe: el deslizador cambia su ancho y el navegador vuelve a elegir la imagen.</p>
+  </main>
+</div>
+<script>
+  const SOURCES = [
+  { name: 'vertical para móvil', media: '(max-width: 600px)', srcset: 'data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20300%20400%27%3E%3Crect%20width=%27300%27%20height=%27400%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27150%27%20cy=%27150%27%20r=%2760%27%20fill=%27%23f59e0b%27/%3E%3Crect%20y=%27250%27%20width=%27300%27%20height=%27150%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M150%20120v120h-40z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M100%20240h110l-18%2018H118z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 1x, data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20300%20400%27%3E%3Crect%20width=%27300%27%20height=%27400%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27150%27%20cy=%27150%27%20r=%2790%27%20fill=%27%23f59e0b%27%20opacity=%27.25%27/%3E%3Ccircle%20cx=%27150%27%20cy=%27150%27%20r=%2760%27%20fill=%27%23f59e0b%27/%3E%3Cpath%20d=%27M30%2060h50a20%2020%200%200%200-20-20%2025%2025%200%200%200-30%2020z%27%20fill=%27%23fff%27%20opacity=%27.8%27/%3E%3Crect%20y=%27250%27%20width=%27300%27%20height=%27150%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M0%20300q25-10%2050%200t50%200%2050%200%2050%200%2050%200%2050%200%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-opacity=%27.5%27%20stroke-width=%273%27/%3E%3Cpath%20d=%27M150%20120v120h-40z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M100%20240h110l-18%2018H118z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 2x' },
+  { name: 'panorámica para escritorio', media: '(min-width: 601px)', srcset: 'data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20840%20360%27%3E%3Crect%20width=%27840%27%20height=%27360%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27620%27%20cy=%27120%27%20r=%2758%27%20fill=%27%23f59e0b%27/%3E%3Crect%20y=%27220%27%20width=%27840%27%20height=%27140%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M420%20110v120h-70z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M410%20240h110l-18%2018H428z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 1x, data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%20840%20360%27%3E%3Crect%20width=%27840%27%20height=%27360%27%20fill=%27%23ffd9a8%27/%3E%3Ccircle%20cx=%27620%27%20cy=%27120%27%20r=%2790%27%20fill=%27%23f59e0b%27%20opacity=%27.25%27/%3E%3Ccircle%20cx=%27620%27%20cy=%27120%27%20r=%2758%27%20fill=%27%23f59e0b%27/%3E%3Cpath%20d=%27M60%2070h80a30%2030%200%200%200-30-30%2040%2040%200%200%200-50%2030z%27%20fill=%27%23fff%27%20opacity=%27.8%27/%3E%3Crect%20y=%27220%27%20width=%27840%27%20height=%27140%27%20fill=%27%232f8fb8%27/%3E%3Cpath%20d=%27M0%20260q40-14%2080%200t80%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%2080%200%27%20fill=%27none%27%20stroke=%27%23fff%27%20stroke-opacity=%27.5%27%20stroke-width=%273%27/%3E%3Cpath%20d=%27M420%20110v120h-70z%27%20fill=%27%23fff%27/%3E%3Cpath%20d=%27M410%20240h110l-18%2018H428z%27%20fill=%27%232f5bff%27/%3E%3C/svg%3E 2x' },
+];
+  const $ = (id) => document.getElementById(id);
+  const range = $('range'), stage = $('stage'), preview = $('preview'), out = $('w'), src = $('src'), vp = $('vp');
+  const sourceTags = SOURCES.map((s) => `<source media="${s.media}" srcset="${s.srcset}">`).join('');
+  const REPORT_SCRIPT = `<script>const img=document.querySelector('img');const report=()=>parent.postMessage({pictureSrc:img.currentSrc,width:innerWidth,height:Math.ceil(img.getBoundingClientRect().height)},'*');img.addEventListener('load',report);addEventListener('resize',report);<\/script>`;
+  const SRCDOC = `<!doctype html><html lang="es"><head><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden}img{display:block;width:100%;height:auto}</style></head><body><picture>${sourceTags}<img alt="Velero navegando al atardecer sobre el mar" width="840" height="360"></picture>${REPORT_SCRIPT}</body></html>`;
+
+  function setWidth() {
+    stage.style.width = `${range.value}px`;
+    range.setAttribute('aria-valuetext', `${range.value} px`);
+    out.textContent = `${range.value} px`;
+  }
+
+  function onReport(e) {
+    if (e.source !== preview.contentWindow || typeof e.data?.pictureSrc !== 'string') return;
+    const { pictureSrc, width, height } = e.data;
+    preview.style.height = `${height}px`;
+    src.textContent = SOURCES.find((s) => pictureSrc && s.srcset.includes(pictureSrc))?.name ?? 'cargando';
+    vp.textContent = width;
+  }
+
+  range.addEventListener('input', setWidth);
+  addEventListener('message', onReport);
+  preview.srcdoc = SRCDOC;
+  setWidth();
+</script>

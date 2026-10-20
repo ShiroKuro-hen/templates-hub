@@ -1,0 +1,1 @@
+{ "title": "Arquitectura por capas", "category": "diagramas", "description": "Diagrama de capas (cliente, edge, API, servicios, datos) con dependencias resaltadas al enfocar.", "tags": ["arquitectura", "capas", "svg", "diagrama"] }

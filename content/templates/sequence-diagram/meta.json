@@ -1,0 +1,1 @@
+{ "title": "Diagrama de secuencia", "category": "diagramas", "description": "Inicio de sesión entre usuario, app, API y base de datos; enfocar un mensaje muestra su texto.", "tags": ["secuencia", "svg", "login"] }

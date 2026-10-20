@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modelo entidad-relación de tienda</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card{max-width:680px;margin:0 auto;padding:20px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .card p{margin:2px 0 12px;color:var(--muted)}
+  svg{display:block;width:100%;height:auto}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .scroll:focus-visible{outline:2px solid var(--accent)}
+  .scroll>svg{min-width:680px}
+  .rel{fill:none;stroke:var(--muted);stroke-width:1.5;transition:stroke .15s,opacity .15s}
+  .rel.hl{stroke:var(--accent);stroke-width:2.5}
+  .card-lbl{fill:var(--muted);font-size:12px;font-weight:600;transition:opacity .15s}
+  .card-lbl.hl{fill:var(--accent)}
+  .ent{cursor:pointer;transition:opacity .15s}
+  .box{fill:var(--bg);stroke:var(--border);stroke-width:1}
+  .ent.hl .box{stroke:var(--accent)}
+  .ent:focus-visible .box{stroke:var(--accent);stroke-width:2}
+  .head{fill:var(--accent)}
+  .head-t{fill:var(--accent-ink);font-size:13px;font-weight:600}
+  .k-pk{fill:var(--accent);font-size:11px;font-weight:700}
+  .k-fk{fill:var(--muted);font-size:11px;font-weight:700}
+  .attr{fill:var(--text);font-size:12px}
+  svg.active .ent:not(.hl),svg.active .rel:not(.hl),svg.active .card-lbl:not(.hl){opacity:.35}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:12px 0 0;padding:0;list-style:none;color:var(--muted);font-size:13px}
+  .legend b{color:var(--text);font-weight:600}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption>
+    <h2>Modelo de datos de la tienda</h2>
+    <p>Un cliente tiene muchos pedidos, y cada pedido tiene varias líneas. Pasa el cursor o enfoca una entidad para ver sus relaciones.</p>
+  </figcaption>
+  <div class="scroll" role="region" tabindex="0" aria-label="Diagrama desplazable horizontalmente">
+  <svg id="erd" viewBox="0 0 680 370" role="img" aria-labelledby="erd-t erd-d">
+    <title id="erd-t">Entidad-relación de la tienda</title>
+    <desc id="erd-d">Cliente 1 a N Pedido; Pedido 1 a 0..N Pago; Pedido 1 a N Línea; Producto 1 a N Línea.</desc>
+  </svg>
+  </div>
+  <ul class="legend" aria-label="Leyenda">
+    <li><b>PK</b> clave primaria</li>
+    <li><b>FK</b> clave externa</li>
+    <li><b>1</b> y <b>N</b> cardinalidad</li>
+  </ul>
+</figure>
+<script>
+  const ents = [
+    { id: 'cliente', name: 'Cliente', x: 20, y: 20, attrs: [['PK', 'id_cliente'], ['', 'nombre'], ['', 'correo']] },
+    { id: 'pedido', name: 'Pedido', x: 255, y: 20, attrs: [['PK', 'id_pedido'], ['FK', 'id_cliente'], ['', 'fecha'], ['', 'estado']] },
+    { id: 'pago', name: 'Pago', x: 490, y: 20, attrs: [['PK', 'id_pago'], ['FK', 'id_pedido'], ['', 'importe'], ['', 'método']] },
+    { id: 'linea', name: 'Línea', x: 255, y: 230, attrs: [['PK', 'id_linea'], ['FK', 'id_pedido'], ['FK', 'id_producto'], ['', 'cantidad']] },
+    { id: 'producto', name: 'Producto', x: 490, y: 230, attrs: [['PK', 'id_producto'], ['', 'nombre'], ['', 'precio']] },
+  ];
+  const rels = [
+    { a: 'cliente', b: 'pedido', d: 'M190,68 H255', labels: [[196, 60, '1', 'start'], [249, 60, 'N', 'end']] },
+    { a: 'pedido', b: 'pago', d: 'M425,68 H490', labels: [[431, 60, '1', 'start'], [484, 60, '0..N', 'end']] },
+    { a: 'pedido', b: 'linea', d: 'M340,136 V230', labels: [[346, 160, '1', 'start'], [346, 220, 'N', 'start']] },
+    { a: 'linea', b: 'producto', d: 'M425,290 H490', labels: [[431, 284, 'N', 'start'], [484, 284, '1', 'end']] },
+  ];
+  const svg = document.getElementById('erd');
+  const HEAD = 28, ROW = 20, W = 170;
+  const rel = (r) => `<path class="rel" d="${r.d}" data-a="${r.a}" data-b="${r.b}"/>` +
+    r.labels.map(([x, y, t, anchor]) => `<text class="card-lbl" x="${x}" y="${y}" text-anchor="${anchor}" data-a="${r.a}" data-b="${r.b}">${t}</text>`).join('');
+  const attr = (e, [k, n], i) => {
+    const y = e.y + HEAD + i * ROW + 15;
+    const key = k ? `<text class="k-${k.toLowerCase()}" x="${e.x + 12}" y="${y}">${k}</text>` : '';
+    return key + `<text class="attr" x="${e.x + 44}" y="${y}">${n}</text>`;
+  };
+  const ent = (e) => `<g class="ent" data-id="${e.id}" tabindex="0" role="group" aria-label="${e.name}">
+    <rect class="box" x="${e.x}" y="${e.y}" width="${W}" height="${HEAD + e.attrs.length * ROW + 8}" rx="6"/>
+    <rect class="head" x="${e.x}" y="${e.y}" width="${W}" height="${HEAD}" rx="6"/>
+    <text class="head-t" x="${e.x + 12}" y="${e.y + 19}">${e.name}</text>
+    ${e.attrs.map((a, i) => attr(e, a, i)).join('')}
+  </g>`;
+  svg.insertAdjacentHTML('beforeend', rels.map(rel).join('') + ents.map(ent).join(''));
+
+  function mark(id) {
+    const linked = (el) => Boolean(id) && (el.dataset.a === id || el.dataset.b === id);
+    const ends = new Set([id]);
+    svg.querySelectorAll('[data-a]').forEach((e) => { if (linked(e)) ends.add(e.dataset.a).add(e.dataset.b); });
+    svg.classList.toggle('active', Boolean(id));
+    svg.querySelectorAll('[data-a]').forEach((e) => e.classList.toggle('hl', linked(e)));
+    svg.querySelectorAll('[data-id]').forEach((n) => n.classList.toggle('hl', ends.has(n.dataset.id)));
+  }
+  const idOf = (e) => e.target.closest('[data-id]')?.dataset.id;
+  svg.addEventListener('mouseover', (e) => mark(idOf(e)));
+  svg.addEventListener('mouseleave', () => mark(null));
+  svg.addEventListener('focusin', (e) => mark(idOf(e)));
+  svg.addEventListener('focusout', () => mark(null));
+</script>
+</body>
+</html>

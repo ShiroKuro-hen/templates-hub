@@ -1,0 +1,52 @@
+<style>
+  .item{animation:enter .45s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i) * 80ms)}
+  .item:not(:first-child) .row{border-top:1px solid var(--border)}
+  .leaving .wrap{grid-template-rows:0fr}
+  @keyframes enter{from{opacity:0;transform:translateY(-8px)}}
+  @media (prefers-reduced-motion:reduce){.item{animation:none}}
+</style>
+<div class="mx-auto max-w-[560px] text-sm text-fg">
+  <div class="mb-3 flex items-center justify-between gap-3">
+    <h2 class="text-base font-semibold">Tareas pendientes</h2>
+    <button id="add" type="button" class="rounded-lg border border-accent bg-accent px-3.5 py-1.5 font-semibold text-accent-ink hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Agregar</button>
+  </div>
+  <ul id="list" class="m-0 list-none overflow-hidden rounded-lg border border-line bg-surface p-0 shadow-sm"></ul>
+</div>
+<script>
+  const PENDIENTES = [
+    ['Revisar el presupuesto', 'Vence hoy a las 18:00'],
+    ['Responder a Ana Pérez', 'Pidió confirmar la reunión'],
+    ['Subir el informe mensual', 'Pendiente de aprobación'],
+    ['Actualizar la política de accesos', 'Asignada por Luis Gómez'],
+  ];
+  const NUEVAS = [
+    ['Llamar al proveedor', 'Confirmar la entrega del lunes'],
+    ['Firmar el contrato', 'Enviado por Marta Ruiz'],
+    ['Revisar comentarios', '3 nuevos en el documento'],
+    ['Preparar la demo', 'Jueves a las 10:00'],
+  ];
+  const list = document.getElementById('list'), add = document.getElementById('add');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let seq = 0;
+
+  function createItem([title, detail], i) {
+    const li = document.createElement('li');
+    li.className = 'item';
+    li.style.setProperty('--i', i);
+    li.innerHTML = `<div class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-out wrap motion-reduce:transition-none"><div class="min-h-0 overflow-hidden inner"><div class="row flex items-center gap-3 px-3.5 py-3"><span class="size-2.5 flex-none rounded-full bg-gradient-to-br from-accent-2 to-accent" aria-hidden="true"></span><div class="min-w-0 flex-1"><b class="block font-semibold">${title}</b><span class="text-[13px] text-muted">${detail}</span></div><button class="rm size-7 flex-none rounded-lg text-lg leading-none text-muted hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent" type="button" aria-label="Quitar: ${title}">×</button></div></div></div>`;
+    li.querySelector('.rm').addEventListener('click', () => remove(li));
+    return li;
+  }
+  function remove(li) {
+    add.focus();
+    if (calm) return li.remove();
+    li.classList.add('leaving');
+    li.querySelector('.wrap').addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'grid-template-rows') li.remove();
+    }, { once: true });
+  }
+  add.addEventListener('click', () => {
+    list.prepend(createItem(NUEVAS[seq++ % NUEVAS.length], 0));
+  });
+  PENDIENTES.forEach((task, i) => list.append(createItem(task, i)));
+</script>

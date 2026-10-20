@@ -1,0 +1,1 @@
+{ "title": "Diagrama entidad-relación", "category": "diagramas", "description": "Modelo de datos en SVG con entidades, claves PK/FK, cardinalidades 1..N y relaciones resaltadas.", "tags": ["er", "base de datos", "svg", "diagrama"] }

@@ -27,17 +27,22 @@ export const CATEGORIES: Record<string, { label: string; blurb: string; icon: st
   filtros: { label: 'Búsqueda y filtros', blurb: 'Filtros facetados, sugerencias, orden y vistas guardadas.', icon: '⌕' },
   documentos: { label: 'Documentación', blurb: 'Layouts de docs, índice, avisos y referencia de API.', icon: '❡' },
   animaciones: { label: 'Animaciones', blurb: 'Hover, scroll, contadores y transiciones con CSS.', icon: '≋' },
+  transiciones: { label: 'Transiciones', blurb: 'Entradas, salidas, cambios de vista y de layout con movimiento.', icon: '⇄' },
+  efectos: { label: 'Efectos', blurb: 'Bordes con brillo, spotlight, 3D, auroras y vidrio, solo con CSS.', icon: '✧' },
+  diagramas: { label: 'Diagramas', blurb: 'Flujos, secuencias, organigramas y arquitectura en SVG accesible.', icon: '⌬' },
+  imagenes: { label: 'Imágenes', blurb: 'Héroes, tarjetas, galerías y zoom con imagen, sin recursos externos.', icon: '▨' },
 };
 
 // Agrupación estilo design-system de gran empresa (orden de la home).
 export const GROUPS: { label: string; blurb: string; cats: string[] }[] = [
-  { label: 'Fundamentos', blurb: 'Color, tipografía, iconografía y movimiento.', cats: ['paleta-de-color', 'tipografia', 'iconos', 'animaciones'] },
+  { label: 'Fundamentos', blurb: 'Color, tipografía e iconografía.', cats: ['paleta-de-color', 'tipografia', 'iconos'] },
+  { label: 'Movimiento y efectos', blurb: 'Animaciones, transiciones y efectos visuales.', cats: ['animaciones', 'transiciones', 'efectos'] },
   { label: 'Componentes', blurb: 'Los bloques de toda interfaz.', cats: ['botones', 'etiquetas', 'formularios', 'tarjetas', 'elementos'] },
   { label: 'Feedback', blurb: 'Comunicar estados al usuario.', cats: ['notificaciones', 'modales', 'cargando'] },
   { label: 'Navegación y búsqueda', blurb: 'Moverse, buscar y filtrar.', cats: ['navegacion', 'filtros'] },
-  { label: 'Datos', blurb: 'Mostrar y visualizar información.', cats: ['tablas', 'barras', 'graficos', 'dashboards'] },
+  { label: 'Datos', blurb: 'Mostrar y visualizar información.', cats: ['tablas', 'barras', 'graficos', 'diagramas', 'dashboards'] },
   { label: 'Producto y negocio', blurb: 'Flujos completos de una aplicación.', cats: ['autenticacion', 'onboarding', 'ecommerce'] },
-  { label: 'Contenido y comunicación', blurb: 'Chat, medios y documentación.', cats: ['mensajeria', 'medios', 'documentos'] },
+  { label: 'Contenido y comunicación', blurb: 'Chat, medios, imágenes y documentación.', cats: ['mensajeria', 'medios', 'imagenes', 'documentos'] },
   { label: 'Layout y páginas', blurb: 'Estructura y secciones completas.', cats: ['grids', 'secciones', 'paginas'] },
 ];
 

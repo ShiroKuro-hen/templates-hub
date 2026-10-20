@@ -1,0 +1,115 @@
+<script setup lang="ts">
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
+
+const OBRAS = [
+  { t: 'Costa al amanecer', d: 'Luz cálida sobre la bahía en las primeras horas del día.', s: '<circle cx="118" cy="30" r="12" fill="rgba(255,255,255,.85)"/><path d="M0 80 50 40 90 70 120 52 160 80V100H0Z" fill="rgba(255,255,255,.35)"/>' },
+  { t: 'Olas de verano', d: 'Crestas suaves que se repiten hasta el horizonte.', s: '<path d="M0 60Q40 30 80 60T160 60V100H0Z" fill="rgba(255,255,255,.4)"/><rect x="34" y="18" width="58" height="28" rx="6" fill="rgba(255,255,255,.85)"/>' },
+  { t: 'Ritmo urbano', d: 'Barras de una ciudad que crece con los años.', s: '<rect x="22" y="48" width="18" height="42" rx="3" fill="rgba(255,255,255,.5)"/><rect x="50" y="26" width="18" height="64" rx="3" fill="rgba(255,255,255,.85)"/><rect x="78" y="58" width="18" height="32" rx="3" fill="rgba(255,255,255,.5)"/><rect x="106" y="36" width="18" height="54" rx="3" fill="rgba(255,255,255,.85)"/>' },
+  { t: 'Órbitas', d: 'Dos círculos que giran alrededor del mismo centro.', s: '<circle cx="62" cy="50" r="30" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="4"/><circle cx="104" cy="50" r="18" fill="rgba(255,255,255,.4)"/>' },
+  { t: 'Noche estrellada', d: 'Un cielo sereno con una estrella más brillante.', s: '<path d="M80 16 86 36 106 36 90 48 96 68 80 56 64 68 70 48 54 36 74 36Z" fill="rgba(255,255,255,.9)"/>' },
+  { t: 'Bloques', d: 'Composición de formas sencillas en equilibrio.', s: '<rect x="20" y="18" width="50" height="62" rx="8" fill="rgba(255,255,255,.4)"/><rect x="86" y="34" width="54" height="46" rx="8" fill="rgba(255,255,255,.85)"/>' },
+];
+
+type VT = Document & { startViewTransition?: (cb: () => Promise<void>) => unknown };
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const uri = (s: string) => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 100">${s}</svg>`)}`;
+
+const cur = ref<number | null>(null);
+const current = computed(() => OBRAS[cur.value ?? 0]);
+const app = ref<HTMLElement>();
+const grid = ref<HTMLElement>();
+const hero = ref<HTMLElement>();
+const heading = ref<HTMLElement>();
+
+const thumbEls = () => Array.from(grid.value?.querySelectorAll<HTMLElement>('.thumb') ?? []);
+const clearNames = () => [hero.value, ...thumbEls()].forEach((el) => el && (el.style.viewTransitionName = ''));
+
+async function swap(from: HTMLElement | undefined, to: HTMLElement | undefined, change: () => Promise<void>) {
+  if (calm) return change();
+  const doc = document as VT;
+  if (!doc.startViewTransition) {
+    await change();
+    app.value?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, easing: 'ease' });
+    return;
+  }
+  clearNames();
+  if (from) from.style.viewTransitionName = 'card';
+  doc.startViewTransition(async () => {
+    clearNames();
+    await change();
+    if (to) to.style.viewTransitionName = 'card';
+  });
+}
+
+function open(i: number) {
+  swap(thumbEls()[i], hero.value, async () => {
+    cur.value = i;
+    await nextTick();
+    heading.value?.focus();
+  });
+}
+
+function close() {
+  const i = cur.value ?? 0;
+  swap(hero.value, thumbEls()[i], async () => {
+    cur.value = null;
+    await nextTick();
+    thumbEls()[i]?.focus();
+  });
+}
+
+const onKey = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' && cur.value !== null) close();
+};
+onMounted(() => document.addEventListener('keydown', onKey));
+onBeforeUnmount(() => document.removeEventListener('keydown', onKey));
+</script>
+
+<template>
+  <main ref="app" class="app">
+    <ul ref="grid" class="grid" :hidden="cur !== null">
+      <li v-for="(o, i) in OBRAS" :key="o.t">
+        <button class="thumb" type="button" @click="open(i)">
+          <span class="tile" :class="`t${i}`"><img alt="" width="160" height="100" :src="uri(o.s)" /></span>
+          <span class="cap">{{ o.t }}</span>
+        </button>
+      </li>
+    </ul>
+    <article class="detail" :hidden="cur === null">
+      <button class="back" type="button" @click="close">← Volver a la galería</button>
+      <div ref="hero" class="tile" :class="`t${cur ?? 0}`">
+        <img alt="" width="160" height="100" :src="uri(current.s)" />
+      </div>
+      <h2 ref="heading" tabindex="-1">{{ current.t }}</h2>
+      <p>{{ current.d }}</p>
+    </article>
+  </main>
+</template>
+
+<style scoped>
+.app { max-width:720px; margin:0 auto; color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; margin:0; padding:0; list-style:none; }
+.thumb { display:block; width:100%; padding:0; background:var(--surface); color:var(--text); font:inherit; text-align:left; border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; cursor:pointer; }
+.thumb:hover { border-color:var(--accent); }
+.thumb:focus-visible, .back:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.tile { display:block; aspect-ratio:16/10; overflow:hidden; border-radius:var(--radius); }
+.tile img { display:block; width:100%; height:100%; }
+.cap { display:block; padding:8px 10px; font-weight:600; }
+.t0 { background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
+.t1 { background:linear-gradient(135deg,var(--ok),var(--info)); }
+.t2 { background:linear-gradient(135deg,var(--warn),var(--err)); }
+.t3 { background:linear-gradient(135deg,var(--info),var(--accent)); }
+.t4 { background:linear-gradient(135deg,var(--accent),var(--err)); }
+.t5 { background:linear-gradient(135deg,var(--ok),var(--accent)); }
+.detail { display:grid; gap:14px; }
+.back { justify-self:start; padding:7px 14px; font:inherit; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); cursor:pointer; }
+h2 { margin:0; font-size:18px; font-weight:600; }
+p { margin:0; color:var(--muted); }
+/* Tokens: ver pestaña HTML + CSS */
+</style>
+
+<style>
+[hidden] { display:none !important; }
+::view-transition-group(card) { animation-duration:.42s; animation-timing-function:ease; }
+@media (prefers-reduced-motion:reduce) { ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation:none !important; } }
+</style>

@@ -1,0 +1,1 @@
+{ "title": "Acordeón con altura animada", "category": "transiciones", "description": "Acordeón que anima la altura con grid-template-rows, sin medir alturas en JavaScript.", "tags": ["acordeón", "altura", "accesibilidad"] }

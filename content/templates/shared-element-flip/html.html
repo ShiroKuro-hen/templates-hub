@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tarjeta que se expande con FLIP</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .page { max-width:720px; margin:0 auto; }
+  h1 { margin:0; font-size:1.25rem; letter-spacing:-.01em; }
+  .lead { margin:0 0 16px; color:var(--muted); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin:0; padding:0; list-style:none; }
+  .card { display:grid; gap:10px; width:100%; padding:14px 16px; font:inherit; color:var(--text); text-align:left; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); cursor:pointer; transition:border-color .14s; }
+  .card:hover { border-color:var(--accent); }
+  .ttl { display:block; font-weight:600; line-height:1.35; }
+  .own { display:block; color:var(--muted); font-size:13px; }
+  .badge { justify-self:start; display:inline-flex; align-items:center; gap:6px; padding:0 10px; border-radius:999px; font-size:12px; font-weight:600; background:var(--info-soft); }
+  .badge::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--info); }
+  .badge.warn { background:var(--warn-soft); }
+  .badge.warn::before { background:var(--warn); }
+  .badge.ok { background:var(--ok-soft); }
+  .badge.ok::before { background:var(--ok); }
+  .bar { display:flex; align-items:center; gap:10px; color:var(--muted); font-size:13px; font-variant-numeric:tabular-nums; }
+  .bar i { flex:1; height:6px; border-radius:999px; background:var(--accent-soft); overflow:hidden; }
+  .bar i::after { content:""; display:block; height:100%; width:calc(var(--p) * 1%); border-radius:999px; background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
+  .layer { position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:16px; background:rgba(0,0,0,.45); }
+  .detail { width:min(520px,100%); max-height:100%; overflow:auto; padding:20px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); transform-origin:0 0; }
+  .det-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; }
+  .det-head h2 { margin:0; font-size:18px; }
+  .close { flex:none; width:32px; height:32px; font:inherit; font-size:20px; line-height:1; color:var(--muted); background:none; border:0; border-radius:var(--radius); cursor:pointer; }
+  .close:hover { background:var(--bg); color:var(--text); }
+  .detail p { margin:0 0 14px; color:var(--muted); }
+  dl { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px 16px; margin:0; }
+  dt { color:var(--muted); font-size:13px; }
+  dd { margin:0; font-weight:600; font-variant-numeric:tabular-nums; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  [hidden] { display:none !important; }
+  @media (prefers-reduced-motion:reduce) { .card { transition:none; } }
+</style>
+</head>
+<body>
+<main class="page">
+  <h1>Proyectos</h1>
+  <p class="lead">Pulsa una tarjeta para ver su detalle.</p>
+  <ul class="grid" id="cards">
+    <li><button type="button" class="card" data-tpl="tpl-nube" aria-haspopup="dialog">
+      <span class="ttl">Migración a la nube</span>
+      <span class="own">Responsable: Marta Ruiz</span>
+      <span class="badge">En curso</span>
+      <span class="bar"><i style="--p:68"></i>68% completado</span>
+    </button></li>
+    <li><button type="button" class="card" data-tpl="tpl-panel" aria-haspopup="dialog">
+      <span class="ttl">Rediseño del panel de clientes</span>
+      <span class="own">Responsable: Luis Gómez</span>
+      <span class="badge warn">En riesgo</span>
+      <span class="bar"><i style="--p:41"></i>41% completado</span>
+    </button></li>
+    <li><button type="button" class="card" data-tpl="tpl-audit" aria-haspopup="dialog">
+      <span class="ttl">Auditoría de seguridad anual</span>
+      <span class="own">Responsable: Carlos Díaz</span>
+      <span class="badge ok">Completado</span>
+      <span class="bar"><i style="--p:100"></i>100% completado</span>
+    </button></li>
+  </ul>
+</main>
+
+<div class="layer" id="layer" hidden>
+  <section class="detail" id="detail" role="dialog" aria-modal="true" aria-labelledby="detail-title"></section>
+</div>
+
+<template id="tpl-nube">
+  <div class="det-head">
+    <div><h2 id="detail-title">Migración a la nube</h2><span class="own">Responsable: Marta Ruiz</span></div>
+    <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+  </div>
+  <p>Traslado de servidores y bases de datos a la nube, por fases y sin cortes de servicio.</p>
+  <dl><div><dt>Entrega</dt><dd>30 abr 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 84.000</dd></div><div><dt>Equipo</dt><dd>7 personas</dd></div></dl>
+</template>
+<template id="tpl-panel">
+  <div class="det-head">
+    <div><h2 id="detail-title">Rediseño del panel de clientes</h2><span class="own">Responsable: Luis Gómez</span></div>
+    <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+  </div>
+  <p>Nueva vista de cuentas y actividad para el equipo comercial, con filtros por región.</p>
+  <dl><div><dt>Entrega</dt><dd>18 may 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 52.500</dd></div><div><dt>Equipo</dt><dd>4 personas</dd></div></dl>
+</template>
+<template id="tpl-audit">
+  <div class="det-head">
+    <div><h2 id="detail-title">Auditoría de seguridad anual</h2><span class="own">Responsable: Carlos Díaz</span></div>
+    <button type="button" class="close" data-close aria-label="Cerrar">×</button>
+  </div>
+  <p>Revisión de accesos, dependencias y configuración, con informe final firmado.</p>
+  <dl><div><dt>Entrega</dt><dd>28 feb 2026</dd></div><div><dt>Presupuesto</dt><dd>S/ 31.200</dd></div><div><dt>Equipo</dt><dd>3 personas</dd></div></dl>
+</template>
+<script>
+  const page = document.querySelector('main'), cards = document.getElementById('cards'), layer = document.getElementById('layer'), detail = document.getElementById('detail');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const EASE = 'cubic-bezier(.2,.7,.2,1)';
+  let active = null;
+
+  const mapTo = (src, dst) =>
+    `translate(${dst.left - src.left}px, ${dst.top - src.top}px) scale(${dst.width / src.width}, ${dst.height / src.height})`;
+  const animate = (keyframes) => detail.animate(keyframes, { duration: reduce.matches ? 0 : 320, easing: EASE });
+
+  function open(card) {
+    detail.getAnimations().forEach((a) => a.cancel());
+    const first = card.getBoundingClientRect();
+    detail.replaceChildren(document.getElementById(card.dataset.tpl).content.cloneNode(true));
+    layer.hidden = false;
+    page.toggleAttribute('inert', true);
+    active = card;
+    card.style.visibility = 'hidden';
+    const last = detail.getBoundingClientRect();
+    animate([{ transform: mapTo(last, first), opacity: 0.6 }, { transform: 'none', opacity: 1 }]);
+    detail.querySelector('[data-close]').focus();
+  }
+
+  function close() {
+    if (!active) return;
+    const card = active;
+    active = null;
+    detail.getAnimations().forEach((a) => a.cancel());
+    const first = detail.getBoundingClientRect();
+    card.style.visibility = '';
+    const last = card.getBoundingClientRect();
+    animate([{ transform: 'none', opacity: 1 }, { transform: mapTo(first, last), opacity: 0 }]).onfinish = () => {
+      layer.hidden = true;
+      detail.replaceChildren();
+      page.toggleAttribute('inert', false);
+      card.focus();
+    };
+  }
+
+  cards.addEventListener('click', (e) => {
+    const card = e.target.closest('[data-tpl]');
+    if (card) open(card);
+  });
+  layer.addEventListener('click', (e) => {
+    if (e.target === layer || e.target.closest('[data-close]')) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+</script>
+</body>
+</html>

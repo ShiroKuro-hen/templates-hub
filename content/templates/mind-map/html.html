@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa mental de la tienda online</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card{max-width:760px;margin:0 auto;padding:20px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .card p{margin:2px 0 12px;color:var(--muted)}
+  svg{display:block;width:100%;height:auto}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .scroll:focus-visible{outline:2px solid var(--accent)}
+  .scroll>svg{min-width:697px}
+  .link{fill:none;stroke-width:2;transition:opacity .2s}
+  .center .shape{fill:var(--accent)}
+  .center .label{fill:var(--accent-ink);font-size:15px;font-weight:600}
+  .branch{cursor:pointer;outline:none;transition:opacity .2s}
+  .branch .shape{stroke-width:1.5}
+  .branch .label{fill:var(--text);font-size:13px;font-weight:600}
+  .branch[aria-pressed="true"] .shape,.branch:focus-visible .shape{stroke-width:3}
+  .branch:focus-visible .shape{stroke:var(--accent)}
+  .leaf{transition:opacity .2s}
+  .leaf .shape{fill:var(--bg);stroke:var(--border);stroke-width:1}
+  .leaf .label{fill:var(--muted);font-size:12px}
+  svg.active [data-group]:not(.on){opacity:.3}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption>
+    <h2>Mapa mental de la tienda online</h2>
+    <p>Cinco ramas principales con sus áreas. Pasa el cursor o enfoca una rama para destacarla; Enter la fija.</p>
+  </figcaption>
+  <div class="scroll" role="region" tabindex="0" aria-label="Diagrama desplazable horizontalmente">
+  <svg id="map" viewBox="0 0 760 560" role="img" aria-labelledby="map-t map-d">
+    <title id="map-t">Mapa mental de la tienda online</title>
+    <desc id="map-d">Tema central Tienda online con cinco ramas: Producto, Clientes, Ventas, Operaciones y Equipo, cada una con dos áreas.</desc>
+  </svg>
+  </div>
+</figure>
+<script>
+  const center = [380, 280];
+  const branches = [
+    { id: 'producto', name: 'Producto', tone: 'accent', x: 380, y: 110, leaves: [['Catálogo', 200, 50], ['Inventario', 560, 50]] },
+    { id: 'clientes', name: 'Clientes', tone: 'ok', x: 640, y: 190, leaves: [['Cuentas', 640, 250], ['Soporte', 640, 300]] },
+    { id: 'ventas', name: 'Ventas', tone: 'warn', x: 620, y: 410, leaves: [['Pedidos', 530, 500], ['Cobros', 690, 500]] },
+    { id: 'operaciones', name: 'Operaciones', tone: 'info', x: 140, y: 410, leaves: [['Logística', 75, 500], ['Compras', 230, 500]] },
+    { id: 'equipo', name: 'Equipo', tone: 'err', x: 120, y: 190, leaves: [['Roles', 80, 120], ['Formación', 80, 280]] },
+  ];
+  const svg = document.getElementById('map');
+  const curve = ([x1, y1], [x2, y2]) => {
+    const k = 0.18, dx = x2 - x1, dy = y2 - y1;
+    return `M${x1},${y1} Q${(x1 + x2) / 2 - dy * k},${(y1 + y2) / 2 + dx * k} ${x2},${y2}`;
+  };
+  const link = (from, to, b) => `<path class="link" d="${curve(from, to)}" style="stroke:var(--${b.tone})" data-group="${b.id}"/>`;
+  const links = (b) => link(center, [b.x, b.y], b) + b.leaves.map(([, x, y]) => link([b.x, b.y], [x, y], b)).join('');
+  const branch = (b) => `<g class="branch" data-branch="${b.id}" data-group="${b.id}" role="button" tabindex="0" aria-pressed="false" aria-label="Rama ${b.name}">
+    <rect class="shape" x="${b.x - 75}" y="${b.y - 18}" width="150" height="36" rx="18" style="fill:var(--${b.tone}-soft);stroke:var(--${b.tone})"/>
+    <text class="label" x="${b.x}" y="${b.y + 5}" text-anchor="middle">${b.name}</text>
+  </g>`;
+  const leaf = (b) => ([text, x, y]) => `<g class="leaf" data-group="${b.id}">
+    <rect class="shape" x="${x - 65}" y="${y - 13}" width="130" height="26" rx="13"/>
+    <text class="label" x="${x}" y="${y + 4}" text-anchor="middle">${text}</text>
+  </g>`;
+  const core = `<g class="center" data-core>
+    <rect class="shape" x="292" y="252" width="176" height="56" rx="28"/>
+    <text class="label" x="380" y="285" text-anchor="middle">Tienda online</text>
+  </g>`;
+  svg.insertAdjacentHTML('beforeend',
+    branches.map(links).join('') + core + branches.map((b) => branch(b) + b.leaves.map(leaf(b)).join('')).join(''));
+
+  let pinned = null;
+  const branchOf = (e) => e.target.closest('[data-branch]')?.dataset.branch;
+  function show(id) {
+    svg.classList.toggle('active', Boolean(id));
+    svg.querySelectorAll('[data-group]').forEach((el) => el.classList.toggle('on', el.dataset.group === id));
+  }
+  function pin(id) {
+    pinned = pinned === id ? null : id;
+    svg.querySelectorAll('[data-branch]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.branch === pinned)));
+    show(pinned);
+  }
+  svg.addEventListener('mouseover', (e) => show(branchOf(e) ?? pinned));
+  svg.addEventListener('mouseleave', () => show(pinned));
+  svg.addEventListener('focusin', (e) => show(branchOf(e) ?? pinned));
+  svg.addEventListener('focusout', () => show(pinned));
+  svg.addEventListener('click', (e) => { const id = branchOf(e); if (id) pin(id); });
+  svg.addEventListener('keydown', (e) => {
+    const id = branchOf(e);
+    if (id && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pin(id); }
+  });
+</script>
+</body>
+</html>

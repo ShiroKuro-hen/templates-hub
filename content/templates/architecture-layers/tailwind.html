@@ -1,0 +1,70 @@
+<figure class="mx-auto max-w-[620px] rounded-lg border border-line bg-surface p-5 text-sm text-fg shadow-sm">
+  <figcaption>
+    <h2 class="m-0 text-base font-semibold">Arquitectura por capas</h2>
+    <p class="mt-0.5 mb-3 text-muted">Cada capa solo llama a la inmediatamente inferior. Pasa el cursor o enfoca una capa para ver sus dependencias.</p>
+  </figcaption>
+  <div class="scroll overflow-x-auto focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-accent" role="region" tabindex="0" aria-label="Diagrama desplazable horizontalmente">
+  <svg id="arch" class="block h-auto w-full min-w-[514px]" viewBox="0 0 560 500" role="img" aria-labelledby="arch-t arch-d">
+    <title id="arch-t">Arquitectura en cinco capas</title>
+    <desc id="arch-d">Cliente, Edge y CDN, API, Servicios y Datos, unidas de arriba abajo por flechas que indican la dependencia.</desc>
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10Z" class="fill-muted"/></marker>
+      <marker id="arr-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L10,5 L0,10Z" class="fill-accent"/></marker>
+    </defs>
+  </svg>
+  </div>
+  <ul class="m-0 mt-3 flex list-none flex-wrap gap-x-4 gap-y-1.5 p-0 text-[13px] text-muted" aria-label="Leyenda">
+    <li class="flex items-center gap-1.5"><i class="size-2.5 rounded-[3px] bg-info"></i>Entrada</li>
+    <li class="flex items-center gap-1.5"><i class="size-2.5 rounded-[3px] bg-accent"></i>Lógica de negocio</li>
+    <li class="flex items-center gap-1.5"><i class="size-2.5 rounded-[3px] bg-ok"></i>Persistencia</li>
+  </ul>
+</figure>
+<style>
+  .edge{fill:none;stroke:var(--muted);stroke-width:1.5;marker-end:url(#arr);transition:stroke .15s,opacity .15s}
+  .edge.hl{stroke:var(--accent);stroke-width:2.5;marker-end:url(#arr-hl)}
+  .lb{fill:var(--muted);font-size:12px;transition:opacity .15s}
+  .lb.hl{fill:var(--accent);font-weight:600}
+  .node{cursor:pointer;transition:opacity .15s}
+  .box{fill:var(--bg);stroke:var(--border);stroke-width:1}
+  .node.hl .box{stroke:var(--accent)}
+  .node:focus-visible .box{stroke:var(--accent);stroke-width:2}
+  .name{fill:var(--text);font-size:14px;font-weight:600}
+  .detail{fill:var(--muted);font-size:13px}
+  svg.active .node:not(.hl),svg.active .edge:not(.hl),svg.active .lb:not(.hl){opacity:.35}
+  .scroll{-webkit-overflow-scrolling:touch}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<script>
+  const layers = [
+    { id: 'cliente', name: 'Cliente', detail: 'Web SPA · App móvil', tone: 'info', via: 'HTTPS' },
+    { id: 'edge', name: 'Edge / CDN', detail: 'CDN · WAF · Balanceador', tone: 'info', via: 'HTTPS · JSON' },
+    { id: 'api', name: 'API', detail: 'Gateway · Autenticación · REST', tone: 'accent', via: 'gRPC' },
+    { id: 'servicios', name: 'Servicios', detail: 'Pedidos · Catálogo · Pagos', tone: 'accent', via: 'SQL · caché' },
+    { id: 'datos', name: 'Datos', detail: 'PostgreSQL · Redis · S3', tone: 'ok' },
+  ];
+  const svg = document.getElementById('arch');
+  const Y = (i) => 20 + i * 100;
+  const edge = (l, i) => `<path class="edge" d="M280,${Y(i) + 56} V${Y(i + 1)}" data-a="${l.id}" data-b="${layers[i + 1].id}"/>
+    <text class="lb" x="292" y="${Y(i) + 82}" data-a="${l.id}" data-b="${layers[i + 1].id}">${l.via}</text>`;
+  const node = (l, i) => `<g class="node" data-id="${l.id}" tabindex="0" role="group" aria-label="${l.name}: ${l.detail}">
+    <rect class="box" x="40" y="${Y(i)}" width="480" height="56" rx="6"/>
+    <rect x="40" y="${Y(i)}" width="4" height="56" style="fill:var(--${l.tone})"/>
+    <text class="name" x="60" y="${Y(i) + 24}">${l.name}</text>
+    <text class="detail" x="60" y="${Y(i) + 44}">${l.detail}</text>
+  </g>`;
+  svg.insertAdjacentHTML('beforeend', layers.slice(0, -1).map(edge).join('') + layers.map(node).join(''));
+
+  function mark(id) {
+    const linked = (el) => Boolean(id) && (el.dataset.a === id || el.dataset.b === id);
+    const ends = new Set([id]);
+    svg.querySelectorAll('[data-a]').forEach((e) => { if (linked(e)) ends.add(e.dataset.a).add(e.dataset.b); });
+    svg.classList.toggle('active', Boolean(id));
+    svg.querySelectorAll('[data-a]').forEach((e) => e.classList.toggle('hl', linked(e)));
+    svg.querySelectorAll('[data-id]').forEach((n) => n.classList.toggle('hl', ends.has(n.dataset.id)));
+  }
+  const idOf = (e) => e.target.closest('[data-id]')?.dataset.id;
+  svg.addEventListener('mouseover', (e) => mark(idOf(e)));
+  svg.addEventListener('mouseleave', () => mark(null));
+  svg.addEventListener('focusin', (e) => mark(idOf(e)));
+  svg.addEventListener('focusout', () => mark(null));
+</script>
