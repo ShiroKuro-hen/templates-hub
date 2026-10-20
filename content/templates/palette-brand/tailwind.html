@@ -3,15 +3,21 @@
   :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2}
   :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8}
 </style>
-<script>
-  tailwind.config = {
-    theme: { extend: { colors: {
-      bg: 'var(--bg)', surface: 'var(--surface)', ink: 'var(--text)', muted: 'var(--muted)', line: 'var(--border)',
-      accent: 'var(--accent)', 'accent-soft': 'var(--accent-soft)',
-      ok: 'var(--ok)', warn: 'var(--warn)', err: 'var(--err)', info: 'var(--info)',
-    } } },
-  };
-</script>
+<style type="text/tailwindcss">
+  @theme inline {
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-ink: var(--text);
+    --color-muted: var(--muted);
+    --color-line: var(--border);
+    --color-accent: var(--accent);
+    --color-accent-soft: var(--accent-soft);
+    --color-ok: var(--ok);
+    --color-warn: var(--warn);
+    --color-err: var(--err);
+    --color-info: var(--info);
+  }
+</style>
 
 <div class="bg-bg p-5 text-sm text-ink">
   <h1 class="m-0 mb-4 text-xl font-semibold tracking-tight">Paleta Ion</h1>

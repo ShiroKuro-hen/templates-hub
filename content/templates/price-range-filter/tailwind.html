@@ -23,7 +23,7 @@
   const R = `pointer-events-none absolute inset-0 m-0 h-6 w-full appearance-none bg-transparent focus-visible:outline-none [&::-webkit-slider-runnable-track]:h-6 [&::-webkit-slider-runnable-track]:bg-transparent [&::-moz-range-track]:bg-transparent [&::-webkit-slider-thumb]:mt-[3px] [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:size-[18px] [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-surface [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:shadow-sm [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:size-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-accent focus-visible:[&::-webkit-slider-thumb]:outline-2 focus-visible:[&::-webkit-slider-thumb]:outline-offset-2 focus-visible:[&::-webkit-slider-thumb]:outline-accent`;
   $('rlo').className = $('rhi').className = R;
   $('hist').innerHTML = C.map((c) => `<i class="block flex-1 rounded-t-sm bg-line" style="height:${(c / TOP) * 100}%"></i>`).join('');
-  const IN = ['bg-accent-soft', 'shadow-[inset_0_2px_0_theme(colors.blue.600)]', ''], OUT = ['bg-line', ''];
+  const IN = ['bg-accent-soft', 'shadow-[inset_0_2px_0_var(--accent)]'], OUT = ['bg-line'];
   let lo = 40, hi = 180;
   function render(from) {
     const bad = lo > hi;

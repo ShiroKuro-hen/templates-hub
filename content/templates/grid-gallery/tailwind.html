@@ -1,3 +1,7 @@
+<style>
+  .tag{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));color:#0a0f1c}
+  .kbd{font:12px/normal ui-monospace,"Cascadia Code",Menlo,monospace}
+</style>
 <section class="rounded-lg border border-line bg-surface p-5 text-sm text-fg shadow-sm" aria-labelledby="t">
   <div class="mb-3 flex flex-wrap items-center justify-between gap-3">
     <div>
@@ -18,28 +22,35 @@
     r43: ['4:3', 'auto-rows-auto', 'aspect-[4/3]', 'aspect-ratio: 4 / 3'],
     r169: ['16:9', 'auto-rows-auto', 'aspect-video', 'aspect-ratio: 16 / 9'],
   };
-  const pal = {
-    a: ['from-accent-soft to-accent-2', 'bg-accent'],
-    b: ['from-accent-2 to-ok-soft', 'bg-info'],
-    c: ['from-ok-soft to-warn-soft', 'bg-ok'],
-    d: ['from-warn-soft to-err-soft', 'bg-warn'],
-    e: ['from-err-soft to-accent-soft', 'bg-err'],
-  };
   const shape = { c: 'rounded-full', s: 'rounded-md rotate-12', t: '[clip-path:polygon(50%_0,100%_100%,0_100%)]' };
-  // [título, categoría, paleta, forma, destacado]
+  // [título, categoría, color inicio, color fin, tinta, forma, destacado]
   const items = [
-    ['Rediseño de la app móvil', 'Producto', 'a', 'c', 1], ['Identidad Aurora', 'Marca', 'b', 's'], ['Sistema de iconos', 'Diseño de sistemas', 'c', 't'],
-    ['Campaña de otoño', 'Marketing', 'd', 'c'], ['Panel de analítica', 'Producto', 'e', 's', 1], ['Portal de clientes', 'Producto', 'a', 't'],
-    ['Guía de estilo', 'Marca', 'b', 'c'], ['Tienda en línea', 'Comercio', 'c', 's'], ['Onboarding guiado', 'Producto', 'd', 't'], ['Kit de ilustraciones', 'Marca', 'e', 'c'],
+    ['Rediseño de la app móvil', 'Producto', 'accent-soft', 'info-soft', 'accent', 'c', 1],
+    ['Identidad Aurora', 'Marca', 'info-soft', 'ok-soft', 'info', 's'],
+    ['Sistema de iconos', 'Diseño de sistemas', 'ok-soft', 'warn-soft', 'ok', 't'],
+    ['Campaña de otoño', 'Marketing', 'warn-soft', 'err-soft', 'warn', 'c'],
+    ['Panel de analítica', 'Producto', 'err-soft', 'accent-soft', 'err', 's', 1],
+    ['Portal de clientes', 'Producto', 'accent-soft', 'ok-soft', 'accent', 't'],
+    ['Guía de estilo', 'Marca', 'info-soft', 'accent-soft', 'info', 'c'],
+    ['Tienda en línea', 'Comercio', 'ok-soft', 'info-soft', 'ok', 's'],
+    ['Onboarding guiado', 'Producto', 'warn-soft', 'accent-soft', 'warn', 't'],
+    ['Kit de ilustraciones', 'Marca', 'err-soft', 'warn-soft', 'err', 'c'],
   ];
   let mode = 'rows';
+  function tile([n, c, from, to, ink, s, w]) {
+    const featured = w && mode === 'rows' ? 'max-[400px]:col-auto col-span-2' : '';
+    const tag = w ? '<span class="tag absolute left-2 top-2 rounded-full px-2 text-xs font-semibold leading-[1.5]">Destacado</span>' : '';
+    return `<li class="flex min-h-0 min-w-0 ${modes[mode][2]} ${featured}"><figure class="m-0 grid min-w-0 flex-1 grid-rows-[minmax(0,1fr)_auto] overflow-hidden rounded-lg border border-line bg-surface transition-colors hover:border-accent">
+      <div class="relative min-h-0 overflow-hidden" style="background:linear-gradient(135deg,var(--${from}),var(--${to}))">${tag}<i class="absolute bottom-[14%] right-[12%] block aspect-square w-[34%] max-h-[70%] opacity-50 ${shape[s]}" style="background:var(--${ink})"></i></div>
+      <figcaption class="border-t border-line px-3 py-2"><b class="block truncate font-semibold">${n}</b><small class="text-muted">${c}</small></figcaption></figure></li>`;
+  }
   function draw() {
-    const [, rows, ar, code] = modes[mode];
-    grid.className = `m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3 p-0 ${rows}`;
-    grid.innerHTML = items.map(([n, c, p, s, w]) => `<li class="flex min-h-0 min-w-0 ${ar} ${w && mode === 'rows' ? 'max-[400px]:col-auto col-span-2' : ''}"><figure class="m-0 grid min-w-0 flex-1 grid-rows-[minmax(0,1fr)_auto] overflow-hidden rounded-lg border border-line bg-surface transition-colors hover:border-accent">
-      <div class="relative min-h-0 overflow-hidden bg-gradient-to-br ${pal[p][0]}">${w ? '<span class="absolute left-2 top-2 rounded-full bg-gradient-to-br from-accent-2 to-accent px-2 text-xs font-semibold text-fg">Destacado</span>' : ''}<i class="absolute bottom-[14%] right-[12%] block aspect-square w-1/3 max-h-[70%] opacity-50 ${pal[p][1]} ${shape[s]}"></i></div>
-      <figcaption class="border-t border-line px-3 py-2"><b class="block truncate font-semibold">${n}</b><small class="text-muted">${c}</small></figcaption></figure></li>`).join('');
-    info.innerHTML = `${mode === 'rows' ? 'Filas de altura uniforme' : 'Proporción fija'}: <code class="rounded-sm border border-line bg-page px-1.5 font-mono text-xs text-fg">${code}</code>`;
+    const [, rows, , code] = modes[mode];
+    grid.className = `m-0 grid list-none grid-flow-dense grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-3 p-0 ${rows}`;
+    grid.innerHTML = items.map(tile).join('');
+    const lead = mode === 'rows' ? 'Filas de altura uniforme: ' : 'Proporción fija: ';
+    const tail = mode === 'rows' ? ' y los destacados ocupan dos columnas.' : '';
+    info.innerHTML = `${lead}<code class="kbd rounded-sm border border-line bg-page px-1.5 py-px text-fg">${code}</code>${tail}`;
   }
   seg.insertAdjacentHTML('beforeend', Object.entries(modes).map(([k, m]) => `<label class="relative"><input type="radio" name="m" value="${k}" class="peer absolute inset-0 m-0 cursor-pointer opacity-0" ${k === mode ? 'checked' : ''}><span class="block rounded-md px-3 py-1 tabular-nums text-muted transition-colors hover:text-fg peer-checked:bg-accent peer-checked:font-semibold peer-checked:text-accent-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-accent">${m[0]}</span></label>`).join(''));
   seg.onchange = (e) => { mode = e.target.value; draw(); };

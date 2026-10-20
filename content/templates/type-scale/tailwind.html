@@ -1,31 +1,35 @@
 <!-- Escala fluida con clamp() como valores arbitrarios (o defínelos en theme.fontSize) -->
-<ol class="mx-auto my-5 max-w-3xl list-none divide-y divide-line overflow-hidden rounded-lg border border-line bg-surface p-0 text-fg shadow-sm">
+<div class="mx-auto max-w-[860px]">
+<h1 class="mb-1 text-[clamp(1.44rem,1.28rem+0.8vw,1.76rem)] font-bold leading-[1.15] tracking-[-.02em]">Escala tipográfica</h1>
+<p class="mb-4 text-[clamp(0.83rem,0.8rem+0.15vw,0.9rem)] text-muted">Siete pasos con <code class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-[0.9em]">clamp()</code>. Cambia el ancho del panel y mira cómo crecen.</p>
+<ol class="list-none divide-y divide-line overflow-hidden rounded-lg border border-line bg-surface p-0 text-fg shadow-sm">
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step-5</b>3.4rem</span>
-    <p class="m-0 w-fit bg-gradient-to-br from-accent-2 to-accent bg-clip-text text-[clamp(2.49rem,1.8rem+3vw,3.4rem)] font-bold leading-[1.1] tracking-tight text-transparent">Titular</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step-5</b>3.4rem</span>
+    <p class="m-0 w-fit bg-gradient-to-br from-accent-2 to-accent bg-clip-text text-[clamp(2.49rem,1.8rem+3vw,3.4rem)] font-bold leading-[1.1] tracking-[-.02em] text-transparent">Titular</p>
   </li>
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step-4</b>2.75rem</span>
-    <p class="m-0 text-[clamp(2.07rem,1.6rem+2vw,2.75rem)] font-bold leading-[1.1] tracking-tight">Gran título</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step-4</b>2.75rem</span>
+    <p class="m-0 text-[clamp(2.07rem,1.6rem+2vw,2.75rem)] font-bold leading-[1.1] tracking-[-.02em]">Gran título</p>
   </li>
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step-3</b>2.2rem</span>
-    <p class="m-0 text-[clamp(1.73rem,1.45rem+1.3vw,2.2rem)] font-bold leading-[1.1] tracking-tight">Título de sección</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step-3</b>2.2rem</span>
+    <p class="m-0 text-[clamp(1.73rem,1.45rem+1.3vw,2.2rem)] font-bold leading-[1.1] tracking-[-.02em]">Título de sección</p>
   </li>
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step-2</b>1.76rem</span>
-    <p class="m-0 text-[clamp(1.44rem,1.28rem+0.8vw,1.76rem)] font-bold leading-[1.1] tracking-tight">Subtítulo destacado</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step-2</b>1.76rem</span>
+    <p class="m-0 text-[clamp(1.44rem,1.28rem+0.8vw,1.76rem)] font-bold leading-[1.1] tracking-[-.02em]">Subtítulo destacado</p>
   </li>
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step-1</b>1.4rem</span>
-    <p class="m-0 text-[clamp(1.2rem,1.1rem+0.5vw,1.4rem)] font-bold leading-[1.1] tracking-tight">Entradilla o lead de página</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step-1</b>1.4rem</span>
+    <p class="m-0 text-[clamp(1.2rem,1.1rem+0.5vw,1.4rem)] font-bold leading-[1.1] tracking-[-.02em]">Entradilla o lead de página</p>
   </li>
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step-0</b>1.125rem</span>
-    <p class="m-0 text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] leading-snug">Texto base para lectura cómoda.</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step-0</b>1.125rem</span>
+    <p class="m-0 text-[clamp(1rem,0.95rem+0.25vw,1.125rem)] leading-[1.4]">Texto base para lectura cómoda.</p>
   </li>
   <li class="grid grid-cols-[6rem_1fr] items-baseline gap-3 px-4 py-3">
-    <span class="font-mono text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">step--1</b>0.9rem</span>
-    <p class="m-0 text-[clamp(0.83rem,0.8rem+0.15vw,0.9rem)] leading-snug">Texto pequeño para notas y pies.</p>
+    <span class="font-[ui-monospace,'Cascadia_Code',Menlo,monospace] text-xs tabular-nums text-muted"><b class="block font-semibold text-fg">--step--1</b>0.9rem</span>
+    <p class="m-0 text-[clamp(0.83rem,0.8rem+0.15vw,0.9rem)] leading-[1.4]">Texto pequeño para notas y pies.</p>
   </li>
 </ol>
+</div>

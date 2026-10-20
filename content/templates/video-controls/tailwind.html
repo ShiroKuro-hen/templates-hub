@@ -1,56 +1,79 @@
-<div class="bg-page p-5 text-sm text-fg">
-  <section id="player" tabindex="0" aria-label="Reproductor de vídeo: Recorrido por el panel de Ion Cloud"
-    class="mx-auto max-w-3xl overflow-hidden rounded-lg border border-line bg-surface shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&.full]:fixed [&.full]:inset-0 [&.full]:z-10 [&.full]:max-w-none [&.full]:rounded-none">
-    <div id="screen" class="relative aspect-video cursor-pointer bg-gradient-to-br from-accent-2 to-accent-soft">
-      <svg viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 size-full">
-        <circle id="sun" cx="130" cy="24" r="10" class="fill-warn"/>
-        <path d="M0 90 50 38l26 26 30-34 54 60z" class="fill-accent"/>
-        <path d="M0 90 34 62l28 16 40-26 58 34z" class="fill-info"/>
-      </svg>
-    </div>
-    <div class="flex flex-wrap items-center gap-2 border-t border-line px-3 py-2 [&_button]:grid [&_button]:h-8 [&_button]:min-w-8 [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:rounded-lg [&_button:hover]:bg-accent-soft [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-accent">
-      <button type="button" id="play" aria-label="Reproducir"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-      <span class="whitespace-nowrap tabular-nums text-muted"><span id="cur">0:00</span> / 3:24</span>
-      <input id="seek" type="range" min="0" max="204" value="0" aria-label="Progreso" aria-valuetext="0:00 de 3:24" class="min-w-32 flex-1 cursor-pointer accent-accent">
-      <button type="button" id="mute" aria-label="Silenciar" aria-pressed="false" class="aria-pressed:text-accent"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zm12 3a4 4 0 0 0-2-3.5v7A4 4 0 0 0 16 12z"/></svg></button>
-      <input id="vol" type="range" min="0" max="100" value="80" aria-label="Volumen" class="w-[72px] accent-accent">
-      <select id="rate" aria-label="Velocidad" class="h-8 rounded-lg border border-line bg-surface px-1.5">
-        <option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option>
-      </select>
-      <button type="button" id="full" aria-label="Pantalla completa" aria-pressed="false"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
-    </div>
-    <div class="h-px bg-gradient-to-r from-accent-2 to-accent"></div>
-    <div class="flex flex-wrap justify-between gap-3 px-3 py-2.5">
-      <h2 class="m-0 text-[15px] font-semibold">Recorrido por el panel de Ion Cloud</h2>
-      <p class="m-0 text-xs text-muted">K reproducir, flechas 5 s, M silenciar, F pantalla completa</p>
-    </div>
-  </section>
-</div>
+<style>
+  .seek{-webkit-appearance:none;appearance:none;height:4px;margin:0;border-radius:999px;cursor:pointer;
+        background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0/var(--p,0%) 100% no-repeat,var(--border)}
+  .seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--surface);border:1px solid var(--accent);box-shadow:var(--shadow)}
+  .seek::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--surface);border:1px solid var(--accent)}
+</style>
+<section id="player" tabindex="0" aria-label="Reproductor de vídeo: Recorrido por el panel de Ion Cloud"
+  class="mx-auto max-w-[760px] overflow-hidden rounded-lg border border-line bg-surface shadow-sm [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&.full]:fixed [&.full]:inset-0 [&.full]:z-10 [&.full]:flex [&.full]:max-w-none [&.full]:flex-col [&.full]:rounded-none">
+  <div id="screen" class="relative aspect-video cursor-pointer bg-info-soft [.full_&]:flex-1 [.full_&]:aspect-auto">
+    <svg viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 size-full">
+      <rect width="160" height="90" class="fill-info-soft"/>
+      <circle id="sun" cx="130" cy="24" r="10" class="fill-warn"/>
+      <path d="M0 90 50 38l26 26 30-34 54 60z" class="fill-accent"/>
+      <path d="M0 90 34 62l28 16 40-26 58 34z" class="fill-info"/>
+    </svg>
+    <button type="button" id="big" tabindex="-1" aria-hidden="true" class="absolute inset-0 m-auto grid size-14 place-items-center rounded-full bg-surface text-fg shadow-sm transition-opacity duration-150 motion-reduce:transition-none [.playing_&]:pointer-events-none [.playing_&]:opacity-0"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+  </div>
+  <div class="flex flex-wrap items-center gap-x-2 gap-y-1.5 border-t border-line px-3 py-2 [&_button]:grid [&_button]:h-8 [&_button]:min-w-8 [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:rounded-lg [&_button:hover]:bg-accent-soft">
+    <button type="button" id="play" aria-label="Reproducir"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <span class="whitespace-nowrap tabular-nums text-muted"><span id="cur">0:00</span> / 3:24</span>
+    <input id="seek" class="seek flex-[1_1_140px]" type="range" min="0" max="204" step="1" value="0" aria-label="Progreso" aria-valuetext="0:00 de 3:24">
+    <button type="button" id="mute" aria-label="Silenciar" aria-pressed="false"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zm12 3a4 4 0 0 0-2-3.5v7A4 4 0 0 0 16 12z"/></svg></button>
+    <input id="vol" class="w-[72px] accent-accent" type="range" min="0" max="100" value="80" aria-label="Volumen">
+    <select id="rate" aria-label="Velocidad" class="h-8 rounded-lg border border-line bg-surface px-1.5"><option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option><option value="2">2×</option></select>
+    <button type="button" id="full" aria-label="Pantalla completa" aria-pressed="false"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
+  </div>
+  <div class="flex flex-wrap justify-between gap-3 border-t border-line px-3 pt-2.5 pb-3">
+    <h2 class="m-0 text-[15px] font-semibold">Recorrido por el panel de Ion Cloud</h2>
+    <p class="m-0 text-xs leading-normal text-muted"><kbd class="rounded-sm border border-line px-1 font-mono">K</kbd> reproducir, <kbd class="rounded-sm border border-line px-1 font-mono">←</kbd><kbd class="rounded-sm border border-line px-1 font-mono">→</kbd> 5 s, <kbd class="rounded-sm border border-line px-1 font-mono">M</kbd> silenciar, <kbd class="rounded-sm border border-line px-1 font-mono">F</kbd> pantalla completa</p>
+  </div>
+</section>
 <script>
-  const $ = (id) => document.getElementById(id), p = $('player'), seek = $('seek'), DUR = 204;
-  let t = 0, playing = false, last = 0;
+  const PLAY = 'M8 5v14l11-7z', PAUSE = 'M6 5h4v14H6zm8 0h4v14h-4z';
+  const VOL = 'M4 9v6h4l5 4V5L8 9zm12 3a4 4 0 0 0-2-3.5v7A4 4 0 0 0 16 12z', OFF = 'M4 9v6h4l5 4V5L8 9zm11.6 0L14 10.6l1.4 1.4-1.4 1.4 1.6 1.6 1.4-1.4 1.4 1.4 1.6-1.6-1.4-1.4 1.4-1.4L18.4 9 17 10.4z';
+  const p = document.getElementById('player'), $ = (id) => document.getElementById(id);
+  const play = $('play'), seek = $('seek'), vol = $('vol'), mute = $('mute'), rate = $('rate'), full = $('full');
+  const DUR = 204; let t = 0, playing = false, last = 0, muted = false;
   const fmt = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
-  const render = () => { seek.value = t; $('cur').textContent = fmt(t); seek.setAttribute('aria-valuetext', fmt(t) + ' de 3:24'); $('sun').style.transform = `translateX(${-t / DUR * 110}px)`; };
-  function tick(now) { if (!playing) return; t = Math.min(DUR, t + (now - last) / 1000 * $('rate').value); last = now; render(); t >= DUR ? toggle(false) : requestAnimationFrame(tick); }
+
+  function render() {
+    seek.value = t; seek.style.setProperty('--p', (t / DUR) * 100 + '%');
+    $('cur').textContent = fmt(t); seek.setAttribute('aria-valuetext', fmt(t) + ' de ' + fmt(DUR));
+    $('sun').style.transform = `translateX(${(-t / DUR) * 110}px)`;
+  }
+  function tick(now) {
+    if (!playing) return;
+    t = Math.min(DUR, t + ((now - last) / 1000) * rate.value); last = now; render();
+    t >= DUR ? toggle(false) : requestAnimationFrame(tick);
+  }
   function toggle(on = !playing) {
-    if (on && t >= DUR) t = 0; playing = on;
-    $('play').setAttribute('aria-label', on ? 'Pausar' : 'Reproducir');
-    $('play').querySelector('path').setAttribute('d', on ? 'M6 5h4v14H6zm8 0h4v14h-4z' : 'M8 5v14l11-7z');
+    if (on && t >= DUR) t = 0;
+    playing = on; p.classList.toggle('playing', on);
+    play.setAttribute('aria-label', on ? 'Pausar' : 'Reproducir');
+    play.querySelector('path').setAttribute('d', on ? PAUSE : PLAY);
     if (on) { last = performance.now(); requestAnimationFrame(tick); }
   }
-  const setFull = (on) => { p.classList.toggle('full', on); $('full').setAttribute('aria-pressed', on); };
-  $('play').onclick = () => toggle(); $('screen').onclick = () => toggle();
+  function setMuted(m) {
+    muted = m; mute.setAttribute('aria-pressed', m); mute.setAttribute('aria-label', m ? 'Activar sonido' : 'Silenciar');
+    mute.querySelector('path').setAttribute('d', m ? OFF : VOL);
+  }
+  function setFull(on) { p.classList.toggle('full', on); full.setAttribute('aria-pressed', on); }
+  const skip = (s) => { t = Math.max(0, Math.min(DUR, t + s)); render(); };
+
+  play.onclick = () => toggle(); $('screen').onclick = () => toggle();
   seek.oninput = () => { t = +seek.value; render(); };
-  $('mute').onclick = () => $('mute').setAttribute('aria-pressed', $('mute').getAttribute('aria-pressed') !== 'true');
-  $('full').onclick = () => setFull(!p.classList.contains('full'));
+  vol.oninput = () => { setMuted(vol.value == 0); vol.setAttribute('aria-valuetext', vol.value + ' %'); };
+  mute.onclick = () => { setMuted(!muted); if (!muted && vol.value == 0) vol.value = 50; };
+  full.onclick = () => setFull(!p.classList.contains('full'));
   p.addEventListener('keydown', (e) => {
     const native = e.target.matches('input, select');
     if (e.key === 'Escape') setFull(false);
     else if (e.key === 'k' || (e.key === ' ' && e.target === p)) toggle();
-    else if (!native && e.key === 'ArrowLeft') { t = Math.max(0, t - 5); render(); }
-    else if (!native && e.key === 'ArrowRight') { t = Math.min(DUR, t + 5); render(); }
-    else if (e.key === 'm') $('mute').click();
-    else if (e.key === 'f') $('full').click();
+    else if (!native && e.key === 'ArrowLeft') skip(-5);
+    else if (!native && e.key === 'ArrowRight') skip(5);
+    else if (e.key === 'm') mute.click();
+    else if (e.key === 'f') full.click();
     else return;
     e.preventDefault();
   });

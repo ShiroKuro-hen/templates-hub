@@ -7,9 +7,9 @@
   .switch:checked::before{transform:translateX(16px)}
   @media (prefers-reduced-motion:reduce){.switch,.switch::before{transition:none}}
 </style>
-<main class="relative isolate mx-auto grid max-w-[760px] grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4 overflow-hidden rounded-lg border border-line bg-page p-4 text-sm text-fg">
+<main class="relative isolate mx-auto grid box-content max-w-[760px] grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4 overflow-hidden rounded-lg border border-line bg-page p-4 text-sm text-fg">
   <span class="pointer-events-none absolute -left-[50px] -top-[70px] -z-10 size-[200px] rounded-full bg-accent opacity-75 blur-[36px]" aria-hidden="true"></span>
-  <span class="pointer-events-none absolute -right-[30px] top-[35%] -z-10 size-[170px] rounded-full bg-gradient-to-br from-accent-2 to-info opacity-75 blur-[36px]" aria-hidden="true"></span>
+  <span class="pointer-events-none absolute -right-[30px] top-[35%] -z-10 size-[170px] rounded-full bg-info opacity-75 blur-[36px]" aria-hidden="true"></span>
   <span class="pointer-events-none absolute bottom-[-130px] left-[30%] -z-10 size-[220px] rounded-full bg-info opacity-75 blur-[36px]" aria-hidden="true"></span>
   <nav class="glass col-span-full flex flex-wrap items-center justify-between gap-3 rounded-lg px-4 py-2.5" aria-label="Principal">
     <strong class="font-bold">Aurora</strong>
@@ -22,11 +22,11 @@
   <article class="glass rounded-lg p-5">
     <h2 class="mb-1.5 text-base font-semibold">Plan Pro</h2>
     <p class="mb-3.5">Acceso a todos los paneles, informes semanales y soporte prioritario.</p>
-    <button type="button" class="rounded-lg border border-accent bg-accent px-3.5 py-1.5 font-semibold text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Cambiar plan</button>
+    <button type="button" class="rounded-lg border border-accent bg-accent px-3.5 py-[7px] font-semibold text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Cambiar plan</button>
   </article>
   <section class="glass overflow-hidden rounded-lg" aria-labelledby="ajustes">
-    <header class="border-b border-line px-3.5 py-2.5"><h2 id="ajustes" class="text-sm font-semibold">Ajustes</h2></header>
+    <header class="border-b border-[color:color-mix(in_srgb,var(--text)_14%,transparent)] px-3.5 py-2.5"><h2 id="ajustes" class="text-[14px] font-semibold leading-[1.5]">Ajustes</h2></header>
     <label class="flex cursor-pointer items-center justify-between gap-3 px-3.5 py-3"><span>Avisos por correo</span><input type="checkbox" class="switch" checked></label>
-    <label class="flex cursor-pointer items-center justify-between gap-3 border-t border-line px-3.5 py-3"><span>Sincronizar en segundo plano</span><input type="checkbox" class="switch"></label>
+    <label class="flex cursor-pointer items-center justify-between gap-3 border-t border-[color:color-mix(in_srgb,var(--text)_10%,transparent)] px-3.5 py-3"><span>Sincronizar en segundo plano</span><input type="checkbox" class="switch"></label>
   </section>
 </main>

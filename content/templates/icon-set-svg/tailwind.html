@@ -15,7 +15,8 @@
     b.type = 'button'; b.className = cls; b.setAttribute('aria-label', 'Copiar SVG de ' + name);
     b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" class="h-6 w-6 fill-none stroke-current stroke-2 text-fg [stroke-linecap:round] [stroke-linejoin:round]">${d}</svg>${name}`;
     b.onclick = async () => {
-      await navigator.clipboard.writeText(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`);
+      const text = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+      try { await navigator.clipboard.writeText(text); } catch { const t = document.createElement('textarea'); t.value = text; document.body.append(t); t.select(); try { document.execCommand('copy'); } catch {} t.remove(); }
       document.getElementById('st').textContent = 'Copiado: ' + name;
     };
     li.append(b); document.getElementById('g').append(li);

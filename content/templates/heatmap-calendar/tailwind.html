@@ -1,5 +1,13 @@
+<style>
+  [data-l="0"]{background:var(--accent-soft)}
+  [data-l="1"]{background:color-mix(in srgb,var(--accent) 30%,var(--surface))}
+  [data-l="2"]{background:color-mix(in srgb,var(--accent) 55%,var(--surface))}
+  [data-l="3"]{background:color-mix(in srgb,var(--accent) 80%,var(--surface))}
+  [data-l="4"]{background:var(--accent)}
+  .tip.on{opacity:1}
+</style>
 <section class="relative mx-auto max-w-[560px] rounded-lg border border-line bg-surface p-5 text-sm text-fg shadow-sm" id="card" aria-labelledby="t">
-  <header class="mb-4 flex flex-wrap items-baseline justify-between gap-x-3">
+  <header class="mb-4 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
     <h2 id="t" class="text-base font-semibold">Actividad del equipo</h2>
     <span id="sum" class="text-[13px] tabular-nums text-muted"></span>
   </header>
@@ -9,33 +17,46 @@
     <div class="grid grid-rows-[repeat(7,1fr)] gap-1" aria-hidden="true"><span></span><span class="flex items-center">Lun</span><span></span><span class="flex items-center">Mié</span><span></span><span class="flex items-center">Vie</span><span></span></div>
     <ul id="heat" class="m-0 grid list-none grid-flow-col grid-cols-12 grid-rows-[repeat(7,auto)] gap-1 p-0" role="group" aria-label="Actividad diaria de las últimas 12 semanas. Usa las flechas para moverte."></ul>
   </div>
-  <div id="tip" role="status" class="pointer-events-none absolute z-10 whitespace-nowrap rounded-lg bg-fg px-2.5 py-1 text-xs text-page opacity-0"></div>
+  <div class="mt-4 flex items-center justify-end gap-1 text-xs leading-[1.5] text-muted" aria-hidden="true">Menos <i data-l="0" class="block size-3.5 rounded-[min(var(--radius),3px)]"></i><i data-l="1" class="block size-3.5 rounded-[min(var(--radius),3px)]"></i><i data-l="2" class="block size-3.5 rounded-[min(var(--radius),3px)]"></i><i data-l="3" class="block size-3.5 rounded-[min(var(--radius),3px)]"></i><i data-l="4" class="block size-3.5 rounded-[min(var(--radius),3px)]"></i> Más</div>
+  <div id="tip" role="status" class="pointer-events-none absolute z-10 whitespace-nowrap rounded-lg bg-fg px-2.5 py-1 text-[12px] text-surface opacity-0 transition-opacity duration-[120ms] motion-reduce:transition-none"></div>
 </section>
 <script>
-  // Escala secuencial de un solo tono (nivel 0 a 4)
-  const LEVELS = ['bg-page', 'bg-accent-soft', 'bg-accent', 'bg-accent', 'bg-accent'];
-  // data = [{ date: Date, count: number }] — 84 días empezando en lunes
-  const start = new Date(2026, 6, 13), data = Array.from({ length: 84 }, (_, i) => {
+  // Datos de ejemplo: [{ date, count }] de 12 semanas (lunes a domingo), generados con un PRNG fijo.
+  const WEEKS = 12, start = new Date(2026, 6, 13); // lunes 13 jul 2026
+  let seed = 7;
+  const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const data = Array.from({ length: WEEKS * 7 }, (_, i) => {
     const date = new Date(start); date.setDate(start.getDate() + i);
-    return { date, count: (i * 7 + (i % 5) * 3) % 11 };
+    const weekend = i % 7 > 4;
+    return { date, count: rnd() < (weekend ? .65 : .12) ? 0 : Math.floor(rnd() * (weekend ? 4 : 12)) + 1 };
   });
   const level = n => n === 0 ? 0 : n <= 2 ? 1 : n <= 5 ? 2 : n <= 8 ? 3 : 4;
-  const label = d => `${d.count} aportes, ${d.date.toLocaleDateString('es', { weekday: 'short', day: 'numeric', month: 'short' })}`;
+  const fmt = d => new Intl.DateTimeFormat('es', { weekday: 'short', day: 'numeric', month: 'short' }).format(d);
   const heat = document.getElementById('heat'), tip = document.getElementById('tip'), card = document.getElementById('card');
-  data.forEach((d, i) => {
-    const c = document.createElement('li');
-    c.className = 'aspect-square cursor-pointer rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ' + LEVELS[level(d.count)];
-    c.tabIndex = i ? -1 : 0; c.setAttribute('role', 'img'); c.setAttribute('aria-label', label(d));
-    const show = () => {
-      const r = c.getBoundingClientRect(), k = card.getBoundingClientRect();
-      tip.textContent = label(d); tip.style.opacity = 1;
-      tip.style.left = Math.min(Math.max(r.left - k.left + r.width / 2 - tip.offsetWidth / 2, 4), k.width - tip.offsetWidth - 4) + 'px';
-      tip.style.top = r.top - k.top - tip.offsetHeight - 6 + 'px';
-    };
-    ['mouseenter', 'focus'].forEach(e => c.addEventListener(e, show));
-    ['mouseleave', 'blur'].forEach(e => c.addEventListener(e, () => tip.style.opacity = 0));
-    heat.appendChild(c);
-  });
-  data.forEach((d, i) => { if (i % 7 === 0 && (i === 0 || d.date.getMonth() !== data[i - 7].date.getMonth())) document.getElementById('months').insertAdjacentHTML('beforeend', `<span style="grid-column:${i / 7 + 1}">${d.date.toLocaleDateString('es', { month: 'short' }).replace('.', '')}</span>`); });
+  const label = d => `${d.count === 0 ? 'Sin aportes' : d.count + (d.count === 1 ? ' aporte' : ' aportes')}, ${fmt(d.date)}`;
+  heat.innerHTML = data.map((d, i) =>
+    `<li class="aspect-square cursor-pointer rounded-sm hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-l="${level(d.count)}" role="img" tabindex="${i ? -1 : 0}" aria-label="${label(d)}"></li>`).join('');
+  const cells = [...heat.children];
   document.getElementById('sum').textContent = data.reduce((a, d) => a + d.count, 0) + ' aportes en 12 semanas';
+  const months = document.getElementById('months');
+  data.forEach((d, i) => {
+    if (i % 7 === 0 && (i === 0 || d.date.getMonth() !== data[i - 7].date.getMonth()))
+      months.insertAdjacentHTML('beforeend', `<span class="whitespace-nowrap" style="grid-column:${i / 7 + 1}">${new Intl.DateTimeFormat('es', { month: 'short' }).format(d.date).replace('.', '')}</span>`);
+  });
+  function show(i) {
+    const c = cells[i], r = c.getBoundingClientRect(), k = card.getBoundingClientRect();
+    tip.textContent = label(data[i]);
+    tip.style.left = Math.min(Math.max(r.left - k.left + r.width / 2 - tip.offsetWidth / 2, 4), k.width - tip.offsetWidth - 4) + 'px';
+    tip.style.top = r.top - k.top - tip.offsetHeight - 6 + 'px';
+    tip.classList.add('on');
+  }
+  cells.forEach((c, i) => {
+    c.addEventListener('mouseenter', () => show(i)); c.addEventListener('focus', () => show(i));
+    c.addEventListener('mouseleave', () => tip.classList.remove('on')); c.addEventListener('blur', () => tip.classList.remove('on'));
+    c.addEventListener('keydown', e => {
+      const d = { ArrowDown: 1, ArrowUp: -1, ArrowRight: 7, ArrowLeft: -7 }[e.key];
+      if (!d || !cells[i + d]) return;
+      e.preventDefault(); c.tabIndex = -1; cells[i + d].tabIndex = 0; cells[i + d].focus();
+    });
+  });
 </script>

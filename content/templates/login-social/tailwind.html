@@ -1,21 +1,37 @@
-<div class="bg-page p-5 text-sm text-fg">
-  <main class="mx-auto max-w-[440px] rounded-lg border border-line bg-surface p-7 shadow-sm" aria-labelledby="t">
-    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-accent-2 to-accent" aria-hidden="true"></div>
-    <h1 id="t" class="mb-1 mt-4 text-xl font-semibold">Accede a Norte Cloud</h1>
-    <p class="mb-5 text-muted">Usa la cuenta de tu empresa. No publicamos nada en tu nombre.</p>
-    <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 [&>button]:flex [&>button]:h-10 [&>button]:items-center [&>button]:justify-center [&>button]:gap-2 [&>button]:rounded-lg [&>button]:border [&>button]:border-line [&>button]:font-semibold [&>button]:transition-colors hover:[&>button]:border-accent hover:[&>button]:bg-accent-soft focus-visible:[&>button]:outline-2 focus-visible:[&>button]:outline-offset-2 focus-visible:[&>button]:outline-accent" role="group" aria-label="Acceder con un proveedor">
-      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7M20 12h-8"/></svg>Google</button>
-      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8" opacity=".7"/><rect x="3" y="13" width="8" height="8" opacity=".7"/><rect x="13" y="13" width="8" height="8" opacity=".45"/></svg>Microsoft</button>
-      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 6"/></svg>GitHub</button>
-      <button type="button"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg>SSO empresarial</button>
-    </div>
-    <p class="my-5 flex items-center gap-3 text-muted before:flex-1 before:border-t before:border-line before:content-[''] after:flex-1 after:border-t after:border-line after:content-['']">o con tu correo</p>
-    <form>
-      <label for="email" class="mb-1.5 block font-semibold">Correo de trabajo</label>
-      <input id="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required
-             class="peer mb-3 h-10 w-full rounded-lg border border-line bg-surface px-3 focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
-      <button type="submit" class="h-10 w-full rounded-lg bg-accent font-semibold text-accent-ink hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Continuar con correo</button>
-    </form>
-    <p class="mt-4 text-xs text-muted">Al continuar aceptas los <a href="#" class="text-accent underline">Términos del servicio</a> y la <a href="#" class="text-accent underline">Política de privacidad</a>.</p>
-  </main>
-</div>
+<main class="mx-auto box-content max-w-[440px] rounded-lg border border-line bg-surface p-7 shadow-sm" aria-labelledby="t">
+  <div class="h-8 w-8 rounded-lg bg-linear-135 from-accent-2 to-accent" aria-hidden="true"></div>
+  <h1 id="t" class="mb-1 mt-4 text-[20px] font-bold leading-[1.3]">Accede a Norte Cloud</h1>
+  <p class="mb-5 text-muted">Usa la cuenta de tu empresa. No publicamos nada en tu nombre.</p>
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(170px,1fr))] gap-2" role="group" aria-label="Acceder con un proveedor">
+    <button type="button" data-p="Google" class="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 font-semibold text-fg transition-[background,border-color] duration-[140ms] motion-reduce:transition-none hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-progress disabled:opacity-60 aria-busy:border-accent aria-busy:opacity-100"><svg class="size-[18px] flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.4-5.7M20 12h-8"/></svg>Google</button>
+    <button type="button" data-p="Microsoft" class="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 font-semibold text-fg transition-[background,border-color] duration-[140ms] motion-reduce:transition-none hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-progress disabled:opacity-60 aria-busy:border-accent aria-busy:opacity-100"><svg class="size-[18px] flex-none" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8" opacity=".7"/><rect x="3" y="13" width="8" height="8" opacity=".7"/><rect x="13" y="13" width="8" height="8" opacity=".45"/></svg>Microsoft</button>
+    <button type="button" data-p="GitHub" class="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 font-semibold text-fg transition-[background,border-color] duration-[140ms] motion-reduce:transition-none hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-progress disabled:opacity-60 aria-busy:border-accent aria-busy:opacity-100"><svg class="size-[18px] flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 6"/></svg>GitHub</button>
+    <button type="button" data-p="tu proveedor SSO" class="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-line bg-surface px-3.5 font-semibold text-fg transition-[background,border-color] duration-[140ms] motion-reduce:transition-none hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-progress disabled:opacity-60 aria-busy:border-accent aria-busy:opacity-100"><svg class="size-[18px] flex-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3M21 12v2"/></svg>SSO empresarial</button>
+  </div>
+  <p class="my-5 flex items-center gap-3 text-muted before:flex-1 before:border-t before:border-line before:content-[''] after:flex-1 after:border-t after:border-line after:content-['']">o con tu correo</p>
+  <form id="f" novalidate>
+    <label for="email" class="mb-1.5 block font-semibold">Correo de trabajo</label>
+    <input id="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required aria-describedby="msg" class="mb-3 h-10 w-full rounded-lg border border-line bg-surface px-3 text-fg focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&[aria-invalid=true]]:border-err">
+    <p id="msg" class="-mt-1 mb-3 text-[13px] text-muted empty:hidden" aria-live="polite"></p>
+    <button type="submit" class="flex h-10 w-full cursor-pointer items-center justify-center rounded-lg border border-accent bg-accent px-3.5 font-semibold text-accent-ink transition-[filter] duration-[140ms] motion-reduce:transition-none hover:brightness-[1.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Continuar con correo</button>
+  </form>
+  <p class="mt-4 text-xs text-muted">Al continuar aceptas los <a href="#" class="text-accent underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Términos del servicio</a> y la <a href="#" class="text-accent underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Política de privacidad</a>.</p>
+  <p id="live" class="sr-only" role="status" aria-live="polite"></p>
+</main>
+<script>
+  const btns = document.querySelectorAll('[data-p]'), live = document.getElementById('live');
+  const MSG_OK = '-mt-1 mb-3 text-[13px] text-muted empty:hidden', MSG_ERR = '-mt-1 mb-3 text-[13px] text-err empty:hidden';
+  btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((x) => (x.disabled = true));
+    b.setAttribute('aria-busy', 'true');
+    live.textContent = `Redirigiendo a ${b.dataset.p}…`;
+    setTimeout(() => { btns.forEach((x) => (x.disabled = false)); b.removeAttribute('aria-busy'); live.textContent = ''; }, 1600);
+  }));
+  document.getElementById('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const i = document.getElementById('email'), m = document.getElementById('msg'), ok = i.checkValidity();
+    m.textContent = ok ? `Te enviamos un código a ${i.value}.` : 'Escribe un correo válido, por ejemplo nombre@empresa.com.';
+    m.className = ok ? MSG_OK : MSG_ERR;
+    i.setAttribute('aria-invalid', String(!ok));
+  });
+</script>

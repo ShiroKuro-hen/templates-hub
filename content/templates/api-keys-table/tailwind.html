@@ -1,7 +1,6 @@
-<div class="bg-page p-5 text-sm text-fg">
-  <main class="mx-auto max-w-[860px] rounded-lg border border-line bg-surface shadow-sm" aria-labelledby="h">
+<main class="mx-auto max-w-[860px] text-sm text-fg rounded-lg border border-line bg-surface shadow-sm" aria-labelledby="h">
     <header class="p-5"><h1 id="h" tabindex="-1" class="text-lg font-semibold focus:outline-none">Claves API</h1><p class="mt-1 text-muted">Trata las claves como contraseñas. Revoca las que ya no uses.</p></header>
-    <div class="overflow-x-auto border-t border-line">
+    <div class="relative overflow-x-auto border-t border-line">
       <table id="t" class="w-full min-w-[640px] border-collapse [&_td]:border-b [&_td]:border-line [&_td]:px-4 [&_td]:py-3 [&_tr:last-child_td]:border-0 [&_th]:whitespace-nowrap [&_th]:border-b [&_th]:border-line [&_th]:px-4 [&_th]:py-3 [&_th]:text-left [&_th]:font-semibold [&_th]:text-muted [&_small]:block [&_small]:text-muted [&_code]:whitespace-nowrap [&_code]:font-mono [&_code]:text-[13px] [&_.a]:text-right [&_.a]:whitespace-nowrap [&_.b]:h-8 [&_.b]:rounded-lg [&_.b]:border [&_.b]:border-line [&_.b]:px-3 [&_.b]:font-semibold hover:[&_.b]:border-accent hover:[&_.b]:bg-accent-soft focus-visible:[&_.b]:outline-2 focus-visible:[&_.b]:outline-offset-2 focus-visible:[&_.b]:outline-accent [&_.b+.b]:ml-1.5 [&_.r]:text-err">
         <caption class="sr-only">Claves API del proyecto Norte Cloud</caption>
         <thead><tr><th scope="col">Nombre</th><th scope="col">Clave</th><th scope="col">Último uso</th><th scope="col">Estado</th><th scope="col"><span class="sr-only">Acciones</span></th></tr></thead>
@@ -30,7 +29,6 @@
     </dialog>
     <p id="live" class="sr-only" role="status" aria-live="polite"></p>
   </main>
-</div>
 <script>
   const $ = (i) => document.getElementById(i), dlg = $('dlg');
   let row;

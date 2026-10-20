@@ -1,7 +1,6 @@
-<div class="bg-page p-5 text-sm text-fg">
-  <figure id="fig" data-ready="false" aria-busy="true" class="group m-0 mx-auto max-w-2xl overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
+<figure id="fig" data-ready="false" aria-busy="true" class="group m-0 mx-auto max-w-[640px] overflow-hidden rounded-lg border border-line bg-surface shadow-sm">
     <div role="img" aria-label="Sierra de Ion al amanecer: montañas azules con cumbres nevadas y un sol dorado" class="relative aspect-video overflow-hidden bg-warn-soft">
-      <svg viewBox="0 0 16 10" preserveAspectRatio="none" aria-hidden="true" class="absolute inset-0 size-full scale-110 blur-xl transition-opacity duration-150 group-data-[ready=true]:opacity-0">
+      <svg viewBox="0 0 16 10" preserveAspectRatio="none" aria-hidden="true" class="absolute inset-0 size-full scale-110 blur-[12px] transition-opacity duration-150 group-data-[ready=true]:opacity-0">
         <rect class="fill-warn-soft" width="16" height="10"/><circle class="fill-warn" cx="11.5" cy="3" r="1.6"/>
         <path class="fill-accent" d="M0 10V6l3-3 3 3 2-2 8 6z"/><path class="fill-ok" d="M0 10l5-2 5 1 6-1v2z"/>
       </svg>
@@ -20,7 +19,6 @@
       <button type="button" id="re" disabled class="h-9 cursor-pointer rounded-lg border border-line bg-surface px-3.5 font-medium enabled:hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50">Volver a cargar</button>
     </figcaption>
   </figure>
-</div>
 <script>
   const $ = (id) => document.getElementById(id), fig = $('fig'), re = $('re');
   let timer = 0, pct = 0;

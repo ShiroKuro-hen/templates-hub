@@ -25,7 +25,8 @@ if (inGroups.length !== new Set(inGroups).size) err('data.ts', 'una categoría a
 const REQUIRED = ['meta.json', 'prompt.md', 'html.html', 'tailwind.html', 'react.tsx', 'vue.vue'];
 // Restos del estilo anterior: el sistema de diseño actual son los tokens "Ion".
 const OLD_STYLE = /#17130f|#f6f1e7|#ff5a36|#ffd84d|\b\d+px \d+px 0(?:px)? (?:#|var\(|rgba?\()|border-black/i; // sombra dura = "4px 4px 0 <color>"
-const PALETTE_CLASS = /(?<![\w-])(?:bg|text|border|outline|ring|fill|stroke|divide|from|to|via)-(?:slate|gray|zinc|neutral|stone|blue|cyan|sky|teal|emerald|green|red|rose|amber|yellow|orange)-\d{2,3}/;
+const PALETTE_CLASS = /-(?:slate|gray|zinc|neutral|stone|blue|cyan|sky|teal|emerald|green|red|rose|amber|yellow|orange)-\d{2,3}\b|theme\(colors\./;
+const EMPTY_CLASSLIST = /classList\.(?:add|remove|toggle)\(\s*(['"`])\1/;
 const EXTERNAL = /<script[^>]+src=["']?https?:|<link[^>]+href=["']?https?:|@import\s+url\(\s*["']?https?:|url\(\s*["']?https?:/i;
 
 const slugs = readdirSync(dir).filter((d) => statSync(join(dir, d)).isDirectory());
@@ -63,6 +64,7 @@ for (const slug of slugs) {
     if (OLD_STYLE.test(txt)) err(slug, `${name} contiene estilo antiguo (colores/sombras previos a Ion)`);
   }
 
+  if (EMPTY_CLASSLIST.test(tw)) err(slug, 'tailwind.html llama a classList con una clase vacía (lanza SyntaxError)');
   if (meta.category !== 'paleta-de-color' && PALETTE_CLASS.test(tw)) err(slug, 'tailwind.html usa colores de la paleta de Tailwind: usa las clases semánticas (bg-surface, text-fg, border-line, text-accent…)');
 
   // Sintaxis de los <script> inline (no detecta errores de ejecución: eso lo cubre audit-previews).

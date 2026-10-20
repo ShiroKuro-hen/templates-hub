@@ -33,7 +33,6 @@
       dot.classList.toggle('!border-ok', ok);
       dot.classList.toggle('!bg-ok-soft', ok);
       li.classList.toggle('!text-fg', ok);
-      li.classList.toggle('', ok);
       score += ok;
     });
     segs.forEach((s, i) => (s.className = i < score ? COLORS[score] : ''));

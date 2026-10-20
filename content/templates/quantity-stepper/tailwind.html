@@ -33,7 +33,6 @@
     const clamped = !fromTyping && n !== v;
     note.textContent = clamped ? `Ajustamos la cantidad a ${v}. Puedes pedir entre ${min} y ${max} unidades.` : `Máximo ${max} unidades por pedido.`;
     note.classList.toggle('!text-warn', clamped);
-    note.classList.toggle('', clamped);
   }
   dec.addEventListener('click', () => set(+qty.value - 1));
   inc.addEventListener('click', () => set(+qty.value + 1));

@@ -1,39 +1,38 @@
-<div class="bg-page p-5 text-sm text-fg">
-  <main class="mx-auto max-w-[560px] rounded-lg border border-line bg-surface p-7 shadow-sm">
-    <div id="setup">
-      <h1 class="mb-1 text-xl font-semibold">Activa la verificación en dos pasos</h1>
-      <p class="mb-5 text-muted">Protege tu cuenta con un código temporal de tu app de autenticación.</p>
-      <div class="mb-5 flex flex-wrap gap-5">
-        <div class="flex-none rounded-lg bg-gradient-to-br from-accent-2 to-accent p-px">
-          <svg id="qr" class="block h-[152px] w-[152px] rounded-[7px] bg-surface p-3 text-fg" viewBox="0 0 25 25" shape-rendering="crispEdges" role="img" aria-label="Código QR para configurar la app de autenticación"><path fill="currentColor" fill-rule="evenodd"/></svg>
-        </div>
-        <ol class="grid min-w-[220px] flex-1 content-start gap-3 pl-5 marker:text-muted">
-          <li>Escanea el código con Google Authenticator, 1Password o Authy.</li>
-          <li>¿No puedes escanear? Escribe esta clave en la app.
-            <div class="mt-2 flex items-center justify-between gap-2 rounded-lg border border-line bg-page py-1.5 pl-3 pr-1.5">
-              <code class="break-all font-mono text-[13px] font-semibold">JBSW Y3DP EHPK 3PXP</code>
-              <button id="copy" type="button" class="h-7 rounded-lg border border-line bg-surface px-2.5 text-[13px] font-semibold hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Copiar</button>
-            </div></li>
-          <li>Escribe el código de 6 dígitos que muestra la app.</li>
-        </ol>
+<main class="mx-auto box-content max-w-[560px] rounded-lg border border-line bg-surface p-7 shadow-sm">
+  <div id="setup">
+    <h1 class="m-0 mb-1 text-[20px] leading-[1.3] font-bold">Activa la verificación en dos pasos</h1>
+    <p class="mb-5 text-muted">Protege tu cuenta con un código temporal de tu app de autenticación.</p>
+    <div class="mb-5 flex flex-wrap gap-5">
+      <div class="flex-none rounded-lg bg-gradient-to-br from-accent-2 to-accent p-px">
+        <svg class="box-content block h-[152px] w-[152px] rounded-[7px] bg-surface p-3 text-fg" viewBox="0 0 25 25" shape-rendering="crispEdges" role="img" aria-label="Código QR para configurar la app de autenticación"><path id="qp" fill="currentColor" fill-rule="evenodd"/></svg>
       </div>
-      <form id="f" novalidate>
-        <label for="code" class="mb-1.5 block font-semibold">Código de verificación</label>
-        <div class="flex flex-wrap gap-2">
-          <input id="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" placeholder="6 dígitos" aria-describedby="msg"
-                 class="h-10 min-w-[140px] flex-1 rounded-lg border border-line bg-surface px-3 tracking-widest tabular-nums aria-[invalid=true]:border-err focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
-          <button type="submit" class="h-10 rounded-lg bg-accent px-4 font-semibold text-accent-ink hover:brightness-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Verificar y activar</button>
-        </div>
-        <p id="msg" class="mt-2 text-[13px] text-err empty:hidden" aria-live="polite"></p>
-      </form>
+      <ol class="grid flex-[1_1_220px] list-decimal content-start gap-3 pl-5 marker:text-muted marker:tabular-nums">
+        <li>Escanea el código con Google Authenticator, 1Password o Authy.</li>
+        <li>¿No puedes escanear? Escribe esta clave en la app.
+          <div class="mt-2 flex items-center justify-between gap-2 rounded-lg border border-line bg-page py-1.5 pr-1.5 pl-3">
+            <code class="break-all font-mono text-[13px] font-semibold">JBSW Y3DP EHPK 3PXP</code>
+            <button id="copy" type="button" class="h-7 rounded-lg border border-line bg-surface px-2.5 text-[13px] font-semibold hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Copiar</button>
+          </div></li>
+        <li>Escribe el código de 6 dígitos que muestra la app.</li>
+      </ol>
     </div>
-    <div id="done" class="flex gap-3 rounded-lg border border-ok bg-ok-soft p-4" hidden>
-      <svg class="h-6 w-6 flex-none text-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>
-      <div><h2 id="td" tabindex="-1" class="font-semibold focus:outline-none">Verificación en dos pasos activada</h2>
-        <p>Desde ahora te pediremos un código al iniciar sesión. Guarda tus códigos de recuperación en un lugar seguro.</p></div>
-    </div>
-  </main>
-</div>
+    <form id="f" novalidate>
+      <label for="code" class="mb-1.5 block font-semibold">Código de verificación</label>
+      <div class="flex flex-wrap gap-2">
+        <input id="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" placeholder="6 dígitos" aria-describedby="msg"
+               class="h-10 flex-[1_1_140px] rounded-lg border border-line bg-surface px-3 tabular-nums tracking-[0.15em] aria-[invalid=true]:border-err focus-visible:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <button type="submit" class="h-10 rounded-lg bg-accent px-4 font-semibold text-accent-ink hover:brightness-[1.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Verificar y activar</button>
+      </div>
+      <p id="msg" class="mt-2 text-[13px] text-err empty:hidden" aria-live="polite"></p>
+    </form>
+  </div>
+  <div id="done" class="flex gap-3 rounded-lg border border-ok bg-ok-soft p-4" hidden>
+    <svg class="h-6 w-6 flex-none text-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/></svg>
+    <div><h2 id="td" tabindex="-1" class="m-0 mb-1 text-[16px] leading-[1.3] font-bold focus:outline-none">Verificación en dos pasos activada</h2>
+      <p>Desde ahora te pediremos un código al iniciar sesión. Guarda tus códigos de recuperación en un lugar seguro.</p></div>
+  </div>
+  <p id="live" class="sr-only" role="status" aria-live="polite"></p>
+</main>
 <script>
   const $ = (i) => document.getElementById(i);
   function qr(n = 25) { // simulado: no es un QR real
@@ -46,10 +45,11 @@
     for (const [x, y] of [[0, 0], [n - 7, 0], [0, n - 7]]) d += `M${x} ${y}h7v7h-7zM${x + 1} ${y + 1}h5v5h-5zM${x + 2} ${y + 2}h3v3h-3z`;
     return d;
   }
-  $('qr').firstElementChild.setAttribute('d', qr());
+  $('qp').setAttribute('d', qr());
   $('copy').addEventListener('click', async (e) => {
     const b = e.currentTarget;
-    try { await navigator.clipboard.writeText('JBSWY3DPEHPK3PXP'); b.textContent = 'Copiado'; } catch { b.textContent = 'Cópiala a mano'; }
+    try { await navigator.clipboard.writeText('JBSWY3DPEHPK3PXP'); b.textContent = 'Copiado'; $('live').textContent = 'Clave copiada.'; }
+    catch { b.textContent = 'Cópiala a mano'; }
     setTimeout(() => (b.textContent = 'Copiar'), 1800);
   });
   $('f').addEventListener('submit', (e) => {

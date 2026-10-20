@@ -12,7 +12,7 @@
   const btn = document.getElementById('copy');
   btn.addEventListener('click', async () => {
     const text = [...document.querySelectorAll('.l')].map((l) => l.textContent).join('\n');
-    await navigator.clipboard.writeText(text);
+    try { await navigator.clipboard.writeText(text); } catch { const t = document.createElement('textarea'); t.value = text; document.body.append(t); t.select(); try { document.execCommand('copy'); } catch {} t.remove(); }
     btn.textContent = 'Copiado';
     setTimeout(() => (btn.textContent = 'Copiar'), 1800);
   });
