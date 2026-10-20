@@ -47,6 +47,31 @@ const preview = url(`/preview/${t.slug}.html`);
           <a class="btn" href={preview} target="_blank" rel="noopener">Abrir en pestaña</a>
           <output class="ruler" id="ruler">—</output>
         </div>
+        <details class="custom">
+          <summary>Personalizar</summary>
+          <div class="fields">
+            <label>Acento <input type="color" id="c-accent"></label>
+            <label>Radio <input type="range" min="0" max="32" id="c-radius"> <output>8px</output></label>
+            <label>Sombra
+              <select id="c-shadow">
+                <option value="">Del estilo</option>
+                <option value="none">Ninguna</option>
+                <option value="soft">Suave</option>
+                <option value="hard">Dura</option>
+              </select>
+            </label>
+            <label>Fuente
+              <select id="c-font">
+                <option value="">Del estilo</option>
+                <option value="system">Sistema</option>
+                <option value="serif">Serif</option>
+                <option value="mono">Mono</option>
+              </select>
+            </label>
+            <button class="btn" type="button" id="reset-custom">Restablecer</button>
+            <button class="btn" type="button" id="copy-link">Copiar enlace</button>
+          </div>
+        </details>
         <div class="stage">
           <div class="frame" id="frame">
             <iframe data-preview src={preview} title={`Vista previa de ${t.title}`} sandbox="allow-scripts allow-popups" allow="clipboard-write" loading="lazy"></iframe>
@@ -75,6 +100,7 @@ const preview = url(`/preview/${t.slug}.html`);
       </div>
       {langs.map((l, n) => (
         <div role="tabpanel" id={`panel-${l}`} aria-labelledby={`tab-${l}`} data-panel={l} data-code={t.code[l]} hidden={n !== 0}>
+          {l === 'tailwind' && <p class="note">Requiere la <a href={url('/tailwind/')}>configuración de Tailwind</a>.</p>}
           <div class="file">{l}.{LANGS[l].ext}</div>
           <Code code={t.code[l]} lang={LANGS[l].shiki as any} themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
         </div>
@@ -89,18 +115,13 @@ const preview = url(`/preview/${t.slug}.html`);
 </Base>
 
 <script>
-  import { THEMES, themeCss } from '../../lib/themes';
+  import { themeCss } from '../../lib/themes';
   import { applyTheme } from '../../lib/apply-theme';
+  import { copy } from '../../lib/copy';
+  import { currentTheme, readState, saveState } from '../../lib/hub-theme';
+  import { toParams, type Overrides } from '../../lib/customize';
 
   const $ = <T extends Element>(s: string) => [...document.querySelectorAll<T>(s)];
-  const flash = (b: HTMLElement, msg = 'Copiado') => {
-    const old = b.textContent;
-    b.textContent = msg;
-    setTimeout(() => (b.textContent = old), 1200);
-  };
-  const copy = async (b: HTMLElement, text: string) => {
-    try { await navigator.clipboard.writeText(text); flash(b); } catch { flash(b, 'No se pudo copiar'); }
-  };
 
   // Pestañas por lenguaje (flechas, Home/End) + recuerda la última elección.
   const tabs = $<HTMLElement>('[data-tab]');
@@ -121,24 +142,53 @@ const preview = url(`/preview/${t.slug}.html`);
   });
   try { const s = localStorage.getItem('lang'); if (s && tabs.some((b) => b.dataset.tab === s)) show(s); } catch {}
 
-  const styleSelect = document.getElementById('style-select') as HTMLSelectElement | null;
-  const selectedTheme = () => THEMES.find((s) => s.id === styleSelect?.value) ?? THEMES[0];
-
   document.getElementById('copy-code')?.addEventListener('click', (e) => {
     const panel = $<HTMLElement>('[data-panel]:not([hidden])')[0];
-    copy(e.currentTarget as HTMLElement, applyTheme(panel.dataset.code!, selectedTheme()));
+    copy(e.currentTarget as HTMLElement, applyTheme(panel.dataset.code!, currentTheme()));
   });
   $<HTMLElement>('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b, b.dataset.copy!)));
 
+  const styleSelect = document.getElementById('style-select') as HTMLSelectElement | null;
   if (styleSelect) {
-    const sendStyle = (f: HTMLIFrameElement) => f.contentWindow?.postMessage({ css: themeCss(selectedTheme()) }, '*');
+    const accent = document.getElementById('c-accent') as HTMLInputElement;
+    const radius = document.getElementById('c-radius') as HTMLInputElement;
+    const radiusOut = document.querySelector<HTMLOutputElement>('.custom output')!;
+    const shadow = document.getElementById('c-shadow') as HTMLSelectElement;
+    const font = document.getElementById('c-font') as HTMLSelectElement;
+
+    const sendStyle = (f: HTMLIFrameElement) => f.contentWindow?.postMessage({ css: themeCss(currentTheme()) }, '*');
     const syncStyle = () => $<HTMLIFrameElement>('iframe[data-preview]').forEach(sendStyle);
-    try { const s = localStorage.getItem('hub-style'); if (s && THEMES.some((t) => t.id === s)) styleSelect.value = s; } catch {}
-    styleSelect.addEventListener('change', () => {
-      try { localStorage.setItem('hub-style', styleSelect.value); } catch {}
+
+    const reflect = () => {
+      const s = readState();
+      styleSelect.value = s.styleId;
+      const { light } = currentTheme(s);
+      accent.value = /^#[0-9a-f]{6}$/i.test(light['--accent'] ?? '') ? light['--accent'] : '#2f5bff';
+      radius.value = String(parseInt(light['--radius'] ?? '8', 10));
+      radiusOut.value = `${radius.value}px`;
+      shadow.value = s.overrides.shadow ?? '';
+      font.value = s.overrides.font ?? '';
+    };
+    const edit = (change: (s: ReturnType<typeof readState>) => ReturnType<typeof readState>) => {
+      const s = change(readState());
+      saveState(s.styleId, s.overrides);
+      history.replaceState(null, '', `${location.pathname}?${toParams(s.styleId, s.overrides)}`);
       syncStyle();
-    });
+      reflect();
+    };
+    const setOverride = (key: keyof Overrides, value: unknown) =>
+      edit((s) => ({ ...s, overrides: { ...s.overrides, [key]: value } as Overrides }));
+
+    styleSelect.addEventListener('change', () => edit((s) => ({ ...s, styleId: styleSelect.value })));
+    accent.addEventListener('input', () => setOverride('accent', accent.value));
+    radius.addEventListener('input', () => setOverride('radius', Number(radius.value)));
+    shadow.addEventListener('change', () => setOverride('shadow', shadow.value || undefined));
+    font.addEventListener('change', () => setOverride('font', font.value || undefined));
+    document.getElementById('reset-custom')!.addEventListener('click', () => edit((s) => ({ ...s, overrides: {} })));
+    document.getElementById('copy-link')!.addEventListener('click', (e) => copy(e.currentTarget as HTMLElement, location.href));
+
     document.addEventListener('load', (e) => { if ((e.target as Element).matches?.('iframe[data-preview]')) sendStyle(e.target as HTMLIFrameElement); }, true);
+    reflect();
     syncStyle();
   }
 

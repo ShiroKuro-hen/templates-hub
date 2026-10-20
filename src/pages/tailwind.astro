@@ -1,0 +1,25 @@
+---
+import { Code } from 'astro:components';
+import Base from '../layouts/Base.astro';
+import setup from '../lib/tailwind-setup.css?raw';
+---
+<Base title="Configuración de Tailwind · Templates Hub" description="CSS único que conecta los componentes de Tailwind con los tokens de estilo del hub.">
+  <h1>Configuración de Tailwind</h1>
+  <p class="lead">Los componentes de Tailwind usan clases semánticas (<code>bg-surface</code>, <code>text-fg</code>, <code>border-line</code>, <code>text-accent</code>…) conectadas a los tokens del estilo. Pega este CSS una sola vez en tu proyecto Tailwind v4: define los tokens, el modo oscuro con <code>data-theme="dark"</code> en <code>&lt;html&gt;</code> y el mapeo de <code>@theme</code>.</p>
+  <p class="lead">«Copiar CSS» incorpora el estilo que elijas en cualquier página de componente.</p>
+  <section class="sec">
+    <div class="prompt">
+      <div class="bar"><span class="pill lang">CSS</span><button class="btn primary" type="button" id="copy-setup" data-css={setup}>Copiar CSS</button></div>
+      <Code code={setup} lang="css" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { applyTheme } from '../lib/apply-theme';
+  import { copy } from '../lib/copy';
+  import { currentTheme } from '../lib/hub-theme';
+
+  const button = document.getElementById('copy-setup')!;
+  button.addEventListener('click', () => copy(button, applyTheme(button.dataset.css!, currentTheme())));
+</script>

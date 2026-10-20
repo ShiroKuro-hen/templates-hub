@@ -40,6 +40,7 @@ const activeCat = currentCat || templates.find((t) => t.slug === current)?.categ
       <a class="brand" href={url('/')}><span class="mark" aria-hidden="true"></span>Templates Hub</a>
       <span class="spacer"></span>
       <button class="toplink" id="open-palette" type="button" aria-haspopup="dialog"><span class="lbl">Buscar</span> <kbd id="kbd-hint">Ctrl K</kbd></button>
+      <a class="toplink" href={url('/tailwind/')}>Tailwind</a>
       <a class="toplink" href="https://github.com/ShiroKuro-hen/templates-hub" aria-label="GitHub">GitHub</a>
       <button class="iconbtn" id="theme" type="button" aria-label="Cambiar entre tema claro y oscuro">
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>

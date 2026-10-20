@@ -90,6 +90,15 @@ kbd { font: 500 11px var(--font-mono); padding: 1px 6px; border: 1px solid var(-
 .seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px var(--border); }
 .bar label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
 .bar select { height: 28px; padding: 0 8px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); font: inherit; font-size: 13px; }
+.custom { padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+.custom summary { display: inline-block; cursor: pointer; font-weight: 500; color: var(--text); }
+.custom .fields { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 8px; }
+.custom label { display: inline-flex; align-items: center; gap: 6px; }
+.custom input[type="color"] { width: 28px; height: 28px; padding: 0; border: 1px solid var(--border); border-radius: 6px; background: none; cursor: pointer; }
+.custom input[type="range"] { width: 120px; accent-color: var(--accent); }
+.custom output { min-width: 40px; font: 500 12px var(--font-mono); font-variant-numeric: tabular-nums; }
+.custom select { height: 28px; padding: 0 8px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); font: inherit; font-size: 13px; }
+.note { margin: 0; padding: 10px 16px 0; font-size: 13.5px; color: var(--muted); }
 .ruler { margin-left: auto; font: 500 12px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 14px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer; transition: border-color .14s, background .14s; }
 .btn:hover { border-color: var(--accent); }
