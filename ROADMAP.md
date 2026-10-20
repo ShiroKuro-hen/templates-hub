@@ -9,6 +9,12 @@ Objetivo: **más estilos** y **más personalización**, sin romper lo que ya es 
 
 **Consecuencia clave:** como todo se pinta con las mismas variables CSS, se pueden ofrecer muchos estilos y personalización **sobrescribiendo variables**, sin tocar los 237 componentes.
 
+## Estado
+- **Fase 1 — hecha:** 9 estilos, selector en el visor, verificador de contraste (`npm run themes`).
+- **Fase 2 — parcial:** "Copiar código" hornea el estilo elegido en HTML+CSS. Hechos también: degradado `--accent-2` y radios `min(var(--radius),Npx)` en ~200 previews. Falta: perillas (acento/radio/densidad), compartir por URL, prompt con variables.
+- **Vue:** su código no trae bloque `:root` (usa las variables de la app que lo recibe), así que el copiado con tema no le aplica.
+- **Tailwind/React:** sin cambios; opción A o B sigue pendiente (ver Riesgos).
+
 ## Qué hace la competencia (y qué nos sirve)
 
 | Referencia | Modelo | Qué tomar |

@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "validate": "node scripts/validate.mjs",
-    "themes": "node scripts/check-themes.mjs",
+    "themes": "node scripts/check-themes.mjs && node scripts/test-apply-theme.mjs",
     "audit": "node scripts/audit-previews.mjs",
     "check": "npm run validate && npm run themes && npm run build"
   },
