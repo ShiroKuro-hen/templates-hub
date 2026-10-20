@@ -1,0 +1,105 @@
+<main class="grid items-start gap-4 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]" id="shop">
+  <article aria-labelledby="plan-t" class="grid gap-[18px] rounded-lg border border-line bg-surface p-6 text-[14px] leading-[1.5] text-fg shadow-sm">
+    <header class="grid gap-1 border-b border-line pb-[18px]">
+      <p class="m-0 text-xs leading-[1.5] font-semibold tracking-wider text-accent uppercase">Plan elegido</p>
+      <h2 id="plan-t" class="m-0 text-[22px] font-bold tracking-[-.01em]">Equipo</h2>
+      <p class="m-0 text-muted">Para equipos que trabajan a diario en el mismo espacio.</p>
+      <p class="mt-2 flex flex-wrap items-baseline gap-2 text-muted"><strong class="text-[32px] leading-none font-bold text-fg tabular-nums">24 €</strong> al mes, hasta 10 personas</p>
+    </header>
+    <ul class="m-0 flex list-none flex-wrap gap-x-4 gap-y-1.5 p-0 text-[13px] text-muted">
+      <li><span aria-hidden="true" class="font-bold text-ok">✓</span> Proyectos ilimitados</li>
+      <li><span aria-hidden="true" class="font-bold text-ok">✓</span> 20 GB de almacenamiento</li>
+      <li><span aria-hidden="true" class="font-bold text-ok">✓</span> Informes y automatizaciones</li>
+    </ul>
+    <fieldset id="addons" class="m-0 grid min-w-0 gap-2 border-0 p-0">
+      <legend class="mb-1 p-0 font-semibold">Complementos opcionales</legend>
+      <div class="addon flex flex-wrap items-center gap-x-3 gap-y-2 rounded-sm border border-line bg-surface p-3 has-[input:checked]:border-accent has-[input:checked]:bg-accent-soft" data-name="Soporte prioritario" data-price="9">
+        <label class="flex min-w-0 flex-[1_1_200px] cursor-pointer items-start gap-2.5"><input type="checkbox" checked class="mt-[3px] h-[18px] w-[18px] flex-none accent-accent"><span class="grid min-w-0 flex-1"><b class="font-semibold">Soporte prioritario</b><small class="text-xs leading-[1.5] text-muted">Respuesta en una hora por chat y teléfono</small></span></label>
+        <span class="font-semibold whitespace-nowrap tabular-nums">9 € <span class="text-xs leading-[1.5] font-normal text-muted">/mes</span></span>
+      </div>
+      <div class="addon flex flex-wrap items-center gap-x-3 gap-y-2 rounded-sm border border-line bg-surface p-3 has-[input:checked]:border-accent has-[input:checked]:bg-accent-soft" data-name="Almacenamiento extra" data-price="4">
+        <label class="flex min-w-0 flex-[1_1_200px] cursor-pointer items-start gap-2.5"><input type="checkbox" checked class="mt-[3px] h-[18px] w-[18px] flex-none accent-accent"><span class="grid min-w-0 flex-1"><b class="font-semibold">Almacenamiento extra</b><small class="text-xs leading-[1.5] text-muted">Bloques de 100 GB</small></span></label>
+        <span class="font-semibold whitespace-nowrap tabular-nums">4 € <span class="text-xs leading-[1.5] font-normal text-muted">/mes</span></span>
+        <div role="group" aria-label="Bloques de 100 GB" class="step inline-flex items-center gap-1">
+          <button type="button" data-d="-1" aria-label="Quitar un bloque de 100 GB" class="h-[30px] w-[30px] rounded-sm border border-line bg-surface text-base font-semibold text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40">−</button>
+          <span class="qty min-w-7 text-center font-semibold tabular-nums">2</span>
+          <button type="button" data-d="1" aria-label="Añadir un bloque de 100 GB" class="h-[30px] w-[30px] rounded-sm border border-line bg-surface text-base font-semibold text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-40">+</button>
+        </div>
+      </div>
+      <div class="addon flex flex-wrap items-center gap-x-3 gap-y-2 rounded-sm border border-line bg-surface p-3 has-[input:checked]:border-accent has-[input:checked]:bg-accent-soft" data-name="Registro de auditoría" data-price="6">
+        <label class="flex min-w-0 flex-[1_1_200px] cursor-pointer items-start gap-2.5"><input type="checkbox" checked class="mt-[3px] h-[18px] w-[18px] flex-none accent-accent"><span class="grid min-w-0 flex-1"><b class="font-semibold">Registro de auditoría</b><small class="text-xs leading-[1.5] text-muted">Historial completo de accesos</small></span></label>
+        <span class="font-semibold whitespace-nowrap tabular-nums">6 € <span class="text-xs leading-[1.5] font-normal text-muted">/mes</span></span>
+      </div>
+      <div class="addon flex flex-wrap items-center gap-x-3 gap-y-2 rounded-sm border border-line bg-surface p-3 has-[input:checked]:border-accent has-[input:checked]:bg-accent-soft" data-name="Correo con tu dominio" data-price="3">
+        <label class="flex min-w-0 flex-[1_1_200px] cursor-pointer items-start gap-2.5"><input type="checkbox" class="mt-[3px] h-[18px] w-[18px] flex-none accent-accent"><span class="grid min-w-0 flex-1"><b class="font-semibold">Correo con tu dominio</b><small class="text-xs leading-[1.5] text-muted">Buzones ilimitados</small></span></label>
+        <span class="font-semibold whitespace-nowrap tabular-nums">3 € <span class="text-xs leading-[1.5] font-normal text-muted">/mes</span></span>
+      </div>
+      <div class="addon flex flex-wrap items-center gap-x-3 gap-y-2 rounded-sm border border-line bg-surface p-3 has-[input:checked]:border-accent has-[input:checked]:bg-accent-soft" data-name="Copias cada hora" data-price="5">
+        <label class="flex min-w-0 flex-[1_1_200px] cursor-pointer items-start gap-2.5"><input type="checkbox" class="mt-[3px] h-[18px] w-[18px] flex-none accent-accent"><span class="grid min-w-0 flex-1"><b class="font-semibold">Copias cada hora</b><small class="text-xs leading-[1.5] text-muted">Restauración en un clic</small></span></label>
+        <span class="font-semibold whitespace-nowrap tabular-nums">5 € <span class="text-xs leading-[1.5] font-normal text-muted">/mes</span></span>
+      </div>
+    </fieldset>
+  </article>
+
+  <aside aria-labelledby="sum-t" class="grid gap-3.5 rounded-lg border border-line bg-surface p-6 text-[14px] leading-[1.5] text-fg shadow-sm md:sticky md:top-5">
+    <h2 id="sum-t" class="m-0 text-[18px] leading-[1.5] font-bold tracking-[-.01em]">Resumen del pedido</h2>
+    <dl id="lineas" class="m-0 grid gap-2.5"></dl>
+    <p class="m-0 flex items-baseline justify-between border-t-2 border-fg pt-3"><span>Total al mes</span><output id="total" class="text-[26px] font-bold tabular-nums"></output></p>
+    <button type="button" class="cursor-pointer rounded-lg border-0 bg-accent px-4 py-[11px] text-[15px] font-semibold text-accent-ink hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Contratar Equipo</button>
+    <p class="m-0 text-center text-xs text-muted">IVA no incluido. Cancela cuando quieras.</p>
+  </aside>
+</main>
+<script>
+  const BASE = 24, MIN_DESCUENTO = 3, TASA = 0.1, MAX = 10;
+  const eur = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+  const panel = document.getElementById('addons');
+  const addons = [...panel.querySelectorAll('.addon')];
+  const qtyOf = (el) => Number(el.querySelector('.qty')?.textContent ?? 1);
+
+  function ajustar(el, n = qtyOf(el)) {
+    const q = el.querySelector('.qty');
+    if (!q) return;
+    const on = el.querySelector('input').checked, v = Math.min(MAX, Math.max(1, n));
+    const [dec, inc] = el.querySelectorAll('.step button');
+    q.textContent = v;
+    dec.disabled = !on || v === 1;
+    inc.disabled = !on || v === MAX;
+  }
+
+  function resumen() {
+    const activos = addons
+      .filter((el) => el.querySelector('input').checked)
+      .map((el) => ({ nombre: el.dataset.name, cantidad: qtyOf(el), importe: Number(el.dataset.price) * qtyOf(el) }));
+    const complementos = activos.reduce((s, l) => s + l.importe, 0);
+    const descuento = activos.length >= MIN_DESCUENTO ? complementos * TASA : 0;
+    return { activos, subtotal: BASE + complementos, descuento, total: BASE + complementos - descuento };
+  }
+
+  const linea = (nombre, importe, cls = '') =>
+    `<div class="flex justify-between gap-3 ${cls}"><dt class="text-muted">${nombre}</dt><dd class="m-0 tabular-nums">${eur.format(importe)}</dd></div>`;
+
+  function render() {
+    const r = resumen();
+    document.getElementById('lineas').innerHTML = [
+      linea('Plan Equipo', BASE),
+      ...r.activos.map((l) => linea(l.cantidad > 1 ? `${l.nombre} × ${l.cantidad}` : l.nombre, l.importe)),
+      linea('Subtotal', r.subtotal, 'border-t border-line pt-2.5'),
+      r.descuento ? linea('Descuento 10 % (3 o más complementos)', -r.descuento) : '',
+    ].join('');
+    document.getElementById('total').textContent = eur.format(r.total);
+  }
+
+  panel.addEventListener('change', (e) => {
+    ajustar(e.target.closest('.addon'));
+    render();
+  });
+  panel.addEventListener('click', (e) => {
+    const b = e.target.closest('.step button');
+    if (!b) return;
+    const el = b.closest('.addon');
+    ajustar(el, qtyOf(el) + Number(b.dataset.d));
+    render();
+  });
+  addons.forEach((el) => ajustar(el));
+  render();
+</script>

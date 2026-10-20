@@ -1,0 +1,81 @@
+<section class="mx-auto grid max-w-[1040px] items-center gap-8 py-[clamp(16px,4vw,48px)] text-fg min-[860px]:grid-cols-[1.1fr_1fr] min-[860px]:gap-6" aria-labelledby="h">
+  <div>
+    <h1 id="h" class="mb-3.5 text-[length:clamp(2rem,5.5vw,3.2rem)] font-bold leading-[1.08] tracking-[-0.03em] text-balance">Lanza tu equipo en minutos, no en semanas.</h1>
+    <p class="mb-6 max-w-[44ch] text-[length:1.05rem] text-muted">Lumen reúne tus proyectos, tus plazos y a tu equipo en un solo lugar, con migración guiada desde la herramienta que ya usas.</p>
+    <ul class="grid gap-3.5">
+      <li class="flex items-start gap-3"><span class="grid h-6 w-6 flex-none place-items-center rounded-full bg-ok-soft text-[13px] font-bold text-ok" aria-hidden="true">✓</span>Importa tus proyectos desde Trello, Asana o una hoja de cálculo.</li>
+      <li class="flex items-start gap-3"><span class="grid h-6 w-6 flex-none place-items-center rounded-full bg-ok-soft text-[13px] font-bold text-ok" aria-hidden="true">✓</span>Permisos por equipo: cada persona ve solo lo que necesita.</li>
+      <li class="flex items-start gap-3"><span class="grid h-6 w-6 flex-none place-items-center rounded-full bg-ok-soft text-[13px] font-bold text-ok" aria-hidden="true">✓</span>Soporte en español y migración guiada sin coste.</li>
+    </ul>
+  </div>
+  <div class="rounded-lg border border-line bg-surface p-5 shadow-sm sm:p-7">
+    <h2 class="m-0 text-xl font-bold">Crea tu cuenta gratis</h2>
+    <p class="mt-1 mb-5 text-[13px] text-muted">14 días de prueba. Sin tarjeta de crédito.</p>
+    <form id="signup" novalidate class="grid gap-4">
+      <div class="grid gap-1.5">
+        <label for="name" class="text-[13px] font-semibold">Nombre completo</label>
+        <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-err" class="w-full rounded-lg border border-line bg-page px-3 py-2.5 text-[15px] leading-[normal] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <p class="m-0 text-[12.5px] font-medium text-err empty:hidden" id="name-err"></p>
+      </div>
+      <div class="grid gap-1.5">
+        <label for="email" class="text-[13px] font-semibold">Correo de trabajo</label>
+        <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-err" class="w-full rounded-lg border border-line bg-page px-3 py-2.5 text-[15px] leading-[normal] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <p class="m-0 text-[12.5px] font-medium text-err empty:hidden" id="email-err"></p>
+      </div>
+      <div class="grid gap-1.5">
+        <label for="password" class="text-[13px] font-semibold">Contraseña</label>
+        <div class="relative">
+          <input id="password" name="password" type="password" autocomplete="new-password" aria-describedby="password-hint password-err" class="w-full rounded-lg border border-line bg-page py-2.5 pr-[76px] pl-3 text-[15px] leading-[normal] text-fg aria-[invalid=true]:border-err focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+          <button type="button" id="toggle" aria-controls="password" class="absolute top-1/2 right-1.5 -translate-y-1/2 cursor-pointer rounded-md px-2 py-1 text-xs font-semibold leading-[normal] text-muted hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Mostrar</button>
+        </div>
+        <p class="m-0 text-[12.5px] text-muted" id="password-hint">Mínimo 8 caracteres.</p>
+        <p class="m-0 text-[12.5px] font-medium text-err empty:hidden" id="password-err"></p>
+      </div>
+      <button type="submit" class="cursor-pointer rounded-lg border border-accent bg-accent px-5 py-[11px] text-base leading-[normal] font-semibold text-accent-ink shadow-sm hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Crear cuenta</button>
+    </form>
+    <div id="done" role="status" tabindex="-1" hidden class="grid justify-items-start gap-2 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      <span class="grid h-9 w-9 place-items-center rounded-full bg-ok-soft text-lg font-bold text-ok" aria-hidden="true">✓</span>
+      <h3 id="done-title" class="mt-1 text-[1.2rem] font-bold"></h3>
+      <p id="done-text" class="m-0 text-muted"></p>
+    </div>
+  </div>
+</section>
+<script>
+  const form = document.getElementById('signup'), done = document.getElementById('done');
+  const fields = [...form.querySelectorAll('input')];
+  const pass = document.getElementById('password'), toggle = document.getElementById('toggle');
+  const FREE = /@(gmail|hotmail|outlook|yahoo)\./i;
+  const RULES = {
+    name: [[(v) => v.trim().length >= 2, 'Escribe tu nombre completo.']],
+    email: [
+      [(v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), 'Revisa el formato, por ejemplo nombre@empresa.com.'],
+      [(v) => !FREE.test(v), 'Usa tu correo de trabajo, no uno personal.'],
+    ],
+    password: [[(v) => v.length >= 8, 'La contraseña necesita al menos 8 caracteres.']],
+  };
+  const check = (input) => {
+    const failed = RULES[input.name].find(([ok]) => !ok(input.value));
+    const msg = failed ? failed[1] : '';
+    input.setAttribute('aria-invalid', String(Boolean(msg)));
+    document.getElementById(`${input.name}-err`).textContent = msg;
+    return !msg;
+  };
+  form.addEventListener('focusout', (e) => { if (e.target.matches('input')) check(e.target); });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const results = fields.map(check);
+    const firstBad = fields[results.indexOf(false)];
+    if (firstBad) { firstBad.focus(); return; }
+    const [nameInput, emailInput] = fields;
+    document.getElementById('done-title').textContent = `¡Listo, ${nameInput.value.trim().split(' ')[0]}!`;
+    document.getElementById('done-text').textContent = `Enviamos un enlace de activación a ${emailInput.value.trim()}.`;
+    form.hidden = true;
+    done.hidden = false;
+    done.focus();
+  });
+  toggle.addEventListener('click', () => {
+    const show = pass.type === 'password';
+    pass.type = show ? 'text' : 'password';
+    toggle.textContent = show ? 'Ocultar' : 'Mostrar';
+  });
+</script>

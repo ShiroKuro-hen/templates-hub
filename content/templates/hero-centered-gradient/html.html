@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero centrado con degradado</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  [hidden]{display:none!important}
+  .hero{position:relative;isolation:isolate;overflow:hidden;max-width:1040px;margin:0 auto;padding:44px 16px 40px;text-align:center}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(var(--border) 1px,transparent 1px) 0 0/22px 22px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0,rgba(0,0,0,1),transparent);mask-image:radial-gradient(ellipse 70% 60% at 50% 0,rgba(0,0,0,1),transparent)}
+  .hero::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 45% at 50% 0,var(--accent-soft),transparent 70%);pointer-events:none}
+  .pill{display:inline-flex;align-items:center;gap:8px;margin:0 0 24px;padding:4px 12px 4px 4px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--muted);font-size:13px;text-decoration:none}
+  .pill:hover{color:var(--text);border-color:var(--accent)}
+  .pill b{padding:2px 9px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600}
+  h1{margin:0 auto 18px;max-width:16ch;font-size:clamp(2.2rem,7vw,3.9rem);font-weight:750;line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
+  .grad{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{max-width:52ch;margin:0 auto 28px;color:var(--muted);font-size:1.1rem;line-height:1.55}
+  .row{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+  .btn{display:inline-flex;align-items:center;padding:11px 20px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:600 1rem system-ui,sans-serif;text-decoration:none}
+  .btn:hover{border-color:var(--accent)}
+  .btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:var(--shadow)}
+  .btn.main:hover{filter:brightness(1.08)}
+  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;max-width:720px;margin:48px auto 0;overflow:hidden;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  @media(min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}}
+  .stats div{padding:16px 12px;background:var(--surface)}
+  .stats dt{color:var(--muted);font-size:13px}
+  .stats dd{margin:2px 0 0;font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+  @media(prefers-reduced-motion:no-preference){.grad{background-size:200% 200%;animation:shift 8s ease-in-out infinite alternate}}
+  @keyframes shift{to{background-position:100% 100%}}
+</style>
+</head>
+<body>
+  <section class="hero" aria-labelledby="h">
+    <a class="pill" href="#novedades"><b>Nuevo</b> Plantillas 3.0 ya disponibles <span aria-hidden="true">→</span></a>
+    <h1 id="h">Diseña landings que <span class="grad">convierten</span> desde el primer día</h1>
+    <p class="sub">Lumen reúne plantillas, datos y pruebas A/B en un solo lugar para que cada visita se convierta en una venta.</p>
+    <div class="row">
+      <a class="btn main" href="#empezar">Empezar gratis</a>
+      <a class="btn" href="#demo">Ver demo</a>
+    </div>
+    <dl class="stats">
+      <div><dt>Equipos activos</dt><dd>12 mil</dd></div>
+      <div><dt>Valoración media</dt><dd>4,9/5</dd></div>
+      <div><dt>Disponibilidad</dt><dd>99,9 %</dd></div>
+      <div><dt>Respuesta de soporte</dt><dd>&lt; 2 h</dd></div>
+    </dl>
+  </section>
+</body>
+</html>

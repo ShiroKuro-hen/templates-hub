@@ -1,0 +1,33 @@
+<div id="frame" class="frame h-80 overflow-auto scroll-smooth rounded-lg border border-line bg-page motion-reduce:scroll-auto">
+  <header id="arriba" class="nav group sticky top-0 z-[1] flex h-16 items-center gap-3 border-b border-line bg-surface px-4 transition-[height,background-color,box-shadow] duration-200 ease-in-out data-[scrolled]:h-12 data-[scrolled]:bg-[color-mix(in_srgb,var(--surface)_75%,transparent)] data-[scrolled]:shadow-sm motion-reduce:transition-none">
+    <a href="#arriba" class="brand flex flex-none items-center gap-2 font-bold text-fg"><i aria-hidden="true" class="size-8 rounded-[min(var(--radius),6px)] bg-gradient-to-br from-accent-2 to-accent transition-[width,height] duration-200 ease-in-out group-data-[scrolled]:size-6 motion-reduce:transition-none"></i>Atlas</a>
+    <nav class="links min-w-0 flex-1 -my-1 overflow-x-auto p-1 [scrollbar-width:none]" aria-label="Principal">
+      <ul class="m-0 flex list-none gap-1 whitespace-nowrap p-0">
+        <li><a href="#arriba" aria-current="page" class="block rounded-lg px-2.5 py-1.5 font-semibold text-accent bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Producto</a></li>
+        <li><a href="#arriba" class="block rounded-lg px-2.5 py-1.5 text-muted transition-colors hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Precios</a></li>
+        <li><a href="#arriba" class="block rounded-lg px-2.5 py-1.5 text-muted transition-colors hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Documentación</a></li>
+        <li><a href="#arriba" class="block rounded-lg px-2.5 py-1.5 text-muted transition-colors hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Equipo</a></li>
+      </ul>
+    </nav>
+    <a href="#arriba" class="btn flex-none whitespace-nowrap rounded-lg bg-accent px-3 py-1.5 font-semibold text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Empezar</a>
+  </header>
+  <main class="content px-4 pt-5 pb-6">
+    <h1 class="mb-1.5 text-[1.3rem] font-semibold tracking-[-0.01em]">Resumen de octubre</h1>
+    <p class="mb-4 max-w-[56ch] text-muted">Desplázate por el contenido: al bajar, la barra se reduce, se vuelve translúcida y gana sombra.</p>
+    <div class="cards mb-5 grid gap-2.5">
+      <article class="card rounded-lg border border-line bg-surface px-3.5 py-3 shadow-sm"><b class="block font-semibold">Proyectos activos</b><span class="text-[13px] text-muted">12 en curso y 3 pendientes de revisión.</span></article>
+      <article class="card rounded-lg border border-line bg-surface px-3.5 py-3 shadow-sm"><b class="block font-semibold">Equipo</b><span class="text-[13px] text-muted">8 personas y 2 invitaciones enviadas esta semana.</span></article>
+      <article class="card rounded-lg border border-line bg-surface px-3.5 py-3 shadow-sm"><b class="block font-semibold">Facturación</b><span class="text-[13px] text-muted">El plan Pro se renueva el 5 de noviembre.</span></article>
+      <article class="card rounded-lg border border-line bg-surface px-3.5 py-3 shadow-sm"><b class="block font-semibold">Incidencias</b><span class="text-[13px] text-muted">Ninguna abierta. El último cierre fue hace cuatro días.</span></article>
+    </div>
+    <p class="mb-4 max-w-[56ch] text-muted">Los cambios se guardan solos y puedes deshacerlos desde el historial durante 30 días.</p>
+    <a href="#arriba" class="top inline-block rounded-lg px-2.5 py-1.5 font-semibold text-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ir arriba ↑</a>
+  </main>
+</div>
+<style>
+  @supports (backdrop-filter: blur(8px)) { .nav[data-scrolled] { backdrop-filter: blur(10px); } }
+</style>
+<script>
+  const frame = document.getElementById('frame'), bar = document.getElementById('arriba');
+  frame.addEventListener('scroll', () => bar.toggleAttribute('data-scrolled', frame.scrollTop > 8), { passive: true });
+</script>

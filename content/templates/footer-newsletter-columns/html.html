@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pie con boletín y columnas</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  footer{max-width:1000px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  a{color:var(--muted);text-decoration:none}
+  a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  [hidden]{display:none!important}
+  .news{display:grid;gap:18px;padding:28px 24px;background:var(--accent-soft);border-bottom:1px solid var(--border)}
+  .news h2{margin:0;font-size:20px;line-height:1.25;letter-spacing:-.01em}
+  .lead{margin:6px 0 0;color:var(--muted)}
+  label{display:block;margin-bottom:6px;font-weight:600}
+  .row{display:flex;flex-wrap:wrap;gap:8px}
+  input{flex:1 1 200px;min-width:0;padding:9px 12px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  input[aria-invalid=true]{border-color:var(--err)}
+  .primary{padding:9px 16px;font:inherit;font-weight:600;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius);cursor:pointer}
+  .primary:hover{filter:brightness(1.08)}
+  .msg{min-height:0;margin:8px 0 0;font-size:13px;color:var(--err)}
+  .done{margin:0;padding:12px 14px;color:var(--text);background:var(--ok-soft);border:1px solid var(--ok);border-radius:var(--radius)}
+  .cols{display:grid;grid-template-columns:repeat(2,1fr);gap:24px 16px;padding:28px 24px}
+  h3{margin:0 0 12px;font-size:12px;font-weight:700;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
+  .cols ul{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+  .legal{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;padding:16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+  .legal p{margin:0}
+  .legal ul{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0;padding:0;list-style:none}
+  .up{padding:6px 12px;font:inherit;font-size:13px;font-weight:600;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer}
+  .up:hover{border-color:var(--accent)}
+  @media (min-width:900px){
+    .news{grid-template-columns:1fr 1.1fr;align-items:center;padding:32px}
+    .cols{grid-template-columns:repeat(4,1fr);gap:24px;padding:28px 32px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<footer>
+  <section class="news" aria-labelledby="fn-t">
+    <div>
+      <h2 id="fn-t">Novedades del producto, sin ruido</h2>
+      <p class="lead">Un correo al mes con lanzamientos y guías. Te das de baja con un clic.</p>
+    </div>
+    <div>
+      <form id="fn-form" novalidate>
+        <label for="fn-email">Correo electrónico</label>
+        <div class="row">
+          <input id="fn-email" type="email" name="email" autocomplete="email" placeholder="nombre@empresa.com" aria-describedby="fn-msg">
+          <button type="submit" class="primary">Suscribirme</button>
+        </div>
+        <p id="fn-msg" class="msg" aria-live="polite"></p>
+      </form>
+      <p id="fn-done" class="done" role="status" tabindex="-1" hidden></p>
+    </div>
+  </section>
+  <div class="cols">
+    <nav aria-labelledby="c1"><h3 id="c1">Producto</h3><ul><li><a href="#">Plataforma</a></li><li><a href="#">Automatizaciones</a></li><li><a href="#">Integraciones</a></li><li><a href="#">Precios</a></li></ul></nav>
+    <nav aria-labelledby="c2"><h3 id="c2">Recursos</h3><ul><li><a href="#">Blog</a></li><li><a href="#">Guías</a></li><li><a href="#">Plantillas</a></li><li><a href="#">Documentación</a></li></ul></nav>
+    <nav aria-labelledby="c3"><h3 id="c3">Empresa</h3><ul><li><a href="#">Nosotros</a></li><li><a href="#">Clientes</a></li><li><a href="#">Empleo</a></li><li><a href="#">Contacto</a></li></ul></nav>
+    <nav aria-labelledby="c4"><h3 id="c4">Ayuda</h3><ul><li><a href="#">Centro de ayuda</a></li><li><a href="#">Estado del servicio</a></li><li><a href="#">Seguridad</a></li><li><a href="#">API</a></li></ul></nav>
+  </div>
+  <div class="legal">
+    <p>© 2026 Nimbo Software, S.L.</p>
+    <ul><li><a href="#">Privacidad</a></li><li><a href="#">Términos</a></li><li><a href="#">Cookies</a></li></ul>
+    <button type="button" class="up" id="up">Volver arriba</button>
+  </div>
+</footer>
+<script>
+  const form = document.getElementById('fn-form'), email = document.getElementById('fn-email'),
+        msg = document.getElementById('fn-msg'), done = document.getElementById('fn-done'),
+        up = document.getElementById('up'), reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const validate = (value) => !value ? 'Escribe tu correo para suscribirte.'
+    : EMAIL.test(value) ? '' : 'Revisa el correo: falta el @ o el dominio.';
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = email.value.trim(), error = validate(value);
+    msg.textContent = error;
+    email.setAttribute('aria-invalid', String(Boolean(error)));
+    if (error) return email.focus();
+    form.hidden = true;
+    done.textContent = `Listo. Confirma tu suscripción en ${value}.`;
+    done.hidden = false;
+    done.focus();
+  });
+  email.addEventListener('input', () => {
+    msg.textContent = '';
+    email.setAttribute('aria-invalid', 'false');
+  });
+  up.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' }));
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precio por usuarios</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .calc{max-width:560px;margin:0 auto;padding:24px;display:grid;gap:22px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  h2{margin:0;font-size:18px;letter-spacing:-.01em}
+  .billing{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+  .lbl.on{color:var(--text);font-weight:600}
+  .switch{position:relative;width:44px;height:24px;padding:0;border:0;border-radius:999px;background:var(--border);cursor:pointer;transition:background .2s}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow);transition:transform .2s}
+  .switch[aria-checked=true]{background:var(--accent)}
+  .switch[aria-checked=true]::after{transform:translateX(20px)}
+  .usage{display:grid;gap:12px}
+  .usage-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .usage-head label{font-weight:600}
+  .count{font-size:26px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+  input[type=range]{--p:5%;-webkit-appearance:none;appearance:none;display:block;width:100%;height:28px;margin:0;background:transparent;cursor:pointer}
+  input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0 / var(--p) 100% no-repeat,var(--border)}
+  input[type=range]::-moz-range-track{height:10px;border-radius:999px;background:var(--border)}
+  input[type=range]::-moz-range-progress{height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-7px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:var(--shadow)}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:var(--shadow)}
+  input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:999px}
+  .ends{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+  .tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:0;padding:0;list-style:none;color:var(--muted);font-size:12px;line-height:1.35}
+  .tiers li{padding:8px;border:1px solid var(--border);border-radius:min(var(--radius),6px)}
+  .tiers b{display:block;font-weight:600;color:var(--text)}
+  .tiers li.on{border-color:var(--accent);background:var(--accent-soft)}
+  .result{display:grid;gap:4px;padding-top:18px;border-top:1px solid var(--border)}
+  .tramo{margin:0;color:var(--muted)}
+  .price{margin:4px 0 0;font-size:clamp(44px,12vw,60px);line-height:1;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .unit{margin:0;color:var(--muted)}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 0;color:var(--muted)}
+  .save{padding:4px 10px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-size:12px;font-weight:600}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (max-width:480px){.tiers{grid-template-columns:repeat(2,1fr)}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="calc" aria-labelledby="t">
+  <header class="top">
+    <h2 id="t">Calcula tu plan</h2>
+    <div class="billing">
+      <span class="lbl on" id="bm">Mensual</span>
+      <button type="button" class="switch" id="sw" role="switch" aria-checked="false" aria-label="Facturación anual"></button>
+      <span class="lbl" id="ba">Anual</span>
+    </div>
+  </header>
+
+  <div class="usage">
+    <div class="usage-head">
+      <label for="u">Usuarios activos</label>
+      <span class="count" id="n" aria-hidden="true">25</span>
+    </div>
+    <input type="range" id="u" min="1" max="500" step="1" value="25" aria-valuetext="25 usuarios">
+    <div class="ends" aria-hidden="true"><span>1</span><span>500</span></div>
+    <ol class="tiers" id="tiers" aria-hidden="true"></ol>
+  </div>
+
+  <div class="result">
+    <p class="tramo">Tramo <b id="tier"></b></p>
+    <p class="price" id="total" aria-hidden="true"></p>
+    <p class="unit" id="unit"></p>
+    <p class="meta"><span id="seat"></span><span class="save" id="save"></span></p>
+    <p class="sr" id="live" aria-live="polite"></p>
+  </div>
+</section>
+<script>
+  const TIERS = [
+    { name: 'Inicio', hasta: 10, precio: 12 },
+    { name: 'Crecimiento', hasta: 50, precio: 10 },
+    { name: 'Equipo', hasta: 200, precio: 8 },
+    { name: 'Escala', hasta: 500, precio: 6 },
+  ];
+  const ANUAL = 0.8;
+  const $ = (id) => document.getElementById(id);
+  const range = $('u'), sw = $('sw'), list = $('tiers');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const money = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 });
+  const cents = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const tierOf = (n) => TIERS.find((t) => n <= t.hasta);
+  const cuota = (n) => {
+    let desde = 0;
+    return TIERS.reduce((sum, t) => {
+      const enTramo = Math.max(0, Math.min(n, t.hasta) - desde);
+      desde = t.hasta;
+      return sum + enTramo * t.precio;
+    }, 0);
+  };
+
+  list.innerHTML = TIERS.map((t, i) => `<li><b>${t.name}</b>${i ? TIERS[i - 1].hasta + 1 : 1}–${t.hasta} · US$${t.precio}</li>`).join('');
+
+  function leer() {
+    const n = +range.value, annual = sw.getAttribute('aria-checked') === 'true', bruto = cuota(n);
+    return { n, annual, bruto, mes: annual ? bruto * ANUAL : bruto, tier: tierOf(n) };
+  }
+
+  let shown = null, raf = 0;
+  function animar(to) {
+    cancelAnimationFrame(raf);
+    const from = shown ?? to, t0 = performance.now();
+    const frame = (now) => {
+      const k = reduce.matches ? 1 : Math.min(1, (now - t0) / 320);
+      shown = from + (to - from) * (1 - (1 - k) ** 3);
+      $('total').textContent = `US$${money.format(Math.round(shown))}`;
+      if (k < 1) raf = requestAnimationFrame(frame);
+    };
+    frame(t0);
+  }
+
+  function render() {
+    const { n, annual, bruto, mes, tier } = leer();
+    range.style.setProperty('--p', `${((n - 1) / (range.max - 1)) * 100}%`);
+    range.setAttribute('aria-valuetext', `${n} ${n === 1 ? 'usuario' : 'usuarios'}`);
+    $('n').textContent = n;
+    $('tier').textContent = tier.name;
+    $('seat').textContent = `US$${cents.format(mes / n)} por usuario al mes`;
+    $('unit').textContent = annual ? 'al mes, facturado al año' : 'al mes, facturado cada mes';
+    const ahorro = money.format(Math.round(bruto * (1 - ANUAL) * 12));
+    $('save').textContent = annual ? `Ahorras US$${ahorro} al año` : `Con anual ahorrarías US$${ahorro}`;
+    $('bm').classList.toggle('on', !annual);
+    $('ba').classList.toggle('on', annual);
+    [...list.children].forEach((li, i) => li.classList.toggle('on', TIERS[i] === tier));
+    animar(mes);
+  }
+
+  const resumen = ({ n, annual, mes, tier }) =>
+    `Precio ${annual ? 'anual' : 'mensual'}: US$${money.format(Math.round(mes))} al mes para ${n} usuarios. Tramo ${tier.name}.`;
+
+  range.addEventListener('input', () => { render(); $('live').textContent = resumen(leer()); });
+  sw.addEventListener('click', () => {
+    sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
+    render();
+    $('live').textContent = resumen(leer());
+  });
+  render();
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barra que se encoge al hacer scroll</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  a, button { font:inherit; color:inherit; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .frame { height:320px; overflow:auto; scroll-behavior:smooth; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); }
+  .nav { position:sticky; top:0; z-index:1; display:flex; align-items:center; gap:12px; height:64px; padding:0 16px; background:var(--surface); border-bottom:1px solid var(--border); transition:height .2s ease, background-color .2s ease, box-shadow .2s ease; }
+  .nav[data-scrolled] { height:48px; background:color-mix(in srgb, var(--surface) 75%, transparent); box-shadow:var(--shadow); }
+  @supports (backdrop-filter:blur(8px)) { .nav[data-scrolled] { backdrop-filter:blur(10px); } }
+  .brand { display:flex; align-items:center; gap:8px; flex:none; font-weight:700; color:var(--text); text-decoration:none; }
+  .brand i { width:32px; height:32px; border-radius:min(var(--radius),6px); background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); transition:width .2s ease, height .2s ease; }
+  .nav[data-scrolled] .brand i { width:24px; height:24px; }
+  .links { flex:1; min-width:0; margin:-4px 0; padding:4px; overflow-x:auto; scrollbar-width:none; }
+  .links ul { display:flex; gap:4px; margin:0; padding:0; list-style:none; white-space:nowrap; }
+  .links a { display:block; padding:6px 10px; border-radius:var(--radius); color:var(--muted); text-decoration:none; transition:background .14s, color .14s; }
+  .links a:hover { color:var(--text); background:var(--bg); }
+  .links a[aria-current] { color:var(--accent); background:var(--accent-soft); font-weight:600; }
+  .btn { flex:none; padding:6px 12px; border-radius:var(--radius); background:var(--accent); color:var(--accent-ink); font-weight:600; text-decoration:none; white-space:nowrap; }
+  .content { padding:20px 16px 24px; }
+  h1 { margin:0 0 6px; font-size:1.3rem; font-weight:600; letter-spacing:-.01em; }
+  .content p { margin:0 0 16px; max-width:56ch; color:var(--muted); }
+  .cards { display:grid; gap:10px; margin:0 0 20px; }
+  .card { padding:12px 14px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .card b { display:block; font-weight:600; }
+  .card span { color:var(--muted); font-size:13px; }
+  .top { display:inline-block; padding:6px 10px; border-radius:var(--radius); color:var(--accent); font-weight:600; text-decoration:none; }
+  .top:hover { background:var(--accent-soft); }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } .frame { scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+<div class="frame" id="frame">
+  <header class="nav" id="arriba">
+    <a class="brand" href="#arriba"><i aria-hidden="true"></i>Atlas</a>
+    <nav class="links" aria-label="Principal">
+      <ul>
+        <li><a href="#arriba" aria-current="page">Producto</a></li>
+        <li><a href="#arriba">Precios</a></li>
+        <li><a href="#arriba">Documentación</a></li>
+        <li><a href="#arriba">Equipo</a></li>
+      </ul>
+    </nav>
+    <a class="btn" href="#arriba">Empezar</a>
+  </header>
+  <main class="content">
+    <h1>Resumen de octubre</h1>
+    <p>Desplázate por el contenido: al bajar, la barra se reduce, se vuelve translúcida y gana sombra.</p>
+    <div class="cards">
+      <article class="card"><b>Proyectos activos</b><span>12 en curso y 3 pendientes de revisión.</span></article>
+      <article class="card"><b>Equipo</b><span>8 personas y 2 invitaciones enviadas esta semana.</span></article>
+      <article class="card"><b>Facturación</b><span>El plan Pro se renueva el 5 de noviembre.</span></article>
+      <article class="card"><b>Incidencias</b><span>Ninguna abierta. El último cierre fue hace cuatro días.</span></article>
+    </div>
+    <p>Los cambios se guardan solos y puedes deshacerlos desde el historial durante 30 días.</p>
+    <a class="top" href="#arriba">Ir arriba ↑</a>
+  </main>
+</div>
+<script>
+  const frame = document.getElementById('frame'), bar = document.getElementById('arriba');
+  frame.addEventListener('scroll', () => bar.toggleAttribute('data-scrolled', frame.scrollTop > 8), { passive: true });
+</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero con registro en dos columnas</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  [hidden]{display:none!important}
+  .split{display:grid;gap:32px;align-items:center;max-width:1040px;margin:0 auto;padding:clamp(16px,4vw,48px) 0}
+  @media(min-width:860px){.split{grid-template-columns:1.1fr 1fr;gap:24px}}
+  h1{margin:0 0 14px;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:700;line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
+  .lead{margin:0 0 24px;max-width:44ch;color:var(--muted);font-size:1.05rem}
+  .perks{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+  .perks li{display:flex;gap:12px;align-items:flex-start}
+  .tick{flex:none;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--ok-soft);color:var(--ok);font-size:13px;font-weight:700;font-style:normal}
+  .card{padding:clamp(20px,4vw,28px);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .card h2{margin:0;font-size:1.25rem;font-weight:700}
+  .intro{margin:4px 0 20px;color:var(--muted);font-size:13px}
+  form{display:grid;gap:16px}
+  .field{display:grid;gap:6px}
+  label{font-size:13px;font-weight:600}
+  input{width:100%;padding:10px 12px;font:15px system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
+  input[aria-invalid=true]{border-color:var(--err)}
+  .hint,.err{margin:0;font-size:12.5px}
+  .hint{color:var(--muted)}
+  .err{color:var(--err);font-weight:500}
+  .err:empty{display:none}
+  .pass{position:relative}
+  .pass input{padding-right:76px}
+  .toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);padding:4px 8px;border:0;border-radius:6px;background:none;color:var(--muted);font:600 12px system-ui,sans-serif;cursor:pointer}
+  .toggle:hover{color:var(--text)}
+  .submit{padding:11px 20px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--accent);color:var(--accent-ink);font:600 1rem system-ui,sans-serif;box-shadow:var(--shadow);cursor:pointer}
+  .submit:hover{filter:brightness(1.08)}
+  .done{display:grid;justify-items:start;gap:8px;padding:8px 0}
+  .done .tick{width:36px;height:36px;font-size:18px}
+  .done h3{margin:4px 0 0;font-size:1.2rem}
+  .done p{margin:0;color:var(--muted)}
+  @media(prefers-reduced-motion:reduce){.submit{transition:none}}
+</style>
+</head>
+<body>
+  <section class="split" aria-labelledby="h">
+    <div>
+      <h1 id="h">Lanza tu equipo en minutos, no en semanas.</h1>
+      <p class="lead">Lumen reúne tus proyectos, tus plazos y a tu equipo en un solo lugar, con migración guiada desde la herramienta que ya usas.</p>
+      <ul class="perks">
+        <li><span class="tick" aria-hidden="true">✓</span>Importa tus proyectos desde Trello, Asana o una hoja de cálculo.</li>
+        <li><span class="tick" aria-hidden="true">✓</span>Permisos por equipo: cada persona ve solo lo que necesita.</li>
+        <li><span class="tick" aria-hidden="true">✓</span>Soporte en español y migración guiada sin coste.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Crea tu cuenta gratis</h2>
+      <p class="intro">14 días de prueba. Sin tarjeta de crédito.</p>
+      <form id="signup" novalidate>
+        <div class="field">
+          <label for="name">Nombre completo</label>
+          <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-err">
+          <p class="err" id="name-err"></p>
+        </div>
+        <div class="field">
+          <label for="email">Correo de trabajo</label>
+          <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-err">
+          <p class="err" id="email-err"></p>
+        </div>
+        <div class="field">
+          <label for="password">Contraseña</label>
+          <div class="pass">
+            <input id="password" name="password" type="password" autocomplete="new-password" aria-describedby="password-hint password-err">
+            <button type="button" class="toggle" id="toggle" aria-controls="password">Mostrar</button>
+          </div>
+          <p class="hint" id="password-hint">Mínimo 8 caracteres.</p>
+          <p class="err" id="password-err"></p>
+        </div>
+        <button class="submit" type="submit">Crear cuenta</button>
+      </form>
+      <div class="done" id="done" role="status" tabindex="-1" hidden>
+        <span class="tick" aria-hidden="true">✓</span>
+        <h3 id="done-title"></h3>
+        <p id="done-text"></p>
+      </div>
+    </div>
+  </section>
+<script>
+  const form = document.getElementById('signup'), done = document.getElementById('done');
+  const fields = [...form.querySelectorAll('input')];
+  const pass = document.getElementById('password'), toggle = document.getElementById('toggle');
+  const FREE = /@(gmail|hotmail|outlook|yahoo)\./i;
+  const RULES = {
+    name: [[(v) => v.trim().length >= 2, 'Escribe tu nombre completo.']],
+    email: [
+      [(v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), 'Revisa el formato, por ejemplo nombre@empresa.com.'],
+      [(v) => !FREE.test(v), 'Usa tu correo de trabajo, no uno personal.'],
+    ],
+    password: [[(v) => v.length >= 8, 'La contraseña necesita al menos 8 caracteres.']],
+  };
+  const check = (input) => {
+    const failed = RULES[input.name].find(([ok]) => !ok(input.value));
+    const msg = failed ? failed[1] : '';
+    input.setAttribute('aria-invalid', String(Boolean(msg)));
+    document.getElementById(`${input.name}-err`).textContent = msg;
+    return !msg;
+  };
+  form.addEventListener('focusout', (e) => { if (e.target.matches('input')) check(e.target); });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const results = fields.map(check);
+    const firstBad = fields[results.indexOf(false)];
+    if (firstBad) { firstBad.focus(); return; }
+    const [nameInput, emailInput] = fields;
+    document.getElementById('done-title').textContent = `¡Listo, ${nameInput.value.trim().split(' ')[0]}!`;
+    document.getElementById('done-text').textContent = `Enviamos un enlace de activación a ${emailInput.value.trim()}.`;
+    form.hidden = true;
+    done.hidden = false;
+    done.focus();
+  });
+  toggle.addEventListener('click', () => {
+    const show = pass.type === 'password';
+    pass.type = show ? 'text' : 'password';
+    toggle.textContent = show ? 'Ocultar' : 'Mostrar';
+  });
+</script>
+</body>
+</html>

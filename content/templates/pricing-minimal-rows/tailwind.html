@@ -1,0 +1,70 @@
+<section aria-labelledby="pt-tw" class="mx-auto grid max-w-[760px] gap-2.5 text-[14px] leading-[1.5] text-fg">
+  <h2 id="pt-tw" class="m-0 text-xl font-semibold tracking-tight">Elige tu plan</h2>
+  <p class="-mt-0.5 mb-2 text-muted">Cambia de plan cuando quieras. Sin permanencia.</p>
+
+  <article class="row relative grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-5 gap-y-3 rounded-lg border border-line bg-surface p-4 max-[559px]:grid-cols-[minmax(0,1fr)_auto]">
+    <div class="grid min-w-0 justify-items-start gap-0.5">
+      <h3 class="m-0 text-[17px] font-bold">Inicial</h3>
+      <p class="m-0 text-[13px] text-muted">Para probar con tu equipo sin pagar nada.</p>
+      <button type="button" class="toggle group inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 py-0.5 text-[13px] font-semibold text-accent" aria-expanded="false" aria-controls="f-inicial">Qué incluye <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="transition-transform duration-200 group-aria-expanded:rotate-180 motion-reduce:transition-none"><path d="M4 6l4 4 4-4"/></svg></button>
+    </div>
+    <p class="m-0 text-right whitespace-nowrap tabular-nums"><strong class="block text-[22px] leading-tight font-bold">0 €</strong><span class="text-xs text-muted">gratis</span></p>
+    <button type="button" class="pick cursor-pointer rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-semibold whitespace-nowrap text-fg hover:border-accent max-[559px]:col-span-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:border-ok aria-pressed:bg-ok-soft aria-pressed:text-ok" aria-pressed="false" data-plan="Inicial">Elegir</button>
+    <ul id="f-inicial" hidden class="col-span-full m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-5 gap-y-1.5 border-t border-dashed border-line p-0 pt-3 text-[13px]">
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Hasta 3 personas</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>5 proyectos activos</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Historial de 30 días</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Soporte de la comunidad</li>
+    </ul>
+  </article>
+
+  <article class="row relative grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-5 gap-y-3 overflow-hidden rounded-lg border border-accent bg-accent-soft p-4 max-[559px]:grid-cols-[minmax(0,1fr)_auto] before:absolute before:inset-y-[-1px] before:left-[-1px] before:w-1 before:rounded-l-lg before:bg-gradient-to-b before:from-accent-2 before:to-accent before:content-['']">
+    <div class="grid min-w-0 justify-items-start gap-0.5">
+      <h3 class="m-0 flex flex-wrap items-center gap-2 text-[17px] font-bold">Profesional <span class="rounded-full bg-accent px-2 py-px text-[11px] font-semibold text-accent-ink">Recomendado</span></h3>
+      <p class="m-0 text-[13px] text-muted">Para equipos que trabajan a diario en Nimbo.</p>
+      <button type="button" class="toggle group inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 py-0.5 text-[13px] font-semibold text-accent" aria-expanded="false" aria-controls="f-pro">Qué incluye <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="transition-transform duration-200 group-aria-expanded:rotate-180 motion-reduce:transition-none"><path d="M4 6l4 4 4-4"/></svg></button>
+    </div>
+    <p class="m-0 text-right whitespace-nowrap tabular-nums"><strong class="block text-[22px] leading-tight font-bold">8 €</strong><span class="text-xs text-muted">por persona al mes</span></p>
+    <button type="button" class="pick cursor-pointer rounded-lg border border-accent bg-accent px-3.5 py-2 text-sm font-semibold whitespace-nowrap text-accent-ink hover:brightness-110 max-[559px]:col-span-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:border-ok aria-pressed:bg-ok-soft aria-pressed:text-ok" aria-pressed="false" data-plan="Profesional">Elegir</button>
+    <ul id="f-pro" hidden class="col-span-full m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-5 gap-y-1.5 border-t border-dashed border-line p-0 pt-3 text-[13px]">
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Personas ilimitadas</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Proyectos ilimitados</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Informes y automatizaciones</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Soporte por chat en 4 horas</li>
+    </ul>
+  </article>
+
+  <article class="row relative grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-x-5 gap-y-3 rounded-lg border border-line bg-surface p-4 max-[559px]:grid-cols-[minmax(0,1fr)_auto]">
+    <div class="grid min-w-0 justify-items-start gap-0.5">
+      <h3 class="m-0 text-[17px] font-bold">Negocio</h3>
+      <p class="m-0 text-[13px] text-muted">Para organizaciones con requisitos de seguridad.</p>
+      <button type="button" class="toggle group inline-flex cursor-pointer items-center gap-1.5 border-0 bg-transparent p-0 py-0.5 text-[13px] font-semibold text-accent" aria-expanded="false" aria-controls="f-negocio">Qué incluye <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" class="transition-transform duration-200 group-aria-expanded:rotate-180 motion-reduce:transition-none"><path d="M4 6l4 4 4-4"/></svg></button>
+    </div>
+    <p class="m-0 text-right whitespace-nowrap tabular-nums"><strong class="block text-[22px] leading-tight font-bold">18 €</strong><span class="text-xs text-muted">por persona al mes</span></p>
+    <button type="button" class="pick cursor-pointer rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-semibold whitespace-nowrap text-fg hover:border-accent max-[559px]:col-span-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:border-ok aria-pressed:bg-ok-soft aria-pressed:text-ok" aria-pressed="false" data-plan="Negocio">Elegir</button>
+    <ul id="f-negocio" hidden class="col-span-full m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-x-5 gap-y-1.5 border-t border-dashed border-line p-0 pt-3 text-[13px]">
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Todo lo del plan Profesional</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>SSO y registro de auditoría</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Disponibilidad del 99,9 %</li>
+      <li><span aria-hidden="true" class="mr-2 font-bold text-ok">✓</span>Gerente de cuenta</li>
+    </ul>
+  </article>
+
+  <p id="msg" role="status" class="m-0 mt-1 min-h-6 text-muted"></p>
+</section>
+<script>
+  const picks = [...document.querySelectorAll('.pick')], msg = document.getElementById('msg');
+  document.querySelectorAll('.toggle').forEach((b) => b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open);
+    document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
+  }));
+  picks.forEach((b) => b.addEventListener('click', () => {
+    picks.forEach((x) => {
+      const on = x === b;
+      x.setAttribute('aria-pressed', on);
+      x.textContent = on ? 'Elegido' : 'Elegir';
+    });
+    msg.textContent = `Plan elegido: ${b.dataset.plan}.`;
+  }));
+</script>

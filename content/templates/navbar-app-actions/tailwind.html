@@ -1,0 +1,82 @@
+<div class="overflow-hidden rounded-lg border border-line bg-page">
+  <header class="bar relative flex h-14 items-center gap-2 border-b border-line bg-surface px-3">
+    <a href="#" class="brand flex flex-none items-center gap-2 font-bold text-fg"><i aria-hidden="true" class="grid size-[26px] place-items-center rounded-[min(var(--radius),6px)] bg-gradient-to-br from-accent-2 to-accent text-[13px] font-bold not-italic leading-none text-accent-ink">N</i><span class="max-[479px]:hidden">Nimbo</span></a>
+    <div class="wrap flex">
+      <button type="button" id="ws-btn" aria-expanded="false" aria-controls="ws-pop" aria-label="Espacio de trabajo: Equipo Nimbo"
+        class="ws ml-1 flex h-[34px] flex-none items-center gap-1.5 rounded-lg border border-transparent py-0 pr-2 pl-1 font-semibold cursor-pointer hover:bg-accent-soft aria-expanded:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <span aria-hidden="true" class="ws-mark grid size-[22px] place-items-center rounded-[min(var(--radius),6px)] bg-accent text-[12px] font-bold text-accent-ink">E</span><span aria-hidden="true" class="ws-name max-[479px]:hidden">Equipo Nimbo</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-3.5 text-muted"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div id="ws-pop" hidden class="pop start absolute left-3 top-[calc(100%+6px)] z-[3] w-[min(280px,calc(100%-24px))] rounded-lg border border-line bg-surface p-1.5 text-fg shadow-sm">
+        <p class="pop-title mx-2 mt-1 mb-1.5 text-xs font-semibold text-muted">Espacios de trabajo</p>
+        <ul class="m-0 grid list-none gap-0.5 p-0">
+          <li><button type="button" aria-current="true" class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-[min(var(--radius),6px)] border-0 bg-transparent p-2 text-left hover:bg-accent-soft aria-[current=true]:font-semibold aria-[current=true]:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Equipo Nimbo <span class="text-xs font-medium">Activo</span></button></li>
+          <li><button type="button" class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-[min(var(--radius),6px)] border-0 bg-transparent p-2 text-left hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Marketing</button></li>
+          <li><button type="button" class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-[min(var(--radius),6px)] border-0 bg-transparent p-2 text-left hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Clientes beta</button></li>
+        </ul>
+      </div>
+    </div>
+    <label class="search group ml-auto flex h-9 flex-[0_1_240px] cursor-text items-center gap-2 rounded-lg border border-line bg-page px-2 text-muted focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent max-[479px]:w-9 max-[479px]:flex-none max-[479px]:cursor-pointer max-[479px]:justify-center max-[479px]:border-transparent max-[479px]:bg-transparent max-[479px]:px-0 max-[479px]:focus-within:absolute max-[479px]:focus-within:top-2.5 max-[479px]:focus-within:right-3 max-[479px]:focus-within:left-3 max-[479px]:focus-within:z-[2] max-[479px]:focus-within:w-auto max-[479px]:focus-within:border-line max-[479px]:focus-within:bg-page max-[479px]:focus-within:px-2">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="size-4 flex-none"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar proyectos" aria-label="Buscar proyectos" autocomplete="off"
+        class="min-w-0 flex-1 border-0 bg-transparent p-0 text-fg outline-none placeholder:text-muted max-[479px]:w-0 max-[479px]:flex-none max-[479px]:group-focus-within:w-auto max-[479px]:group-focus-within:flex-1">
+      <kbd class="flex-none rounded-[min(var(--radius),4px)] border border-line px-1.5 font-mono text-xs leading-[18px] text-muted max-[479px]:hidden">Ctrl K</kbd>
+    </label>
+    <div class="wrap flex">
+      <button type="button" id="bell-btn" aria-expanded="false" aria-controls="bell-pop" aria-label="Notificaciones, 3 sin leer"
+        class="relative grid size-9 flex-none cursor-pointer place-items-center rounded-lg text-muted hover:bg-accent-soft hover:text-fg aria-expanded:bg-accent-soft aria-expanded:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-[18px]"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <span aria-hidden="true" class="count absolute top-0.5 right-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-err px-1 text-[11px] font-bold leading-none text-accent-ink ring-2 ring-surface">3</span>
+      </button>
+      <div id="bell-pop" hidden class="pop end absolute right-3 top-[calc(100%+6px)] z-[3] w-[min(280px,calc(100%-24px))] rounded-lg border border-line bg-surface p-1.5 text-fg shadow-sm">
+        <p class="pop-title mx-2 mt-1 mb-1.5 text-xs font-semibold text-muted">Notificaciones</p>
+        <ul class="notes m-0 grid list-none gap-0.5 p-0">
+          <li class="flex gap-2.5 rounded-[min(var(--radius),6px)] p-2 hover:bg-page"><span class="dot mt-1.5 size-2 flex-none rounded-full bg-accent" aria-hidden="true"></span><div><b class="block font-semibold">Ana comentó en Rediseño</b><span class="text-xs text-muted">Hace 5 min</span></div></li>
+          <li class="flex gap-2.5 rounded-[min(var(--radius),6px)] p-2 hover:bg-page"><span class="dot mt-1.5 size-2 flex-none rounded-full bg-accent" aria-hidden="true"></span><div><b class="block font-semibold">Se completó la tarea «Facturas»</b><span class="text-xs text-muted">Hace 1 h</span></div></li>
+          <li class="flex gap-2.5 rounded-[min(var(--radius),6px)] p-2 hover:bg-page"><span class="dot mt-1.5 size-2 flex-none rounded-full bg-accent" aria-hidden="true"></span><div><b class="block font-semibold">Invitación aceptada por Marcos</b><span class="text-xs text-muted">Ayer</span></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="wrap flex">
+      <button type="button" id="me-btn" aria-expanded="false" aria-controls="me-pop" aria-label="Cuenta de Lucía Ferrer"
+        class="group flex-none cursor-pointer rounded-full border-0 bg-transparent p-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+        <span aria-hidden="true" class="avatar grid size-8 place-items-center rounded-full bg-gradient-to-br from-accent-2 to-accent text-xs font-bold text-accent-ink group-aria-expanded:shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--accent)]">LF</span>
+      </button>
+      <div id="me-pop" hidden class="pop end absolute right-3 top-[calc(100%+6px)] z-[3] w-[min(280px,calc(100%-24px))] rounded-lg border border-line bg-surface p-1.5 text-fg shadow-sm">
+        <div class="me flex items-center gap-2.5 p-2"><span aria-hidden="true" class="avatar grid size-10 place-items-center rounded-full bg-gradient-to-br from-accent-2 to-accent text-sm font-bold text-accent-ink">LF</span><div><b class="block">Lucía Ferrer</b><span class="text-xs text-muted">lucia@nimbo.app</span></div></div>
+        <ul class="m-0 grid list-none gap-0.5 p-0">
+          <li><button type="button" class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-[min(var(--radius),6px)] border-0 bg-transparent p-2 text-left hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Mi perfil</button></li>
+          <li><button type="button" class="flex w-full cursor-pointer items-center justify-between gap-2 rounded-[min(var(--radius),6px)] border-0 bg-transparent p-2 text-left hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Preferencias</button></li>
+          <li><button type="button" class="danger flex w-full cursor-pointer items-center justify-between gap-2 rounded-[min(var(--radius),6px)] border-0 bg-transparent p-2 text-left text-err hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Cerrar sesión</button></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <main class="content bg-surface px-3 py-4">
+    <h1 class="mb-1 text-[1.15rem] font-semibold tracking-[-0.01em]">Proyectos</h1>
+    <p class="m-0 text-muted">Ocho proyectos activos esta semana. Pulsa Ctrl K para encontrar uno.</p>
+  </main>
+</div>
+<script>
+  const triggers = [...document.querySelectorAll('[aria-controls][aria-expanded]')];
+  const panelOf = (t) => document.getElementById(t.getAttribute('aria-controls'));
+  const setOpen = (t, open) => { t.setAttribute('aria-expanded', open); panelOf(t).hidden = !open; };
+  const closeAll = (except) => triggers.filter((t) => t !== except).forEach((t) => setOpen(t, false));
+
+  triggers.forEach((t) => t.addEventListener('click', () => {
+    const open = t.getAttribute('aria-expanded') !== 'true';
+    closeAll(t);
+    setOpen(t, open);
+  }));
+  document.addEventListener('click', (e) => { if (!e.target.closest('.wrap')) closeAll(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const open = triggers.find((t) => t.getAttribute('aria-expanded') === 'true');
+      if (open) { setOpen(open, false); open.focus(); }
+    }
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      document.getElementById('q').focus();
+    }
+  });
+</script>

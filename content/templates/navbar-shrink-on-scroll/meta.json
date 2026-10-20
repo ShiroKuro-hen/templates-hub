@@ -1,0 +1,1 @@
+{ "title": "Barra que se encoge al hacer scroll", "category": "navegacion", "description": "Barra fija que se reduce, se vuelve translúcida con desenfoque y gana sombra al desplazarse.", "tags": ["navbar", "sticky", "scroll", "a11y"] }

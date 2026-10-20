@@ -1,0 +1,111 @@
+<style>
+  .lbl.on{color:var(--text);font-weight:600}
+  .u-range{display:block;width:100%;height:28px;margin:0;background:transparent;cursor:pointer;-webkit-appearance:none;appearance:none;--p:5%}
+  .u-range::-webkit-slider-runnable-track{height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0 / var(--p) 100% no-repeat,var(--border)}
+  .u-range::-moz-range-track{height:10px;border-radius:999px;background:var(--border)}
+  .u-range::-moz-range-progress{height:10px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+  .u-range::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-7px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:var(--shadow)}
+  .u-range::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:var(--shadow)}
+  .u-range:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:999px}
+</style>
+<section aria-labelledby="t-tw" class="mx-auto grid max-w-[560px] gap-[22px] rounded-lg border border-line bg-surface p-6 text-[14px] leading-[1.5] text-fg shadow-sm">
+  <header class="flex flex-wrap items-center justify-between gap-3">
+    <h2 id="t-tw" class="text-lg font-semibold tracking-tight">Calcula tu plan</h2>
+    <div class="flex items-center gap-2 text-[13px] text-muted">
+      <span id="bm" class="lbl on">Mensual</span>
+      <button type="button" id="sw" role="switch" aria-checked="false" aria-label="Facturación anual" class="relative h-6 w-11 cursor-pointer rounded-full bg-line transition-colors duration-200 after:absolute after:top-[3px] after:left-[3px] after:h-[18px] after:w-[18px] after:rounded-full after:bg-surface after:shadow-sm after:transition-transform after:duration-200 aria-checked:bg-accent aria-checked:after:translate-x-5 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"></button>
+      <span id="ba" class="lbl">Anual</span>
+    </div>
+  </header>
+
+  <div class="grid gap-3">
+    <div class="flex items-baseline justify-between gap-3">
+      <label for="u" class="font-semibold">Usuarios activos</label>
+      <span id="n" aria-hidden="true" class="text-[26px] font-bold tabular-nums text-accent">25</span>
+    </div>
+    <input type="range" id="u" class="u-range" min="1" max="500" step="1" value="25" aria-valuetext="25 usuarios">
+    <div aria-hidden="true" class="flex justify-between text-xs tabular-nums text-muted"><span>1</span><span>500</span></div>
+    <ol id="tiers" aria-hidden="true" class="grid grid-cols-2 gap-1.5 text-xs leading-snug text-muted min-[480px]:grid-cols-4"></ol>
+  </div>
+
+  <div class="grid gap-1 border-t border-line pt-[18px]">
+    <p class="m-0 text-muted">Tramo <b id="tier" class="font-semibold text-fg"></b></p>
+    <p id="total" aria-hidden="true" class="mt-1 bg-gradient-to-br from-accent-2 to-accent bg-clip-text text-[clamp(44px,12vw,60px)] leading-none font-extrabold tracking-tight tabular-nums text-transparent"></p>
+    <p id="unit" class="m-0 text-muted"></p>
+    <p class="mt-2 flex flex-wrap items-center gap-2 text-muted"><span id="seat"></span><span id="save" class="rounded-full bg-ok-soft px-2.5 py-1 text-xs font-semibold text-ok"></span></p>
+    <p id="live" aria-live="polite" class="sr-only"></p>
+  </div>
+</section>
+<script>
+  const TIERS = [
+    { name: 'Inicio', hasta: 10, precio: 12 },
+    { name: 'Crecimiento', hasta: 50, precio: 10 },
+    { name: 'Equipo', hasta: 200, precio: 8 },
+    { name: 'Escala', hasta: 500, precio: 6 },
+  ];
+  const ANUAL = 0.8;
+  const TIER_ON = 'border-accent bg-accent-soft', TIER_OFF = 'border-line';
+  const $ = (id) => document.getElementById(id);
+  const range = $('u'), sw = $('sw'), list = $('tiers');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const money = new Intl.NumberFormat('es-ES', { maximumFractionDigits: 0 });
+  const cents = new Intl.NumberFormat('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const tierOf = (n) => TIERS.find((t) => n <= t.hasta);
+  const cuota = (n) => {
+    let desde = 0;
+    return TIERS.reduce((sum, t) => {
+      const enTramo = Math.max(0, Math.min(n, t.hasta) - desde);
+      desde = t.hasta;
+      return sum + enTramo * t.precio;
+    }, 0);
+  };
+
+  list.innerHTML = TIERS.map((t, i) => `<li class="rounded-sm border p-2 ${TIER_OFF}"><b class="block font-semibold text-fg">${t.name}</b>${i ? TIERS[i - 1].hasta + 1 : 1}–${t.hasta} · US$${t.precio}</li>`).join('');
+
+  function leer() {
+    const n = +range.value, annual = sw.getAttribute('aria-checked') === 'true', bruto = cuota(n);
+    return { n, annual, bruto, mes: annual ? bruto * ANUAL : bruto, tier: tierOf(n) };
+  }
+
+  let shown = null, raf = 0;
+  function animar(to) {
+    cancelAnimationFrame(raf);
+    const from = shown ?? to, t0 = performance.now();
+    const frame = (now) => {
+      const k = reduce.matches ? 1 : Math.min(1, (now - t0) / 320);
+      shown = from + (to - from) * (1 - (1 - k) ** 3);
+      $('total').textContent = `US$${money.format(Math.round(shown))}`;
+      if (k < 1) raf = requestAnimationFrame(frame);
+    };
+    frame(t0);
+  }
+
+  function render() {
+    const { n, annual, bruto, mes, tier } = leer();
+    range.style.setProperty('--p', `${((n - 1) / (range.max - 1)) * 100}%`);
+    range.setAttribute('aria-valuetext', `${n} ${n === 1 ? 'usuario' : 'usuarios'}`);
+    $('n').textContent = n;
+    $('tier').textContent = tier.name;
+    $('seat').textContent = `US$${cents.format(mes / n)} por usuario al mes`;
+    $('unit').textContent = annual ? 'al mes, facturado al año' : 'al mes, facturado cada mes';
+    const ahorro = money.format(Math.round(bruto * (1 - ANUAL) * 12));
+    $('save').textContent = annual ? `Ahorras US$${ahorro} al año` : `Con anual ahorrarías US$${ahorro}`;
+    $('bm').classList.toggle('on', !annual);
+    $('ba').classList.toggle('on', annual);
+    [...list.children].forEach((li, i) => {
+      li.className = `rounded-sm border p-2 ${TIERS[i] === tier ? TIER_ON : TIER_OFF}`;
+    });
+    animar(mes);
+  }
+
+  const resumen = ({ n, annual, mes, tier }) =>
+    `Precio ${annual ? 'anual' : 'mensual'}: US$${money.format(Math.round(mes))} al mes para ${n} usuarios. Tramo ${tier.name}.`;
+
+  range.addEventListener('input', () => { render(); $('live').textContent = resumen(leer()); });
+  sw.addEventListener('click', () => {
+    sw.setAttribute('aria-checked', sw.getAttribute('aria-checked') !== 'true');
+    render();
+    $('live').textContent = resumen(leer());
+  });
+  render();
+</script>

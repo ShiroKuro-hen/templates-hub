@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planes en filas</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  [hidden]{display:none!important}
+  .plans{max-width:760px;margin:0 auto;display:grid;gap:10px}
+  h2{margin:0;font-size:20px;letter-spacing:-.01em}
+  .intro{margin:2px 0 8px;color:var(--muted)}
+  .row{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px 20px;padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .row.rec{border-color:var(--accent);background:var(--accent-soft)}
+  .row.rec::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:4px;border-radius:var(--radius) 0 0 var(--radius);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+  .info{min-width:0;display:grid;gap:2px;justify-items:start}
+  .name{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;font-size:17px;font-weight:700}
+  .tag{padding:1px 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:600}
+  .info p{margin:0;color:var(--muted);font-size:13px}
+  .toggle{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:2px 0;font:600 13px system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--accent);background:none;border:0;cursor:pointer}
+  .toggle svg{transition:transform .2s}
+  .toggle[aria-expanded=true] svg{transform:rotate(180deg)}
+  .price{margin:0;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .price strong{display:block;font-size:22px;line-height:1.1}
+  .price span{font-size:12px;color:var(--muted)}
+  .pick{padding:8px 14px;font:600 14px system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;white-space:nowrap}
+  .pick:hover{border-color:var(--accent)}
+  .rec .pick{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .pick[aria-pressed=true]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+  .feat{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 20px;margin:0;padding:12px 0 0;list-style:none;border-top:1px dashed var(--border);font-size:13px}
+  .feat li::before{content:"✓";margin-right:8px;font-weight:700;color:var(--ok)}
+  .picked{min-height:1.5em;margin:4px 0 0;color:var(--muted)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (max-width:559px){.row{grid-template-columns:minmax(0,1fr) auto}.pick{grid-column:1/-1}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<section class="plans" aria-labelledby="pt">
+  <h2 id="pt">Elige tu plan</h2>
+  <p class="intro">Cambia de plan cuando quieras. Sin permanencia.</p>
+
+  <article class="row">
+    <div class="info">
+      <h3 class="name">Inicial</h3>
+      <p>Para probar con tu equipo sin pagar nada.</p>
+      <button type="button" class="toggle" aria-expanded="false" aria-controls="f-inicial">Qué incluye <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></button>
+    </div>
+    <p class="price"><strong>0 €</strong><span>gratis</span></p>
+    <button type="button" class="pick" aria-pressed="false" data-plan="Inicial">Elegir</button>
+    <ul class="feat" id="f-inicial" hidden>
+      <li>Hasta 3 personas</li><li>5 proyectos activos</li><li>Historial de 30 días</li><li>Soporte de la comunidad</li>
+    </ul>
+  </article>
+
+  <article class="row rec">
+    <div class="info">
+      <h3 class="name">Profesional <span class="tag">Recomendado</span></h3>
+      <p>Para equipos que trabajan a diario en Nimbo.</p>
+      <button type="button" class="toggle" aria-expanded="false" aria-controls="f-pro">Qué incluye <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></button>
+    </div>
+    <p class="price"><strong>8 €</strong><span>por persona al mes</span></p>
+    <button type="button" class="pick" aria-pressed="false" data-plan="Profesional">Elegir</button>
+    <ul class="feat" id="f-pro" hidden>
+      <li>Personas ilimitadas</li><li>Proyectos ilimitados</li><li>Informes y automatizaciones</li><li>Soporte por chat en 4 horas</li>
+    </ul>
+  </article>
+
+  <article class="row">
+    <div class="info">
+      <h3 class="name">Negocio</h3>
+      <p>Para organizaciones con requisitos de seguridad.</p>
+      <button type="button" class="toggle" aria-expanded="false" aria-controls="f-negocio">Qué incluye <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6l4 4 4-4"/></svg></button>
+    </div>
+    <p class="price"><strong>18 €</strong><span>por persona al mes</span></p>
+    <button type="button" class="pick" aria-pressed="false" data-plan="Negocio">Elegir</button>
+    <ul class="feat" id="f-negocio" hidden>
+      <li>Todo lo del plan Profesional</li><li>SSO y registro de auditoría</li><li>Disponibilidad del 99,9 %</li><li>Gerente de cuenta</li>
+    </ul>
+  </article>
+
+  <p class="picked" id="msg" role="status"></p>
+</section>
+<script>
+  const picks = [...document.querySelectorAll('.pick')], msg = document.getElementById('msg');
+  document.querySelectorAll('.toggle').forEach((b) => b.addEventListener('click', () => {
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open);
+    document.getElementById(b.getAttribute('aria-controls')).hidden = !open;
+  }));
+  picks.forEach((b) => b.addEventListener('click', () => {
+    picks.forEach((x) => {
+      const on = x === b;
+      x.setAttribute('aria-pressed', on);
+      x.textContent = on ? 'Elegido' : 'Elegir';
+    });
+    msg.textContent = `Plan elegido: ${b.dataset.plan}.`;
+  }));
+</script>
+</body>
+</html>
