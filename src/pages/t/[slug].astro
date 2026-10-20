@@ -2,6 +2,7 @@
 import { Code } from 'astro:components';
 import Base from '../../layouts/Base.astro';
 import { CATEGORIES, LANGS, groupOf, ordered, templates, url } from '../../lib/data';
+import { THEMES, themeCss } from '../../lib/themes';
 export const getStaticPaths = () => templates.map((t) => ({ params: { slug: t.slug }, props: { t } }));
 const { t } = Astro.props;
 const langs = Object.keys(t.code).filter((l) => LANGS[l]);
@@ -13,6 +14,7 @@ const next = ordered[i + 1];
 // {{variable}} del prompt resaltada.
 const parts = t.prompt.split(/(\{\{[^}]+\}\})/);
 const preview = url(`/preview/${t.slug}.html`);
+const styles = Object.fromEntries(THEMES.map((s) => [s.id, themeCss(s)]));
 ---
 <Base title={`${t.title} · Templates Hub`} description={t.description} current={t.slug}>
   <nav class="crumbs" aria-label="Ruta">
@@ -38,6 +40,11 @@ const preview = url(`/preview/${t.slug}.html`);
             <button type="button" data-w="768" aria-pressed="false">Tablet</button>
             <button type="button" data-w="" aria-pressed="true">Completo</button>
           </div>
+          <label>Estilo
+            <select id="style-select" data-styles={JSON.stringify(styles)}>
+              {THEMES.map((s) => <option value={s.id}>{s.label}</option>)}
+            </select>
+          </label>
           <a class="btn" href={preview} target="_blank" rel="noopener">Abrir en pestaña</a>
           <output class="ruler" id="ruler">—</output>
         </div>
@@ -115,6 +122,20 @@ const preview = url(`/preview/${t.slug}.html`);
   document.getElementById('copy-code')?.addEventListener('click', (e) =>
     copy(e.currentTarget as HTMLElement, $<HTMLElement>('[data-panel]:not([hidden])')[0].dataset.code!));
   $<HTMLElement>('[data-copy]').forEach((b) => b.addEventListener('click', () => copy(b, b.dataset.copy!)));
+
+  const styleSelect = document.getElementById('style-select') as HTMLSelectElement | null;
+  if (styleSelect) {
+    const styles: Record<string, string> = JSON.parse(styleSelect.dataset.styles!);
+    const sendStyle = (f: HTMLIFrameElement) => f.contentWindow?.postMessage({ css: styles[styleSelect.value] ?? '' }, '*');
+    const syncStyle = () => $<HTMLIFrameElement>('iframe[data-preview]').forEach(sendStyle);
+    try { const s = localStorage.getItem('hub-style'); if (s && s in styles) styleSelect.value = s; } catch {}
+    styleSelect.addEventListener('change', () => {
+      try { localStorage.setItem('hub-style', styleSelect.value); } catch {}
+      syncStyle();
+    });
+    document.addEventListener('load', (e) => { if ((e.target as Element).matches?.('iframe[data-preview]')) sendStyle(e.target as HTMLIFrameElement); }, true);
+    syncStyle();
+  }
 
   // Lienzo: ancho predefinido + regla en vivo (el marco también se redimensiona a mano).
   const frame = document.getElementById('frame');

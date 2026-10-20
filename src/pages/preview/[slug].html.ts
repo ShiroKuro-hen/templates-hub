@@ -5,7 +5,8 @@ import { templates } from '../../lib/data';
 // Inyecta solo el tema (claro/oscuro): el código que el usuario copia queda limpio.
 const THEME = `<script>(function(){var d=document.documentElement;function s(t){d.setAttribute('data-theme',t==='dark'?'dark':'light')}
 var q=new URLSearchParams(location.search).get('theme');s(q||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
-addEventListener('message',function(e){if(e.data&&e.data.theme)s(e.data.theme)})})();</script>`;
+var st;function css(x){if(!st){st=document.createElement('style');st.id='hub-style';document.head.appendChild(st)}st.textContent=x}
+addEventListener('message',function(e){if(e.data&&e.data.theme)s(e.data.theme);if(e.data&&typeof e.data.css==='string')css(e.data.css)})})();</script>`;
 
 export const getStaticPaths = (() =>
   templates.filter((t) => t.code.html).map((t) => ({ params: { slug: t.slug }, props: { html: t.code.html } }))) satisfies GetStaticPaths;

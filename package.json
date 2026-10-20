@@ -10,8 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "validate": "node scripts/validate.mjs",
+    "themes": "node scripts/check-themes.mjs",
     "audit": "node scripts/audit-previews.mjs",
-    "check": "npm run validate && npm run build"
+    "check": "npm run validate && npm run themes && npm run build"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
