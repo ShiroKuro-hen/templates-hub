@@ -25,6 +25,7 @@ if (inGroups.length !== new Set(inGroups).size) err('data.ts', 'una categoría a
 const REQUIRED = ['meta.json', 'prompt.md', 'html.html', 'tailwind.html', 'react.tsx', 'vue.vue'];
 // Restos del estilo anterior: el sistema de diseño actual son los tokens "Ion".
 const OLD_STYLE = /#17130f|#f6f1e7|#ff5a36|#ffd84d|\b\d+px \d+px 0(?:px)? (?:#|var\(|rgba?\()|border-black/i; // sombra dura = "4px 4px 0 <color>"
+const PALETTE_CLASS = /(?<![\w-])(?:bg|text|border|outline|ring|fill|stroke|divide|from|to|via)-(?:slate|gray|zinc|neutral|stone|blue|cyan|sky|teal|emerald|green|red|rose|amber|yellow|orange)-\d{2,3}/;
 const EXTERNAL = /<script[^>]+src=["']?https?:|<link[^>]+href=["']?https?:|@import\s+url\(\s*["']?https?:|url\(\s*["']?https?:/i;
 
 const slugs = readdirSync(dir).filter((d) => statSync(join(dir, d)).isDirectory());
@@ -61,6 +62,8 @@ for (const slug of slugs) {
   for (const [name, txt] of [['html.html', html], ['tailwind.html', tw], ['react.tsx', react], ['vue.vue', vue]]) {
     if (OLD_STYLE.test(txt)) err(slug, `${name} contiene estilo antiguo (colores/sombras previos a Ion)`);
   }
+
+  if (meta.category !== 'paleta-de-color' && PALETTE_CLASS.test(tw)) err(slug, 'tailwind.html usa colores de la paleta de Tailwind: usa las clases semánticas (bg-surface, text-fg, border-line, text-accent…)');
 
   // Sintaxis de los <script> inline (no detecta errores de ejecución: eso lo cubre audit-previews).
   for (const [name, txt] of [['html.html', html], ['tailwind.html', tw]]) {

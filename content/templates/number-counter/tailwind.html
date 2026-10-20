@@ -1,35 +1,35 @@
-<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-page p-5 text-sm text-fg">
   <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
     <div>
       <h1 class="text-base font-semibold">Resumen del trimestre</h1>
-      <p class="mt-0.5 text-slate-500 dark:text-slate-400">Las cifras cuentan hasta su valor al entrar en vista.</p>
+      <p class="mt-0.5 text-muted">Las cifras cuentan hasta su valor al entrar en vista.</p>
     </div>
-    <button id="rep" type="button" class="rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 font-semibold transition-colors hover:border-blue-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800">Repetir</button>
+    <button id="rep" type="button" class="rounded-lg border border-line bg-surface px-3.5 py-1.5 font-semibold transition-colors hover:border-accent hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Repetir</button>
   </div>
-  <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 [&>div]:rounded-lg [&>div]:border [&>div]:border-slate-200 [&>div]:bg-white [&>div]:p-[18px] [&>div]:shadow-sm dark:[&>div]:border-slate-700 dark:[&>div]:bg-slate-900">
+  <dl class="m-0 grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 [&>div]:rounded-lg [&>div]:border [&>div]:border-line [&>div]:bg-surface [&>div]:p-[18px] [&>div]:shadow-sm">
     <div data-to="128450" class="stat [--p:86]">
-      <dt class="text-slate-500 dark:text-slate-400">Usuarios activos</dt>
+      <dt class="text-muted">Usuarios activos</dt>
       <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">128.450</span></dd>
-      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
-      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">86 % de la meta anual</p>
+      <div class="h-1 overflow-hidden rounded-full bg-accent-soft" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-accent-2 to-accent"></i></div>
+      <p class="mt-1.5 text-[13px] text-muted">86 % de la meta anual</p>
     </div>
     <div data-to="99.98" data-dec="2" class="stat [--p:100]">
-      <dt class="text-slate-500 dark:text-slate-400">Disponibilidad</dt>
-      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">99,98</span><small class="ml-1 text-[15px] font-semibold text-slate-500 dark:text-slate-400">%</small></dd>
-      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
-      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">Objetivo de servicio cumplido</p>
+      <dt class="text-muted">Disponibilidad</dt>
+      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">99,98</span><small class="ml-1 text-[15px] font-semibold text-muted">%</small></dd>
+      <div class="h-1 overflow-hidden rounded-full bg-accent-soft" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-accent-2 to-accent"></i></div>
+      <p class="mt-1.5 text-[13px] text-muted">Objetivo de servicio cumplido</p>
     </div>
     <div data-to="182" class="stat [--p:64]">
-      <dt class="text-slate-500 dark:text-slate-400">Latencia mediana</dt>
-      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">182</span><small class="ml-1 text-[15px] font-semibold text-slate-500 dark:text-slate-400">ms</small></dd>
-      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
-      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">64 % del presupuesto de 285 ms</p>
+      <dt class="text-muted">Latencia mediana</dt>
+      <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">182</span><small class="ml-1 text-[15px] font-semibold text-muted">ms</small></dd>
+      <div class="h-1 overflow-hidden rounded-full bg-accent-soft" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-accent-2 to-accent"></i></div>
+      <p class="mt-1.5 text-[13px] text-muted">64 % del presupuesto de 285 ms</p>
     </div>
     <div data-to="1284560" class="stat [--p:72]">
-      <dt class="text-slate-500 dark:text-slate-400">Pedidos procesados</dt>
+      <dt class="text-muted">Pedidos procesados</dt>
       <dd class="mb-3.5 ml-0 mt-1.5 text-3xl font-bold leading-tight tabular-nums"><span class="v">1.284.560</span></dd>
-      <div class="h-1 overflow-hidden rounded-full bg-blue-100 dark:bg-slate-800" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-cyan-400 to-blue-600"></i></div>
-      <p class="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">72 % de la capacidad contratada</p>
+      <div class="h-1 overflow-hidden rounded-full bg-accent-soft" aria-hidden="true"><i class="block h-full w-[calc(var(--p)*var(--t,1)*1%)] rounded-full bg-gradient-to-br from-accent-2 to-accent"></i></div>
+      <p class="mt-1.5 text-[13px] text-muted">72 % de la capacidad contratada</p>
     </div>
   </dl>
 </div>

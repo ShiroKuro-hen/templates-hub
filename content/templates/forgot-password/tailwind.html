@@ -1,15 +1,15 @@
-<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-  <main class="mx-auto max-w-[420px] rounded-lg border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-700 dark:bg-slate-900
+<div class="bg-page p-5 text-sm text-fg">
+  <main class="mx-auto max-w-[420px] rounded-lg border border-line bg-surface p-7 shadow-sm
       [&_h1]:mb-1 [&_h1]:text-xl [&_h1]:font-semibold [&_h1]:focus:outline-none [&_label]:mb-1.5 [&_label]:block [&_label]:font-semibold
-      [&_.sub]:mb-5 [&_.sub]:text-slate-500 dark:[&_.sub]:text-slate-400 [&_.help]:mt-4 [&_.help]:text-[13px] [&_.help]:text-slate-500 dark:[&_.help]:text-slate-400
-      [&_.field]:mb-3 [&_.field]:h-10 [&_.field]:w-full [&_.field]:rounded-lg [&_.field]:border [&_.field]:border-slate-200 [&_.field]:bg-white [&_.field]:px-3 [&_.field]:focus-visible:border-blue-600 [&_.field]:focus-visible:outline-2 [&_.field]:focus-visible:outline-offset-2 [&_.field]:focus-visible:outline-blue-600 dark:[&_.field]:border-slate-700 dark:[&_.field]:bg-slate-900 [&_.field[aria-invalid=true]]:border-red-600
-      [&_.msg]:-mt-1 [&_.msg]:mb-3 [&_.msg]:text-[13px] [&_.msg]:text-red-600 [&_.msg:empty]:hidden dark:[&_.msg]:text-red-400
-      [&_.btn]:h-10 [&_.btn]:w-full [&_.btn]:rounded-lg [&_.btn]:bg-blue-600 [&_.btn]:font-semibold [&_.btn]:text-white hover:[&_.btn]:bg-blue-700 [&_.btn]:focus-visible:outline-2 [&_.btn]:focus-visible:outline-offset-2 [&_.btn]:focus-visible:outline-blue-600 dark:[&_.btn]:bg-blue-400 dark:[&_.btn]:text-slate-950
-      [&_a]:text-blue-600 dark:[&_a]:text-blue-400 [&_.link]:text-blue-600 [&_.link]:underline dark:[&_.link]:text-blue-400">
+      [&_.sub]:mb-5 [&_.sub]:text-muted [&_.help]:mt-4 [&_.help]:text-[13px] [&_.help]:text-muted
+      [&_.field]:mb-3 [&_.field]:h-10 [&_.field]:w-full [&_.field]:rounded-lg [&_.field]:border [&_.field]:border-line [&_.field]:bg-surface [&_.field]:px-3 [&_.field]:focus-visible:border-accent [&_.field]:focus-visible:outline-2 [&_.field]:focus-visible:outline-offset-2 [&_.field]:focus-visible:outline-accent [&_.field[aria-invalid=true]]:border-err
+      [&_.msg]:-mt-1 [&_.msg]:mb-3 [&_.msg]:text-[13px] [&_.msg]:text-err [&_.msg:empty]:hidden
+      [&_.btn]:h-10 [&_.btn]:w-full [&_.btn]:rounded-lg [&_.btn]:bg-accent [&_.btn]:font-semibold [&_.btn]:text-page hover:[&_.btn]:bg-accent [&_.btn]:focus-visible:outline-2 [&_.btn]:focus-visible:outline-offset-2 [&_.btn]:focus-visible:outline-accent
+      [&_a]:text-accent [&_.link]:text-accent [&_.link]:underline">
     <ol id="steps" class="mb-6 grid grid-cols-3 gap-1.5" aria-label="Progreso de recuperación">
-      <li class="h-1 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600" aria-current="step"><span class="sr-only">Paso 1 de 3: pedir enlace</span></li>
-      <li class="h-1 rounded-full bg-slate-200 dark:bg-slate-700"><span class="sr-only">Paso 2 de 3: revisar correo</span></li>
-      <li class="h-1 rounded-full bg-slate-200 dark:bg-slate-700"><span class="sr-only">Paso 3 de 3: crear contraseña</span></li>
+      <li class="h-1 rounded-full bg-gradient-to-br from-accent-2 to-accent" aria-current="step"><span class="sr-only">Paso 1 de 3: pedir enlace</span></li>
+      <li class="h-1 rounded-full bg-line"><span class="sr-only">Paso 2 de 3: revisar correo</span></li>
+      <li class="h-1 rounded-full bg-line"><span class="sr-only">Paso 3 de 3: crear contraseña</span></li>
     </ol>
     <section>
       <h1 tabindex="-1">¿Olvidaste tu contraseña?</h1>
@@ -49,7 +49,7 @@
 </div>
 <script>
   const $ = (i) => document.getElementById(i), secs = [...document.querySelectorAll('main section')], dots = [...$('steps').children];
-  const on = 'bg-gradient-to-br from-cyan-400 to-blue-600', off = 'bg-slate-200 dark:bg-slate-700';
+  const on = 'bg-gradient-to-br from-accent-2 to-accent', off = 'bg-line';
   function go(n) {
     const d = Math.min(n, 2);
     secs.forEach((s, i) => (s.hidden = i !== n));

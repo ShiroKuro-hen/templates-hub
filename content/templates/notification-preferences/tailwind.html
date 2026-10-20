@@ -1,21 +1,21 @@
-<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-  <section aria-labelledby="t" class="mx-auto max-w-2xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900
-    [&_input]:mx-auto [&_input]:block [&_input]:size-[18px] [&_input]:cursor-pointer [&_input]:accent-blue-600 [&_input:disabled]:cursor-not-allowed [&_input:disabled]:opacity-50 [&_input]:focus-visible:outline-2 [&_input]:focus-visible:outline-offset-2 [&_input]:focus-visible:outline-blue-500
-    [&_tr>*]:border-b [&_tr>*]:border-slate-200 [&_tr>*]:px-2 [&_tr>*]:py-3 dark:[&_tr>*]:border-slate-700 [&_tbody_tr:last-child>*]:border-0 [&_tbody_tr:hover]:bg-blue-50 dark:[&_tbody_tr:hover]:bg-slate-800">
-    <header class="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-slate-200 px-5 py-4 dark:border-slate-700">
+<div class="bg-page p-5 text-sm text-fg">
+  <section aria-labelledby="t" class="mx-auto max-w-2xl rounded-lg border border-line bg-surface shadow-sm
+    [&_input]:mx-auto [&_input]:block [&_input]:size-[18px] [&_input]:cursor-pointer [&_input]:accent-accent [&_input:disabled]:cursor-not-allowed [&_input:disabled]:opacity-50 [&_input]:focus-visible:outline-2 [&_input]:focus-visible:outline-offset-2 [&_input]:focus-visible:outline-accent
+    [&_tr>*]:border-b [&_tr>*]:border-line [&_tr>*]:px-2 [&_tr>*]:py-3 [&_tbody_tr:last-child>*]:border-0 [&_tbody_tr:hover]:bg-accent-soft">
+    <header class="flex flex-wrap items-baseline justify-between gap-x-4 border-b border-line px-5 py-4">
       <h2 id="t" class="m-0 text-base font-semibold">Preferencias de notificación</h2>
-      <p class="m-0 tabular-nums text-slate-500 dark:text-slate-400" aria-live="polite"><b id="n" class="font-semibold">8</b> de 15 activadas</p>
+      <p class="m-0 tabular-nums text-muted" aria-live="polite"><b id="n" class="font-semibold">8</b> de 15 activadas</p>
     </header>
     <div class="overflow-x-auto">
       <table class="w-full border-collapse">
         <caption class="sr-only">Elige por qué canal recibes cada tipo de aviso.</caption>
-        <thead class="text-slate-500 dark:text-slate-400"><tr class="[&>th]:font-semibold">
+        <thead class="text-muted"><tr class="[&>th]:font-semibold">
           <th scope="col" class="!pl-5 text-left">Evento</th>
-          <th scope="col" class="align-bottom"><label class="grid cursor-pointer justify-items-center gap-1.5 text-slate-900 dark:text-slate-100">Correo<input type="checkbox" data-all="0" aria-label="Activar todo por Correo"></label></th>
-          <th scope="col" class="align-bottom"><label class="grid cursor-pointer justify-items-center gap-1.5 text-slate-900 dark:text-slate-100">Push<input type="checkbox" data-all="1" aria-label="Activar todo por Push"></label></th>
-          <th scope="col" class="align-bottom"><label class="grid cursor-pointer justify-items-center gap-1.5 text-slate-900 dark:text-slate-100">SMS<input type="checkbox" data-all="2" aria-label="Activar todo por SMS"></label></th>
+          <th scope="col" class="align-bottom"><label class="grid cursor-pointer justify-items-center gap-1.5 text-fg">Correo<input type="checkbox" data-all="0" aria-label="Activar todo por Correo"></label></th>
+          <th scope="col" class="align-bottom"><label class="grid cursor-pointer justify-items-center gap-1.5 text-fg">Push<input type="checkbox" data-all="1" aria-label="Activar todo por Push"></label></th>
+          <th scope="col" class="align-bottom"><label class="grid cursor-pointer justify-items-center gap-1.5 text-fg">SMS<input type="checkbox" data-all="2" aria-label="Activar todo por SMS"></label></th>
         </tr></thead>
-        <tbody class="[&_td]:w-16 [&_td]:text-center [&_th]:min-w-28 [&_th]:!pl-5 [&_th]:text-left [&_th]:font-semibold [&_th>span]:hidden [&_th>span]:font-normal [&_th>span]:text-slate-500 sm:[&_th>span]:block dark:[&_th>span]:text-slate-400">
+        <tbody class="[&_td]:w-16 [&_td]:text-center [&_th]:min-w-28 [&_th]:!pl-5 [&_th]:text-left [&_th]:font-semibold [&_th>span]:hidden [&_th>span]:font-normal [&_th>span]:text-muted sm:[&_th>span]:block">
           <tr><th scope="row">Menciones<span>Cuando alguien te menciona con @.</span></th>
             <td><input type="checkbox" data-c="0" checked aria-label="Menciones por Correo"></td><td><input type="checkbox" data-c="1" checked aria-label="Menciones por Push"></td><td><input type="checkbox" data-c="2" aria-label="Menciones por SMS"></td></tr>
           <tr><th scope="row">Comentarios<span>Respuestas en los hilos que sigues.</span></th>
@@ -29,7 +29,7 @@
         </tbody>
       </table>
     </div>
-    <p class="m-0 border-t border-slate-200 px-5 py-3 text-slate-500 dark:border-slate-700 dark:text-slate-400">Los cambios se guardan solos. Las alertas de seguridad por correo son obligatorias.</p>
+    <p class="m-0 border-t border-line px-5 py-3 text-muted">Los cambios se guardan solos. Las alertas de seguridad por correo son obligatorias.</p>
   </section>
 </div>
 <script>

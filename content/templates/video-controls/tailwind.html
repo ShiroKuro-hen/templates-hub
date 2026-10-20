@@ -1,28 +1,28 @@
-<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-page p-5 text-sm text-fg">
   <section id="player" tabindex="0" aria-label="Reproductor de vídeo: Recorrido por el panel de Ion Cloud"
-    class="mx-auto max-w-3xl overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900 [&.full]:fixed [&.full]:inset-0 [&.full]:z-10 [&.full]:max-w-none [&.full]:rounded-none">
-    <div id="screen" class="relative aspect-video cursor-pointer bg-gradient-to-br from-cyan-100 to-blue-200 dark:from-cyan-950 dark:to-blue-950">
+    class="mx-auto max-w-3xl overflow-hidden rounded-lg border border-line bg-surface shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&.full]:fixed [&.full]:inset-0 [&.full]:z-10 [&.full]:max-w-none [&.full]:rounded-none">
+    <div id="screen" class="relative aspect-video cursor-pointer bg-gradient-to-br from-accent-2 to-accent-soft">
       <svg viewBox="0 0 160 90" preserveAspectRatio="xMidYMid slice" aria-hidden="true" class="absolute inset-0 size-full">
-        <circle id="sun" cx="130" cy="24" r="10" class="fill-amber-500"/>
-        <path d="M0 90 50 38l26 26 30-34 54 60z" class="fill-blue-600 dark:fill-blue-500"/>
-        <path d="M0 90 34 62l28 16 40-26 58 34z" class="fill-cyan-600"/>
+        <circle id="sun" cx="130" cy="24" r="10" class="fill-warn"/>
+        <path d="M0 90 50 38l26 26 30-34 54 60z" class="fill-accent"/>
+        <path d="M0 90 34 62l28 16 40-26 58 34z" class="fill-info"/>
       </svg>
     </div>
-    <div class="flex flex-wrap items-center gap-2 border-t border-slate-200 px-3 py-2 dark:border-slate-700 [&_button]:grid [&_button]:h-8 [&_button]:min-w-8 [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:rounded-lg [&_button:hover]:bg-blue-50 dark:[&_button:hover]:bg-slate-800 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-blue-500">
+    <div class="flex flex-wrap items-center gap-2 border-t border-line px-3 py-2 [&_button]:grid [&_button]:h-8 [&_button]:min-w-8 [&_button]:cursor-pointer [&_button]:place-items-center [&_button]:rounded-lg [&_button:hover]:bg-accent-soft [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-accent">
       <button type="button" id="play" aria-label="Reproducir"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
-      <span class="whitespace-nowrap tabular-nums text-slate-500 dark:text-slate-400"><span id="cur">0:00</span> / 3:24</span>
-      <input id="seek" type="range" min="0" max="204" value="0" aria-label="Progreso" aria-valuetext="0:00 de 3:24" class="min-w-32 flex-1 cursor-pointer accent-blue-600">
-      <button type="button" id="mute" aria-label="Silenciar" aria-pressed="false" class="aria-pressed:text-blue-600"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zm12 3a4 4 0 0 0-2-3.5v7A4 4 0 0 0 16 12z"/></svg></button>
-      <input id="vol" type="range" min="0" max="100" value="80" aria-label="Volumen" class="w-[72px] accent-blue-600">
-      <select id="rate" aria-label="Velocidad" class="h-8 rounded-lg border border-slate-200 bg-white px-1.5 dark:border-slate-700 dark:bg-slate-900">
+      <span class="whitespace-nowrap tabular-nums text-muted"><span id="cur">0:00</span> / 3:24</span>
+      <input id="seek" type="range" min="0" max="204" value="0" aria-label="Progreso" aria-valuetext="0:00 de 3:24" class="min-w-32 flex-1 cursor-pointer accent-accent">
+      <button type="button" id="mute" aria-label="Silenciar" aria-pressed="false" class="aria-pressed:text-accent"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9zm12 3a4 4 0 0 0-2-3.5v7A4 4 0 0 0 16 12z"/></svg></button>
+      <input id="vol" type="range" min="0" max="100" value="80" aria-label="Volumen" class="w-[72px] accent-accent">
+      <select id="rate" aria-label="Velocidad" class="h-8 rounded-lg border border-line bg-surface px-1.5">
         <option value="0.5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option>
       </select>
       <button type="button" id="full" aria-label="Pantalla completa" aria-pressed="false"><svg class="size-[18px] fill-current" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
     </div>
-    <div class="h-px bg-gradient-to-r from-cyan-400 to-blue-600"></div>
+    <div class="h-px bg-gradient-to-r from-accent-2 to-accent"></div>
     <div class="flex flex-wrap justify-between gap-3 px-3 py-2.5">
       <h2 class="m-0 text-[15px] font-semibold">Recorrido por el panel de Ion Cloud</h2>
-      <p class="m-0 text-xs text-slate-500 dark:text-slate-400">K reproducir, flechas 5 s, M silenciar, F pantalla completa</p>
+      <p class="m-0 text-xs text-muted">K reproducir, flechas 5 s, M silenciar, F pantalla completa</p>
     </div>
   </section>
 </div>

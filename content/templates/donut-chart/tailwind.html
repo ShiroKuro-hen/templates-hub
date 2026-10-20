@@ -1,11 +1,11 @@
-<section class="mx-auto flex max-w-[620px] flex-wrap items-center justify-center gap-x-8 gap-y-5 rounded-lg border border-slate-200 bg-white p-6 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" aria-labelledby="t">
+<section class="mx-auto flex max-w-[620px] flex-wrap items-center justify-center gap-x-8 gap-y-5 rounded-lg border border-line bg-surface p-6 text-sm text-fg shadow-sm" aria-labelledby="t">
   <div class="relative h-44 w-44 flex-none">
     <svg class="block h-full w-full" viewBox="0 0 42 42" role="img" aria-label="Gráfico de donut: visitas por canal">
       <g id="segs" fill="none" stroke-width="5"></g>
     </svg>
     <div class="pointer-events-none absolute inset-0 grid place-content-center text-center" aria-hidden="true">
       <strong class="text-[28px] font-semibold leading-tight tabular-nums">12,5k</strong>
-      <span class="text-xs text-slate-500 dark:text-slate-400">visitas</span>
+      <span class="text-xs text-muted">visitas</span>
     </div>
   </div>
   <div>
@@ -15,11 +15,11 @@
 </section>
 <script>
   const data = [
-    { label: 'Directo', value: 38, seg: 'stroke-blue-600 dark:stroke-blue-400', dot: 'bg-blue-600 dark:bg-blue-400' },
-    { label: 'Orgánico', value: 27, seg: 'stroke-cyan-600 dark:stroke-cyan-400', dot: 'bg-cyan-600 dark:bg-cyan-400' },
-    { label: 'Referidos', value: 18, seg: 'stroke-emerald-600 dark:stroke-emerald-400', dot: 'bg-emerald-600 dark:bg-emerald-400' },
-    { label: 'Social', value: 12, seg: 'stroke-amber-600 dark:stroke-amber-400', dot: 'bg-amber-600 dark:bg-amber-400' },
-    { label: 'Otros', value: 5, seg: 'stroke-red-600 dark:stroke-red-400', dot: 'bg-red-600 dark:bg-red-400' },
+    { label: 'Directo', value: 38, seg: 'stroke-accent', dot: 'bg-accent' },
+    { label: 'Orgánico', value: 27, seg: 'stroke-info', dot: 'bg-info' },
+    { label: 'Referidos', value: 18, seg: 'stroke-ok', dot: 'bg-ok' },
+    { label: 'Social', value: 12, seg: 'stroke-warn', dot: 'bg-warn' },
+    { label: 'Otros', value: 5, seg: 'stroke-err', dot: 'bg-err' },
   ];
   const NS = 'http://www.w3.org/2000/svg', R = 100 / (2 * Math.PI);
   const segs = document.getElementById('segs'), legend = document.getElementById('legend');
@@ -35,6 +35,6 @@
     acc += d.value / sum * 100;
     segs.appendChild(c);
     legend.insertAdjacentHTML('beforeend',
-      `<li class="flex items-center gap-2.5 px-2 py-1.5"><span class="size-2.5 rounded-[3px] ${d.dot}"></span><span class="flex-1">${d.label}</span><span class="tabular-nums text-slate-500 dark:text-slate-400">${d.value}%</span></li>`);
+      `<li class="flex items-center gap-2.5 px-2 py-1.5"><span class="size-2.5 rounded-[3px] ${d.dot}"></span><span class="flex-1">${d.label}</span><span class="tabular-nums text-muted">${d.value}%</span></li>`);
   });
 </script>

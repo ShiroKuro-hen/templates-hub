@@ -1,22 +1,22 @@
-<nav aria-label="Progreso de la compra" class="p-5 text-slate-900 dark:text-slate-100">
+<nav aria-label="Progreso de la compra" class="p-5 text-fg">
   <ol class="m-0 grid list-none auto-cols-fr grid-flow-col p-0">
     <!-- completado -->
     <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium">
-      <span class="relative z-10 grid size-9 place-items-center rounded-full bg-emerald-600 text-sm font-semibold text-white dark:bg-emerald-400 dark:text-slate-950" aria-hidden="true">✓</span>
+      <span class="relative z-10 grid size-9 place-items-center rounded-full bg-ok text-sm font-semibold text-accent-ink" aria-hidden="true">✓</span>
       Carrito <span class="sr-only">(completado)</span>
     </li>
     <!-- actual -->
-    <li aria-current="step" class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-gradient-to-r before:from-cyan-400 before:to-blue-600">
-      <span class="relative z-10 grid size-9 place-items-center rounded-full bg-blue-600 text-sm font-semibold tabular-nums text-white ring-4 ring-blue-50 dark:bg-blue-500 dark:ring-slate-800" aria-hidden="true">2</span>
+    <li aria-current="step" class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-gradient-to-r before:from-accent-2 before:to-accent">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full bg-accent text-sm font-semibold tabular-nums text-accent-ink ring-4 ring-accent-soft" aria-hidden="true">2</span>
       Envío <span class="sr-only">(paso actual)</span>
     </li>
     <!-- pendiente: conector punteado -->
-    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium text-slate-500 before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.200)_0_6px,transparent_6px_12px)] dark:text-slate-400 dark:before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.700)_0_6px,transparent_6px_12px)]">
-      <span class="relative z-10 grid size-9 place-items-center rounded-full border border-slate-200 bg-white text-sm font-semibold tabular-nums dark:border-slate-700 dark:bg-slate-900" aria-hidden="true">3</span>
+    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium text-muted before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.200)_0_6px,transparent_6px_12px)] dark:before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.700)_0_6px,transparent_6px_12px)]">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full border border-line bg-surface text-sm font-semibold tabular-nums" aria-hidden="true">3</span>
       Pago <span class="sr-only">(pendiente)</span>
     </li>
-    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium text-slate-500 before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.200)_0_6px,transparent_6px_12px)] dark:text-slate-400 dark:before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.700)_0_6px,transparent_6px_12px)]">
-      <span class="relative z-10 grid size-9 place-items-center rounded-full border border-slate-200 bg-white text-sm font-semibold tabular-nums dark:border-slate-700 dark:bg-slate-900" aria-hidden="true">4</span>
+    <li class="relative flex flex-col items-center gap-1.5 text-center text-[13px] font-medium text-muted before:absolute before:right-1/2 before:top-[17px] before:h-0.5 before:w-full before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.200)_0_6px,transparent_6px_12px)] dark:before:bg-[repeating-linear-gradient(90deg,theme(colors.slate.700)_0_6px,transparent_6px_12px)]">
+      <span class="relative z-10 grid size-9 place-items-center rounded-full border border-line bg-surface text-sm font-semibold tabular-nums" aria-hidden="true">4</span>
       Listo <span class="sr-only">(pendiente)</span>
     </li>
   </ol>

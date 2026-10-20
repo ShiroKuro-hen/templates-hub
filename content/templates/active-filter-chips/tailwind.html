@@ -1,12 +1,12 @@
-<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
-  <div class="max-w-2xl rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
-    <div class="flex flex-wrap items-center gap-2 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+<div class="bg-page p-5 text-sm text-fg">
+  <div class="max-w-2xl rounded-lg border border-line bg-surface shadow-sm">
+    <div class="flex flex-wrap items-center gap-2 border-b border-line px-4 py-3">
       <ul id="chips" aria-label="Filtros activos" class="m-0 flex list-none flex-wrap items-center gap-2 p-0"></ul>
-      <select id="add" aria-label="Añadir filtro" class="cursor-pointer rounded-lg border border-slate-200 bg-white px-3 py-1.5 hover:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:bg-slate-900"></select>
-      <button type="button" id="clr" class="ml-auto rounded-lg px-3 py-1.5 text-blue-600 hover:border-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:text-blue-400">Limpiar todo</button>
+      <select id="add" aria-label="Añadir filtro" class="cursor-pointer rounded-lg border border-line bg-surface px-3 py-1.5 hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"></select>
+      <button type="button" id="clr" class="ml-auto rounded-lg px-3 py-1.5 text-accent hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Limpiar todo</button>
     </div>
-    <p id="n" aria-live="polite" class="m-0 flex items-center gap-2 px-4 py-3 font-semibold tabular-nums before:size-2 before:rounded-full before:bg-gradient-to-br before:from-cyan-400 before:to-blue-600 before:content-['']"></p>
-    <ul id="list" class="m-0 list-none divide-y divide-slate-200 border-t border-slate-200 p-0 dark:divide-slate-700 dark:border-slate-700"></ul>
+    <p id="n" aria-live="polite" class="m-0 flex items-center gap-2 px-4 py-3 font-semibold tabular-nums before:size-2 before:rounded-full before:bg-gradient-to-br before:from-accent-2 before:to-accent before:content-['']"></p>
+    <ul id="list" class="m-0 list-none divide-y divide-line border-t border-line p-0"></ul>
   </div>
 </div>
 <script>
@@ -20,15 +20,15 @@
   const X = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m2 2 8 8M10 2l-8 8"/></svg>';
   function render(focusIdx) {
     const on = Object.entries(act);
-    chips.innerHTML = on.map(([k, v]) => `<li class="inline-flex items-center gap-0.5 rounded-full border border-blue-600 bg-blue-50 py-0.5 pl-3 pr-0.5 dark:bg-slate-800"><span>${F[k][0]}: <b>${v}</b></span><button type="button" data-k="${k}" aria-label="Quitar filtro ${F[k][0]}: ${v}" class="grid size-6 place-items-center rounded-full text-blue-600 hover:bg-white focus-visible:outline-2 focus-visible:outline-blue-600 dark:text-blue-400 dark:hover:bg-slate-900">${X}</button></li>`).join('')
-      || '<li class="text-slate-500">Sin filtros activos.</li>';
+    chips.innerHTML = on.map(([k, v]) => `<li class="inline-flex items-center gap-0.5 rounded-full border border-accent bg-accent-soft py-0.5 pl-3 pr-0.5"><span>${F[k][0]}: <b>${v}</b></span><button type="button" data-k="${k}" aria-label="Quitar filtro ${F[k][0]}: ${v}" class="grid size-6 place-items-center rounded-full text-accent hover:bg-surface focus-visible:outline-2 focus-visible:outline-accent">${X}</button></li>`).join('')
+      || '<li class="text-muted">Sin filtros activos.</li>';
     add.innerHTML = '<option value="">Añadir filtro</option>' + Object.entries(F).map(([k, [t, vs]]) =>
       `<optgroup label="${t}">${vs.filter((v) => act[k] !== v).map((v) => `<option value="${k}:${v}">${v}</option>`).join('')}</optgroup>`).join('');
     clr.hidden = !on.length;
     const hits = T.filter((x) => on.every(([k, v]) => x[k] === v));
     document.getElementById('n').textContent = `${hits.length} tickets`;
-    list.innerHTML = hits.length ? hits.map((x) => `<li class="flex justify-between gap-3 px-4 py-2.5"><span>${x.t}</span><small class="whitespace-nowrap text-slate-500 dark:text-slate-400">${x.estado}, ${x.prioridad}, ${x.equipo}</small></li>`).join('')
-      : '<li class="px-4 py-6 text-center text-slate-500 dark:text-slate-400">Ningún ticket coincide. Quita un filtro o pulsa «Limpiar todo».</li>';
+    list.innerHTML = hits.length ? hits.map((x) => `<li class="flex justify-between gap-3 px-4 py-2.5"><span>${x.t}</span><small class="whitespace-nowrap text-muted">${x.estado}, ${x.prioridad}, ${x.equipo}</small></li>`).join('')
+      : '<li class="px-4 py-6 text-center text-muted">Ningún ticket coincide. Quita un filtro o pulsa «Limpiar todo».</li>';
     if (focusIdx !== undefined) { const b = chips.querySelectorAll('button'); (b[focusIdx] || b[focusIdx - 1] || add).focus(); }
   }
   chips.addEventListener('click', (e) => {

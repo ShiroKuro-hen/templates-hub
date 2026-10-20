@@ -1,5 +1,5 @@
-<div class="p-5 text-sm text-slate-900 dark:text-slate-100">
-  <p id="status" aria-live="polite" class="mb-4 text-center tabular-nums text-slate-500 dark:text-slate-400"></p>
+<div class="p-5 text-sm text-fg">
+  <p id="status" aria-live="polite" class="mb-4 text-center tabular-nums text-muted"></p>
   <nav aria-label="Paginación" class="flex items-center justify-center gap-0.5 sm:gap-2">
     <button id="prev" type="button" aria-label="Página anterior">
       <svg viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4 fill-none stroke-current stroke-2 [stroke-linecap:round] [stroke-linejoin:round]"><path d="M15 6l-6 6 6 6"/></svg><span class="max-sm:hidden">Anterior</span>
@@ -13,9 +13,9 @@
 
 <script>
   // Clases Tailwind repetidas (cópialas a @apply .pg si prefieres)
-  const BTN = 'inline-flex h-9 min-w-[30px] items-center justify-center gap-1 rounded-lg border px-1 font-medium tabular-nums transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 sm:min-w-9 sm:px-3';
-  const OFF = 'border-slate-200 bg-white text-slate-900 shadow-sm hover:border-blue-600 hover:text-blue-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-blue-500 dark:hover:text-blue-500';
-  const ON = 'border-blue-600 bg-blue-600 text-white dark:border-blue-500 dark:bg-blue-500';
+  const BTN = 'inline-flex h-9 min-w-[30px] items-center justify-center gap-1 rounded-lg border px-1 font-medium tabular-nums transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:min-w-9 sm:px-3';
+  const OFF = 'border-line bg-surface text-fg shadow-sm hover:border-accent hover:text-accent';
+  const ON = 'border-accent bg-accent text-accent-ink';
   const TOTAL = 12, PER = 10, COUNT = 120;
   let page = 4;
   const ul = document.getElementById('pages'), prev = document.getElementById('prev'),
@@ -34,7 +34,7 @@
   }
   function render(focusCurrent) {
     ul.innerHTML = pageList(page, TOTAL).map((n) => n === '…'
-      ? '<li aria-hidden="true" class="min-w-3.5 text-center text-slate-500 sm:min-w-5 dark:text-slate-400">…</li>'
+      ? '<li aria-hidden="true" class="min-w-3.5 text-center text-muted sm:min-w-5">…</li>'
       : `<li><button type="button" data-p="${n}" aria-label="Página ${n}"${n === page ? ' aria-current="page"' : ''} class="${BTN} ${n === page ? ON : OFF}">${n}</button></li>`).join('');
     prev.setAttribute('aria-disabled', page === 1);
     next.setAttribute('aria-disabled', page === TOTAL);

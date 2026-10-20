@@ -1,15 +1,15 @@
-<article class="relative m-5 mt-7 flex max-w-xs flex-col gap-3 rounded-lg border border-blue-600 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-blue-500 dark:bg-slate-900 dark:text-slate-100">
-  <span aria-hidden="true" class="absolute -inset-x-px -top-px h-[3px] rounded-t-lg bg-gradient-to-r from-cyan-400 to-blue-600"></span>
-  <span class="absolute -top-3 right-4 rounded-full border border-blue-600 bg-blue-50 px-2.5 py-0.5 text-xs font-semibold text-blue-700 dark:border-blue-400 dark:bg-slate-800 dark:text-blue-400">Recomendado</span>
+<article class="relative m-5 mt-7 flex max-w-xs flex-col gap-3 rounded-lg border border-accent bg-surface p-5 text-sm text-fg shadow-sm">
+  <span aria-hidden="true" class="absolute -inset-x-px -top-px h-[3px] rounded-t-lg bg-gradient-to-r from-accent-2 to-accent"></span>
+  <span class="absolute -top-3 right-4 rounded-full border border-accent bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent">Recomendado</span>
   <h2 class="text-base font-semibold">Pro</h2>
-  <p class="text-4xl font-bold leading-none tracking-tight tabular-nums">$12 <small class="text-[13px] font-medium tracking-normal text-slate-500 dark:text-slate-400">/mes</small></p>
-  <ul class="grid flex-1 gap-1.5 border-t border-slate-200 pt-3 dark:border-slate-700">
-    <li><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold text-emerald-600 dark:text-emerald-400">✓</span>Proyectos ilimitados</li>
-    <li><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold text-emerald-600 dark:text-emerald-400">✓</span>Exportar a PDF y PNG</li>
-    <li><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold text-emerald-600 dark:text-emerald-400">✓</span>Dominio propio</li>
-    <li class="text-slate-500 line-through dark:text-slate-400"><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold">✕</span>Soporte dedicado</li>
+  <p class="text-4xl font-bold leading-none tracking-tight tabular-nums">$12 <small class="text-[13px] font-medium tracking-normal text-muted">/mes</small></p>
+  <ul class="grid flex-1 gap-1.5 border-t border-line pt-3">
+    <li><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold text-ok">✓</span>Proyectos ilimitados</li>
+    <li><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold text-ok">✓</span>Exportar a PDF y PNG</li>
+    <li><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold text-ok">✓</span>Dominio propio</li>
+    <li class="text-muted line-through"><span aria-hidden="true" class="mr-1.5 inline-block w-4 font-bold">✕</span>Soporte dedicado</li>
   </ul>
-  <button type="button" id="elegir" aria-pressed="false" class="rounded-lg border border-blue-600 bg-blue-600 px-3.5 py-2 font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 aria-pressed:border-emerald-600 aria-pressed:bg-emerald-50 aria-pressed:text-emerald-700 motion-reduce:transition-none dark:bg-blue-500 dark:aria-pressed:bg-emerald-950 dark:aria-pressed:text-emerald-400">Elegir Pro</button>
+  <button type="button" id="elegir" aria-pressed="false" class="rounded-lg border border-accent bg-accent px-3.5 py-2 font-semibold text-accent-ink transition-colors hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:border-ok aria-pressed:bg-ok-soft aria-pressed:text-ok motion-reduce:transition-none">Elegir Pro</button>
   <p id="msg" role="status" class="sr-only"></p>
 </article>
 <script>

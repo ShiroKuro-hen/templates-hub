@@ -1,19 +1,19 @@
-<section class="relative mx-auto max-w-[560px] rounded-lg border border-slate-200 bg-white p-5 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100" id="card" aria-labelledby="t">
+<section class="relative mx-auto max-w-[560px] rounded-lg border border-line bg-surface p-5 text-sm text-fg shadow-sm" id="card" aria-labelledby="t">
   <header class="mb-4 flex flex-wrap items-baseline justify-between gap-x-3">
     <h2 id="t" class="text-base font-semibold">Actividad del equipo</h2>
-    <span id="sum" class="text-[13px] tabular-nums text-slate-500 dark:text-slate-400"></span>
+    <span id="sum" class="text-[13px] tabular-nums text-muted"></span>
   </header>
-  <div class="grid grid-cols-[28px_1fr] gap-x-1.5 gap-y-1 text-[11px] text-slate-500 dark:text-slate-400">
+  <div class="grid grid-cols-[28px_1fr] gap-x-1.5 gap-y-1 text-[11px] text-muted">
     <span></span>
     <div id="months" class="grid grid-cols-12 gap-1" aria-hidden="true"></div>
     <div class="grid grid-rows-[repeat(7,1fr)] gap-1" aria-hidden="true"><span></span><span class="flex items-center">Lun</span><span></span><span class="flex items-center">Mié</span><span></span><span class="flex items-center">Vie</span><span></span></div>
     <ul id="heat" class="m-0 grid list-none grid-flow-col grid-cols-12 grid-rows-[repeat(7,auto)] gap-1 p-0" role="group" aria-label="Actividad diaria de las últimas 12 semanas. Usa las flechas para moverte."></ul>
   </div>
-  <div id="tip" role="status" class="pointer-events-none absolute z-10 whitespace-nowrap rounded-lg bg-slate-900 px-2.5 py-1 text-xs text-white opacity-0 dark:bg-slate-100 dark:text-slate-900"></div>
+  <div id="tip" role="status" class="pointer-events-none absolute z-10 whitespace-nowrap rounded-lg bg-fg px-2.5 py-1 text-xs text-page opacity-0"></div>
 </section>
 <script>
   // Escala secuencial de un solo tono (nivel 0 a 4)
-  const LEVELS = ['bg-slate-100 dark:bg-slate-800', 'bg-blue-200 dark:bg-blue-500/25', 'bg-blue-300 dark:bg-blue-500/50', 'bg-blue-500 dark:bg-blue-500/75', 'bg-blue-700 dark:bg-blue-400'];
+  const LEVELS = ['bg-page', 'bg-accent-soft', 'bg-accent', 'bg-accent', 'bg-accent'];
   // data = [{ date: Date, count: number }] — 84 días empezando en lunes
   const start = new Date(2026, 6, 13), data = Array.from({ length: 84 }, (_, i) => {
     const date = new Date(start); date.setDate(start.getDate() + i);
@@ -24,7 +24,7 @@
   const heat = document.getElementById('heat'), tip = document.getElementById('tip'), card = document.getElementById('card');
   data.forEach((d, i) => {
     const c = document.createElement('li');
-    c.className = 'aspect-square cursor-pointer rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 ' + LEVELS[level(d.count)];
+    c.className = 'aspect-square cursor-pointer rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ' + LEVELS[level(d.count)];
     c.tabIndex = i ? -1 : 0; c.setAttribute('role', 'img'); c.setAttribute('aria-label', label(d));
     const show = () => {
       const r = c.getBoundingClientRect(), k = card.getBoundingClientRect();

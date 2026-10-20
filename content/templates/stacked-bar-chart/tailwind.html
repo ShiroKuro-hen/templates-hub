@@ -1,15 +1,15 @@
 <!-- Versión estática: el tooltip usa <title> nativo. Para el tooltip propio, usa el script de la pestaña HTML + CSS. -->
-<figure class="m-0 rounded-lg border border-slate-200 bg-white px-5 py-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
-  <figcaption><strong class="block text-[15px] font-semibold">Pedidos por canal</strong><span class="text-slate-500 dark:text-slate-400">Primer semestre de 2026, en miles de pedidos</span></figcaption>
-  <ul class="mb-1 mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[13px] text-slate-500 dark:text-slate-400 [&_i]:h-2.5 [&_i]:w-2.5 [&_i]:rounded-[3px] [&_li]:flex [&_li]:items-center [&_li]:gap-2">
-    <li><i class="bg-blue-600 dark:bg-blue-400"></i>Web</li>
-    <li><i class="bg-cyan-600 dark:bg-sky-400"></i>App móvil</li>
-    <li><i class="bg-emerald-600 dark:bg-emerald-400"></i>Tienda física</li>
+<figure class="m-0 rounded-lg border border-line bg-surface px-5 py-4 text-sm text-fg shadow-sm">
+  <figcaption><strong class="block text-[15px] font-semibold">Pedidos por canal</strong><span class="text-muted">Primer semestre de 2026, en miles de pedidos</span></figcaption>
+  <ul class="mb-1 mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[13px] text-muted [&_i]:h-2.5 [&_i]:w-2.5 [&_i]:rounded-[3px] [&_li]:flex [&_li]:items-center [&_li]:gap-2">
+    <li><i class="bg-accent"></i>Web</li>
+    <li><i class="bg-info"></i>App móvil</li>
+    <li><i class="bg-ok"></i>Tienda física</li>
   </ul>
   <svg width="100%" height="250" role="group" aria-label="Pedidos por canal y mes. Recorre las barras con Tab." class="block overflow-visible
-       [&_rect]:cursor-pointer [&_rect]:stroke-white [&_rect]:transition-opacity hover:[&_rect]:opacity-85 focus-visible:[&_rect]:outline-2 focus-visible:[&_rect]:outline-offset-2 focus-visible:[&_rect]:outline-blue-600 dark:[&_rect]:stroke-slate-900
-       [&_.w]:fill-blue-600 dark:[&_.w]:fill-blue-400 [&_.a]:fill-cyan-600 dark:[&_.a]:fill-sky-400 [&_.t]:fill-emerald-600 dark:[&_.t]:fill-emerald-400
-       [&_line]:stroke-slate-200 dark:[&_line]:stroke-slate-700 [&_text]:text-xs [&_.tot]:fill-current [&_.tot]:font-semibold [&_.tot]:tabular-nums [&_.lab]:fill-slate-500 dark:[&_.lab]:fill-slate-400">
+       [&_rect]:cursor-pointer [&_rect]:stroke-surface [&_rect]:transition-opacity hover:[&_rect]:opacity-85 focus-visible:[&_rect]:outline-2 focus-visible:[&_rect]:outline-offset-2 focus-visible:[&_rect]:outline-accent
+       [&_.w]:fill-accent [&_.a]:fill-info [&_.t]:fill-ok
+       [&_line]:stroke-line [&_text]:text-xs [&_.tot]:fill-current [&_.tot]:font-semibold [&_.tot]:tabular-nums [&_.lab]:fill-muted">
     <line x1="0" x2="100%" y1="156.7" y2="156.7" stroke-dasharray="2 4"/>
     <line x1="0" x2="100%" y1="91.3" y2="91.3" stroke-dasharray="2 4"/>
     <line x1="0" x2="100%" y1="26" y2="26" stroke-dasharray="2 4"/>

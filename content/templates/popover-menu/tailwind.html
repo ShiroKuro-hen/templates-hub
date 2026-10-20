@@ -1,19 +1,19 @@
 <button type="button" id="btn" popovertarget="menu" aria-haspopup="menu" aria-expanded="false"
-        class="rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-900 shadow-sm transition-colors hover:border-blue-600 aria-expanded:border-blue-600 aria-expanded:bg-blue-50 aria-expanded:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:aria-expanded:border-blue-400 dark:aria-expanded:bg-slate-800 dark:aria-expanded:text-blue-400">
+        class="rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-semibold text-fg shadow-sm transition-colors hover:border-accent aria-expanded:border-accent aria-expanded:bg-accent-soft aria-expanded:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none">
   Opciones ▾
 </button>
 
 <div id="menu" popover role="menu" aria-label="Opciones del archivo"
-     class="fixed m-0 min-w-[200px] rounded-lg border border-slate-200 bg-white p-1 text-sm text-slate-900 shadow-lg [inset:auto] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
+     class="fixed m-0 min-w-[200px] rounded-lg border border-line bg-surface p-1 text-sm text-fg shadow-lg [inset:auto]">
   <button role="menuitem" popovertarget="menu" popovertargetaction="hide"
-          class="block w-full rounded-md px-2.5 py-[7px] text-left hover:bg-blue-50 focus-visible:bg-blue-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800 dark:focus-visible:bg-slate-800">Renombrar</button>
+          class="block w-full rounded-md px-2.5 py-[7px] text-left hover:bg-accent-soft focus-visible:bg-accent-soft focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent">Renombrar</button>
   <button role="menuitem" popovertarget="menu" popovertargetaction="hide"
-          class="block w-full rounded-md px-2.5 py-[7px] text-left hover:bg-blue-50 focus-visible:bg-blue-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800 dark:focus-visible:bg-slate-800">Duplicar</button>
+          class="block w-full rounded-md px-2.5 py-[7px] text-left hover:bg-accent-soft focus-visible:bg-accent-soft focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent">Duplicar</button>
   <button role="menuitem" popovertarget="menu" popovertargetaction="hide"
-          class="block w-full rounded-md px-2.5 py-[7px] text-left hover:bg-blue-50 focus-visible:bg-blue-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-blue-500 dark:hover:bg-slate-800 dark:focus-visible:bg-slate-800">Mover a…</button>
-  <hr role="separator" class="my-1 border-0 border-t border-slate-200 dark:border-slate-700">
+          class="block w-full rounded-md px-2.5 py-[7px] text-left hover:bg-accent-soft focus-visible:bg-accent-soft focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent">Mover a…</button>
+  <hr role="separator" class="my-1 border-0 border-t border-line">
   <button role="menuitem" popovertarget="menu" popovertargetaction="hide"
-          class="block w-full rounded-md px-2.5 py-[7px] text-left text-red-600 hover:bg-red-50 focus-visible:bg-red-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-red-500 dark:text-red-400 dark:hover:bg-red-950 dark:focus-visible:bg-red-950">Eliminar</button>
+          class="block w-full rounded-md px-2.5 py-[7px] text-left text-err hover:bg-err-soft focus-visible:bg-err-soft focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-err">Eliminar</button>
 </div>
 
 <script>

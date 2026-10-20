@@ -1,12 +1,12 @@
-<ul id="list" class="mx-auto flex max-w-3xl list-none flex-col gap-2.5 p-0 text-sm text-slate-900 dark:text-slate-100"></ul>
-<button type="button" id="reset" hidden class="mx-auto mt-2.5 block rounded-lg border border-slate-200 bg-white px-3.5 py-2 font-semibold shadow-sm hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-900">Mostrar avisos otra vez</button>
+<ul id="list" class="mx-auto flex max-w-3xl list-none flex-col gap-2.5 p-0 text-sm text-fg"></ul>
+<button type="button" id="reset" hidden class="mx-auto mt-2.5 block rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold shadow-sm hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Mostrar avisos otra vez</button>
 <script>
   // Clases completas por tipo (Tailwind necesita verlas enteras).
   const KIND = {
-    info: ['bg-cyan-50 before:bg-cyan-600 dark:bg-cyan-950', 'bg-cyan-600', 'i', 'status', 'nueva versión'],
-    ok: ['bg-emerald-50 before:bg-emerald-600 dark:bg-emerald-950', 'bg-emerald-600', '✓', 'status', 'pago recibido'],
-    warn: ['bg-amber-50 before:bg-amber-600 dark:bg-amber-950', 'bg-amber-600', '!', 'status', 'plan por vencer'],
-    err: ['bg-red-50 before:bg-red-600 dark:bg-red-950', 'bg-red-600', '✕', 'alert', 'error de formulario'],
+    info: ['bg-info-soft before:bg-info', 'bg-info', 'i', 'status', 'nueva versión'],
+    ok: ['bg-ok-soft before:bg-ok', 'bg-ok', '✓', 'status', 'pago recibido'],
+    warn: ['bg-warn-soft before:bg-warn', 'bg-warn', '!', 'status', 'plan por vencer'],
+    err: ['bg-err-soft before:bg-err', 'bg-err', '✕', 'alert', 'error de formulario'],
   };
   const DATA = [
     ['info', 'Nueva versión disponible', 'La 2.4 llega el viernes con mejoras de velocidad.'],
@@ -17,10 +17,10 @@
   const list = document.getElementById('list'), reset = document.getElementById('reset');
   function fill() {
     list.innerHTML = DATA.map(([k, t, d]) => `
-      <li role="${KIND[k][3]}" class="relative flex items-start gap-3 overflow-hidden rounded-lg border border-slate-200 py-3 pr-3 pl-4 shadow-sm before:absolute before:inset-y-0 before:left-0 before:w-[3px] dark:border-slate-700 ${KIND[k][0]}">
-        <i aria-hidden="true" class="grid h-[22px] w-[22px] flex-none place-items-center rounded-full text-xs font-semibold text-white not-italic ${KIND[k][1]}">${KIND[k][2]}</i>
-        <div class="min-w-0 flex-1"><b class="block font-semibold">${t}</b><span class="text-[13px] text-slate-500 dark:text-slate-400">${d}</span></div>
-        <button type="button" aria-label="Descartar aviso: ${KIND[k][4]}" class="h-7 w-7 flex-none rounded-lg text-lg leading-none text-slate-500 hover:bg-white hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100">×</button>
+      <li role="${KIND[k][3]}" class="relative flex items-start gap-3 overflow-hidden rounded-lg border border-line py-3 pr-3 pl-4 shadow-sm before:absolute before:inset-y-0 before:left-0 before:w-[3px] ${KIND[k][0]}">
+        <i aria-hidden="true" class="grid h-[22px] w-[22px] flex-none place-items-center rounded-full text-xs font-semibold text-accent-ink not-italic ${KIND[k][1]}">${KIND[k][2]}</i>
+        <div class="min-w-0 flex-1"><b class="block font-semibold">${t}</b><span class="text-[13px] text-muted">${d}</span></div>
+        <button type="button" aria-label="Descartar aviso: ${KIND[k][4]}" class="h-7 w-7 flex-none rounded-lg text-lg leading-none text-muted hover:bg-surface hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">×</button>
       </li>`).join('');
   }
   list.addEventListener('click', (e) => {

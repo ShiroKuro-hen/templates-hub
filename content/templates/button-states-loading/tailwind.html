@@ -1,12 +1,12 @@
-<div class="flex flex-wrap items-center gap-4 p-5 text-slate-900 dark:text-slate-100">
+<div class="flex flex-wrap items-center gap-4 p-5 text-fg">
   <!-- Normal (hover y active vienen de las variantes) -->
-  <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-500 active:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 motion-reduce:transition-none dark:bg-blue-500 dark:hover:bg-blue-400">Guardar</button>
+  <button type="button" class="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-ink shadow-sm transition hover:brightness-110 active:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none">Guardar</button>
 
   <!-- Deshabilitado -->
-  <button type="button" disabled class="cursor-not-allowed rounded-lg border border-slate-200 bg-slate-100 px-4 py-2 text-sm font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">Guardar</button>
+  <button type="button" disabled class="cursor-not-allowed rounded-lg border border-line bg-page px-4 py-2 text-sm font-medium text-muted">Guardar</button>
 
   <!-- Cargando: aria-busy + aria-disabled para conservar el foco -->
-  <button type="button" aria-busy="true" aria-disabled="true" class="inline-flex cursor-progress items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:bg-blue-500">
+  <button type="button" aria-busy="true" aria-disabled="true" class="inline-flex cursor-progress items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
     <span aria-hidden="true" class="size-3.5 animate-spin rounded-full border-2 border-current border-r-transparent motion-reduce:animate-none"></span>
     Guardando…
   </button>

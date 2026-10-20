@@ -1,15 +1,15 @@
-<article class="mx-auto flex max-w-lg gap-3 rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
-  <span aria-hidden="true" class="grid size-9 shrink-0 place-items-center rounded-full bg-blue-50 text-xs font-semibold text-blue-600 dark:bg-blue-500/15 dark:text-blue-300">MQ</span>
+<article class="mx-auto flex max-w-lg gap-3 rounded-lg border border-line bg-surface p-4 text-sm text-fg shadow-sm">
+  <span aria-hidden="true" class="grid size-9 shrink-0 place-items-center rounded-full bg-accent-soft text-xs font-semibold text-accent">MQ</span>
   <div class="min-w-0 flex-1">
-    <header class="flex flex-wrap items-baseline gap-2"><strong>Marina Quiroga</strong><time class="text-xs text-slate-500 dark:text-slate-400">10:32</time></header>
+    <header class="flex flex-wrap items-baseline gap-2"><strong>Marina Quiroga</strong><time class="text-xs text-muted">10:32</time></header>
     <p class="mb-2.5 mt-0.5 break-words">Lanzamos la versión 3.2 con las correcciones de accesibilidad. Gracias a todo el equipo.</p>
-    <div id="bar" role="group" aria-label="Reacciones al mensaje" class="flex flex-wrap items-center gap-1.5 [&>button]:inline-flex [&>button]:min-h-7 [&>button]:items-center [&>button]:gap-1.5 [&>button]:rounded-full [&>button]:border [&>button]:border-slate-200 [&>button]:bg-white [&>button]:px-2.5 [&>button]:text-slate-500 [&>button:hover]:bg-blue-50 dark:[&>button]:border-slate-700 dark:[&>button]:bg-slate-900 dark:[&>button]:text-slate-400 dark:[&>button:hover]:bg-slate-800 [&>button]:focus-visible:outline-2 [&>button]:focus-visible:outline-offset-2 [&>button]:focus-visible:outline-blue-600 [&>button[aria-pressed=true]]:border-blue-600 [&>button[aria-pressed=true]]:bg-blue-50 [&>button[aria-pressed=true]]:text-blue-600 dark:[&>button[aria-pressed=true]]:border-blue-400 dark:[&>button[aria-pressed=true]]:bg-blue-500/15 dark:[&>button[aria-pressed=true]]:text-blue-300">
+    <div id="bar" role="group" aria-label="Reacciones al mensaje" class="flex flex-wrap items-center gap-1.5 [&>button]:inline-flex [&>button]:min-h-7 [&>button]:items-center [&>button]:gap-1.5 [&>button]:rounded-full [&>button]:border [&>button]:border-line [&>button]:bg-surface [&>button]:px-2.5 [&>button]:text-muted [&>button:hover]:bg-accent-soft [&>button]:focus-visible:outline-2 [&>button]:focus-visible:outline-offset-2 [&>button]:focus-visible:outline-accent [&>button[aria-pressed=true]]:border-accent [&>button[aria-pressed=true]]:bg-accent-soft [&>button[aria-pressed=true]]:text-accent">
       <button type="button" data-e="👍" aria-pressed="true" aria-label="👍, 12 reacciones"><span aria-hidden="true">👍</span><b class="tabular-nums" aria-hidden="true">12</b></button>
       <button type="button" data-e="🎉" aria-pressed="false" aria-label="🎉, 7 reacciones"><span aria-hidden="true">🎉</span><b class="tabular-nums" aria-hidden="true">7</b></button>
       <button type="button" data-e="🚀" aria-pressed="false" aria-label="🚀, 3 reacciones"><span aria-hidden="true">🚀</span><b class="tabular-nums" aria-hidden="true">3</b></button>
       <details id="add" class="relative">
-        <summary aria-label="Añadir reacción" class="inline-flex min-h-7 cursor-pointer list-none items-center rounded-full border border-slate-200 px-2.5 text-slate-500 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 [&::-webkit-details-marker]:hidden">+</summary>
-        <div id="pick" role="group" aria-label="Elegir emoji" class="absolute left-0 top-9 z-10 flex w-max max-w-56 flex-wrap gap-0.5 rounded-lg border border-slate-200 bg-white p-1 shadow-md dark:border-slate-700 dark:bg-slate-900"></div>
+        <summary aria-label="Añadir reacción" class="inline-flex min-h-7 cursor-pointer list-none items-center rounded-full border border-line px-2.5 text-muted hover:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent [&::-webkit-details-marker]:hidden">+</summary>
+        <div id="pick" role="group" aria-label="Elegir emoji" class="absolute left-0 top-9 z-10 flex w-max max-w-56 flex-wrap gap-0.5 rounded-lg border border-line bg-surface p-1 shadow-md"></div>
       </details>
     </div>
     <p id="st" role="status" class="sr-only"></p>
@@ -32,7 +32,7 @@
   }
   ['👍', '❤️', '🎉', '🚀', '👀', '✅', '😄', '🙌'].forEach((e) => {
     const b = document.createElement('button'); b.type = 'button'; b.textContent = e; b.setAttribute('aria-label', 'Reaccionar con ' + e);
-    b.className = 'min-h-8 rounded-lg px-2 text-base hover:bg-blue-50 dark:hover:bg-slate-800'; pick.append(b);
+    b.className = 'min-h-8 rounded-lg px-2 text-base hover:bg-accent-soft'; pick.append(b);
   });
   bar.addEventListener('click', (ev) => { const b = ev.target.closest('button[data-e]'); if (b) toggle(b.dataset.e); });
   pick.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (b) { add.open = false; toggle(b.textContent); } });

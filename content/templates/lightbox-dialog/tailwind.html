@@ -1,9 +1,9 @@
-<div class="bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<div class="bg-page p-5 text-sm text-fg">
   <svg width="0" height="0" aria-hidden="true" class="absolute"><defs>
     <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient>
-    <symbol id="diag" viewBox="0 0 400 240" class="[&_.n]:fill-white [&_.n]:stroke-slate-200 dark:[&_.n]:fill-slate-900 dark:[&_.n]:stroke-slate-700 [&_.t]:fill-slate-900 dark:[&_.t]:fill-slate-100 [&_.t]:text-[11px] [&_.t]:font-semibold [&_.s]:fill-slate-500 [&_.s]:text-[10px] [&_path]:fill-none [&_path]:stroke-slate-500">
+    <symbol id="diag" viewBox="0 0 400 240" class="[&_.n]:fill-surface [&_.n]:stroke-line [&_.t]:fill-fg [&_.t]:text-[11px] [&_.t]:font-semibold [&_.s]:fill-muted [&_.s]:text-[10px] [&_path]:fill-none [&_path]:stroke-muted">
       <rect class="n" x="10" y="100" width="80" height="40" rx="8"/><text class="t" x="50" y="118" text-anchor="middle">Cliente</text><text class="s" x="50" y="131" text-anchor="middle">Web y móvil</text>
-      <rect x="140" y="100" width="100" height="40" rx="8" stroke="url(#gr)" stroke-width="1.5" class="fill-blue-50 dark:fill-slate-800"/><text class="t" x="190" y="118" text-anchor="middle">API Gateway</text><text class="s" x="190" y="131" text-anchor="middle">Autenticación</text>
+      <rect x="140" y="100" width="100" height="40" rx="8" stroke="url(#gr)" stroke-width="1.5" class="fill-accent-soft"/><text class="t" x="190" y="118" text-anchor="middle">API Gateway</text><text class="s" x="190" y="131" text-anchor="middle">Autenticación</text>
       <rect class="n" x="300" y="20" width="90" height="40" rx="8"/><text class="t" x="345" y="38" text-anchor="middle">Usuarios</text><text class="s" x="345" y="51" text-anchor="middle">12 ms</text>
       <rect class="n" x="300" y="100" width="90" height="40" rx="8"/><text class="t" x="345" y="118" text-anchor="middle">Pagos</text><text class="s" x="345" y="131" text-anchor="middle">48 ms</text>
       <rect class="n" x="300" y="180" width="90" height="40" rx="8"/><text class="t" x="345" y="198" text-anchor="middle">Informes</text><text class="s" x="345" y="211" text-anchor="middle">120 ms</text>
@@ -11,29 +11,29 @@
     </symbol>
   </defs></svg>
 
-  <div class="mx-auto max-w-sm rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+  <div class="mx-auto max-w-sm rounded-lg border border-line bg-surface p-4 shadow-sm">
     <h1 class="m-0 mb-0.5 text-base font-semibold">Arquitectura del servicio</h1>
-    <p class="mb-3 mt-0 text-slate-500 dark:text-slate-400">Cómo viaja una solicitud desde el cliente hasta cada servicio.</p>
-    <button id="open" type="button" aria-label="Ampliar diagrama de arquitectura" class="relative block w-full cursor-zoom-in rounded-lg border border-slate-200 bg-slate-50 p-2 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-950">
+    <p class="mb-3 mt-0 text-muted">Cómo viaja una solicitud desde el cliente hasta cada servicio.</p>
+    <button id="open" type="button" aria-label="Ampliar diagrama de arquitectura" class="relative block w-full cursor-zoom-in rounded-lg border border-line bg-page p-2 hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
       <svg viewBox="0 0 400 240" role="img" aria-label="Cliente, API Gateway y tres servicios" class="block h-auto w-full"><use href="#diag" width="400" height="240"/></svg>
-      <span class="absolute bottom-2 right-2 rounded-full border border-slate-200 bg-white px-2.5 py-0.5 text-xs font-semibold dark:border-slate-700 dark:bg-slate-900">Ampliar</span>
+      <span class="absolute bottom-2 right-2 rounded-full border border-line bg-surface px-2.5 py-0.5 text-xs font-semibold">Ampliar</span>
     </button>
   </div>
 
-  <dialog id="dlg" aria-labelledby="t" class="w-[min(92vw,820px)] rounded-lg border border-slate-200 bg-white p-0 text-slate-900 shadow-lg backdrop:bg-slate-900/50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
-    <div class="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
+  <dialog id="dlg" aria-labelledby="t" class="w-[min(92vw,820px)] rounded-lg border border-line bg-surface p-0 text-fg shadow-lg backdrop:bg-fg/50">
+    <div class="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
       <h2 id="t" class="m-0 text-base font-semibold">Arquitectura del servicio</h2>
-      <button id="close" type="button" aria-label="Cerrar" class="h-9 min-w-9 cursor-pointer rounded-lg border border-slate-200 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700">×</button>
+      <button id="close" type="button" aria-label="Cerrar" class="h-9 min-w-9 cursor-pointer rounded-lg border border-line hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">×</button>
     </div>
-    <div id="view" tabindex="0" role="region" aria-label="Diagrama ampliado. Usa las flechas para desplazarte." class="m-4 h-[min(56vh,420px)] overflow-auto rounded-lg border border-slate-200 bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-950">
+    <div id="view" tabindex="0" role="region" aria-label="Diagrama ampliado. Usa las flechas para desplazarte." class="m-4 h-[min(56vh,420px)] overflow-auto rounded-lg border border-line bg-page focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
       <svg id="img" viewBox="0 0 400 240" role="img" aria-label="Cliente, API Gateway y tres servicios" class="block h-auto w-full"><use href="#diag" width="400" height="240"/></svg>
     </div>
     <div class="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 pb-4">
-      <button id="out" type="button" aria-label="Alejar" class="h-9 min-w-9 cursor-pointer rounded-lg border border-slate-200 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-blue-500 dark:border-slate-700">−</button>
-      <input id="rng" type="range" min="100" max="400" step="25" value="100" aria-label="Nivel de zoom" class="min-w-28 flex-1 accent-blue-600">
-      <button id="in" type="button" aria-label="Acercar" class="h-9 min-w-9 cursor-pointer rounded-lg border border-slate-200 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-blue-500 dark:border-slate-700">+</button>
+      <button id="out" type="button" aria-label="Alejar" class="h-9 min-w-9 cursor-pointer rounded-lg border border-line hover:border-accent focus-visible:outline-2 focus-visible:outline-accent">−</button>
+      <input id="rng" type="range" min="100" max="400" step="25" value="100" aria-label="Nivel de zoom" class="min-w-28 flex-1 accent-accent">
+      <button id="in" type="button" aria-label="Acercar" class="h-9 min-w-9 cursor-pointer rounded-lg border border-line hover:border-accent focus-visible:outline-2 focus-visible:outline-accent">+</button>
       <output id="val" class="min-w-14 text-right font-semibold tabular-nums">100 %</output>
-      <button id="reset" type="button" class="h-9 cursor-pointer rounded-lg border border-slate-200 px-3 hover:border-blue-500 focus-visible:outline-2 focus-visible:outline-blue-500 dark:border-slate-700">Restablecer</button>
+      <button id="reset" type="button" class="h-9 cursor-pointer rounded-lg border border-line px-3 hover:border-accent focus-visible:outline-2 focus-visible:outline-accent">Restablecer</button>
     </div>
   </dialog>
 </div>

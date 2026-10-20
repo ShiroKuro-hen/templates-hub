@@ -1,11 +1,11 @@
-<div class="relative min-h-[300px] max-w-lg bg-slate-50 p-5 text-sm text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+<div class="relative min-h-[300px] max-w-lg bg-page p-5 text-sm text-fg">
   <label for="q" class="mb-1.5 block font-semibold">Buscar en la consola</label>
-  <div class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 shadow-sm focus-within:border-blue-600 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-blue-600 dark:border-slate-700 dark:bg-slate-900">
-    <svg class="flex-none text-slate-500" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
+  <div class="flex items-center gap-2 rounded-lg border border-line bg-surface px-3 shadow-sm focus-within:border-accent focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-accent">
+    <svg class="flex-none text-muted" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="m11 11 3.5 3.5"/></svg>
     <input id="q" type="text" role="combobox" aria-expanded="false" aria-controls="lb" aria-autocomplete="list" autocomplete="off" placeholder="Servicios, facturas, usuarios" class="min-w-0 flex-1 bg-transparent py-2.5 outline-none">
   </div>
-  <ul id="lb" role="listbox" aria-label="Sugerencias" hidden class="absolute inset-x-5 mt-1.5 list-none rounded-lg border border-slate-200 bg-white p-1.5 shadow-md dark:border-slate-700 dark:bg-slate-900"></ul>
-  <p id="st" aria-live="polite" class="mt-2.5 text-slate-500 dark:text-slate-400"></p>
+  <ul id="lb" role="listbox" aria-label="Sugerencias" hidden class="absolute inset-x-5 mt-1.5 list-none rounded-lg border border-line bg-surface p-1.5 shadow-md"></ul>
+  <p id="st" aria-live="polite" class="mt-2.5 text-muted"></p>
 </div>
 <script>
   const data = [['Balanceadores de carga', 'Red'], ['Bases de datos gestionadas', 'Datos'], ['Buckets de almacenamiento', 'Datos'],
@@ -13,17 +13,17 @@
     ['Máquinas virtuales', 'Cómputo'], ['Registros de auditoría', 'Seguridad'], ['Usuarios y roles', 'Cuenta']];
   let recent = ['Máquinas virtuales', 'Claves de API'], opts = [], active = -1;
   const q = document.getElementById('q'), lb = document.getElementById('lb');
-  const OPT = 'relative flex cursor-pointer justify-between gap-3 rounded-md px-2.5 py-2 hover:bg-blue-50 aria-selected:bg-blue-50 aria-selected:before:absolute aria-selected:before:inset-y-1.5 aria-selected:before:left-0 aria-selected:before:w-[3px] aria-selected:before:rounded-full aria-selected:before:bg-gradient-to-br aria-selected:before:from-cyan-400 aria-selected:before:to-blue-600 aria-selected:before:content-[\'\'] dark:hover:bg-slate-800 dark:aria-selected:bg-slate-800';
+  const OPT = 'relative flex cursor-pointer justify-between gap-3 rounded-md px-2.5 py-2 hover:bg-accent-soft aria-selected:bg-accent-soft aria-selected:before:absolute aria-selected:before:inset-y-1.5 aria-selected:before:left-0 aria-selected:before:w-[3px] aria-selected:before:rounded-full aria-selected:before:bg-gradient-to-br aria-selected:before:from-accent-2 aria-selected:before:to-accent aria-selected:before:content-[\'\']';
   const esc = (s) => s.replace(/[&<>"]/g, (c) => `&#${c.charCodeAt(0)};`);
   const hl = (s, t) => { const i = s.toLowerCase().indexOf(t.toLowerCase());
-    return i < 0 || !t ? esc(s) : esc(s.slice(0, i)) + '<mark class="bg-transparent font-semibold text-blue-600 dark:text-blue-400">' + esc(s.slice(i, i + t.length)) + '</mark>' + esc(s.slice(i + t.length)); };
+    return i < 0 || !t ? esc(s) : esc(s.slice(0, i)) + '<mark class="bg-transparent font-semibold text-accent">' + esc(s.slice(i, i + t.length)) + '</mark>' + esc(s.slice(i + t.length)); };
   function open() {
     const t = q.value.trim();
     opts = t ? data.filter(([n]) => n.toLowerCase().includes(t.toLowerCase())) : recent.map((n) => data.find((d) => d[0] === n));
     active = -1;
-    lb.innerHTML = (t ? '' : '<li role="presentation" class="px-2.5 pb-1 pt-1.5 text-xs text-slate-500">Búsquedas recientes</li>') + (opts.length
-      ? opts.map(([n, c], i) => `<li role="option" id="o${i}" aria-selected="false" class="${OPT}">${hl(n, t)}<small class="text-slate-500">${c}</small></li>`).join('')
-      : `<li role="presentation" class="p-2.5 text-slate-500">Sin resultados para “${esc(t)}”. Prueba con otro término.</li>`);
+    lb.innerHTML = (t ? '' : '<li role="presentation" class="px-2.5 pb-1 pt-1.5 text-xs text-muted">Búsquedas recientes</li>') + (opts.length
+      ? opts.map(([n, c], i) => `<li role="option" id="o${i}" aria-selected="false" class="${OPT}">${hl(n, t)}<small class="text-muted">${c}</small></li>`).join('')
+      : `<li role="presentation" class="p-2.5 text-muted">Sin resultados para “${esc(t)}”. Prueba con otro término.</li>`);
     lb.hidden = false; q.setAttribute('aria-expanded', 'true'); q.removeAttribute('aria-activedescendant');
   }
   function close() { lb.hidden = true; q.setAttribute('aria-expanded', 'false'); q.removeAttribute('aria-activedescendant'); }
