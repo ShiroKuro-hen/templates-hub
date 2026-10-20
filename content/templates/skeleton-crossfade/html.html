@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Perfiles con esqueleto y fundido</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .stage { --dur:.4s; --ease:cubic-bezier(.2,.8,.2,1); max-width:560px; margin:0 auto; }
+  .head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px; }
+  h1 { margin:0; font-size:1.25rem; letter-spacing:-.01em; }
+  .status { min-height:20px; margin:0 0 12px; color:var(--muted); font-size:13px; }
+  .reload { font:600 14px system-ui,-apple-system,"Segoe UI",sans-serif; padding:8px 14px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); cursor:pointer; }
+  .reload:hover { border-color:var(--accent); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; margin:0; padding:0; list-style:none; }
+  .card { display:grid; padding:16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .layer { grid-area:1/1; display:grid; align-content:start; gap:10px; transition:opacity var(--dur) var(--ease); }
+  .real { opacity:0; }
+  [data-state=ready] .real { opacity:1; }
+  [data-state=ready] .sk { opacity:0; }
+  .who { display:flex; align-items:center; gap:10px; }
+  .who b { display:block; font-weight:600; }
+  .who small { display:block; color:var(--muted); font-size:13px; }
+  .av { flex:none; width:40px; height:40px; display:grid; place-items:center; border-radius:50%; background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); color:var(--accent-ink); font-weight:600; font-size:13px; }
+  .real p { margin:0; color:var(--muted); }
+  .pill { justify-self:start; padding:0 10px; border-radius:999px; font-size:12px; font-weight:600; line-height:22px; background:var(--accent-soft); }
+  .pill.ok { background:var(--ok-soft); }
+  .pill.warn { background:var(--warn-soft); }
+  .bone { display:block; height:12px; border-radius:6px; background:var(--accent-soft); }
+  .bones { display:grid; gap:8px; flex:1; }
+  .circ { flex:none; width:40px; height:40px; border-radius:50%; }
+  .w1 { width:60%; }
+  .w2 { width:40%; }
+  .w3 { width:75%; }
+  .tag { width:84px; height:22px; border-radius:999px; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  @media (prefers-reduced-motion:reduce) { .stage { --dur:0s; } }
+</style>
+</head>
+<body>
+<section class="stage" id="stage" data-state="loading">
+  <header class="head">
+    <h1>Equipo</h1>
+    <button type="button" class="reload" id="reload">Recargar</button>
+  </header>
+  <p class="status" id="status" aria-live="polite">Cargando perfiles…</p>
+  <ul class="grid" id="grid" aria-busy="true">
+    <li class="card">
+      <div class="layer sk" aria-hidden="true">
+        <div class="who"><i class="bone circ"></i><div class="bones"><i class="bone w1"></i><i class="bone w2"></i></div></div>
+        <i class="bone"></i>
+        <i class="bone w3"></i>
+        <i class="bone tag"></i>
+      </div>
+      <div class="layer real" inert>
+        <div class="who"><span class="av" aria-hidden="true">MR</span><div><b>Marta Ruiz</b><small>Diseñadora de producto</small></div></div>
+        <p>Lidera el sistema de diseño y la documentación de componentes.</p>
+        <span class="pill ok">Disponible</span>
+      </div>
+    </li>
+    <li class="card">
+      <div class="layer sk" aria-hidden="true">
+        <div class="who"><i class="bone circ"></i><div class="bones"><i class="bone w1"></i><i class="bone w2"></i></div></div>
+        <i class="bone"></i>
+        <i class="bone w3"></i>
+        <i class="bone tag"></i>
+      </div>
+      <div class="layer real" inert>
+        <div class="who"><span class="av" aria-hidden="true">LG</span><div><b>Luis Gómez</b><small>Ingeniero de datos</small></div></div>
+        <p>Construye los pipelines de métricas y los paneles de seguimiento.</p>
+        <span class="pill warn">En reunión</span>
+      </div>
+    </li>
+    <li class="card">
+      <div class="layer sk" aria-hidden="true">
+        <div class="who"><i class="bone circ"></i><div class="bones"><i class="bone w1"></i><i class="bone w2"></i></div></div>
+        <i class="bone"></i>
+        <i class="bone w3"></i>
+        <i class="bone tag"></i>
+      </div>
+      <div class="layer real" inert>
+        <div class="who"><span class="av" aria-hidden="true">CD</span><div><b>Carlos Díaz</b><small>Responsable de seguridad</small></div></div>
+        <p>Coordina auditorías de accesos y la respuesta a incidentes.</p>
+        <span class="pill idle">Fuera hoy</span>
+      </div>
+    </li>
+  </ul>
+</section>
+<script>
+  const stage = document.getElementById('stage'), grid = document.getElementById('grid'), status = document.getElementById('status');
+  const reals = [...grid.querySelectorAll('.real')];
+  let timer = 0;
+
+  function load() {
+    clearTimeout(timer);
+    stage.dataset.state = 'loading';
+    grid.setAttribute('aria-busy', 'true');
+    reals.forEach((r) => (r.inert = true));
+    status.textContent = 'Cargando perfiles…';
+    timer = setTimeout(show, 1200);
+  }
+
+  function show() {
+    stage.dataset.state = 'ready';
+    grid.setAttribute('aria-busy', 'false');
+    reals.forEach((r) => (r.inert = false));
+    status.textContent = 'Perfiles cargados.';
+  }
+
+  document.getElementById('reload').addEventListener('click', load);
+  load();
+</script>
+</body>
+</html>

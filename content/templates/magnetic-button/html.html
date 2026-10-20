@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Botones magnéticos</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .stage{--dur:.35s;--ease:cubic-bezier(.2,.8,.2,1);--halo:0 0 0 4px var(--accent-soft),0 10px 26px -8px var(--accent);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;max-width:520px;margin:0 auto;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .zone{display:inline-block;padding:24px}
+  .mag{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;font:inherit;font-size:14px;font-weight:600;line-height:1;border:1px solid transparent;border-radius:var(--radius);cursor:pointer;transition:transform var(--dur) var(--ease),box-shadow .3s ease,border-color .2s,background-color .2s,color .2s}
+  .primary{padding:0 18px;background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .icon{width:44px;padding:0;border-radius:50%;border-color:var(--border);background:var(--surface);color:var(--text)}
+  .icon[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .icon svg{width:18px;height:18px}
+  .mag:focus-visible{outline:2px solid var(--accent);outline-offset:3px;box-shadow:var(--halo)}
+  @media (hover:hover) and (pointer:fine){.mag{transform:translate(var(--tx,0px),var(--ty,0px))}.mag:hover{box-shadow:var(--halo)}}
+  @media (prefers-reduced-motion:reduce){.mag{transition:none!important;transform:none!important}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="zone"><button type="button" class="mag primary">Empezar gratis</button></div>
+  <div class="zone"><button type="button" class="mag icon" id="save" aria-pressed="false" aria-label="Guardar en favoritos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button></div>
+</main>
+<script>
+  const PULL = 0.3, MAX = 8;
+  const offset = (d) => `${Math.max(-MAX, Math.min(MAX, d * PULL))}px`;
+  document.querySelectorAll('.zone').forEach((zone) => {
+    const btn = zone.querySelector('.mag');
+    const place = (x, y) => { btn.style.setProperty('--tx', x); btn.style.setProperty('--ty', y); };
+    zone.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const r = zone.getBoundingClientRect();
+      place(offset(e.clientX - r.left - r.width / 2), offset(e.clientY - r.top - r.height / 2));
+    });
+    zone.addEventListener('pointerleave', () => place('0px', '0px'));
+  });
+  document.getElementById('save').addEventListener('click', (e) => {
+    const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+  });
+</script>
+</body>
+</html>

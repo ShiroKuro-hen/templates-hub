@@ -1,0 +1,1 @@
+{ "title": "Panel lateral con foco gestionado", "category": "transiciones", "description": "Panel que entra por la derecha, izquierda o abajo, con foco gestionado y cierre con Esc.", "tags": ["panel", "drawer", "accesibilidad"] }

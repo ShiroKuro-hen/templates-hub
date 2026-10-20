@@ -1,0 +1,1 @@
+{ "title": "Lista de prioridades con FLIP", "category": "transiciones", "description": "Reordena filas con Subir y Bajar o Alt+flechas, con animación FLIP y anuncios aria-live.", "tags": ["FLIP", "reordenar", "teclado"] }

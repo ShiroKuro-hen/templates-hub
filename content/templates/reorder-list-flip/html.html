@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lista de prioridades con FLIP</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .stage { --dur:.26s; --ease:cubic-bezier(.2,.8,.2,1); max-width:560px; margin:0 auto; }
+  .head { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-bottom:12px; }
+  h1 { margin:0; font-size:1.25rem; letter-spacing:-.01em; }
+  .lead { margin:4px 0 0; color:var(--muted); }
+  .sort { font:600 14px system-ui,-apple-system,"Segoe UI",sans-serif; padding:8px 14px; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); cursor:pointer; }
+  .sort:hover { border-color:var(--accent); }
+  .sort[aria-pressed=true] { background:var(--accent-soft); border-color:var(--accent); }
+  .list { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
+  .row { display:flex; align-items:center; gap:12px; padding:10px 12px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .pos { flex:none; width:24px; height:24px; display:grid; place-items:center; border-radius:50%; background:var(--accent-soft); font-size:12px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .name { flex:1; min-width:0; font-weight:600; }
+  .acts { display:flex; flex:none; gap:6px; }
+  .mv { font:inherit; font-size:13px; padding:4px 10px; color:var(--text); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; }
+  .mv:hover { border-color:var(--accent); }
+  .live { min-height:20px; margin:10px 0 0; color:var(--muted); font-size:13px; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  @media (prefers-reduced-motion:reduce) { .stage { --dur:0s; } }
+</style>
+</head>
+<body>
+<section class="stage" aria-labelledby="ttl">
+  <div class="head">
+    <div>
+      <h1 id="ttl">Prioridades del sprint</h1>
+      <p class="lead">Usa Subir y Bajar, o Alt + flechas sobre una fila.</p>
+    </div>
+    <button type="button" class="sort" id="sort" aria-pressed="false">Ordenar A–Z</button>
+  </div>
+  <ol class="list" id="list">
+    <li class="row" tabindex="0"><span class="pos">1</span><span class="name">Incidencia en pagos</span><span class="acts"><button type="button" class="mv" data-dir="up" aria-label="Subir: Incidencia en pagos">Subir</button><button type="button" class="mv" data-dir="down" aria-label="Bajar: Incidencia en pagos">Bajar</button></span></li>
+    <li class="row" tabindex="0"><span class="pos">2</span><span class="name">Renovar certificado TLS</span><span class="acts"><button type="button" class="mv" data-dir="up" aria-label="Subir: Renovar certificado TLS">Subir</button><button type="button" class="mv" data-dir="down" aria-label="Bajar: Renovar certificado TLS">Bajar</button></span></li>
+    <li class="row" tabindex="0"><span class="pos">3</span><span class="name">Revisar accesos de proveedores</span><span class="acts"><button type="button" class="mv" data-dir="up" aria-label="Subir: Revisar accesos de proveedores">Subir</button><button type="button" class="mv" data-dir="down" aria-label="Bajar: Revisar accesos de proveedores">Bajar</button></span></li>
+    <li class="row" tabindex="0"><span class="pos">4</span><span class="name">Migrar base de datos de clientes</span><span class="acts"><button type="button" class="mv" data-dir="up" aria-label="Subir: Migrar base de datos de clientes">Subir</button><button type="button" class="mv" data-dir="down" aria-label="Bajar: Migrar base de datos de clientes">Bajar</button></span></li>
+    <li class="row" tabindex="0"><span class="pos">5</span><span class="name">Preparar informe mensual</span><span class="acts"><button type="button" class="mv" data-dir="up" aria-label="Subir: Preparar informe mensual">Subir</button><button type="button" class="mv" data-dir="down" aria-label="Bajar: Preparar informe mensual">Bajar</button></span></li>
+  </ol>
+  <p class="live" id="live" aria-live="polite"></p>
+</section>
+<script>
+  const stage = document.querySelector('.stage'), list = document.getElementById('list'), live = document.getElementById('live'), sort = document.getElementById('sort');
+  let manual = null;
+  const rows = () => [...list.children];
+  const nameOf = (row) => row.querySelector('.name').textContent;
+
+  function flip(mutate) {
+    const before = new Map(rows().map((el) => [el, el.getBoundingClientRect().top]));
+    mutate();
+    const css = getComputedStyle(stage);
+    const duration = parseFloat(css.getPropertyValue('--dur')) * 1000, easing = css.getPropertyValue('--ease');
+    for (const el of rows()) {
+      const dy = before.get(el) - el.getBoundingClientRect().top;
+      if (dy) el.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration, easing });
+    }
+  }
+
+  function renumber() {
+    rows().forEach((row, k) => (row.querySelector('.pos').textContent = k + 1));
+  }
+
+  function move(row, delta) {
+    const items = rows(), from = items.indexOf(row), to = from + delta;
+    if (to < 0 || to >= items.length) return (live.textContent = `${nameOf(row)} ya está ${delta < 0 ? 'al principio' : 'al final'} de la lista.`);
+    flip(() => list.insertBefore(row, delta < 0 ? items[to] : items[to].nextSibling));
+    renumber();
+    live.textContent = `${nameOf(row)}: posición ${to + 1} de ${items.length}.`;
+    row.querySelector(delta < 0 ? '[data-dir=up]' : '[data-dir=down]').focus();
+  }
+
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-dir]');
+    if (btn) move(btn.closest('.row'), btn.dataset.dir === 'up' ? -1 : 1);
+  });
+
+  list.addEventListener('keydown', (e) => {
+    const delta = { ArrowUp: -1, ArrowDown: 1 }[e.key];
+    const row = e.target.closest('.row');
+    if (!e.altKey || !delta || !row) return;
+    e.preventDefault();
+    move(row, delta);
+  });
+
+  sort.addEventListener('click', () => {
+    const on = sort.getAttribute('aria-pressed') !== 'true';
+    sort.setAttribute('aria-pressed', String(on));
+    if (on) {
+      manual = rows();
+      const sorted = [...manual].sort((a, b) => nameOf(a).localeCompare(nameOf(b), 'es'));
+      flip(() => list.replaceChildren(...sorted));
+    } else {
+      const saved = manual;
+      manual = null;
+      flip(() => list.replaceChildren(...saved));
+    }
+    renumber();
+    live.textContent = on ? 'Lista ordenada de la A a la Z.' : 'Orden de prioridad restaurado.';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<style>
+  .stage{--dur:.4s;--ease:cubic-bezier(.2,.8,.2,1)}
+  .layer{grid-area:1/1;transition:opacity var(--dur) var(--ease)}
+  .real{opacity:0}
+  [data-state=ready] .real{opacity:1}
+  [data-state=ready] .sk{opacity:0}
+  @media (prefers-reduced-motion:reduce){.stage{--dur:0s}}
+</style>
+<section class="stage mx-auto max-w-[560px]" id="stage" data-state="loading">
+  <header class="mb-1.5 flex items-center justify-between gap-3">
+    <h1 class="m-0 text-xl font-semibold tracking-tight">Equipo</h1>
+    <button type="button" id="reload" class="rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold shadow-sm hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Recargar</button>
+  </header>
+  <p id="status" aria-live="polite" class="mb-3 min-h-5 text-[13px] text-muted">Cargando perfiles…</p>
+  <ul id="grid" aria-busy="true" class="m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-3 p-0">
+    <li class="grid rounded-lg border border-line bg-surface p-4 shadow-sm">
+      <div class="layer sk grid content-start gap-2.5" aria-hidden="true">
+        <div class="flex items-center gap-2.5"><i class="block h-10 w-10 flex-none rounded-full bg-accent-soft"></i><div class="grid flex-1 gap-2"><i class="block h-3 w-3/5 rounded-md bg-accent-soft"></i><i class="block h-3 w-2/5 rounded-md bg-accent-soft"></i></div></div>
+        <i class="block h-3 rounded-md bg-accent-soft"></i>
+        <i class="block h-3 w-3/4 rounded-md bg-accent-soft"></i>
+        <i class="block h-[22px] w-[84px] rounded-full bg-accent-soft"></i>
+      </div>
+      <div class="real layer grid content-start gap-2.5" inert>
+        <div class="flex items-center gap-2.5"><span aria-hidden="true" class="grid h-10 w-10 flex-none place-items-center rounded-full bg-gradient-to-br from-accent-2 to-accent text-[13px] font-semibold text-accent-ink">MR</span><div><b class="block font-semibold">Marta Ruiz</b><small class="block text-[13px] text-muted">Diseñadora de producto</small></div></div>
+        <p class="m-0 text-muted">Lidera el sistema de diseño y la documentación de componentes.</p>
+        <span class="justify-self-start rounded-full bg-ok-soft px-2.5 text-xs font-semibold leading-[22px]">Disponible</span>
+      </div>
+    </li>
+    <li class="grid rounded-lg border border-line bg-surface p-4 shadow-sm">
+      <div class="layer sk grid content-start gap-2.5" aria-hidden="true">
+        <div class="flex items-center gap-2.5"><i class="block h-10 w-10 flex-none rounded-full bg-accent-soft"></i><div class="grid flex-1 gap-2"><i class="block h-3 w-3/5 rounded-md bg-accent-soft"></i><i class="block h-3 w-2/5 rounded-md bg-accent-soft"></i></div></div>
+        <i class="block h-3 rounded-md bg-accent-soft"></i>
+        <i class="block h-3 w-3/4 rounded-md bg-accent-soft"></i>
+        <i class="block h-[22px] w-[84px] rounded-full bg-accent-soft"></i>
+      </div>
+      <div class="real layer grid content-start gap-2.5" inert>
+        <div class="flex items-center gap-2.5"><span aria-hidden="true" class="grid h-10 w-10 flex-none place-items-center rounded-full bg-gradient-to-br from-accent-2 to-accent text-[13px] font-semibold text-accent-ink">LG</span><div><b class="block font-semibold">Luis Gómez</b><small class="block text-[13px] text-muted">Ingeniero de datos</small></div></div>
+        <p class="m-0 text-muted">Construye los pipelines de métricas y los paneles de seguimiento.</p>
+        <span class="justify-self-start rounded-full bg-warn-soft px-2.5 text-xs font-semibold leading-[22px]">En reunión</span>
+      </div>
+    </li>
+    <li class="grid rounded-lg border border-line bg-surface p-4 shadow-sm">
+      <div class="layer sk grid content-start gap-2.5" aria-hidden="true">
+        <div class="flex items-center gap-2.5"><i class="block h-10 w-10 flex-none rounded-full bg-accent-soft"></i><div class="grid flex-1 gap-2"><i class="block h-3 w-3/5 rounded-md bg-accent-soft"></i><i class="block h-3 w-2/5 rounded-md bg-accent-soft"></i></div></div>
+        <i class="block h-3 rounded-md bg-accent-soft"></i>
+        <i class="block h-3 w-3/4 rounded-md bg-accent-soft"></i>
+        <i class="block h-[22px] w-[84px] rounded-full bg-accent-soft"></i>
+      </div>
+      <div class="real layer grid content-start gap-2.5" inert>
+        <div class="flex items-center gap-2.5"><span aria-hidden="true" class="grid h-10 w-10 flex-none place-items-center rounded-full bg-gradient-to-br from-accent-2 to-accent text-[13px] font-semibold text-accent-ink">CD</span><div><b class="block font-semibold">Carlos Díaz</b><small class="block text-[13px] text-muted">Responsable de seguridad</small></div></div>
+        <p class="m-0 text-muted">Coordina auditorías de accesos y la respuesta a incidentes.</p>
+        <span class="justify-self-start rounded-full bg-accent-soft px-2.5 text-xs font-semibold leading-[22px]">Fuera hoy</span>
+      </div>
+    </li>
+  </ul>
+</section>
+<script>
+  const stage = document.getElementById('stage'), grid = document.getElementById('grid'), status = document.getElementById('status');
+  const reals = [...grid.querySelectorAll('.real')];
+  let timer = 0;
+
+  function load() {
+    clearTimeout(timer);
+    stage.dataset.state = 'loading';
+    grid.setAttribute('aria-busy', 'true');
+    reals.forEach((r) => (r.inert = true));
+    status.textContent = 'Cargando perfiles…';
+    timer = setTimeout(show, 1200);
+  }
+
+  function show() {
+    stage.dataset.state = 'ready';
+    grid.setAttribute('aria-busy', 'false');
+    reals.forEach((r) => (r.inert = false));
+    status.textContent = 'Perfiles cargados.';
+  }
+
+  document.getElementById('reload').addEventListener('click', load);
+  load();
+</script>

@@ -1,0 +1,29 @@
+<style>
+  .w{color:var(--muted);color:color-mix(in srgb,var(--text) calc(var(--r,1)*100%),var(--muted))}
+  @media (prefers-reduced-motion:reduce){.w{color:var(--text)}}
+</style>
+<p id="reveal-hint" class="mx-auto mb-2.5 max-w-[560px] text-[13px] text-muted">Desplázate dentro del recuadro para leer. Con teclado, enfócalo y usa las flechas.</p>
+<div id="reveal" tabindex="0" role="region" aria-labelledby="reveal-hint" class="mx-auto h-60 max-w-[560px] overflow-auto rounded-lg border border-line bg-surface px-6 py-5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+  <p class="m-0 text-base leading-[1.7]">Cada palabra del párrafo cambia de tono a medida que avanzas por el recuadro. Así sabes con un vistazo cuánto llevas leído y cuánto te queda por delante. Los informes trimestrales resumen las ventas, los costes y los objetivos de cada equipo. Revisa primero las cifras clave, compara el avance con el mes anterior y comparte las conclusiones antes del viernes. Si algún dato no cuadra, abre el detalle de la categoría y revisa las transacciones una a una. Con el tiempo, cada cifra quedará documentada en el mismo lugar para que cualquiera del equipo pueda seguir el hilo.</p>
+</div>
+<script>
+  const box = document.getElementById('reveal');
+  const para = box.querySelector('p');
+  const spans = para.textContent.trim().split(/\s+/).map((word) => {
+    const span = document.createElement('span');
+    span.className = 'w';
+    span.textContent = word;
+    return span;
+  });
+  para.replaceChildren(...spans.flatMap((span, i) => (i ? [' ', span] : [span])));
+  const LAG = 4;
+  const clamp = (x) => Math.min(1, Math.max(0, x));
+  const update = () => {
+    const max = box.scrollHeight - box.clientHeight;
+    const progress = max > 0 ? box.scrollTop / max : 1;
+    spans.forEach((span, i) => span.style.setProperty('--r', clamp((progress * (spans.length + LAG) - i) / LAG).toFixed(3)));
+  };
+  box.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+</script>

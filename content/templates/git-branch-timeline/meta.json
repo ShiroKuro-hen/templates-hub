@@ -1,0 +1,1 @@
+{ "title": "Grafo de ramas Git", "category": "diagramas", "description": "Commits de main y dos ramas con fusión; enfocar un commit resalta su rama y muestra su detalle.", "tags": ["git", "ramas", "svg"] }

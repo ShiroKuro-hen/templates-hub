@@ -1,0 +1,63 @@
+<style>
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .stage { --dur:.25s; --ease:cubic-bezier(.2,.8,.2,1); --life:5s; }
+  .wrap { display:grid; grid-template-rows:1fr; transition:grid-template-rows var(--dur) var(--ease); }
+  .wrap.leaving { grid-template-rows:0fr; }
+  .wrap.leaving .toast { opacity:0; transform:translateX(16px); }
+  .inner { min-height:0; overflow:hidden; }
+  .toast { animation:enter var(--dur) var(--ease) backwards; transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .bar { animation:drain var(--life) linear forwards; }
+  .toast:hover .bar, .toast:focus-within .bar { animation-play-state:paused; }
+  @keyframes enter { from { opacity:0; transform:translateX(16px); } }
+  @keyframes drain { from { transform:scaleX(1); } to { transform:scaleX(0); } }
+  @media (prefers-reduced-motion:reduce) { .toast { animation:none; transition:none; } .wrap { transition:none; } }
+</style>
+<main class="stage mx-auto max-w-[560px] rounded-lg border border-line bg-surface p-5 text-sm text-fg shadow-sm">
+  <h1 class="mb-1 text-xl font-bold leading-normal tracking-[-0.01em]">Notificaciones</h1>
+  <p class="mb-4 text-muted">Dispara un aviso para ver cómo entra, se apila y se retira.</p>
+  <div id="triggers" role="group" aria-label="Disparar notificación" class="flex flex-wrap gap-2">
+    <button type="button" data-kind="ok" class="rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Éxito</button>
+    <button type="button" data-kind="warn" class="rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Aviso</button>
+    <button type="button" data-kind="err" class="rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold text-fg hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Error</button>
+  </div>
+  <section id="stack" aria-label="Notificaciones" class="fixed right-4 bottom-4 flex w-[min(360px,calc(100vw_-_32px))] flex-col gap-2"></section>
+</main>
+<script>
+  const KINDS = {
+    ok: { title: 'Cambios guardados', text: 'Tu perfil se actualizó correctamente.', role: 'status', icon: '✓', tone: 'bg-ok' },
+    warn: { title: 'Espacio casi lleno', text: 'Quedan 500 MB de 5 GB disponibles.', role: 'status', icon: '!', tone: 'bg-warn' },
+    err: { title: 'No se pudo guardar', text: 'Revisa tu conexión e inténtalo de nuevo.', role: 'alert', icon: '✕', tone: 'bg-err' },
+  };
+  const MAX = 3;
+  const triggers = document.getElementById('triggers'), stack = document.getElementById('stack');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const live = () => [...stack.children].filter((w) => !w.classList.contains('leaving'));
+
+  function build(kind) {
+    const { title, text, role, icon, tone } = KINDS[kind];
+    const wrap = document.createElement('div');
+    wrap.className = 'wrap';
+    wrap.innerHTML = `<div class="inner"><div role="${role}" class="toast relative flex items-start gap-3 overflow-hidden rounded-lg border border-line bg-surface pt-3 pr-10 pb-3.5 pl-3.5"><i aria-hidden="true" class="grid h-[22px] w-[22px] flex-none place-items-center rounded-full text-xs font-semibold not-italic text-accent-ink ${tone}">${icon}</i><div class="min-w-0 flex-1"><b class="block font-semibold">${title}</b><span class="text-[13px] text-muted">${text}</span></div><button type="button" aria-label="Cerrar: ${title}" class="absolute top-2 right-2 size-7 rounded-lg text-lg leading-none text-muted hover:bg-page hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">×</button><span aria-hidden="true" class="bar absolute inset-x-0 bottom-0 h-[3px] ${tone}"></span></div></div>`;
+    wrap.querySelector('button').addEventListener('click', () => {
+      triggers.querySelector('button').focus();
+      retire(wrap);
+    });
+    wrap.querySelector('.bar').addEventListener('animationend', () => retire(wrap));
+    wrap.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'grid-template-rows') wrap.remove();
+    });
+    return wrap;
+  }
+  function retire(wrap) {
+    if (wrap.classList.contains('leaving')) return;
+    wrap.classList.add('leaving');
+    if (calm) wrap.remove();
+  }
+  function show(kind) {
+    stack.append(build(kind));
+    live().slice(0, -MAX).forEach(retire);
+  }
+  triggers.addEventListener('click', (e) => {
+    if (e.target.dataset.kind) show(e.target.dataset.kind);
+  });
+</script>

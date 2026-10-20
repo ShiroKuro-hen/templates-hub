@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grafo de ramas Git</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card{max-width:620px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .card p{margin:2px 0 12px;color:var(--muted)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .scroll>svg{display:block;width:100%;height:auto;min-width:514px}
+  text{font:13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--text)}
+  .hash{font:600 12px ui-monospace,Consolas,monospace}
+  .meta{font-size:12px;fill:var(--muted)}
+  .lane{fill:none;stroke:var(--c);stroke-width:3;transition:opacity .15s,stroke-width .15s}
+  .dot{fill:var(--c);stroke:var(--surface);stroke-width:2}
+  .row{fill:transparent}
+  .commit{outline:none}
+  .commit.on .row{stroke:var(--accent);stroke-width:2}
+  svg.active .lane:not(.on){opacity:.3}
+  svg.active .lane.on{stroke-width:5}
+  .panel{min-height:3.2em;margin:12px 0 0;padding-top:10px;border-top:1px solid var(--border)}
+  .panel strong{display:block;font-weight:600}
+  .panel span{display:block;color:var(--muted);font-size:13px}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:12px 0 0;padding:0;list-style:none;color:var(--muted);font-size:13px}
+  .legend li{display:flex;align-items:center;gap:6px}
+  .legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption>
+    <h2>Ramas y fusiones</h2>
+    <p>Cada línea es una rama. Pasa el cursor o enfoca un commit para ver su detalle y resaltar su rama.</p>
+  </figcaption>
+  <div class="scroll" role="region" tabindex="0" aria-label="Grafo de commits desplazable horizontalmente">
+    <svg id="graph" viewBox="0 0 560 480" role="img" aria-labelledby="g-t g-d">
+      <title id="g-t">Grafo de commits con main y dos ramas</title>
+      <desc id="g-d">La rama main recibe la fusión de feature/pagos. feature/login sale de main y aún no está fusionada. Cada commit muestra su hash, su mensaje, su autor y la fecha relativa.</desc>
+      <path class="lane" data-branch="main" style="--c:var(--accent)" d="M40 50V442"/>
+      <path class="lane" data-branch="pagos" style="--c:var(--warn)" d="M40 50C40 78 140 78 140 106V162C140 190 40 190 40 218"/>
+      <path class="lane" data-branch="login" style="--c:var(--ok)" d="M40 386C40 358 90 358 90 330V274"/>
+      <g class="commit" tabindex="0" role="group" aria-label="e41d0a2 Fusiona feature/pagos en main, Lucía Ruiz, hace 1 día" data-branch="main" data-msg="Fusiona feature/pagos en main" data-info="e41d0a2 · Lucía Ruiz · hace 1 día · rama main" style="--c:var(--accent)">
+        <rect class="row" x="10" y="24" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="40" cy="50" r="6"/>
+        <text x="170" y="45"><tspan class="hash">e41d0a2</tspan><tspan dx="8">Fusiona feature/pagos en main</tspan></text>
+        <text class="meta" x="170" y="63">Lucía Ruiz · hace 1 día</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="9c7f3b1 Añade reintentos al cobro, Mateo Ortiz, hace 2 días" data-branch="pagos" data-msg="Añade reintentos al cobro" data-info="9c7f3b1 · Mateo Ortiz · hace 2 días · rama feature/pagos" style="--c:var(--warn)">
+        <rect class="row" x="10" y="80" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="140" cy="106" r="6"/>
+        <text x="170" y="101"><tspan class="hash">9c7f3b1</tspan><tspan dx="8">Añade reintentos al cobro</tspan></text>
+        <text class="meta" x="170" y="119">Mateo Ortiz · hace 2 días</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="5b2e8d4 Integra la pasarela de pago, Mateo Ortiz, hace 3 días" data-branch="pagos" data-msg="Integra la pasarela de pago" data-info="5b2e8d4 · Mateo Ortiz · hace 3 días · rama feature/pagos" style="--c:var(--warn)">
+        <rect class="row" x="10" y="136" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="140" cy="162" r="6"/>
+        <text x="170" y="157"><tspan class="hash">5b2e8d4</tspan><tspan dx="8">Integra la pasarela de pago</tspan></text>
+        <text class="meta" x="170" y="175">Mateo Ortiz · hace 3 días</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="3f8a6c2 Corrige el redondeo de totales, Ana Gil, hace 4 días" data-branch="main" data-msg="Corrige el redondeo de totales" data-info="3f8a6c2 · Ana Gil · hace 4 días · rama main" style="--c:var(--accent)">
+        <rect class="row" x="10" y="192" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="40" cy="218" r="6"/>
+        <text x="170" y="213"><tspan class="hash">3f8a6c2</tspan><tspan dx="8">Corrige el redondeo de totales</tspan></text>
+        <text class="meta" x="170" y="231">Ana Gil · hace 4 días</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="d62b9e1 Pantalla de inicio de sesión, Ana Gil, hace 5 días" data-branch="login" data-msg="Pantalla de inicio de sesión" data-info="d62b9e1 · Ana Gil · hace 5 días · rama feature/login" style="--c:var(--ok)">
+        <rect class="row" x="10" y="248" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="90" cy="274" r="6"/>
+        <text x="170" y="269"><tspan class="hash">d62b9e1</tspan><tspan dx="8">Pantalla de inicio de sesión</tspan></text>
+        <text class="meta" x="170" y="287">Ana Gil · hace 5 días</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="b1d4e77 Valida el formato del correo, Carlos Pérez, hace 6 días" data-branch="login" data-msg="Valida el formato del correo" data-info="b1d4e77 · Carlos Pérez · hace 6 días · rama feature/login" style="--c:var(--ok)">
+        <rect class="row" x="10" y="304" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="90" cy="330" r="6"/>
+        <text x="170" y="325"><tspan class="hash">b1d4e77</tspan><tspan dx="8">Valida el formato del correo</tspan></text>
+        <text class="meta" x="170" y="343">Carlos Pérez · hace 6 días</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="7c02a9e Añade CI con pruebas, Lucía Ruiz, hace 1 semana" data-branch="main" data-msg="Añade CI con pruebas" data-info="7c02a9e · Lucía Ruiz · hace 1 semana · rama main" style="--c:var(--accent)">
+        <rect class="row" x="10" y="360" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="40" cy="386" r="6"/>
+        <text x="170" y="381"><tspan class="hash">7c02a9e</tspan><tspan dx="8">Añade CI con pruebas</tspan></text>
+        <text class="meta" x="170" y="399">Lucía Ruiz · hace 1 semana</text>
+      </g>
+      <g class="commit" tabindex="0" role="group" aria-label="a0f13c5 Versión 2.3.0, Lucía Ruiz, hace 2 semanas" data-branch="main" data-msg="Versión 2.3.0" data-info="a0f13c5 · Lucía Ruiz · hace 2 semanas · rama main" style="--c:var(--accent)">
+        <rect class="row" x="10" y="416" width="540" height="52" rx="6"/>
+        <circle class="dot" cx="40" cy="442" r="6"/>
+        <text x="170" y="437"><tspan class="hash">a0f13c5</tspan><tspan dx="8">Versión 2.3.0</tspan></text>
+        <text class="meta" x="170" y="455">Lucía Ruiz · hace 2 semanas</text>
+      </g>
+    </svg>
+  </div>
+  <p class="panel" aria-live="polite"><strong id="pm">Ningún commit seleccionado</strong><span id="pd">Pasa el cursor o enfoca un commit para ver su detalle.</span></p>
+  <ul class="legend" aria-label="Leyenda de ramas">
+    <li><i style="--c:var(--accent)"></i>main</li>
+    <li><i style="--c:var(--ok)"></i>feature/login</li>
+    <li><i style="--c:var(--warn)"></i>feature/pagos</li>
+  </ul>
+</figure>
+<script>
+  const svg = document.getElementById('graph'), pm = document.getElementById('pm'), pd = document.getElementById('pd');
+  const [titulo, detalle] = [pm.textContent, pd.textContent];
+  const lanes = svg.querySelectorAll('.lane'), commits = svg.querySelectorAll('.commit');
+  const show = (commit) => {
+    const rama = commit?.dataset.branch;
+    svg.classList.toggle('active', Boolean(commit));
+    lanes.forEach((l) => l.classList.toggle('on', l.dataset.branch === rama));
+    commits.forEach((c) => c.classList.toggle('on', c === commit));
+    pm.textContent = commit ? commit.dataset.msg : titulo;
+    pd.textContent = commit ? commit.dataset.info : detalle;
+  };
+  const commitOf = (e) => e.target.closest('.commit');
+  svg.addEventListener('pointerover', (e) => show(commitOf(e)));
+  svg.addEventListener('pointerleave', () => show(null));
+  svg.addEventListener('focusin', (e) => show(commitOf(e)));
+  svg.addEventListener('focusout', () => show(null));
+</script>
+</body>
+</html>

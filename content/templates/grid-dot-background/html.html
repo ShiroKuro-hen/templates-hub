@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fondos de puntos y cuadrícula</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  .seg{display:flex;width:fit-content;margin:0 auto 16px;padding:3px;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .seg button{font:inherit;font-size:13px;font-weight:600;padding:6px 12px;border:0;border-radius:min(var(--radius),6px);background:none;color:var(--muted);cursor:pointer}
+  .seg button:hover{color:var(--text)}
+  .seg button[aria-pressed=true]{background:var(--accent-soft);color:var(--accent)}
+  .stage{--line:color-mix(in srgb,var(--accent) 20%,transparent);--dot:color-mix(in srgb,var(--accent) 45%,transparent);position:relative;isolation:isolate;display:grid;place-items:center;overflow:hidden;min-height:280px;max-width:720px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .layer{position:absolute;inset:0;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse at center,rgb(0 0 0) 25%,transparent 75%);mask-image:radial-gradient(ellipse at center,rgb(0 0 0) 25%,transparent 75%)}
+  .layer[data-pattern=dots]{background-image:radial-gradient(circle,var(--dot) 1px,transparent 1.5px);background-size:20px 20px}
+  .layer[data-pattern=lines]{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:32px 32px}
+  .layer[data-pattern=diagonal]{background-image:repeating-linear-gradient(45deg,var(--line) 0 1px,transparent 1px 14px)}
+  .glow{position:absolute;left:50%;top:50%;width:min(100%,480px);aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 18%,transparent),transparent)}
+  .content{position:relative;max-width:460px;padding:56px 24px;text-align:center}
+  h1{margin:0 0 10px;font-size:clamp(24px,5vw,34px);line-height:1.15;letter-spacing:-.02em}
+  .content p{margin:0 0 20px;color:var(--text)}
+  .cta{display:inline-block;padding:10px 18px;background:var(--accent);color:var(--accent-ink);border:1px solid var(--accent);border-radius:var(--radius);font-weight:600;text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="seg" role="group" aria-label="Patrón de fondo">
+  <button type="button" data-pattern="dots" aria-pressed="true">Puntos</button>
+  <button type="button" data-pattern="lines" aria-pressed="false">Cuadrícula</button>
+  <button type="button" data-pattern="diagonal" aria-pressed="false">Diagonal</button>
+</div>
+<section class="stage" aria-labelledby="gdb-title">
+  <div class="layer" data-pattern="dots" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="content">
+    <h1 id="gdb-title">Lanza tu producto con una base clara</h1>
+    <p>Plantillas, datos y permisos listos desde el primer día para tu equipo.</p>
+    <a class="cta" href="#">Empezar gratis</a>
+  </div>
+</section>
+<script>
+  const layer = document.querySelector('.layer');
+  document.querySelector('.seg').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    layer.dataset.pattern = b.dataset.pattern;
+    document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+  });
+</script>
+</body>
+</html>

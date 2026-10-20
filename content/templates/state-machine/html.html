@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Máquina de estados de un pedido</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card{max-width:740px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  h2{margin:0;font-size:16px;font-weight:600}
+  .card p{margin:2px 0 12px;color:var(--muted)}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .scroll>svg{display:block;width:100%;height:auto;min-width:642px}
+  text{font:13px/1 system-ui,-apple-system,"Segoe UI",sans-serif;fill:var(--text);text-anchor:middle;dominant-baseline:middle}
+  .lbl{font-size:12px;fill:var(--muted)}
+  .lbl.left{text-anchor:start}
+  .box{fill:var(--surface);stroke:var(--border);stroke-width:1.5}
+  .state.on .box{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2.5}
+  .state.on text{fill:var(--accent);font-weight:600}
+  .edge{fill:none;stroke:var(--muted);stroke-width:1.5;marker-end:url(#fl);transition:stroke .15s}
+  .edge.taken{stroke:var(--accent);stroke-width:2.5;marker-end:url(#fl-hot)}
+  .head{fill:var(--muted)}
+  .head.hot{fill:var(--accent)}
+  .estado{margin:14px 0 0}
+  .estado strong{color:var(--accent)}
+  .acciones{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px}
+  .transiciones{display:flex;flex-wrap:wrap;flex:1;gap:8px}
+  button{font:600 14px system-ui,-apple-system,"Segoe UI",sans-serif;padding:8px 14px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer;transition:border-color .14s}
+  button:hover{border-color:var(--accent)}
+  .reiniciar{color:var(--muted)}
+  .live{min-height:3em;margin:12px 0 0;padding-top:10px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<figure class="card">
+  <figcaption>
+    <h2>Estados de un pedido</h2>
+    <p>Desde el estado actual solo se ofrecen los cambios permitidos.</p>
+  </figcaption>
+  <div class="scroll" role="region" tabindex="0" aria-label="Diagrama de estados desplazable horizontalmente">
+    <svg id="maquina" viewBox="0 0 700 260" role="img" aria-labelledby="sm-t sm-d">
+      <title id="sm-t">Estados de un pedido</title>
+      <desc id="sm-d">Un pedido pasa de Pendiente a Pagado o a Cancelado. Pagado pasa a Enviado o a Reembolsado, Enviado pasa a Entregado y Entregado puede pasar a Reembolsado. Cancelado y Reembolsado son estados finales.</desc>
+      <defs>
+        <marker id="fl" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path class="head" d="M0 0L9 5L0 10z"/></marker>
+        <marker id="fl-hot" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path class="head hot" d="M0 0L9 5L0 10z"/></marker>
+      </defs>
+      <path class="edge" data-t="pagar" d="M138 70H202"/>
+      <path class="edge" data-t="enviar" d="M318 70H382"/>
+      <path class="edge" data-t="entregar" d="M498 70H562"/>
+      <path class="edge" data-t="cancelar" d="M80 92V188"/>
+      <path class="edge" data-t="reembolsar" d="M260 92V210H382"/>
+      <path class="edge" data-t="devolver" d="M620 92V210H498"/>
+      <text class="lbl" x="170" y="60">Pagar</text>
+      <text class="lbl" x="350" y="60">Enviar</text>
+      <text class="lbl" x="530" y="60">Entregar</text>
+      <text class="lbl left" x="92" y="144">Cancelar</text>
+      <text class="lbl" x="321" y="200">Reembolsar</text>
+      <text class="lbl" x="559" y="200">Devolver</text>
+      <g class="state" data-state="pendiente"><rect class="box" x="22" y="48" width="116" height="44" rx="6"/><text x="80" y="70">Pendiente</text></g>
+      <g class="state" data-state="pagado"><rect class="box" x="202" y="48" width="116" height="44" rx="6"/><text x="260" y="70">Pagado</text></g>
+      <g class="state" data-state="enviado"><rect class="box" x="382" y="48" width="116" height="44" rx="6"/><text x="440" y="70">Enviado</text></g>
+      <g class="state" data-state="entregado"><rect class="box" x="562" y="48" width="116" height="44" rx="6"/><text x="620" y="70">Entregado</text></g>
+      <g class="state" data-state="cancelado"><rect class="box" x="22" y="188" width="116" height="44" rx="6"/><text x="80" y="210">Cancelado</text></g>
+      <g class="state" data-state="reembolsado"><rect class="box" x="382" y="188" width="116" height="44" rx="6"/><text x="440" y="210">Reembolsado</text></g>
+    </svg>
+  </div>
+  <p class="estado">Estado actual: <strong id="estado">Pendiente</strong></p>
+  <div class="acciones">
+    <div id="transiciones" class="transiciones" role="group" aria-label="Transiciones disponibles"></div>
+    <button type="button" id="reiniciar" class="reiniciar">Reiniciar</button>
+  </div>
+  <p id="live" class="live" aria-live="polite">Pedido creado en estado Pendiente.</p>
+</figure>
+<script>
+  const TRANSICIONES = [
+    { id: 'pagar', de: 'pendiente', a: 'pagado', texto: 'Pagar' },
+    { id: 'cancelar', de: 'pendiente', a: 'cancelado', texto: 'Cancelar' },
+    { id: 'enviar', de: 'pagado', a: 'enviado', texto: 'Enviar' },
+    { id: 'reembolsar', de: 'pagado', a: 'reembolsado', texto: 'Reembolsar' },
+    { id: 'entregar', de: 'enviado', a: 'entregado', texto: 'Entregar' },
+    { id: 'devolver', de: 'entregado', a: 'reembolsado', texto: 'Devolver' },
+  ];
+  const NOMBRES = { pendiente: 'Pendiente', pagado: 'Pagado', enviado: 'Enviado', entregado: 'Entregado', cancelado: 'Cancelado', reembolsado: 'Reembolsado' };
+  const svg = document.getElementById('maquina'), lista = document.getElementById('transiciones');
+  const reiniciar = document.getElementById('reiniciar'), estado = document.getElementById('estado'), live = document.getElementById('live');
+  let actual = 'pendiente', ultima = null;
+
+  const boton = (t) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = t.texto;
+    b.addEventListener('click', () => mover(t));
+    return b;
+  };
+  const render = () => {
+    svg.querySelectorAll('.state').forEach((s) => s.classList.toggle('on', s.dataset.state === actual));
+    svg.querySelectorAll('.edge').forEach((e) => e.classList.toggle('taken', e.dataset.t === ultima));
+    estado.textContent = NOMBRES[actual];
+    lista.replaceChildren(...TRANSICIONES.filter((t) => t.de === actual).map(boton));
+  };
+  const mover = (t) => {
+    actual = t.a;
+    ultima = t.id;
+    render();
+    const final = lista.children.length === 0;
+    live.textContent = `Pedido pasado de ${NOMBRES[t.de]} a ${NOMBRES[t.a]}.${final ? ' Es un estado final.' : ''}`;
+    (lista.querySelector('button') ?? reiniciar).focus();
+  };
+  reiniciar.addEventListener('click', () => {
+    actual = 'pendiente';
+    ultima = null;
+    render();
+    live.textContent = 'Pedido reiniciado en estado Pendiente.';
+  });
+  render();
+</script>
+</body>
+</html>

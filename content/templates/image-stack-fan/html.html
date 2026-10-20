@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pila de fotos en abanico</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .wrap{max-width:560px;margin:0 auto}
+  h1{margin:0 0 4px;font-size:1.5rem;font-weight:700;letter-spacing:-.02em}
+  .hint{margin:0 0 16px;color:var(--muted);font-size:13px}
+  .stage{display:grid;place-items:center;height:220px;padding:14px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+  .stack{position:relative;width:min(160px,46vw);aspect-ratio:4/3;outline-offset:6px}
+  .card{position:absolute;inset:0;margin:0;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);--d:calc(var(--p) - 1.5);--rot:calc(var(--d) * 8deg);transform:translate(calc(var(--p) * 2px),calc(var(--p) * -2px));z-index:calc(4 - var(--p));transition:transform .35s ease}
+  .stack:is(:hover,:focus-within,[data-open="true"]) .card{transform:translateX(calc(var(--d) * 26%)) rotate(var(--rot))}
+  .card img{display:block;width:100%;height:100%;object-fit:cover}
+  .card figcaption{position:absolute;left:0;right:0;bottom:0;padding:6px 10px;background:var(--surface);border-top:1px solid var(--border);font-size:12px;font-weight:600}
+  .bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+  .bar p{margin:0;color:var(--muted);font-size:13px}
+  .btn{font:600 13px system-ui,-apple-system,"Segoe UI",sans-serif;padding:8px 16px;color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent);border-radius:999px;cursor:pointer}
+  .btn:hover{opacity:.9}
+  @media (prefers-reduced-motion:reduce){.card{--rot:0deg;transition:none}}
+</style>
+</head>
+<body>
+<main class="wrap" aria-labelledby="fan-title">
+  <h1 id="fan-title">Pila de fotos</h1>
+  <p class="hint" id="fan-hint">Pasa el cursor, toca la pila o enfócala para abrirla. Enter o Espacio la abren y las flechas cambian la foto de arriba.</p>
+  <div class="stage">
+    <div class="stack" id="stack" role="group" tabindex="0" aria-label="Pila de fotos" aria-describedby="fan-hint" data-open="false">
+      <figure class="card" style="--p:0"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23ffd6a5%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%22110%22%20r%3D%2240%22%20fill%3D%22%23ff9770%22%2F%3E%3Cpath%20d%3D%22M0%20200L90%20110l60%2050%2070-70%20100%20110z%22%20fill%3D%22%236d597a%22%2F%3E%3C%2Fsvg%3E" alt="Montañas bajo un cielo anaranjado" width="320" height="200" loading="lazy"><figcaption>Montañas</figcaption></figure>
+      <figure class="card" style="--p:1"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23bde0fe%22%2F%3E%3Ccircle%20cx%3D%22250%22%20cy%3D%2250%22%20r%3D%2222%22%20fill%3D%22%23ffc8dd%22%2F%3E%3Cpath%20d%3D%22M0%20120q40-20%2080%200t80%200%2080%200%2080%200v80H0z%22%20fill%3D%22%233a86ff%22%2F%3E%3Cpath%20d%3D%22M0%20150q40-20%2080%200t80%200%2080%200%2080%200v50H0z%22%20fill%3D%22%231d4ed8%22%2F%3E%3C%2Fsvg%3E" alt="Olas azules bajo un sol rosado" width="320" height="200" loading="lazy"><figcaption>Olas</figcaption></figure>
+      <figure class="card" style="--p:2"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23d8f3dc%22%2F%3E%3Cpath%20d%3D%22M40%20170L70%2090l30%2080zM110%20170l30-110%2030%20110zM190%20170l30-85%2030%2085zM260%20170l25-65%2025%2065z%22%20fill%3D%22%232d6a4f%22%2F%3E%3Crect%20y%3D%22170%22%20width%3D%22320%22%20height%3D%2230%22%20fill%3D%22%2374c69d%22%2F%3E%3C%2Fsvg%3E" alt="Bosque de pinos con hierba clara" width="320" height="200" loading="lazy"><figcaption>Bosque</figcaption></figure>
+      <figure class="card" style="--p:3"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20200%22%3E%3Crect%20width%3D%22320%22%20height%3D%22200%22%20fill%3D%22%23fde2e4%22%2F%3E%3Crect%20x%3D%2230%22%20y%3D%2230%22%20width%3D%22110%22%20height%3D%2270%22%20rx%3D%2212%22%20fill%3D%22%23e63946%22%2F%3E%3Crect%20x%3D%22160%22%20y%3D%2230%22%20width%3D%22130%22%20height%3D%2250%22%20rx%3D%2212%22%20fill%3D%22%23f4a261%22%2F%3E%3Crect%20x%3D%2230%22%20y%3D%22120%22%20width%3D%22260%22%20height%3D%2250%22%20rx%3D%2212%22%20fill%3D%22%23457b9d%22%2F%3E%3C%2Fsvg%3E" alt="Bloques de colores redondeados" width="320" height="200" loading="lazy"><figcaption>Bloques</figcaption></figure>
+    </div>
+  </div>
+  <div class="bar">
+    <p id="now" aria-live="polite">Arriba: Montañas</p>
+    <button type="button" class="btn" id="shuffle">Barajar</button>
+  </div>
+</main>
+<script>
+  const stack = document.getElementById('stack'), now = document.getElementById('now');
+  let order = [...stack.querySelectorAll('.card')];
+  const STEPS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+  const render = () => {
+    order.forEach((card, p) => card.style.setProperty('--p', p));
+    now.textContent = `Arriba: ${order[0].querySelector('figcaption').textContent}`;
+  };
+  const rotate = (step) => {
+    const k = (step + order.length) % order.length;
+    order = [...order.slice(k), ...order.slice(0, k)];
+    render();
+  };
+  stack.addEventListener('click', () => { stack.dataset.open = String(stack.dataset.open !== 'true'); });
+  stack.addEventListener('keydown', (e) => {
+    if (e.key in STEPS) { e.preventDefault(); rotate(STEPS[e.key]); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); stack.click(); }
+  });
+  document.getElementById('shuffle').addEventListener('click', () => rotate(1));
+</script>
+</body>
+</html>

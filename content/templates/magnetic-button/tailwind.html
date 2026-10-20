@@ -1,0 +1,29 @@
+<style>
+  .stage{--dur:.35s;--ease:cubic-bezier(.2,.8,.2,1);--halo:0 0 0 4px var(--accent-soft),0 10px 26px -8px var(--accent)}
+  .mag{transition:transform var(--dur) var(--ease),box-shadow .3s ease,border-color .2s,background-color .2s,color .2s}
+  .mag:focus-visible{box-shadow:var(--halo)}
+  @media (hover:hover) and (pointer:fine){.mag{transform:translate(var(--tx,0px),var(--ty,0px))}.mag:hover{box-shadow:var(--halo)}}
+  @media (prefers-reduced-motion:reduce){.mag{transition:none!important;transform:none!important}}
+</style>
+<main class="stage mx-auto flex max-w-[520px] flex-wrap items-center justify-center gap-2 rounded-lg border border-line bg-surface p-4 shadow-sm">
+  <div class="zone inline-block p-6"><button type="button" class="mag inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-lg border border-accent bg-accent px-[18px] text-sm font-semibold leading-none text-accent-ink focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent">Empezar gratis</button></div>
+  <div class="zone inline-block p-6"><button type="button" id="save" aria-pressed="false" aria-label="Guardar en favoritos" class="mag inline-flex h-11 w-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-line bg-surface p-0 text-sm leading-none text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-accent focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"><svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button></div>
+</main>
+<script>
+  const PULL = 0.3, MAX = 8;
+  const offset = (d) => `${Math.max(-MAX, Math.min(MAX, d * PULL))}px`;
+  document.querySelectorAll('.zone').forEach((zone) => {
+    const btn = zone.querySelector('.mag');
+    const place = (x, y) => { btn.style.setProperty('--tx', x); btn.style.setProperty('--ty', y); };
+    zone.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const r = zone.getBoundingClientRect();
+      place(offset(e.clientX - r.left - r.width / 2), offset(e.clientY - r.top - r.height / 2));
+    });
+    zone.addEventListener('pointerleave', () => place('0px', '0px'));
+  });
+  document.getElementById('save').addEventListener('click', (e) => {
+    const on = e.currentTarget.getAttribute('aria-pressed') !== 'true';
+    e.currentTarget.setAttribute('aria-pressed', String(on));
+  });
+</script>

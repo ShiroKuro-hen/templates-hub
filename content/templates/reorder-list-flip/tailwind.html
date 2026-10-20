@@ -1,0 +1,80 @@
+<style>
+  .stage{--dur:.26s;--ease:cubic-bezier(.2,.8,.2,1)}
+  @media (prefers-reduced-motion:reduce){.stage{--dur:0s}}
+</style>
+<section class="stage mx-auto max-w-[560px]" aria-labelledby="ttl">
+  <div class="mb-3 flex flex-wrap items-start justify-between gap-3">
+    <div>
+      <h1 id="ttl" class="m-0 text-xl font-semibold tracking-tight">Prioridades del sprint</h1>
+      <p class="mt-1 text-muted">Usa Subir y Bajar, o Alt + flechas sobre una fila.</p>
+    </div>
+    <button type="button" id="sort" aria-pressed="false" class="rounded-lg border border-line bg-surface px-3.5 py-2 font-semibold shadow-sm hover:border-accent aria-pressed:border-accent aria-pressed:bg-accent-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Ordenar A–Z</button>
+  </div>
+  <ol id="list" class="m-0 grid list-none gap-2 p-0">
+    <li tabindex="0" class="row flex items-center gap-3 rounded-lg border border-line bg-surface px-3 py-2.5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><span class="pos grid h-6 w-6 flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold tabular-nums">1</span><span class="name min-w-0 flex-1 font-semibold">Incidencia en pagos</span><span class="flex flex-none gap-1.5"><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="up" aria-label="Subir: Incidencia en pagos">Subir</button><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="down" aria-label="Bajar: Incidencia en pagos">Bajar</button></span></li>
+    <li tabindex="0" class="row flex items-center gap-3 rounded-lg border border-line bg-surface px-3 py-2.5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><span class="pos grid h-6 w-6 flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold tabular-nums">2</span><span class="name min-w-0 flex-1 font-semibold">Renovar certificado TLS</span><span class="flex flex-none gap-1.5"><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="up" aria-label="Subir: Renovar certificado TLS">Subir</button><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="down" aria-label="Bajar: Renovar certificado TLS">Bajar</button></span></li>
+    <li tabindex="0" class="row flex items-center gap-3 rounded-lg border border-line bg-surface px-3 py-2.5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><span class="pos grid h-6 w-6 flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold tabular-nums">3</span><span class="name min-w-0 flex-1 font-semibold">Revisar accesos de proveedores</span><span class="flex flex-none gap-1.5"><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="up" aria-label="Subir: Revisar accesos de proveedores">Subir</button><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="down" aria-label="Bajar: Revisar accesos de proveedores">Bajar</button></span></li>
+    <li tabindex="0" class="row flex items-center gap-3 rounded-lg border border-line bg-surface px-3 py-2.5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><span class="pos grid h-6 w-6 flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold tabular-nums">4</span><span class="name min-w-0 flex-1 font-semibold">Migrar base de datos de clientes</span><span class="flex flex-none gap-1.5"><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="up" aria-label="Subir: Migrar base de datos de clientes">Subir</button><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="down" aria-label="Bajar: Migrar base de datos de clientes">Bajar</button></span></li>
+    <li tabindex="0" class="row flex items-center gap-3 rounded-lg border border-line bg-surface px-3 py-2.5 shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><span class="pos grid h-6 w-6 flex-none place-items-center rounded-full bg-accent-soft text-xs font-semibold tabular-nums">5</span><span class="name min-w-0 flex-1 font-semibold">Preparar informe mensual</span><span class="flex flex-none gap-1.5"><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="up" aria-label="Subir: Preparar informe mensual">Subir</button><button type="button" class="mv rounded-lg border border-line bg-page px-2.5 py-1 text-[13px] hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" data-dir="down" aria-label="Bajar: Preparar informe mensual">Bajar</button></span></li>
+  </ol>
+  <p id="live" aria-live="polite" class="mt-2.5 min-h-5 text-[13px] text-muted"></p>
+</section>
+<script>
+  const stage = document.querySelector('.stage'), list = document.getElementById('list'), live = document.getElementById('live'), sort = document.getElementById('sort');
+  let manual = null;
+  const rows = () => [...list.children];
+  const nameOf = (row) => row.querySelector('.name').textContent;
+
+  function flip(mutate) {
+    const before = new Map(rows().map((el) => [el, el.getBoundingClientRect().top]));
+    mutate();
+    const css = getComputedStyle(stage);
+    const duration = parseFloat(css.getPropertyValue('--dur')) * 1000, easing = css.getPropertyValue('--ease');
+    for (const el of rows()) {
+      const dy = before.get(el) - el.getBoundingClientRect().top;
+      if (dy) el.animate([{ transform: `translateY(${dy}px)` }, { transform: 'none' }], { duration, easing });
+    }
+  }
+
+  function renumber() {
+    rows().forEach((row, k) => (row.querySelector('.pos').textContent = k + 1));
+  }
+
+  function move(row, delta) {
+    const items = rows(), from = items.indexOf(row), to = from + delta;
+    if (to < 0 || to >= items.length) return (live.textContent = `${nameOf(row)} ya está ${delta < 0 ? 'al principio' : 'al final'} de la lista.`);
+    flip(() => list.insertBefore(row, delta < 0 ? items[to] : items[to].nextSibling));
+    renumber();
+    live.textContent = `${nameOf(row)}: posición ${to + 1} de ${items.length}.`;
+    row.querySelector(delta < 0 ? '[data-dir=up]' : '[data-dir=down]').focus();
+  }
+
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-dir]');
+    if (btn) move(btn.closest('.row'), btn.dataset.dir === 'up' ? -1 : 1);
+  });
+
+  list.addEventListener('keydown', (e) => {
+    const delta = { ArrowUp: -1, ArrowDown: 1 }[e.key];
+    const row = e.target.closest('.row');
+    if (!e.altKey || !delta || !row) return;
+    e.preventDefault();
+    move(row, delta);
+  });
+
+  sort.addEventListener('click', () => {
+    const on = sort.getAttribute('aria-pressed') !== 'true';
+    sort.setAttribute('aria-pressed', String(on));
+    if (on) {
+      manual = rows();
+      const sorted = [...manual].sort((a, b) => nameOf(a).localeCompare(nameOf(b), 'es'));
+      flip(() => list.replaceChildren(...sorted));
+    } else {
+      const saved = manual;
+      manual = null;
+      flip(() => list.replaceChildren(...saved));
+    }
+    renumber();
+    live.textContent = on ? 'Lista ordenada de la A a la Z.' : 'Orden de prioridad restaurado.';
+  });
+</script>

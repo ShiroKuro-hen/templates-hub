@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel lateral deslizante</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .page { max-width:640px; margin:0 auto; padding:20px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  h1 { margin:0 0 4px; font-size:1.25rem; letter-spacing:-.01em; }
+  .lead { margin:0 0 16px; color:var(--muted); }
+  fieldset { min-width:0; margin:0 0 16px; padding:0; border:0; }
+  legend { margin:0 0 6px; padding:0; color:var(--muted); font-weight:500; }
+  .segmented { display:flex; gap:4px; padding:4px; background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); }
+  .segmented label { position:relative; flex:1; padding:6px 10px; text-align:center; border-radius:min(var(--radius), 6px); cursor:pointer; }
+  .segmented input { position:absolute; inset:0; margin:0; opacity:0; cursor:pointer; }
+  .segmented label:has(:checked) { background:var(--accent); color:var(--accent-ink); font-weight:600; }
+  .segmented label:has(:focus-visible) { outline:2px solid var(--accent); outline-offset:2px; }
+  .status { min-height:1.5em; margin:12px 0 0; color:var(--ok); }
+  .btn { padding:8px 14px; font:inherit; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; }
+  .btn:hover { background:var(--bg); }
+  .btn.primary { color:var(--accent-ink); background:var(--accent); border-color:var(--accent); }
+  .drawer { --dur:.3s; --ease:cubic-bezier(.2,.8,.2,1); margin:0; padding:0; border:0; max-width:100%; max-height:100%; color:var(--text); background:var(--surface); box-shadow:var(--shadow); transform:translate(var(--tx), var(--ty)); transition-property:transform, display, overlay; transition-duration:var(--dur); transition-timing-function:var(--ease); transition-behavior:normal, allow-discrete, allow-discrete; }
+  .drawer[data-side=right] { inset:0 0 0 auto; width:min(360px, 100%); height:100%; --tx:100%; --ty:0; }
+  .drawer[data-side=left] { inset:0 auto 0 0; width:min(360px, 100%); height:100%; --tx:-100%; --ty:0; }
+  .drawer[data-side=bottom] { inset:auto 0 0 0; width:100%; max-height:80%; --tx:0; --ty:100%; }
+  .drawer[open] { transform:none; }
+  @starting-style { .drawer[open] { transform:translate(var(--tx), var(--ty)); } }
+  .drawer::backdrop { background:rgba(0,0,0,0); transition-property:background, display, overlay; transition-duration:var(--dur); transition-timing-function:var(--ease); transition-behavior:normal, allow-discrete, allow-discrete; }
+  .drawer[open]::backdrop { background:rgba(0,0,0,.5); }
+  @starting-style { .drawer[open]::backdrop { background:rgba(0,0,0,0); } }
+  .drawer form { display:flex; flex-direction:column; height:100%; }
+  .head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:20px 20px 12px; }
+  .head h2 { margin:0; font-size:18px; }
+  .head p { margin:2px 0 0; color:var(--muted); }
+  .x { flex:none; width:28px; height:28px; font:inherit; font-size:18px; line-height:1; color:var(--muted); background:none; border:0; border-radius:var(--radius); cursor:pointer; }
+  .x:hover { background:var(--bg); color:var(--text); }
+  .body { display:grid; align-content:start; gap:8px; flex:1; padding:8px 20px 20px; }
+  .body label { font-weight:500; }
+  .body input:not([type=checkbox]) { box-sizing:border-box; width:100%; padding:8px 10px; font:inherit; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); }
+  .check { display:flex; align-items:center; gap:8px; }
+  .foot { display:flex; justify-content:flex-end; gap:8px; padding:12px 20px; border-top:1px solid var(--border); }
+  @media (prefers-reduced-motion:reduce) { .drawer, .drawer::backdrop { transition:none; } }
+</style>
+</head>
+<body>
+<main class="page" id="page">
+  <h1>Preferencias</h1>
+  <p class="lead">Elige desde qué borde aparece el panel y ábrelo para editar tus ajustes.</p>
+  <fieldset>
+    <legend>Posición del panel</legend>
+    <div class="segmented">
+      <label><input type="radio" name="side" value="left"><span>Izquierda</span></label>
+      <label><input type="radio" name="side" value="right" checked><span>Derecha</span></label>
+      <label><input type="radio" name="side" value="bottom"><span>Abajo</span></label>
+    </div>
+  </fieldset>
+  <button type="button" class="btn primary" id="open" aria-haspopup="dialog">Abrir ajustes</button>
+  <p class="status" id="msg" role="status"></p>
+</main>
+
+<dialog class="drawer" id="drawer" aria-labelledby="dr-title">
+  <form method="dialog">
+    <header class="head">
+      <div>
+        <h2 id="dr-title">Ajustes de cuenta</h2>
+        <p>Los cambios se aplican a tu perfil.</p>
+      </div>
+      <button type="submit" value="cancel" class="x" aria-label="Cerrar ajustes" formnovalidate>×</button>
+    </header>
+    <div class="body">
+      <label for="name">Nombre para mostrar</label>
+      <input id="name" name="name" required autocomplete="name" value="Lucía Torres" autofocus>
+      <label for="mail">Correo electrónico</label>
+      <input id="mail" name="mail" type="email" required autocomplete="email" value="lucia@empresa.com">
+      <label class="check"><input type="checkbox" name="digest" checked> Recibir un resumen semanal</label>
+    </div>
+    <footer class="foot">
+      <button type="submit" value="cancel" class="btn" formnovalidate>Cancelar</button>
+      <button type="submit" value="save" class="btn primary">Guardar</button>
+    </footer>
+  </form>
+</dialog>
+<script>
+  const page = document.getElementById('page'), open = document.getElementById('open');
+  const drawer = document.getElementById('drawer'), msg = document.getElementById('msg');
+  const nameInput = document.getElementById('name');
+  const isOutside = (e) => {
+    const r = drawer.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+  open.addEventListener('click', () => {
+    drawer.dataset.side = document.querySelector('input[name=side]:checked').value;
+    drawer.querySelector('form').reset();
+    page.inert = true;
+    drawer.showModal();
+  });
+  drawer.addEventListener('click', (e) => {
+    if (e.target === drawer && isOutside(e)) drawer.close('cancel');
+  });
+  drawer.addEventListener('close', () => {
+    page.inert = false;
+    open.focus();
+    if (drawer.returnValue === 'save') msg.textContent = `Ajustes guardados para ${nameInput.value.trim()}.`;
+  });
+</script>
+</body>
+</html>

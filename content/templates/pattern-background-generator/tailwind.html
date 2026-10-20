@@ -1,0 +1,75 @@
+<section class="mx-auto max-w-[880px] text-fg" aria-labelledby="h">
+  <h1 id="h" class="mb-1 text-2xl font-bold leading-[1.3] tracking-[-0.02em]">Generador de patrones de fondo</h1>
+  <p class="mb-[18px] text-muted">Elige un patrón, ajusta su tamaño y color, y copia el CSS.</p>
+  <div class="grid gap-4 md:grid-cols-2">
+    <div id="controls" class="min-w-0 rounded-lg border border-line bg-surface p-4 shadow-sm">
+      <fieldset class="mb-4 min-w-0 border-0 p-0">
+        <legend class="mb-2 p-0 font-semibold">Patrón</legend>
+        <div class="flex flex-wrap gap-2">
+          <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-line px-2.5 py-1.5 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"><input type="radio" name="pattern" value="dots" checked class="accent-accent"> Puntos</label>
+          <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-line px-2.5 py-1.5 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"><input type="radio" name="pattern" value="lines" class="accent-accent"> Líneas</label>
+          <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-line px-2.5 py-1.5 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"><input type="radio" name="pattern" value="grid" class="accent-accent"> Cuadrícula</label>
+          <label class="inline-flex cursor-pointer items-center gap-1.5 rounded-md border border-line px-2.5 py-1.5 has-[:checked]:border-accent has-[:checked]:bg-accent-soft has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent"><input type="radio" name="pattern" value="waves" class="accent-accent"> Ondas</label>
+        </div>
+      </fieldset>
+      <div class="mb-4 min-w-0">
+        <label for="size" class="mb-2 block font-semibold">Tamaño: <output id="size-out" for="size">24</output> px</label>
+        <input id="size" type="range" min="8" max="48" value="24" class="m-0 w-full accent-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+      </div>
+      <div class="mb-4 min-w-0">
+        <label for="color" class="mb-2 block font-semibold">Color</label>
+        <select id="color" class="w-full rounded-md border border-line bg-page px-2.5 py-2 text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">
+          <option value="accent">Acento</option>
+          <option value="ok">Éxito</option>
+          <option value="warn">Aviso</option>
+          <option value="info">Información</option>
+          <option value="muted">Atenuado</option>
+        </select>
+      </div>
+    </div>
+    <div class="min-w-0 rounded-lg border border-line bg-surface p-4 shadow-sm">
+      <div id="preview" role="img" aria-label="Vista previa del patrón" class="mb-3 h-56 rounded-md border border-line bg-surface"></div>
+      <pre tabindex="0" aria-label="CSS generado" class="mb-3 overflow-x-auto rounded-md border border-line bg-page p-3 font-mono text-[13px] leading-[1.6] text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><code id="css"></code></pre>
+      <button type="button" id="copy" class="cursor-pointer rounded-lg border border-accent bg-accent px-3.5 py-2 font-semibold text-accent-ink hover:brightness-[1.08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Copiar CSS</button>
+      <p id="msg" role="status" class="mt-2 min-h-6 text-[13px] text-muted"></p>
+    </div>
+  </div>
+</section>
+<script>
+  const $ = (id) => document.getElementById(id);
+  const sizeInput = $('size'), sizeOut = $('size-out'), colorSelect = $('color');
+  const preview = $('preview'), codeEl = $('css'), msg = $('msg');
+
+  function layers(pattern, size, color) {
+    const dot = Math.max(1, Math.round(size / 8)), arc = Math.round(size * 0.4);
+    if (pattern === 'dots') return `radial-gradient(circle, ${color} ${dot}px, transparent ${dot + 1}px)`;
+    if (pattern === 'lines') return `linear-gradient(${color} 2px, transparent 2px)`;
+    if (pattern === 'grid') return `linear-gradient(${color} 1px, transparent 1px), linear-gradient(90deg, ${color} 1px, transparent 1px)`;
+    return `radial-gradient(circle at 50% 100%, transparent ${arc - 1}px, ${color} ${arc}px ${arc + 2}px, transparent ${arc + 3}px)`;
+  }
+
+  function render() {
+    const size = Number(sizeInput.value);
+    const pattern = document.querySelector('input[name=pattern]:checked').value;
+    const image = layers(pattern, size, `var(--${colorSelect.value})`);
+    sizeOut.textContent = size;
+    preview.style.backgroundImage = image;
+    preview.style.backgroundSize = `${size}px ${size}px`;
+    codeEl.textContent = `.patron {\n  background-color: var(--surface);\n  background-image: ${image};\n  background-size: ${size}px ${size}px;\n}`;
+  }
+
+  async function copyCss() {
+    try {
+      if (!navigator.clipboard) throw new Error('sin portapapeles');
+      await navigator.clipboard.writeText(codeEl.textContent);
+      msg.textContent = 'CSS copiado.';
+    } catch {
+      msg.textContent = 'No se pudo copiar. Selecciona el código y cópialo a mano.';
+    }
+  }
+
+  $('controls').addEventListener('input', render);
+  $('controls').addEventListener('change', render);
+  $('copy').addEventListener('click', copyCss);
+  render();
+</script>

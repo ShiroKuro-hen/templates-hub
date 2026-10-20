@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pila de notificaciones</title>
+<style>
+  :root{--bg:#f5f7fa;--surface:#fff;--text:#0e1726;--muted:#5b6b82;--border:#d8dfea;--accent:#2f5bff;--accent-ink:#fff;--accent-soft:#e8eeff;--ok:#0e9f6e;--warn:#b7791f;--err:#d92d4a;--info:#0891b2;--ok-soft:#e3f6ee;--warn-soft:#fbf1dc;--err-soft:#fde8ec;--info-soft:#dff3f8;--radius:8px;--shadow:0 1px 2px rgba(14,23,38,.06),0 6px 20px rgba(14,23,38,.06)}
+  :root[data-theme=dark]{--bg:#0a0f1c;--surface:#111a2e;--text:#e6ecf8;--muted:#8ea0bc;--border:#223052;--accent:#6c8cff;--accent-ink:#0a0f1c;--accent-soft:#16213f;--ok:#34d399;--warn:#f5b84b;--err:#ff6b81;--info:#38bdf8;--ok-soft:#0f2a24;--warn-soft:#2a2210;--err-soft:#2d1218;--info-soft:#0c2430;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35)}
+  * { box-sizing:border-box; }
+  body { margin:0; padding:20px; background:var(--bg); color:var(--text); font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .stage { --dur:.25s; --ease:cubic-bezier(.2,.8,.2,1); --life:5s; max-width:560px; margin:0 auto; padding:20px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
+  h1 { margin:0 0 4px; font-size:1.25rem; letter-spacing:-.01em; }
+  .lead { margin:0 0 16px; color:var(--muted); }
+  .triggers { display:flex; flex-wrap:wrap; gap:8px; }
+  .btn { padding:8px 14px; font:inherit; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; }
+  .btn:hover { border-color:var(--accent); }
+  .stack { position:fixed; right:16px; bottom:16px; width:min(360px, calc(100vw - 32px)); display:flex; flex-direction:column; gap:8px; }
+  .wrap { display:grid; grid-template-rows:1fr; transition:grid-template-rows var(--dur) var(--ease); }
+  .wrap.leaving { grid-template-rows:0fr; }
+  .wrap.leaving .toast { opacity:0; transform:translateX(16px); }
+  .inner { min-height:0; overflow:hidden; }
+  .toast { --c:var(--info); position:relative; display:flex; align-items:flex-start; gap:12px; padding:12px 40px 14px 14px; overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); animation:enter var(--dur) var(--ease) backwards; transition:opacity var(--dur) var(--ease), transform var(--dur) var(--ease); }
+  .toast.ok { --c:var(--ok); }
+  .toast.warn { --c:var(--warn); }
+  .toast.err { --c:var(--err); }
+  .toast i { flex:none; width:22px; height:22px; display:grid; place-items:center; border-radius:50%; background:var(--c); color:var(--accent-ink); font:600 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif; font-style:normal; }
+  .msg { flex:1; min-width:0; }
+  .msg b { display:block; font-weight:600; }
+  .msg span { color:var(--muted); font-size:13px; }
+  .x { position:absolute; top:8px; right:8px; width:28px; height:28px; font:inherit; font-size:18px; line-height:1; color:var(--muted); background:none; border:0; border-radius:var(--radius); cursor:pointer; }
+  .x:hover { background:var(--bg); color:var(--text); }
+  .bar { position:absolute; left:0; right:0; bottom:0; height:3px; background:var(--c); transform-origin:left; animation:drain var(--life) linear forwards; }
+  .toast:hover .bar, .toast:focus-within .bar { animation-play-state:paused; }
+  @keyframes enter { from { opacity:0; transform:translateX(16px); } }
+  @keyframes drain { from { transform:scaleX(1); } to { transform:scaleX(0); } }
+  @media (prefers-reduced-motion:reduce) { .toast { animation:none; transition:none; } .wrap { transition:none; } }
+</style>
+</head>
+<body>
+<main class="stage">
+  <h1>Notificaciones</h1>
+  <p class="lead">Dispara un aviso para ver cómo entra, se apila y se retira.</p>
+  <div class="triggers" id="triggers" role="group" aria-label="Disparar notificación">
+    <button type="button" class="btn" data-kind="ok">Éxito</button>
+    <button type="button" class="btn" data-kind="warn">Aviso</button>
+    <button type="button" class="btn" data-kind="err">Error</button>
+  </div>
+  <section class="stack" id="stack" aria-label="Notificaciones"></section>
+</main>
+<script>
+  const KINDS = {
+    ok: { title: 'Cambios guardados', text: 'Tu perfil se actualizó correctamente.', role: 'status', icon: '✓' },
+    warn: { title: 'Espacio casi lleno', text: 'Quedan 500 MB de 5 GB disponibles.', role: 'status', icon: '!' },
+    err: { title: 'No se pudo guardar', text: 'Revisa tu conexión e inténtalo de nuevo.', role: 'alert', icon: '✕' },
+  };
+  const MAX = 3;
+  const triggers = document.getElementById('triggers'), stack = document.getElementById('stack');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const live = () => [...stack.children].filter((w) => !w.classList.contains('leaving'));
+
+  function build(kind) {
+    const { title, text, role, icon } = KINDS[kind];
+    const wrap = document.createElement('div');
+    wrap.className = 'wrap';
+    wrap.innerHTML = `<div class="inner"><div class="toast ${kind}" role="${role}"><i aria-hidden="true">${icon}</i><div class="msg"><b>${title}</b><span>${text}</span></div><button type="button" class="x" aria-label="Cerrar: ${title}">×</button><span class="bar" aria-hidden="true"></span></div></div>`;
+    wrap.querySelector('.x').addEventListener('click', () => {
+      triggers.querySelector('button').focus();
+      retire(wrap);
+    });
+    wrap.querySelector('.bar').addEventListener('animationend', () => retire(wrap));
+    wrap.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'grid-template-rows') wrap.remove();
+    });
+    return wrap;
+  }
+  function retire(wrap) {
+    if (wrap.classList.contains('leaving')) return;
+    wrap.classList.add('leaving');
+    if (calm) wrap.remove();
+  }
+  function show(kind) {
+    stack.append(build(kind));
+    live().slice(0, -MAX).forEach(retire);
+  }
+  triggers.addEventListener('click', (e) => {
+    if (e.target.dataset.kind) show(e.target.dataset.kind);
+  });
+</script>
+</body>
+</html>
