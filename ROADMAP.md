@@ -56,8 +56,13 @@ Inspirado en Radix/shadcn: pocas perillas, efecto global.
 
 ### Fase 4 — Más contenido y más variantes
 - **Variantes por componente** (3–4 por tipo, estilo Flowbite/Tailwind Plus): botones, tarjetas, navbar, hero, precios, footers. Es lo que más piden los catálogos.
-- **Nueva categoría "Efectos"** (inspirada en Aceternity/Magic UI), todo CSS: borde con gradiente animado, spotlight al pasar el cursor, rejilla/ruido de fondo, tarjeta inclinada 3D, marquee, texto con brillo, haz de luz.
-- **Kits de sitio completo:** landing SaaS, portafolio, blog, admin, e-commerce — cada uno con su estilo y copiable en bloque.
+- **Cuatro categorías nuevas** (grupos "Movimiento y efectos", "Datos" y "Contenido y comunicación"). Lote 1 = 6 componentes por categoría, en total 24:
+  - **Transiciones** (entradas, salidas y cambios de estado con movimiento): cambio de vista con View Transitions API (con alternativa), deslizamiento entre pestañas, lista escalonada que entra y sale, acordeón con altura animada (`grid-template-rows 0fr→1fr`), diálogo con `@starting-style`, elemento compartido (FLIP). Reglas: respetar `prefers-reduced-motion`, duración y curva como tokens (`--dur`, `--ease`), nada que dependa de librerías.
+  - **Efectos** (inspirados en Aceternity/Magic UI, solo CSS/JS mínimo): borde con gradiente animado, spotlight que sigue al cursor, tarjeta 3D inclinada, aurora de fondo, panel de vidrio, texto con brillo. Todos toman color de los tokens, así que cambian con el estilo elegido.
+  - **Diagramas** (SVG/HTML accesible, sin librerías): flujo con decisiones, secuencia, organigrama, capas de arquitectura, entidad-relación, mapa mental; lote 2: Gantt, red, línea de tiempo ramificada. Cada nodo es enfocable, con `<title>/<desc>` y resalte de conexiones al enfocar. Colores solo por tokens; dibujos que escalan a 360 px.
+  - **Imágenes** (componentes con imagen): héroe con imagen, tarjetas con portada y subtítulo, galería masonry, zoom de producto con lupa, `<picture>` con dirección de arte, imágenes con texto superpuesto. Regla del repo: **sin recursos externos**, así que cada `<img>` lleva una ilustración SVG como `data:` URI, con `alt`, `width`/`height` y `loading="lazy"`; el usuario cambia solo el `src`. Lote 2: carrusel con miniaturas, antes/después con tema, avatares apilados, imagen con *blur-up*, fondo con patrón generado.
+- **Transiciones entre estilos del propio sitio:** al cambiar de estilo en el selector, animar el cambio de variables (`transition` en `background-color/color/border-color`) o usar `document.startViewTransition`; con `prefers-reduced-motion` el cambio es instantáneo.
+- **Kits de sitio completo:** landing SaaS, portafolio, blog, admin, e-commerce — cada uno con su estilo y copiable en bloque; usarán las nuevas categorías (hero con imagen, efectos y diagramas).
 - Huecos de categoría a considerar: calendario/fecha, kanban, árbol de archivos, comando/menú contextual, upload de archivos avanzado, tablas con celdas editables, emails HTML.
 - Mantener el estándar actual: 6 archivos por componente, sin recursos externos, claro y oscuro, a11y básica.
 
@@ -72,7 +77,7 @@ Inspirado en Radix/shadcn: pocas perillas, efecto global.
 ## Orden recomendado
 1. Fase 1 (selector de estilos) — visible de inmediato, bajo riesgo, desbloquea todo lo demás.
 2. Fase 2 (perillas + copiar con mi tema) — es el diferenciador.
-3. Fase 4 en paralelo, un lote por semana (variantes + "Efectos").
+3. Fase 4 en paralelo, por lotes: lote 1 (transiciones, efectos, diagramas, imágenes), después variantes por componente y kits de sitio.
 4. Fase 3 y 5 cuando haya estilos suficientes / tráfico.
 
 ## Riesgos
