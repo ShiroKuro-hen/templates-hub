@@ -18,7 +18,7 @@ const id = useId();
 .btn:hover { border-color: var(--accent); background: var(--accent-soft); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tip { position: relative; display: inline-block; }
-.tip [role="tooltip"] { position: absolute; left: 50%; bottom: calc(100% + 8px); z-index: 10; width: max-content; max-width: 220px; padding: 6px 10px; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; color: var(--surface); background: var(--text); border-radius: 6px; box-shadow: var(--shadow); opacity: 0; visibility: hidden; transform: translate(-50%, 4px); transition: opacity .14s, transform .14s, visibility 0s .14s; }
+.tip [role="tooltip"] { position: absolute; left: 50%; bottom: calc(100% + 8px); z-index: 10; width: max-content; max-width: 220px; padding: 6px 10px; font: 13px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: center; color: var(--surface); background: var(--text); border-radius: min(var(--radius),6px); box-shadow: var(--shadow); opacity: 0; visibility: hidden; transform: translate(-50%, 4px); transition: opacity .14s, transform .14s, visibility 0s .14s; }
 .tip [role="tooltip"]::after { content: ""; position: absolute; left: 50%; top: 100%; margin-left: -5px; border: 5px solid transparent; border-top-color: var(--text); }
 .tip [role="tooltip"]::before { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 8px; } /* puente: el puntero no la pierde */
 .tip.below [role="tooltip"] { bottom: auto; top: calc(100% + 8px); transform: translate(-50%, -4px); }

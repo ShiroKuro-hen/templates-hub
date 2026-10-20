@@ -37,7 +37,7 @@
   .playing .row[aria-current] .eq i{animation:eq .9s ease-in-out infinite alternate}
   .eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.6s}
   @keyframes eq{to{transform:scaleY(1)}}
-  .bar{display:none;position:absolute;left:12px;right:12px;bottom:3px;height:2px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff) 0/var(--p,0%) 100% no-repeat,var(--border)}
+  .bar{display:none;position:absolute;left:12px;right:12px;bottom:3px;height:2px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0/var(--p,0%) 100% no-repeat,var(--border)}
   .row[aria-current] .bar{display:block}
   @media (min-width:520px){.row{grid-template-columns:28px 1fr 140px auto}.alb{display:block}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

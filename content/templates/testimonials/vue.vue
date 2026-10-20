@@ -36,7 +36,7 @@ h2 { max-width: 30rem; margin: 0 0 20px; font-size: clamp(1.4rem, 3.5vw, 1.875re
 .list { display: grid; gap: 16px; margin: 0; padding: 0; list-style: none; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
 figure { position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%; margin: 0; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
 figure.featured { border-color: var(--accent); }
-figure.featured::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+figure.featured::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .mark { width: 24px; height: 20px; margin-bottom: 12px; fill: var(--accent); opacity: .8; }
 blockquote { flex: 1; margin: 0 0 16px; font-size: .9375rem; line-height: 1.6; }
 blockquote p { margin: 0; }

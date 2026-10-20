@@ -15,7 +15,7 @@
   .lift:hover,.lift:focus-visible{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--accent)}
   .glow::before{content:"";position:absolute;inset:0;background:radial-gradient(180px circle at var(--x,50%) var(--y,50%),color-mix(in srgb,var(--accent) 16%,transparent),transparent 70%);opacity:0;transition:opacity .16s;pointer-events:none}
   .glow:hover::before,.glow:focus-visible::before{opacity:1}
-  .line span{background:linear-gradient(135deg,#22d3ee,#2f5bff) 0 100%/0 1px no-repeat;transition:background-size .16s}
+  .line span{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0 100%/0 1px no-repeat;transition:background-size .16s}
   .line:hover span,.line:focus-visible span{background-size:100% 1px}
   .spin svg{display:block;margin-bottom:10px;color:var(--accent);transition:transform .16s}
   .spin:hover svg,.spin:focus-visible svg{transform:rotate(90deg)}
@@ -24,7 +24,7 @@
   .fill:hover,.fill:focus-visible{color:var(--accent-ink);border-color:var(--accent)}
   .fill:hover p,.fill:focus-visible p{color:var(--accent-ink)}
   .fill:hover::after,.fill:focus-visible::after{transform:scaleX(1)}
-  .media{height:72px;margin-bottom:12px;border-radius:6px;background:var(--accent-soft);overflow:hidden}
+  .media{height:72px;margin-bottom:12px;border-radius:min(var(--radius),6px);background:var(--accent-soft);overflow:hidden}
   .media svg{display:block;width:100%;height:100%;color:var(--accent);transition:transform .16s}
   .zoom:hover .media svg,.zoom:focus-visible .media svg{transform:scale(1.1)}
   @media (prefers-reduced-motion:reduce){

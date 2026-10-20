@@ -40,7 +40,7 @@ function mover(e: PointerEvent) {
 <template>
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
     <defs>
-      <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient>
+      <linearGradient id="gr" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient>
       <marker id="ah" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0 0L6 3L0 6z" style="fill:var(--muted)" /></marker>
       <symbol id="diag" viewBox="0 0 400 240">
         <g v-for="n in nodos" :key="n.t">

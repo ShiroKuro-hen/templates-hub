@@ -43,9 +43,9 @@ onBeforeUnmount(() => clearTimeout(timer));
 h2{margin:0;font-size:15px;font-weight:600}
 .note{margin:2px 0 12px;color:var(--muted)}
 .code{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 14px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
-.code::before{content:"$";font:600 13px/1.6 ui-monospace,"Cascadia Code",Menlo,monospace;background:linear-gradient(135deg,#22d3ee,#2f5bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.code::before{content:"$";font:600 13px/1.6 ui-monospace,"Cascadia Code",Menlo,monospace;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));-webkit-background-clip:text;background-clip:text;color:transparent}
 pre{flex:1;min-width:0;margin:0;overflow-x:auto;font:13px/1.6 ui-monospace,"Cascadia Code",Menlo,monospace}
-.copy{flex:none;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;font:inherit;font-weight:500;cursor:pointer;transition:border-color .14s,color .14s}
+.copy{flex:none;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:min(var(--radius),6px);font:inherit;font-weight:500;cursor:pointer;transition:border-color .14s,color .14s}
 .copy:hover{border-color:var(--muted)}
 .copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .copy .check,.copy.done .icon{display:none}

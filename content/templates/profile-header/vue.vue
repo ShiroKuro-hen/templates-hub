@@ -19,7 +19,7 @@ function toggle() {
   <article class="card" aria-labelledby="n">
     <svg class="cover" viewBox="0 0 800 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
-        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient>
         <pattern id="p" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity=".18" /></pattern>
       </defs>
       <rect width="800" height="150" fill="url(#g)" />

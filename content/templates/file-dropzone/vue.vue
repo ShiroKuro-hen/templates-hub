@@ -59,7 +59,7 @@ h2{margin:0 0 12px;font-size:16px}
 .drop:hover,.drop.over{background:var(--accent-soft);border-color:var(--accent)}
 .drop:focus-within{outline:2px solid var(--accent);outline-offset:2px}
 .drop input{position:absolute;width:1px;height:1px;opacity:0}
-.ico{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;color:var(--accent-ink);background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.ico{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .link{color:var(--accent);font-weight:600}
 small{color:var(--muted)}
 .msg{margin:12px 0 0;padding:8px 12px;border-radius:var(--radius);background:var(--err-soft);color:var(--err)}

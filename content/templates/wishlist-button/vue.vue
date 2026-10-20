@@ -26,7 +26,7 @@ onBeforeUnmount(() => { document.removeEventListener('keydown', esc); clearTimeo
 <template>
   <article class="card">
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+      <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
     </svg>
     <div class="img" aria-hidden="true" />
     <button class="fab" type="button" :aria-pressed="on" :aria-label="label" @click="toggle()">

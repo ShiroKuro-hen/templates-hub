@@ -23,7 +23,7 @@ withDefaults(defineProps<{ items?: Milestone[] }>(), {
 
 <style scoped>
 .tl { position: relative; margin: 0; padding: 0; list-style: none; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
-.tl::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); border-radius: 2px; }
+.tl::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); border-radius: min(var(--radius),2px); }
 li { position: relative; padding: 0 0 20px 36px; }
 li:last-child { padding-bottom: 0; }
 li::before { content: ""; position: absolute; left: 4px; top: 2px; width: 16px; height: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 50%; }

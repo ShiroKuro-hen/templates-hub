@@ -13,7 +13,7 @@ const anillos = (): Ring[] => [
 <template>
   <section class="card" aria-labelledby="pc-titulo">
     <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
     </svg>
     <h2 id="pc-titulo">Estado del espacio de trabajo</h2>
     <div class="grid">

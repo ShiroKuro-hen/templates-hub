@@ -36,7 +36,7 @@ const money = (n: number) => 'S/ ' + n.toLocaleString('es-PE', { minimumFraction
 
 <style scoped>
 .card{position:relative;max-width:820px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.card::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#2f5bff,transparent)}
+.card::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--accent-2,#22d3ee),var(--accent,#2f5bff),transparent)}
 h2{margin:0;padding:16px 20px;font-size:16px;border-bottom:1px solid var(--border)}
 table{width:100%;border-collapse:collapse}
 th,td{padding:12px 20px;text-align:left;border-bottom:1px solid var(--border)}

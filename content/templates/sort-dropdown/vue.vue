@@ -61,7 +61,7 @@ select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 ol{list-style:none;margin:0;padding:0}
 li{position:relative;display:flex;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--border)}
 li:first-child{border-top:0}
-li:first-child::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+li:first-child::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 li span{font-weight:600}
 li small{display:block;color:var(--muted);font-weight:400}
 li output{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}

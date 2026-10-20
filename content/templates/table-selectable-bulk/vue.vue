@@ -57,7 +57,7 @@ function archive() {
 
 <style scoped>
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.bulk{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:52px;padding:8px 16px;border-bottom:1px solid;border-image:linear-gradient(90deg,#22d3ee,#2f5bff) 1;background:var(--accent-soft)}
+.bulk{display:flex;flex-wrap:wrap;align-items:center;gap:8px;min-height:52px;padding:8px 16px;border-bottom:1px solid;border-image:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 1;background:var(--accent-soft)}
 .count{padding:2px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-variant-numeric:tabular-nums}
 .sp{flex:1}
 .btn{font:inherit;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s,border-color .14s}

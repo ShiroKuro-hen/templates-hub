@@ -89,7 +89,7 @@ a{color:inherit}
 :is(a,button):focus-visible,label:has(input[type=radio]:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 .top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;margin-bottom:20px}
 .brand{display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700;text-decoration:none}
-.brand i{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.brand i{width:22px;height:22px;border-radius:min(var(--radius),6px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .steps{display:flex;gap:16px;margin:0;padding:0;list-style:none;color:var(--muted)}
 .steps li+li::before{content:"/";margin-right:16px}
 .steps [aria-current=step]{color:var(--text);font-weight:600}

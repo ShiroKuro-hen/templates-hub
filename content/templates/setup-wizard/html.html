@@ -16,7 +16,7 @@
   .steps li:last-child::after{display:none}
   .steps b{display:grid;place-items:center;flex:none;width:24px;height:24px;border:1px solid var(--border);border-radius:999px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
   .steps li[aria-current=step]{color:var(--text);font-weight:500}
-  .steps li[aria-current=step] b{border-color:transparent;background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#fff}
+  .steps li[aria-current=step] b{border-color:transparent;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));color:#fff}
   .steps li.done b{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
   .steps span{white-space:nowrap}
   @media (max-width:480px){.steps li:not([aria-current=step]) span{display:none}}

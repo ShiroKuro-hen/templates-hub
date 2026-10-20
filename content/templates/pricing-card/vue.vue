@@ -36,7 +36,7 @@ function toggle() {
 <style scoped>
 .plan { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); }
 .plan.hot { border-color: var(--accent); }
-.plan.hot::before { content: ""; position: absolute; inset: -1px -1px auto; height: 3px; border-radius: var(--radius) var(--radius) 0 0; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.plan.hot::before { content: ""; position: absolute; inset: -1px -1px auto; height: 3px; border-radius: var(--radius) var(--radius) 0 0; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .badge { position: absolute; top: -11px; right: 16px; padding: 2px 10px; border: 1px solid var(--accent); border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 12px; font-weight: 600; }
 h2 { margin: 0; font-size: 1rem; font-weight: 600; }
 .price { margin: 0; font-size: 2.25rem; font-weight: 700; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }

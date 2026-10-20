@@ -53,7 +53,7 @@ ul{display:flex;flex-wrap:wrap;flex:none;gap:12px;margin:0;padding:0 12px 0 0;li
 .msg{font-weight:400;padding:6px 14px;border-radius:999px}
 .dot{width:8px;height:8px;border-radius:50%;flex:none}
 .dot.ok{background:var(--ok)}.dot.info{background:var(--info)}.dot.warn{background:var(--warn)}
-.dot.on{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.dot.on{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .live .marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .live .track{width:max-content;animation:slide var(--d,34s) linear infinite}
 .live ul{flex-wrap:nowrap}

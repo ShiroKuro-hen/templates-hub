@@ -68,7 +68,7 @@ dd{margin:0}
 .num{margin:6px 0 14px;font-size:30px;font-weight:700;line-height:1.1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .num small{margin-left:4px;font-size:15px;font-weight:600;color:var(--muted)}
 .meter{height:4px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
-.meter i{display:block;height:100%;width:calc(var(--p) * var(--t, 1) * 1%);border-radius:inherit;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.meter i{display:block;height:100%;width:calc(var(--p) * var(--t, 1) * 1%);border-radius:inherit;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .cap{margin:6px 0 0;color:var(--muted);font-size:13px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */

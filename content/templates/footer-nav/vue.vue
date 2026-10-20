@@ -35,10 +35,10 @@ const toggle = (name: string) => { if (!wide.value) open[name] = !open[name]; };
 
 <style scoped>
 footer{position:relative;max-width:960px;margin:0 auto;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,#2f5bff,transparent)}
+footer::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,var(--accent-2,#22d3ee),var(--accent,#2f5bff),transparent)}
 a{color:var(--muted);text-decoration:none;transition:color .14s}
 a:hover{color:var(--text);text-decoration:underline;text-underline-offset:3px}
-a:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+a:focus-visible,summary:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),4px)}
 .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:28px}
 summary{display:flex;justify-content:space-between;align-items:center;list-style:none;font-weight:600;cursor:default}
 summary::-webkit-details-marker{display:none}

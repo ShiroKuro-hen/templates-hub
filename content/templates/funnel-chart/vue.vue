@@ -25,7 +25,7 @@ const pts = (i: number) => {
     </figcaption>
     <div class="wrap">
       <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" :class="{ dim: hl >= 0 }" :style="{ height: n * 64 + 'px' }" @pointerleave="hl = -1">
-        <defs><linearGradient id="fg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="fg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
         <polygon v-for="(s, i) in stages" :key="s[0]" :class="{ on: hl === i }" :points="pts(i)" @pointerover="hl = i" />
       </svg>
       <ol @pointerleave="hl = -1">

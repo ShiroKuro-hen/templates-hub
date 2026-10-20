@@ -23,7 +23,7 @@ figure{margin:0;padding:20px 20px 12px;background:var(--surface);border:1px soli
        background:repeating-linear-gradient(to top,transparent 0 51px,var(--border) 51px 52px)}
 .bar{flex:1;height:calc(var(--v) * 1%);background:var(--accent-soft);border:1px solid var(--accent);border-bottom:0;border-radius:4px 4px 0 0;position:relative;transition:filter .14s}
 .bar:hover{filter:brightness(.96)}
-.bar.max{background:linear-gradient(135deg,#22d3ee,#2f5bff);border-color:transparent}
+.bar.max{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));border-color:transparent}
 .bar b{position:absolute;top:-22px;left:0;right:0;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
 .labels{display:flex;gap:16px;padding:8px 8px 0;color:var(--muted)}
 .labels span{flex:1;text-align:center}

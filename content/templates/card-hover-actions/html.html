@@ -13,7 +13,7 @@
   .thumb{position:relative;height:128px;background:var(--bg);border-bottom:1px solid var(--border)}
   .sk{display:grid;align-content:center;gap:8px;height:100%;padding:0 20px;box-sizing:border-box}
   .sk i{display:block;height:6px;width:calc(var(--w) * 1%);border-radius:999px;background:var(--border)}
-  .sk i:first-child{height:10px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .sk i:first-child{height:10px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   .acts{position:absolute;right:10px;bottom:10px;left:10px;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px;opacity:0;transform:translateY(4px);transition:opacity .14s,transform .14s}
   .card:hover .acts,.card:focus-within .acts{opacity:1;transform:none}
   @media (hover:none){.acts{opacity:1;transform:none}}

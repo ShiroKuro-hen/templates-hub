@@ -45,7 +45,7 @@ const lines = ref(2);
 section{padding:16px 20px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 h2{margin:0;font-size:15px}
 .hint{margin:2px 0 12px;color:var(--muted);font-size:13px}
-code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;border:1px solid var(--border);border-radius:4px;background:var(--bg)}
+code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;border:1px solid var(--border);border-radius:min(var(--radius),4px);background:var(--bg)}
 label{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:var(--muted)}
 input[type=range]{flex:1;accent-color:var(--accent)}
 input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

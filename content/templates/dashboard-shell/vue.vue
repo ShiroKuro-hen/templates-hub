@@ -86,9 +86,9 @@ const rows = computed(() => props.orders.filter((o) => `${o.cliente} ${o.pedido}
 .app{display:grid;grid-template-columns:220px 1fr;min-height:100vh;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .side{border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:20px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;padding:0 8px}
-.logo{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#22d3ee,#2f5bff);flex:none}
+.logo{width:26px;height:26px;border-radius:min(var(--radius),7px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));flex:none}
 .side ul{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.side a{display:flex;align-items:center;gap:10px;padding:8px;border-radius:6px;color:var(--muted);text-decoration:none;font-weight:500;transition:background .14s,color .14s}
+.side a{display:flex;align-items:center;gap:10px;padding:8px;border-radius:min(var(--radius),6px);color:var(--muted);text-decoration:none;font-weight:500;transition:background .14s,color .14s}
 .side a:hover{background:var(--bg);color:var(--text)}
 .side a[aria-current=page]{background:var(--accent-soft);color:var(--accent)}
 .main{min-width:0;display:flex;flex-direction:column}

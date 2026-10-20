@@ -24,7 +24,7 @@
   .snack button { font:inherit; font-weight:600; padding:5px 12px; color:var(--bg); background:transparent; border:1px solid var(--bg); border-radius:var(--radius); cursor:pointer; transition:background .14s, color .14s; font-variant-numeric:tabular-nums; }
   .snack button:hover { background:var(--bg); color:var(--text); }
   .snack button:focus-visible { outline-color:var(--accent); }
-  .snack::after { content:""; position:absolute; left:0; bottom:0; height:3px; width:100%; background:linear-gradient(135deg,#22d3ee,#2f5bff); transform-origin:left; animation:drain var(--ms) linear forwards; }
+  .snack::after { content:""; position:absolute; left:0; bottom:0; height:3px; width:100%; background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); transform-origin:left; animation:drain var(--ms) linear forwards; }
   @keyframes up { from { transform:translateY(16px); opacity:0; } }
   @keyframes drain { to { transform:scaleX(0); } }
   @media (prefers-reduced-motion:reduce) { .snack { animation:none; } .snack::after { animation:none; display:none; } * { transition:none !important; } }

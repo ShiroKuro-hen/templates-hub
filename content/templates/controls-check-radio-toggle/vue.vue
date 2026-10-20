@@ -30,7 +30,7 @@ input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 input:disabled { opacity: .5; }
 input::before { content: ""; position: absolute; opacity: 0; }
 input:checked::before { opacity: 1; }
-[type=checkbox] { border-radius: 5px; }
+[type=checkbox] { border-radius: min(var(--radius),5px); }
 [type=checkbox]:checked { background: var(--accent); border-color: var(--accent); }
 [type=checkbox]::before { left: 6px; top: 2px; width: 5px; height: 10px; border: solid var(--accent-ink); border-width: 0 2px 2px 0; transform: rotate(45deg); }
 [type=radio] { border-radius: 50%; }
@@ -38,7 +38,7 @@ input:checked::before { opacity: 1; }
 [type=radio]:checked { border-color: var(--accent); }
 [role=switch] { width: 40px; height: 24px; border-radius: 12px; background: var(--border); border-color: transparent; }
 [role=switch]::before { opacity: 1; left: 2px; top: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--muted); }
-[role=switch]:checked { background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+[role=switch]:checked { background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 [role=switch]:checked::before { transform: translateX(16px); background: #fff; }
 @media (prefers-reduced-motion: no-preference) { input, input::before { transition: transform .14s, background-color .14s, border-color .14s; } }
 /* Tokens: ver pestaña HTML + CSS */

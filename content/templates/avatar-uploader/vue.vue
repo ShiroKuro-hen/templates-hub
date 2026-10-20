@@ -59,7 +59,7 @@ onBeforeUnmount(revoke);
 h2{margin:0;font-size:16px;font-weight:600}
 .muted{margin:2px 0 0;color:var(--muted)}
 .row{display:flex;flex-wrap:wrap;gap:24px;align-items:center;margin:20px 0}
-.ring{flex:none;padding:1px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#2f5bff);box-shadow:0 0 0 5px var(--accent-soft)}
+.ring{flex:none;padding:1px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));box-shadow:0 0 0 5px var(--accent-soft)}
 .avatar{display:grid;place-items:center;width:128px;height:128px;border-radius:50%;overflow:hidden;background:var(--surface);color:var(--muted)}
 .avatar img{width:100%;height:100%;object-fit:cover;transform:scale(var(--z,1));transition:transform .12s}
 .avatar svg{width:64px;height:64px;fill:currentColor}

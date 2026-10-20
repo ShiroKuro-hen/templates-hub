@@ -9,14 +9,15 @@ const ionCss = readFileSync(join(root, 'content', 'templates', 'alert-variants',
 
 const MODES = ['light', 'dark'];
 const BACKDROP = { light: [255, 255, 255], dark: [0, 0, 0] };
-const PAIRS = [['--text', '--bg'], ['--text', '--surface'], ['--muted', '--surface'], ['--accent-ink', '--accent'], ['--accent', '--surface']];
+const PAIRS = [['--text', '--bg'], ['--text', '--surface'], ['--muted', '--surface'], ['--accent-ink', '--accent'], ['--accent', '--surface'],
+  ...['ok', 'warn', 'err', 'info'].map((s) => ['--text', `--${s}-soft`])];
 const MIN_RATIO = 4.5;
 const KEBAB = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 const declarations = (block) => Object.fromEntries([...block.matchAll(/(--[a-z-]+):\s*([^;]+)/g)].map(([, k, v]) => [k, v.trim()]));
 const lightBase = declarations(ionCss.match(/:root\{([^}]*)\}/)[1]);
 const ION = { light: lightBase, dark: { ...lightBase, ...declarations(ionCss.match(/:root\[data-theme=dark\]\{([^}]*)\}/)[1]) } };
-const TOKENS = Object.keys(lightBase);
+const TOKENS = [...Object.keys(lightBase), '--accent-2'];
 
 function parseColor(value) {
   const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)?.[1];

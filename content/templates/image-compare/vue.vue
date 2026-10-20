@@ -44,7 +44,7 @@ h2{margin:0;font-size:16px;font-weight:600}
 .bg{fill:var(--warn-soft)}.sun{fill:var(--warn)}.far{fill:var(--accent)}.near{fill:var(--ok)}.lake{fill:var(--info)}
 .tag{position:absolute;top:10px;padding:2px 10px;font-size:12px;font-weight:500;background:var(--surface);border:1px solid var(--border);border-radius:999px}
 .tag.a{left:10px}.tag.d{right:10px}
-.line{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:linear-gradient(135deg,#22d3ee,#2f5bff);pointer-events:none}
+.line{position:absolute;top:0;bottom:0;left:var(--p);width:2px;margin-left:-1px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));pointer-events:none}
 .knob{position:absolute;top:50%;left:var(--p);display:grid;place-items:center;width:36px;height:36px;margin:-18px 0 0 -18px;color:var(--accent);background:var(--surface);border:1px solid var(--border);border-radius:50%;box-shadow:var(--shadow);pointer-events:none}
 .knob svg{width:20px;height:20px;fill:currentColor}
 .cmp input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize}

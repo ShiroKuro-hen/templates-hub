@@ -60,13 +60,13 @@ async function save(c: Consent) {
 .btn.primary{color:var(--accent-ink);background:var(--accent);border-color:var(--accent)}
 .btn.primary:hover{filter:brightness(1.08)}
 details{margin-top:16px;border-top:1px solid var(--border)}
-summary{width:fit-content;margin-top:12px;padding:2px 4px;border-radius:4px;color:var(--accent);font-weight:600;cursor:pointer}
+summary{width:fit-content;margin-top:12px;padding:2px 4px;border-radius:min(var(--radius),4px);color:var(--accent);font-weight:600;cursor:pointer}
 .opt{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--border)}
 .opt b{display:block;font-weight:600}
 .opt small{display:block;color:var(--muted);font-size:13px}
 .switch{appearance:none;flex:none;position:relative;width:36px;height:20px;margin:2px 0 0;border:1px solid var(--border);border-radius:999px;background:var(--bg);cursor:pointer;transition:background .14s}
 .switch::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--muted);transition:transform .14s}
-.switch:checked{border-color:transparent;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.switch:checked{border-color:transparent;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .switch:checked::after{transform:translateX(16px);background:var(--surface)}
 .switch:disabled{opacity:.6;cursor:not-allowed}
 .btn:focus-visible,summary:focus-visible,.switch:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

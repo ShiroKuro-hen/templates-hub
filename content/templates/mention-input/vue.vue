@@ -60,7 +60,7 @@ textarea{display:block;width:100%;box-sizing:border-box;resize:vertical;font:inh
 .list li[aria-selected=true]{background:var(--accent-soft)}
 .list .none{color:var(--muted);cursor:default}
 .av{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:600}
-[aria-selected=true] .av{background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#fff}
+[aria-selected=true] .av{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));color:#fff}
 .who{display:grid;line-height:1.3}
 .who small{color:var(--muted)}
 .meta{margin:10px 0 0;min-height:24px;font-size:12px;color:var(--muted)}

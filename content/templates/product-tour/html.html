@@ -23,14 +23,14 @@
   .row small{color:var(--muted);font-variant-numeric:tabular-nums}
   .dots{display:flex;gap:4px;margin-left:auto}
   .dots i{width:6px;height:6px;border-radius:999px;background:var(--border)}
-  .dots i.on{width:16px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .dots i.on{width:16px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   .btns{display:flex;gap:8px;margin-top:12px}
   .btns .ctl{height:32px}
   .btns .ctl:disabled{opacity:.5;cursor:default}
-  .link{margin-left:auto;background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;border-radius:4px}
+  .link{margin-left:auto;background:none;border:0;color:var(--muted);font:inherit;cursor:pointer;border-radius:min(var(--radius),4px)}
   .link:hover{color:var(--text)}
   .pop .hint{margin:12px 0 0;padding-top:10px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
-  kbd{padding:0 5px;border:1px solid var(--border);border-radius:4px;background:var(--bg);font:12px ui-monospace,"Cascadia Code",Menlo,monospace}
+  kbd{padding:0 5px;border:1px solid var(--border);border-radius:min(var(--radius),4px);background:var(--bg);font:12px ui-monospace,"Cascadia Code",Menlo,monospace}
   #again{position:absolute;right:16px;bottom:16px}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}

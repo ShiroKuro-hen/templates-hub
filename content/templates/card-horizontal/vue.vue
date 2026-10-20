@@ -21,7 +21,7 @@ withDefaults(defineProps<{ articulos?: Articulo[] }>(), {
     <article v-for="a in articulos" :key="a.id" class="card" :class="{ rev: a.invertida }">
       <div class="art">
         <svg viewBox="0 0 240 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
-          <defs><linearGradient :id="`g-${a.id}`" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient :id="`g-${a.id}`" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
           <rect class="bg" width="240" height="180" />
           <template v-if="a.arte === 'linea'">
             <path class="gl" d="M0 45H240M0 90H240M0 135H240M60 0V180M120 0V180M180 0V180" />

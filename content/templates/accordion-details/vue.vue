@@ -28,7 +28,7 @@ details[open] { border-color: var(--accent); }
 summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; font-weight: 600; cursor: pointer; list-style: none; border-radius: var(--radius); }
 summary::-webkit-details-marker { display: none; }
 summary::after { content: "+"; display: grid; place-items: center; flex: none; width: 24px; height: 24px; font-size: 16px; line-height: 1; background: var(--accent-soft); color: var(--accent); border-radius: 50%; transition: transform 160ms; }
-details[open] summary::after { content: "−"; transform: rotate(180deg); background: linear-gradient(135deg, #22d3ee, #2f5bff); color: #fff; }
+details[open] summary::after { content: "−"; transform: rotate(180deg); background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); color: #fff; }
 summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 p { margin: 0; padding: 0 16px 14px; color: var(--muted); }
 details::details-content { block-size: 0; overflow: clip; transition: block-size 160ms ease, content-visibility 160ms allow-discrete; }

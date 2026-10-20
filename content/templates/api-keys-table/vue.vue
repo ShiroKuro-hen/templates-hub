@@ -92,7 +92,7 @@ tr.revoked code{text-decoration:line-through}
 .badge{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
 .badge::before{content:"";width:8px;height:8px;border-radius:999px;background:currentColor}
 .badge.ok{background:var(--ok-soft)}
-.badge.ok::before{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.badge.ok::before{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .badge.warn{background:var(--warn-soft)}
 .badge.warn::before{background:var(--warn)}
 .badge.err{background:var(--err-soft)}

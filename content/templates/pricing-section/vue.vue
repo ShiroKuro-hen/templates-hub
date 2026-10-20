@@ -50,14 +50,14 @@ h2{margin:0 0 8px;font-size:clamp(24px,4vw,32px);line-height:1.2;letter-spacing:
 header p{margin:0 auto 20px;max-width:52ch;color:var(--muted)}
 fieldset{border:0;margin:0;padding:0;min-width:0;display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
 .toggle{display:inline-flex;gap:2px;padding:3px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
-.toggle label{position:relative;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:500;color:var(--muted);transition:background .14s,color .14s}
+.toggle label{position:relative;padding:6px 16px;border-radius:min(var(--radius),6px);cursor:pointer;font-weight:500;color:var(--muted);transition:background .14s,color .14s}
 .toggle input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
 .toggle label:has(:checked){background:var(--accent);color:var(--accent-ink)}
 .toggle label:has(:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
 .badge{padding:2px 10px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-size:12px;font-weight:600}
 .plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
 .plan{display:flex;flex-direction:column;gap:16px;padding:24px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-.plan.pop{border-color:transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box}
+.plan.pop{border-color:transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) border-box}
 .plan h3{display:flex;justify-content:space-between;align-items:center;margin:0;font-size:16px}
 .plan h3 .badge{background:var(--accent-soft);color:var(--accent)}
 .plan p{margin:0;color:var(--muted)}

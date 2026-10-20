@@ -17,7 +17,7 @@ const initials = (s: string) => s.split(' ').map((w) => w[0]).slice(0, 2).join('
 <template>
   <article class="article">
     <svg class="cover" viewBox="0 0 320 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs><linearGradient id="ln" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+      <defs><linearGradient id="ln" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
       <path d="M0 40h320M0 80h320M0 120h320M80 0v160M160 0v160M240 0v160" fill="none" stroke="currentColor" stroke-opacity=".25" />
       <path d="M0 130 C60 120 90 60 150 70 S250 30 320 20" fill="none" stroke="url(#ln)" stroke-width="3" />
       <circle cx="150" cy="70" r="5" fill="currentColor" />

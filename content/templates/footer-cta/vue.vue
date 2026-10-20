@@ -28,7 +28,7 @@ const idiomas = ['Español', 'English', 'Português'];
         <div class="about">
           <a class="brand" href="#" aria-label="Nimbo, inicio">
             <svg viewBox="0 0 24 24" aria-hidden="true">
-              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
               <rect width="24" height="24" rx="6" fill="url(#g)" />
               <path d="M7 16.5a3.5 3.5 0 0 1 .6-6.9A4.5 4.5 0 0 1 16.3 10a3.3 3.3 0 0 1 .7 6.5z" fill="#fff" />
             </svg>
@@ -54,8 +54,8 @@ const idiomas = ['Español', 'English', 'Português'];
 <style scoped>
 .page{max-width:1100px;margin:0 auto;color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 a{color:inherit;text-decoration:none}
-a:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
-.cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:32px;border:1px solid transparent;border-radius:var(--radius);background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box;box-shadow:var(--shadow)}
+a:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),4px)}
+.cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;padding:32px;border:1px solid transparent;border-radius:var(--radius);background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) border-box;box-shadow:var(--shadow)}
 .cta h2{margin:0 0 4px;font-size:clamp(22px,3.5vw,28px);line-height:1.25;letter-spacing:-.02em}
 .cta p{margin:0;max-width:46ch;color:var(--muted)}
 .actions{display:flex;flex-wrap:wrap;gap:12px}

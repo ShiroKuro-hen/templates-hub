@@ -19,7 +19,7 @@ defineProps<{ stats: Stat[] }>();
 <style scoped>
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
 .stat { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 4px; padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
-.stat:first-child::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.stat:first-child::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .stat small { color: var(--muted); font-size: .8125rem; font-weight: 500; }
 .stat strong { font-size: 2rem; font-weight: 700; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .up, .down { align-self: flex-start; padding: 2px 8px; border-radius: 999px; font-size: .75rem; font-weight: 600; font-variant-numeric: tabular-nums; }

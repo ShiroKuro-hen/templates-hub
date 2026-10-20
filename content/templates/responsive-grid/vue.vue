@@ -23,6 +23,6 @@ withDefaults(defineProps<{ min?: number }>(), { min: 160 });
   box-shadow: var(--shadow); padding: 16px; min-height: 90px; font-weight: 600;
 }
 .item.wide { grid-column: span 2; background: var(--accent-soft); }
-.item.wide::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.item.wide::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 /* Tokens: ver pestaña HTML + CSS */
 </style>

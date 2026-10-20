@@ -30,7 +30,7 @@ const stateOf = (i: number) => (i < cur.value ? 'done' : i === cur.value ? 'curr
 <style scoped>
 .steps { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0 0 20px; padding: 0; list-style: none; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
 .step { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 13px; font-weight: 500; color: var(--muted); }
-.step::before { content: ""; position: absolute; top: 17px; right: 50%; width: 100%; height: 2px; background: linear-gradient(90deg, #22d3ee, #2f5bff); }
+.step::before { content: ""; position: absolute; top: 17px; right: 50%; width: 100%; height: 2px; background: linear-gradient(90deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .step:first-child::before { display: none; }
 .dot { position: relative; z-index: 1; display: grid; place-items: center; width: 36px; height: 36px; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; background: var(--surface); color: var(--muted); border: 1px solid var(--border); border-radius: 50%; }
 .step[data-state="done"], .step[data-state="current"] { color: var(--text); }

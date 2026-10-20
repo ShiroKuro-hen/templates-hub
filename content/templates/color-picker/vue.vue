@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue';
 
 const MUESTRAS = [
-  ['Ultramar', '#2f5bff'], ['Cian', '#0891b2'], ['Esmeralda', '#0e9f6e'], ['Ámbar', '#b7791f'],
+  ['Ultramar', 'var(--accent,#2f5bff)'], ['Cian', '#0891b2'], ['Esmeralda', '#0e9f6e'], ['Ámbar', '#b7791f'],
   ['Coral', '#d92d4a'], ['Violeta', '#7c3aed'], ['Pizarra', '#334155'], ['Grafito', '#0e1726'],
 ];
 const HEX = /^#[0-9a-f]{6}$/i;
@@ -16,8 +16,8 @@ const ratio = (a: number[], b: number[]) => {
   return (p + 0.05) / (q + 0.05);
 };
 
-const hex = ref('#2f5bff');
-const texto = ref('#2F5BFF');
+const hex = ref('var(--accent,#2f5bff)');
+const texto = ref('var(--accent,#2f5bff)');
 const error = ref(false);
 const v = computed(() => [1, 3, 5].map((i) => parseInt(hex.value.slice(i, i + 2), 16)));
 const contrastes = computed(() =>
@@ -56,7 +56,7 @@ function onBlur() {
       </div>
       <p class="rgb">rgb({{ v.join(', ') }})</p>
     </div>
-    <p id="xe" class="err" role="alert">{{ error ? 'Escribe un HEX de 6 dígitos, como #2F5BFF.' : '' }}</p>
+    <p id="xe" class="err" role="alert">{{ error ? 'Escribe un HEX de 6 dígitos, como var(--accent,#2f5bff).' : '' }}</p>
     <fieldset class="sws">
       <legend>Muestras</legend>
       <button v-for="[n, h] in MUESTRAS" :key="h" type="button" class="sw" :style="{ '--c': h }"
@@ -69,7 +69,7 @@ function onBlur() {
 .card{max-width:460px;margin:0 auto;padding:24px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 h1{margin:0;font-size:18px;line-height:1.3}
 .sub{margin:2px 0 16px;color:var(--muted)}
-.prev{display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px 20px;min-height:88px;padding:14px 16px;border-radius:var(--radius);background:linear-gradient(135deg,var(--c) 60%,color-mix(in srgb,var(--c) 55%,#22d3ee));font-size:18px;font-weight:600}
+.prev{display:flex;flex-wrap:wrap;align-items:flex-end;gap:4px 20px;min-height:88px;padding:14px 16px;border-radius:var(--radius);background:linear-gradient(135deg,var(--c) 60%,color-mix(in srgb,var(--c) 55%,var(--accent-2,#22d3ee)));font-size:18px;font-weight:600}
 .prev span:first-child{color:#fff}
 .prev span:last-child{color:#000}
 .ratios{display:grid;gap:6px;margin:12px 0 16px;padding:0;list-style:none;font-variant-numeric:tabular-nums}

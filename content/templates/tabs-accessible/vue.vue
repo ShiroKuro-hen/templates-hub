@@ -50,7 +50,7 @@ function onKeyDown(e: KeyboardEvent, n: number) {
 [role="tab"] { position:relative; padding:10px 14px; font:inherit; font-weight:500; color:var(--muted); background:none; border:0; border-radius:var(--radius) var(--radius) 0 0; white-space:nowrap; cursor:pointer; transition:color .14s, background .14s; }
 [role="tab"]:hover { color:var(--text); background:var(--surface); }
 [role="tab"][aria-selected="true"] { color:var(--accent); }
-[role="tab"][aria-selected="true"]::after { content:""; position:absolute; left:8px; right:8px; bottom:-1px; height:2px; border-radius:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+[role="tab"][aria-selected="true"]::after { content:""; position:absolute; left:8px; right:8px; bottom:-1px; height:2px; border-radius:min(var(--radius),2px); background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
 [role="tab"]:focus-visible { outline-offset:-2px; }
 [role="tabpanel"] { padding:16px 18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
 p { margin:0; max-width:52ch; }

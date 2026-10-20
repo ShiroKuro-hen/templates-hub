@@ -47,7 +47,7 @@ h2{margin:24px 0 8px;font-size:15px}
 code{font:13px ui-monospace,"Cascadia Code",Menlo,monospace}
 .route{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);overflow-x:auto}
 .m{flex:none;display:inline-flex;align-items:center;gap:6px;padding:1px 10px;font-weight:600;background:var(--ok-soft);border-radius:999px}
-.m::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.m::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .route code{white-space:nowrap}
 p{margin:12px 0 0;color:var(--muted);max-width:64ch}
 .tw{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius)}

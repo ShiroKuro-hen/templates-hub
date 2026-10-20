@@ -78,7 +78,7 @@ function submit() {
 h1{margin:0;font-size:18px;line-height:1.3}
 .sub{margin:2px 0 14px;color:var(--muted);font-variant-numeric:tabular-nums}
 .bar{height:6px;margin-bottom:22px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+.bar i{display:block;height:100%;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .16s}
 fieldset{border:0;margin:0;padding:0;min-width:0}
 legend{padding:0;margin-bottom:12px;font-size:16px;font-weight:600}
 .f{display:grid;gap:6px;margin-bottom:14px}

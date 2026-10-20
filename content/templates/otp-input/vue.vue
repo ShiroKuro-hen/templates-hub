@@ -63,7 +63,7 @@ legend{padding:0;font-size:16px;font-weight:600}
 .otp input:not(:placeholder-shown){border-color:var(--accent);background:var(--accent-soft)}
 .otp input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .bar{height:2px;margin-top:12px;border-radius:999px;background:var(--border);overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(135deg,#22d3ee,#2f5bff);transform-origin:left;transform:scaleX(var(--p,0));transition:transform .16s}
+.bar i{display:block;height:100%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transform-origin:left;transform:scaleX(var(--p,0));transition:transform .16s}
 .actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;flex-wrap:wrap}
 button{font:inherit;font-weight:600;padding:8px 16px;border-radius:var(--radius);cursor:pointer;transition:opacity .14s}
 button[type=submit]{color:var(--accent-ink);background:var(--accent);border:1px solid var(--accent)}

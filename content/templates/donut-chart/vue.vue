@@ -68,7 +68,7 @@ h2{margin:0 0 8px;font-size:16px;font-weight:600}
 .legend button{display:flex;gap:10px;align-items:center;width:100%;padding:6px 8px;border:1px solid transparent;border-radius:var(--radius);background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;transition:background .14s,border-color .14s}
 .legend button:hover,.legend button.on{border-color:var(--border);background:var(--accent-soft)}
 .legend button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.dot{flex:none;width:10px;height:10px;border-radius:3px;background:var(--c)}
+.dot{flex:none;width:10px;height:10px;border-radius:min(var(--radius),3px);background:var(--c)}
 .name{flex:1}
 .val{color:var(--muted);font-variant-numeric:tabular-nums}
 @media(prefers-reduced-motion:reduce){.seg,.legend button{transition:none}}

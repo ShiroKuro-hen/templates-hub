@@ -54,7 +54,7 @@ ol{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:4px}
 .me{padding:0 8px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-size:12px;font-weight:600}
 .bar{height:6px;margin-top:6px;border-radius:999px;background:var(--border);overflow:hidden}
 .bar::after{content:"";display:block;width:calc(var(--v) * 1%);height:100%;border-radius:999px;background:var(--accent)}
-.row:first-child .bar::after{background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+.row:first-child .bar::after{background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .pts{flex:none;font-weight:600;font-variant-numeric:tabular-nums}
 .pts small{font-weight:400;color:var(--muted)}
 @media (max-width:400px){.av{display:none}}

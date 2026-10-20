@@ -83,7 +83,7 @@ h3 a::after,h2 a::after{content:"";position:absolute;inset:0}
 .who{display:flex;align-items:center;gap:8px;color:var(--text)}
 .av{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-size:10px;font-weight:700}
 .feat{grid-template-columns:1.1fr 1fr;margin-bottom:16px}
-.feat .cover{aspect-ratio:auto;min-height:240px;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.18) 14px 15px),linear-gradient(135deg,#22d3ee,#2f5bff)}
+.feat .cover{aspect-ratio:auto;min-height:240px;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.18) 14px 15px),linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .feat .body{gap:12px;padding:28px;align-content:center}
 .feat h2{font-size:clamp(22px,3vw,28px)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}

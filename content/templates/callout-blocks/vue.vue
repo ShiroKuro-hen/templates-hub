@@ -37,7 +37,7 @@ h1{margin:0 0 8px;font-size:24px;line-height:1.2}
 .co.warn{--c:var(--warn);--s:var(--warn-soft)}
 .co.err{--c:var(--err);--s:var(--err-soft)}
 .ic{display:grid;place-items:center;width:22px;height:22px;color:var(--c)}
-.imp .ic{color:#fff;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.imp .ic{color:#fff;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .t{align-self:center;margin:0;font-weight:600}
 .co div{grid-column:2}
 .co div>p{margin:0}

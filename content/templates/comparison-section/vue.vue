@@ -58,7 +58,7 @@ thead th{padding-top:16px;font-size:15px;font-weight:600;vertical-align:bottom}
 th[scope=row]{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;font-weight:500}
 thead th:first-child{text-align:left;color:var(--muted);font-weight:500}
 .us{background:var(--accent-soft)}
-thead .us span{display:inline-block;padding:2px 10px;border-radius:999px;color:var(--accent-ink);background:linear-gradient(135deg,#22d3ee,#2f5bff);font-size:13px}
+thead .us span{display:inline-block;padding:2px 10px;border-radius:999px;color:var(--accent-ink);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));font-size:13px}
 td:not(.us){color:var(--muted)}
 tbody tr{transition:background .14s}
 tbody tr:hover :is(td:not(.us),th){background:var(--accent-soft)}

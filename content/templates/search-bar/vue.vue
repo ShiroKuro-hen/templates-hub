@@ -39,7 +39,7 @@ function clear() { value.value = ''; input.value?.focus(); }
 
 <style scoped>
 .box { position: relative; }
-.box::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px; border-radius: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); opacity: 0; transition: opacity .14s; pointer-events: none; }
+.box::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; height: 2px; border-radius: min(var(--radius),2px); background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); opacity: 0; transition: opacity .14s; pointer-events: none; }
 .box:focus-within::after { opacity: 1; }
 .box > svg { position: absolute; left: 12px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; pointer-events: none; }
 input { width: 100%; height: 42px; padding: 0 44px 0 40px; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); appearance: none; }
@@ -53,7 +53,7 @@ ul { margin: 0; padding: 0; max-height: 220px; overflow: auto; list-style: none;
 li { display: flex; justify-content: space-between; gap: 8px; padding: 9px 14px; border-bottom: 1px solid var(--border); }
 li:last-child { border-bottom: 0; }
 li span { color: var(--muted); font-size: 13px; }
-:deep(mark) { color: var(--accent); background: var(--accent-soft); font-weight: 600; border-radius: 3px; }
+:deep(mark) { color: var(--accent); background: var(--accent-soft); font-weight: 600; border-radius: min(var(--radius),3px); }
 .empty { display: block; padding: 16px 14px; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 /* Tokens: ver pestaña HTML + CSS */

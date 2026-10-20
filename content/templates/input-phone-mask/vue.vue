@@ -78,7 +78,7 @@ option{background:var(--surface);color:var(--text)}
 input{flex:1;font-variant-numeric:tabular-nums;border-radius:0 var(--radius) var(--radius) 0}
 select:focus-visible,input:focus-visible{outline:0}
 .meter{height:4px;margin-top:8px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
-.meter i{display:block;height:100%;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+.meter i{display:block;height:100%;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .16s}
 .hint{min-height:21px;margin:8px 0 0;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
 .hint.err{color:var(--err)}
 .hint.ok{color:var(--ok)}

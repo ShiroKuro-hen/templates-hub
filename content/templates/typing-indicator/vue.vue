@@ -63,7 +63,7 @@ p{margin:0;padding:8px 12px;border:1px solid var(--border);border-radius:var(--r
 .st[data-s=read]{color:var(--accent)}
 .typing p{display:flex;align-items:center;gap:4px;height:20px}
 .typing[hidden]{display:none}
-.dots i{width:6px;height:6px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);animation:b 1.1s ease-in-out infinite}
+.dots i{width:6px;height:6px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));animation:b 1.1s ease-in-out infinite}
 .dots i:nth-child(2){animation-delay:.15s}
 .dots i:nth-child(3){animation-delay:.3s}
 @keyframes b{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}

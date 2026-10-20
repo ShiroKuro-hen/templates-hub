@@ -51,7 +51,7 @@ function submit(e: Event) {
 
 <style scoped>
 .card{max-width:440px;margin:0 auto;padding:28px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.logo{width:32px;height:32px;border-radius:var(--radius);background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.logo{width:32px;height:32px;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 h1{margin:16px 0 4px;font-size:20px;line-height:1.3}
 .sub{margin:0 0 20px;color:var(--muted)}
 .providers{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px}

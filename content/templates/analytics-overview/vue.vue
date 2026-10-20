@@ -48,7 +48,7 @@ const label = computed(() => {
       <svg viewBox="0 0 600 200" preserveAspectRatio="none" role="img" :aria-label="label">
         <defs>
           <linearGradient id="ao-g" gradientUnits="userSpaceOnUse" x1="0" x2="600">
-            <stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" />
+            <stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" />
           </linearGradient>
         </defs>
         <g class="grid"><line v-for="y in [50, 100, 150, 200]" :key="y" x1="0" x2="600" :y1="y" :y2="y" /></g>
@@ -68,7 +68,7 @@ h2{margin:0;font-size:18px;font-weight:600}
 .range{display:inline-flex;margin:0;padding:3px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg)}
 .range label{position:relative}
 .range input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.range span{display:block;padding:5px 12px;border-radius:6px;color:var(--muted);transition:background .14s,color .14s}
+.range span{display:block;padding:5px 12px;border-radius:min(var(--radius),6px);color:var(--muted);transition:background .14s,color .14s}
 .range input:checked+span{background:var(--surface);color:var(--text);font-weight:600;box-shadow:var(--shadow)}
 .range input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

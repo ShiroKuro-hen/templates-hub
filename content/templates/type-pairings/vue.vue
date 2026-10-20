@@ -43,7 +43,7 @@ article{display:flex;flex-direction:column;padding:20px;background:var(--surface
 .spec h3{margin:0 0 8px;font:700 24px/1.2 var(--d);letter-spacing:-.01em;text-wrap:balance}
 .spec p{margin:0 0 12px;font:16px/1.6 var(--b);max-width:60ch}
 .nums{display:flex;flex-wrap:wrap;align-items:center;gap:2px 14px;font:600 13px var(--b);font-variant-numeric:tabular-nums;color:var(--muted)}
-.nums i{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.nums i{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 code{display:block;margin-top:auto;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);font:12px/1.6 var(--mono);white-space:pre-wrap}
 /* Tokens: ver pestaña HTML + CSS */
 </style>

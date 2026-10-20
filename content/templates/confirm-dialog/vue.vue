@@ -63,7 +63,7 @@ p{margin:4px 0 0;color:var(--muted)}
 .btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
 .btn:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 dialog{width:min(440px,calc(100% - 32px));box-sizing:border-box;padding:24px;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-dialog::before{content:"";position:absolute;top:0;left:8px;right:8px;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+dialog::before{content:"";position:absolute;top:0;left:8px;right:8px;height:1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 dialog::backdrop{background:rgba(10,15,28,.5)}
 dialog h2{font-size:18px}
 .icon{display:grid;place-items:center;width:40px;height:40px;margin-bottom:12px;border-radius:50%;color:var(--err);background:var(--err-soft)}

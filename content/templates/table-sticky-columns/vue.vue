@@ -47,7 +47,7 @@ thead th{position:sticky;top:0;z-index:1;font-weight:600;color:var(--muted)}
 th[scope=row]{font-weight:600}
 .fix{position:sticky;left:0;z-index:2}
 thead .fix{z-index:3}
-.fix::after{content:"";position:absolute;top:0;right:0;bottom:0;width:1px;background:linear-gradient(180deg,#22d3ee,#2f5bff)}
+.fix::after{content:"";position:absolute;top:0;right:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .num{text-align:right;font-variant-numeric:tabular-nums}
 tbody tr:hover>*{background:var(--accent-soft)}
 tbody tr>*{transition:background .14s}

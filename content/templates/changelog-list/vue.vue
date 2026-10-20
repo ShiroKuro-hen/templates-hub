@@ -61,7 +61,7 @@ ol{margin-left:5px;border-left:1px solid var(--border)}
 .rel{position:relative;padding:0 0 28px 24px}
 .rel:last-child{padding-bottom:0}
 .rel::before{content:"";position:absolute;left:-6px;top:6px;width:11px;height:11px;border-radius:999px;background:var(--surface);border:1px solid var(--muted)}
-.rel.last::before{border-color:transparent;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.rel.last::before{border-color:transparent;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .rel h2{display:inline;margin:0;font-size:18px;font-variant-numeric:tabular-nums}
 .rel time{margin-left:10px;color:var(--muted)}
 .rel ul{margin-top:10px}

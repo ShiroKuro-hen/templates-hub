@@ -22,7 +22,7 @@ function onClose() {
     <dialog ref="dlg" aria-labelledby="ttl" aria-describedby="desc" @click.self="dlg?.close()" @close="onClose">
       <figure>
         <svg viewBox="0 0 440 150" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
           <rect width="440" height="150" style="fill: var(--accent-soft)" />
           <g transform="translate(56 24)">
             <rect width="170" height="104" rx="8" style="fill: var(--surface); stroke: var(--border)" />

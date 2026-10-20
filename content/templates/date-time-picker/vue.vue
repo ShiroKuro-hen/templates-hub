@@ -64,7 +64,7 @@ input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline
 input[aria-invalid=true]{border-color:var(--err)}
 .err{min-height:21px;margin:10px 0 0;color:var(--err);font-size:13px}
 .sum{position:relative;margin-top:8px;padding:14px 16px 14px 28px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
-.sum::before{content:"";position:absolute;left:12px;top:14px;bottom:14px;width:4px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.sum::before{content:"";position:absolute;left:12px;top:14px;bottom:14px;width:4px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .sum h2{margin:0;font-size:13px;font-weight:600;color:var(--muted)}
 .when{margin:2px 0 0;font-size:20px;font-weight:600;line-height:1.3;font-variant-numeric:tabular-nums}
 .day,.zone{margin:0;color:var(--muted)}

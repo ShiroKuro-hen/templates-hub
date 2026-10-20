@@ -41,7 +41,7 @@ h2 { margin: 0 0 8px; font-size: clamp(1.6rem, 4.5vw, 2.2rem); font-weight: 700;
 details { position: relative; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); transition: border-color .14s, box-shadow .14s; }
 details:hover { border-color: var(--muted); }
 details[open] { border-color: var(--accent); box-shadow: var(--shadow); }
-details[open]::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: linear-gradient(180deg, #22d3ee, #2f5bff); }
+details[open]::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: linear-gradient(180deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 summary { display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 14px 16px; font-weight: 600; cursor: pointer; list-style: none; }
 summary::-webkit-details-marker { display: none; }
 summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; border-radius: var(--radius); }

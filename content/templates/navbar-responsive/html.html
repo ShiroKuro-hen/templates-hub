@@ -18,11 +18,11 @@
   .menu a:not(.btn) { position:relative; display:block; padding:6px 10px; border-radius:var(--radius); color:var(--muted); font-weight:500; text-decoration:none; transition:background .14s, color .14s; }
   .menu a:not([aria-current]):not(.btn):hover { color:var(--text); background:var(--bg); }
   .menu a[aria-current] { color:var(--accent); background:var(--accent-soft); }
-  .menu a[aria-current]::after { content:""; position:absolute; left:10px; right:10px; bottom:2px; height:2px; border-radius:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+  .menu a[aria-current]::after { content:""; position:absolute; left:10px; right:10px; bottom:2px; height:2px; border-radius:min(var(--radius),2px); background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
   .btn { padding:7px 14px; border-radius:var(--radius); background:var(--accent); color:var(--accent-ink); font-weight:600; text-decoration:none; transition:filter .14s; }
   .btn:hover { filter:brightness(1.1); }
   .burger { display:none; position:relative; width:40px; height:40px; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); cursor:pointer; }
-  .burger span, .burger span::before, .burger span::after { position:absolute; left:0; right:0; height:2px; border-radius:2px; background:var(--text); content:""; transition:transform .14s; }
+  .burger span, .burger span::before, .burger span::after { position:absolute; left:0; right:0; height:2px; border-radius:min(var(--radius),2px); background:var(--text); content:""; transition:transform .14s; }
   .burger span { top:50%; left:11px; right:11px; margin-top:-1px; }
   .burger span::before { transform:translateY(-6px); }
   .burger span::after { transform:translateY(6px); }

@@ -70,7 +70,7 @@ tbody th{font-weight:600}
 .tg:hover{background:var(--accent-soft);color:var(--text)}
 .tg svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .14s}
 .tg[aria-expanded=true] svg{transform:rotate(90deg)}
-tr.open>:first-child,tr.open+tr>:first-child{background-image:linear-gradient(180deg,#22d3ee,#2f5bff);background-position:left;background-size:3px 100%;background-repeat:no-repeat}
+tr.open>:first-child,tr.open+tr>:first-child{background-image:linear-gradient(180deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));background-position:left;background-size:3px 100%;background-repeat:no-repeat}
 tr.open>*{background-color:var(--accent-soft)}
 tr.open+tr>*{background-color:var(--bg)}
 .num{text-align:right;font-variant-numeric:tabular-nums}

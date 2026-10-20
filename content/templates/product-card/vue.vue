@@ -17,7 +17,7 @@ function add() { n.value++; emit('add'); }
     <div class="media">
       <span class="badge">Nuevo</span>
       <svg viewBox="0 0 120 120" role="img" :aria-label="p.nombre">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
         <path d="M22 70V60a38 38 0 0 1 76 0v10" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" />
         <rect x="14" y="64" width="22" height="36" rx="8" fill="currentColor" />
         <rect x="84" y="64" width="22" height="36" rx="8" fill="currentColor" />

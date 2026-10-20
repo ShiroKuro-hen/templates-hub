@@ -59,7 +59,7 @@ function enviar() {
 
 <style scoped>
 .card{max-width:520px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-h2{margin:0;padding:16px 20px;font-size:16px;font-weight:600;border-bottom:1px solid transparent;background:linear-gradient(90deg,#22d3ee,#2f5bff) bottom/100% 1px no-repeat}
+h2{margin:0;padding:16px 20px;font-size:16px;font-weight:600;border-bottom:1px solid transparent;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) bottom/100% 1px no-repeat}
 form{display:grid;gap:16px;padding:20px}
 .alert{--k:var(--info);--ks:var(--info-soft);display:flex;gap:10px;padding:12px 14px;border:1px solid var(--k);border-radius:var(--radius);background:var(--ks)}
 .alert.err{--k:var(--err);--ks:var(--err-soft)}
@@ -70,7 +70,7 @@ form{display:grid;gap:16px;padding:20px}
 .alert p,.alert ul{margin:2px 0 0}
 .alert ul{padding-left:18px}
 .alert a{color:var(--text);font-weight:600;text-decoration-color:var(--k);text-underline-offset:2px}
-.alert a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.alert a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),2px)}
 .field label{display:block;margin-bottom:4px;font-weight:600}
 .field input{box-sizing:border-box;width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;transition:border-color .14s}
 .field input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}

@@ -26,7 +26,7 @@ const state = (v: number) => (v >= props.crit ? ['err', 'Crítico'] : v >= props
 <template>
   <figure>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <defs><linearGradient id="ion" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+      <defs><linearGradient id="ion" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
     </svg>
     <figcaption><strong>Uso de recursos</strong><span>Clúster de producción, últimos 5 minutos</span></figcaption>
     <div class="grid">
@@ -68,6 +68,6 @@ figcaption span{color:var(--muted)}
 .chip.ok{--c:var(--ok);background:var(--ok-soft)} .chip.warn{--c:var(--warn);background:var(--warn-soft)} .chip.err{--c:var(--err);background:var(--err-soft)}
 .legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:12px 0 0;border-top:1px solid var(--border);list-style:none;color:var(--muted);font-size:13px}
 .legend li{display:flex;align-items:center;gap:8px}
-.legend i{width:12px;height:3px;border-radius:2px;background:var(--c)}
+.legend i{width:12px;height:3px;border-radius:min(var(--radius),2px);background:var(--c)}
 /* Tokens: ver pestaña HTML + CSS */
 </style>

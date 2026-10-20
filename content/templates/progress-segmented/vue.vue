@@ -52,7 +52,7 @@ ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(
 li{min-width:0}
 .track{height:8px;border-radius:999px;background:var(--border);overflow:hidden}
 .track i{display:block;height:100%;width:calc(var(--p) * 1%);border-radius:inherit;background:var(--ok);transition:width .16s}
-li[data-s=active] .track i{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+li[data-s=active] .track i{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 strong{display:block;margin-top:10px;font-weight:600;overflow-wrap:anywhere}
 small{color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
 li[data-s=done] small{color:var(--ok)}

@@ -40,7 +40,7 @@ dialog[open] { display:flex; flex-direction:column; animation:slide .16s ease-ou
 dialog::backdrop { background:rgba(10,15,28,.5); }
 header, footer { display:flex; align-items:center; gap:10px; padding:12px 16px; }
 header { position:relative; justify-content:space-between; border-bottom:1px solid var(--border); }
-header::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+header::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
 footer { justify-content:flex-end; border-top:1px solid var(--border); }
 h2 { margin:0; font-size:16px; font-weight:600; }
 .x { width:32px; height:32px; font-size:20px; line-height:1; color:var(--muted); background:none; border:0; border-radius:var(--radius); cursor:pointer; transition:background .14s, color .14s; }

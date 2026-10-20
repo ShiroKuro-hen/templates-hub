@@ -34,7 +34,7 @@ async function share() {
     </div>
     <div class="ring">
       <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
-        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
         <circle class="track" cx="60" cy="60" r="52" />
         <circle :key="`a${run}`" class="arc" cx="60" cy="60" r="52" />
       </svg>
@@ -73,7 +73,7 @@ h2{margin:0;font-size:20px;font-weight:600}
 .btn.main{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 #st{min-height:21px;margin:12px 0 0;color:var(--muted)}
 .confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.confetti i{position:absolute;top:-14px;left:var(--x);width:8px;height:12px;border-radius:2px;background:var(--c);opacity:0}
+.confetti i{position:absolute;top:-14px;left:var(--x);width:8px;height:12px;border-radius:min(var(--radius),2px);background:var(--c);opacity:0}
 @keyframes fall{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),360px) rotate(540deg)}}
 @keyframes draw{from{stroke-dashoffset:327}}
 @media (prefers-reduced-motion:no-preference){

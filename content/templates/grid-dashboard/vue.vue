@@ -31,7 +31,7 @@ const pts = computed(() => vals.map((v, i) => `${x(i)},${y(v)}`).join(' '));
       <h2>Ventas diarias</h2>
       <svg ref="svg" :viewBox="`0 0 ${W} ${H}`" role="img" aria-label="Ventas diarias de septiembre: suben de 2,1 a 5,2 miles de dólares en 14 días.">
         <defs>
-          <linearGradient id="lg"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient>
+          <linearGradient id="lg"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient>
           <linearGradient id="af" x1="0" x2="0" y1="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.25" /><stop offset="1" style="stop-color:var(--accent);stop-opacity:0" /></linearGradient>
         </defs>
         <g v-for="t in [0, 2, 4, 6]" :key="t"><line class="gl" :x1="L" :x2="W - 8" :y1="y(t)" :y2="y(t)" /><text class="ax" :x="L - 6" :y="y(t) + 4" text-anchor="end">{{ t }}</text></g>
@@ -86,8 +86,8 @@ ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .m i{display:block;height:100%;width:calc(var(--p) * 1%);border-radius:inherit;background:var(--accent)}
 progress{width:100%;height:8px;border:0;border-radius:999px;background:var(--border);appearance:none;overflow:hidden}
 progress::-webkit-progress-bar{background:var(--border)}
-progress::-webkit-progress-value{border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
-progress::-moz-progress-bar{border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+progress::-webkit-progress-value{border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+progress::-moz-progress-bar{border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .meta p:last-child{margin:8px 0 0;color:var(--muted)}
 .meta .v{margin-bottom:8px}
 @media (min-width:600px){.dash{grid-template-areas:"kpi1 kpi2" "kpi3 kpi4" "chart chart" "tabla meta" "act act"}}

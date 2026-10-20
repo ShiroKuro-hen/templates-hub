@@ -65,8 +65,8 @@ const parts = computed<[string, string][]>(() => [
 .x:hover{color:var(--text);background:var(--accent-soft)}
 progress{display:block;width:100%;height:4px;border:0;background:var(--accent-soft);-webkit-appearance:none;appearance:none}
 progress::-webkit-progress-bar{background:var(--accent-soft)}
-progress::-webkit-progress-value{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
-progress::-moz-progress-bar{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+progress::-webkit-progress-value{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
+progress::-moz-progress-bar{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */

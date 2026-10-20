@@ -39,7 +39,7 @@
 
   svg.setAttribute('height', rows.length * ROW - 12);
   svg.setAttribute('aria-label', 'Ranking de ventas: ' + rows.map((r, i) => `${i + 1}, ${r.label}, ${fmt.format(r.value)} unidades`).join('; '));
-  svg.innerHTML = `<defs><linearGradient id="ion-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>`
+  svg.innerHTML = `<defs><linearGradient id="ion-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--accent-2,#22d3ee)"/><stop offset="1" stop-color="var(--accent,#2f5bff)"/></linearGradient></defs>`
     + rows.map((r, i) => {
       const y = i * ROW;
       return `<text class="label" x="0" y="${y + 14}"><tspan class="rank">${i + 1}  </tspan>${r.label}</text>

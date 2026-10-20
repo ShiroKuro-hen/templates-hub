@@ -16,7 +16,7 @@
   .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; align-items:start; max-width:720px; }
   .box { margin:0; padding:0; list-style:none; overflow:hidden; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); }
   .pad { padding:14px; }
-  .sk { display:block; background:linear-gradient(100deg, var(--border) 30%, var(--bg) 50%, var(--border) 70%) 0 0 / 200% 100%; border-radius:6px; animation:shimmer 1.4s linear infinite; }
+  .sk { display:block; background:linear-gradient(100deg, var(--border) 30%, var(--bg) 50%, var(--border) 70%) 0 0 / 200% 100%; border-radius:min(var(--radius),6px); animation:shimmer 1.4s linear infinite; }
   @keyframes shimmer { to { background-position:-200% 0; } }
   .media { height:84px; border-radius:0; }
   .line { height:10px; margin-top:10px; } .w60 { width:60%; } .w40 { width:40%; } .title { height:14px; width:75%; }
@@ -24,7 +24,7 @@
   .row + .row { border-top:1px solid var(--border); }
   .row > div { flex:1; } .row .line { margin:0; } .row .line + .line { margin-top:8px; }
   .avatar { flex:none; width:34px; height:34px; border-radius:50%; }
-  .real .media { background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+  .real .media { background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
   .real h3 { margin:0; font-size:1rem; font-weight:600; } .real p { margin:2px 0 0; color:var(--muted); }
   .real .avatar { display:grid; place-items:center; color:var(--accent); background:var(--accent-soft); font-weight:600; }
   @media (prefers-reduced-motion:reduce) { .sk { animation:none; } .btn { transition:none; } }

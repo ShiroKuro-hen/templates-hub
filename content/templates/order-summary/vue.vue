@@ -79,7 +79,7 @@ dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:8px 12px}
 dt{color:var(--muted)} dd{margin:0;text-align:right}
 .save{color:var(--ok)}
 .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:12px;border-top:1px solid var(--border);font-size:18px;font-weight:600}
-.bar{height:3px;margin-top:12px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.bar{height:3px;margin-top:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .ghost{margin-left:6px;padding:0 6px;border:0;background:none;color:var(--accent);text-decoration:underline}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */

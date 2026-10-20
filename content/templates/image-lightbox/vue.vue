@@ -68,7 +68,7 @@ dialog::backdrop{background:rgba(10,15,28,.6)}
 .ib svg{width:18px;height:18px;fill:currentColor}
 .x{top:8px;right:8px}.prev,.next{top:50%;margin-top:-18px}.prev{left:8px}.next{right:8px}
 .meter{height:3px;background:var(--border)}
-.meter i{display:block;height:100%;width:calc(var(--p) * 1%);background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .14s}
+.meter i{display:block;height:100%;width:calc(var(--p) * 1%);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .14s}
 .cap{display:flex;justify-content:space-between;gap:12px;padding:12px 16px}
 .cap b{font-weight:600}
 .cap span{color:var(--muted);font-variant-numeric:tabular-nums}

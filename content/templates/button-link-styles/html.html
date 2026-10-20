@@ -12,11 +12,11 @@
   h3{margin:0;font-size:15px}
   p{margin:0 0 12px;color:var(--muted)}
   .l{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
-  .l:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+  .l:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),4px)}
   .l svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .14s}
   .subtle{padding:6px 10px;margin-left:-10px;border-radius:var(--radius);color:var(--muted);transition:background .14s,color .14s}
   .subtle:hover{background:var(--accent-soft);color:var(--text)}
-  .under{color:var(--accent);padding-bottom:2px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#22d3ee,#2f5bff) 0 100%/0 2px no-repeat;transition:background-size .16s}
+  .under{color:var(--accent);padding-bottom:2px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0 100%/0 2px no-repeat;transition:background-size .16s}
   .under:hover,.under:focus-visible{background-size:100% 2px}
   .arrow{color:var(--accent)}
   .arrow:hover svg{transform:translateX(4px)}

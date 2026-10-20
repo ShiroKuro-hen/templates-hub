@@ -29,7 +29,7 @@ const toggle = (f: string) =>
 
 <style scoped>
 .seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
-.seg button { font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 6px 16px; border: 0; border-radius: 6px; background: transparent; color: var(--muted); cursor: pointer; transition: background .14s, color .14s; }
+.seg button { font: 500 14px system-ui, -apple-system, "Segoe UI", sans-serif; padding: 6px 16px; border: 0; border-radius: min(var(--radius),6px); background: transparent; color: var(--muted); cursor: pointer; transition: background .14s, color .14s; }
 .seg button:hover { background: var(--accent-soft); color: var(--text); }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 .seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

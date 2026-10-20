@@ -72,7 +72,7 @@ header h2{margin:0;font-size:16px}
 .shipbox{padding:12px 20px;border-bottom:1px solid var(--border)}
 .ship{margin:0;color:var(--muted);font-size:13px}
 .meter{height:4px;margin-top:6px;border-radius:999px;background:var(--accent-soft);overflow:hidden}
-.meter i{display:block;height:100%;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+.meter i{display:block;height:100%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .16s}
 ul{list-style:none;margin:0;padding:0 20px;flex:1;overflow:auto}
 li{display:grid;grid-template-columns:48px 1fr auto;gap:12px;padding:16px 0;border-bottom:1px solid var(--border)}
 .thumb{width:48px;height:48px;border-radius:var(--radius);background:var(--accent-soft);border:1px solid var(--border)}

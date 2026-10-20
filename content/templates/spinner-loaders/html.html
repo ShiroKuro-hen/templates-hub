@@ -25,7 +25,7 @@
   @keyframes hop { to { transform:translateY(-14px); } }
 
   .bars { display:flex; gap:4px; align-items:center; height:40px; }
-  .bars i { width:5px; height:100%; background:linear-gradient(180deg,#22d3ee,#2f5bff); border-radius:3px; animation:stretch 1s ease-in-out infinite; }
+  .bars i { width:5px; height:100%; background:linear-gradient(180deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); border-radius:min(var(--radius),3px); animation:stretch 1s ease-in-out infinite; }
   .bars i:nth-child(2) { animation-delay:.1s; } .bars i:nth-child(3) { animation-delay:.2s; }
   .bars i:nth-child(4) { animation-delay:.3s; } .bars i:nth-child(5) { animation-delay:.4s; }
   @keyframes stretch { 0%, 100% { transform:scaleY(.3); } 50% { transform:scaleY(1); } }

@@ -40,13 +40,13 @@ const year = new Date().getFullYear();
 
 <style scoped>
 footer { position: relative; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); box-shadow: var(--shadow); overflow: hidden; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-footer::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+footer::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 a { color: inherit; }
-a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: min(var(--radius),4px); }
 .top { display: grid; gap: 32px; padding: 40px 24px 32px; }
 @media (min-width: 900px) { .top { grid-template-columns: 1.3fr repeat(4, 1fr); padding: 48px 32px 36px; } }
 .brand { display: inline-flex; gap: 10px; align-items: center; color: var(--text); font-size: 1.2rem; font-weight: 700; letter-spacing: -.02em; text-decoration: none; }
-.brand span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--radius); background: linear-gradient(135deg, #22d3ee, #2f5bff); color: #fff; font-size: .95rem; }
+.brand span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--radius); background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); color: #fff; font-size: .95rem; }
 .tag { max-width: 26ch; margin: 12px 0 18px; color: var(--muted); }
 .social { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .social a { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--border); border-radius: var(--radius); color: var(--muted); transition: color .14s, border-color .14s, background .14s; }

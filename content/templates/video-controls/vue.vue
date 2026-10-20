@@ -84,14 +84,14 @@ button:hover{background:var(--accent-soft)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 svg.i{width:18px;height:18px;fill:currentColor}
 .time{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-.seek{-webkit-appearance:none;appearance:none;flex:1 1 140px;height:4px;margin:0;border-radius:999px;cursor:pointer;background:linear-gradient(135deg,#22d3ee,#2f5bff) 0/var(--p,0%) 100% no-repeat,var(--border)}
+.seek{-webkit-appearance:none;appearance:none;flex:1 1 140px;height:4px;margin:0;border-radius:999px;cursor:pointer;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0/var(--p,0%) 100% no-repeat,var(--border)}
 .seek::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--surface);border:1px solid var(--accent);box-shadow:var(--shadow)}
 .seek::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--surface);border:1px solid var(--accent)}
 .vol{width:72px;accent-color:var(--accent)}
 .info{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 12px 12px;border-top:1px solid var(--border)}
 .info h2{margin:0;font-size:15px;font-weight:600}
 .hint{margin:0;color:var(--muted);font-size:12px}
-kbd{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:0 4px;border:1px solid var(--border);border-radius:4px}
+kbd{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:0 4px;border:1px solid var(--border);border-radius:min(var(--radius),4px)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */
 </style>

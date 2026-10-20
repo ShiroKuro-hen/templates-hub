@@ -42,7 +42,7 @@ onBeforeUnmount(() => cancelAnimationFrame(raf));
     </div>
     <div class="wave">
       <svg viewBox="0 0 240 48" preserveAspectRatio="none" aria-hidden="true">
-        <defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" x2="240"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="0" x2="240"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
         <rect v-for="(h, k) in bars" :key="k" :x="k * 4" :y="(48 - h) / 2" width="2.4" :height="h" rx="1.2" :class="{ on: k / N < t / cur.d }" />
       </svg>
       <input type="range" min="0" :max="cur.d" step="1" :value="Math.floor(t)" aria-label="Posición de la pista"
@@ -75,7 +75,7 @@ onBeforeUnmount(() => cancelAnimationFrame(raf));
 .cover{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:var(--radius);background:var(--accent-soft);color:var(--accent)}
 .now h2{margin:0;font-size:15px;font-weight:600}
 .now p{margin:0;color:var(--muted)}
-.wave{position:relative;margin:8px 16px 0;height:48px;border-radius:4px}
+.wave{position:relative;margin:8px 16px 0;height:48px;border-radius:min(var(--radius),4px)}
 .wave svg{display:block;width:100%;height:100%}
 .wave rect{fill:var(--muted);opacity:.35;transition:opacity .12s}
 .wave rect.on{fill:url(#g);opacity:1}

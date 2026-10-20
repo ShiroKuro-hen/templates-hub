@@ -27,7 +27,7 @@ const alturas = [60, 80, 50, 90, 70, 40, 30];
 .cell p { margin: 0; }
 .big { font-size: 2rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .hero { grid-area: hero; }
-.hero::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.hero::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .hero .big { font-size: 2.75rem; }
 .kpi { grid-area: kpi; } .streak { grid-area: streak; } .chart { grid-area: chart; } .note { grid-area: note; background: var(--accent-soft); } .tag { grid-area: tag; }
 .bars { display: flex; align-items: flex-end; gap: 6px; height: 56px; }

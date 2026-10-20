@@ -19,7 +19,7 @@ const estado = (k: (typeof kpis)[number]) =>
 <template>
   <section class="card" aria-labelledby="t">
     <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-      <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+      <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
     </svg>
     <div class="head">
       <div><h2 id="t">Objetivos del trimestre</h2><p>Valor actual frente a la meta, con rangos de desempeño.</p></div>
@@ -57,7 +57,7 @@ h2{margin:0;font-size:16px;font-weight:600}
 .head p{margin:2px 0 0;color:var(--muted)}
 .sw{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer}
 .sw input{accent-color:var(--accent);margin:0}
-.sw:has(:focus-visible){outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
+.sw:has(:focus-visible){outline:2px solid var(--accent);outline-offset:4px;border-radius:min(var(--radius),4px)}
 ul{list-style:none;margin:0;padding:0;display:grid;gap:20px}
 .top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 12px;margin-bottom:6px}
 .name{font-weight:600}
@@ -69,14 +69,14 @@ ul{list-style:none;margin:0;padding:0;display:grid;gap:20px}
 .badge.ok{background:var(--ok-soft)}.badge.ok::before{background:var(--ok)}
 .badge.warn{background:var(--warn-soft)}.badge.warn::before{background:var(--warn)}
 .badge.err{background:var(--err-soft)}.badge.err::before{background:var(--err)}
-svg.b{display:block;width:100%;height:28px;border-radius:4px;overflow:hidden}
+svg.b{display:block;width:100%;height:28px;border-radius:min(var(--radius),4px);overflow:hidden}
 .r1{fill:var(--muted);fill-opacity:.38}.r2{fill:var(--muted);fill-opacity:.22}.r3{fill:var(--muted);fill-opacity:.1}
 .off svg.b rect[class^=r]{fill-opacity:0}
 .bar{fill:var(--accent)}.bar.met{fill:url(#g)}
 .tg{stroke:var(--text);stroke-width:3}
 .key{display:flex;flex-wrap:wrap;gap:8px 20px;margin:20px 0 0;padding:12px 0 0;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
 .key span{display:inline-flex;align-items:center;gap:8px}
-.key i{display:inline-block;width:20px;height:10px;border-radius:2px}
+.key i{display:inline-block;width:20px;height:10px;border-radius:min(var(--radius),2px)}
 .key i.t{width:3px;height:16px;background:var(--text);border-radius:0}
 /* Tokens: ver pestaña HTML + CSS */
 </style>

@@ -28,13 +28,13 @@
   #pop{position:fixed;inset:auto;margin:0;width:min(300px,calc(100vw - 16px));box-sizing:border-box;padding:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);box-shadow:var(--shadow)}
   .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:12px}
   .seg i{height:4px;border-radius:999px;background:var(--border)}
-  .seg i.on{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .seg i.on{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   .step{margin:0;color:var(--muted);font-variant-numeric:tabular-nums}
   #pop h3{margin:2px 0 4px;font-size:15px;font-weight:600}
   #pt+p{margin:0 0 16px;color:var(--muted)}
   .acts{display:flex;align-items:center;gap:8px}
   .acts .btn{height:32px;padding:0 12px}
-  .link{margin-right:auto;padding:4px;border:0;border-radius:4px;background:none;color:var(--muted);font:inherit;cursor:pointer}
+  .link{margin-right:auto;padding:4px;border:0;border-radius:min(var(--radius),4px);background:none;color:var(--muted);font:inherit;cursor:pointer}
   .link:hover{color:var(--text)}
   @media (max-width:520px){.stage{grid-template-columns:1fr}.side{padding:8px 12px;border-right:0;border-bottom:1px solid var(--border)}.side ul{display:flex;flex-wrap:wrap}}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}

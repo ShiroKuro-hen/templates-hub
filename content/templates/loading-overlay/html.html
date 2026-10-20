@@ -22,7 +22,7 @@
   .stamp{margin:0;padding:12px 20px;border-top:1px solid var(--border);color:var(--muted);font-size:13px}
   .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:color-mix(in srgb,var(--surface) 76%,transparent);opacity:0;visibility:hidden;transition:opacity .16s,visibility .16s}
   .panel[aria-busy=true] .overlay{opacity:1;visibility:visible}
-  .spin{width:32px;height:32px;border-radius:50%;background:conic-gradient(from 0deg,transparent,#22d3ee,#2f5bff);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));animation:rot .9s linear infinite}
+  .spin{width:32px;height:32px;border-radius:50%;background:conic-gradient(from 0deg,transparent,var(--accent-2,#22d3ee),var(--accent,#2f5bff));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 4px),#000 calc(100% - 3px));animation:rot .9s linear infinite}
   @keyframes rot{to{transform:rotate(360deg)}}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}.spin{animation-duration:3s}}

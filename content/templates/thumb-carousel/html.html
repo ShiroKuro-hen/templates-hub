@@ -26,7 +26,7 @@
   .th:hover{opacity:1}
   .th svg{display:block;width:100%;aspect-ratio:16/10}
   .th[aria-current]{opacity:1;border-color:var(--accent)}
-  .th[aria-current]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+  .th[aria-current]::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   .bw{fill:var(--warn-soft)}.bi{fill:var(--info-soft)}.ba{fill:var(--accent-soft)}.bo{fill:var(--ok-soft)}.be{fill:var(--err-soft)}
   .fw{fill:var(--warn)}.fi{fill:var(--info)}.fa{fill:var(--accent)}.fo{fill:var(--ok)}.fe{fill:var(--err)}
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}

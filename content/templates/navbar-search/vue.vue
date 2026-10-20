@@ -44,7 +44,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDoc));
 <style scoped>
 .nav{display:flex;align-items:center;gap:16px;max-width:900px;margin:0 auto;padding:0 12px 0 16px;height:56px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .brand{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--text);text-decoration:none;white-space:nowrap}
-.brand i{width:22px;height:22px;border-radius:6px;background:var(--accent)}
+.brand i{width:22px;height:22px;border-radius:min(var(--radius),6px);background:var(--accent)}
 .links{display:flex;gap:4px;margin:0;padding:0;list-style:none;min-width:0;overflow-x:auto}
 .links a{display:block;padding:6px 12px;border-radius:var(--radius);color:var(--muted);text-decoration:none;white-space:nowrap;transition:background .14s,color .14s}
 .links a:hover{background:var(--accent-soft);color:var(--text)}
@@ -52,7 +52,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onDoc));
 a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .s{position:relative;display:flex;align-items:center;margin-left:auto;border:1px solid transparent;border-radius:var(--radius);transition:border-color .14s,background .14s}
 .s.open{border-color:var(--border);background:var(--bg)}
-.s::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;border-radius:999px;background:linear-gradient(90deg,#22d3ee,#2f5bff);transform:scaleX(0);transition:transform .16s}
+.s::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transform:scaleX(0);transition:transform .16s}
 .s.open:focus-within::after{transform:scaleX(1)}
 .s button{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;border-radius:var(--radius);background:none;color:var(--muted);cursor:pointer}
 .s button:hover{color:var(--text)}

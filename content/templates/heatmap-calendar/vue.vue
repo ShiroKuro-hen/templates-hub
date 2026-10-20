@@ -55,7 +55,7 @@ h2{margin:0;font-size:16px;font-weight:600}
 .days{display:grid;grid-template-rows:repeat(7,1fr);gap:4px}
 .days span{display:flex;align-items:center}
 .heat{grid-template-rows:repeat(7,auto);grid-auto-flow:column;margin:0;padding:0;list-style:none}
-.cell{aspect-ratio:1;border-radius:4px;background:var(--bg);cursor:pointer}
+.cell{aspect-ratio:1;border-radius:min(var(--radius),4px);background:var(--bg);cursor:pointer}
 .cell:hover{outline:1px solid var(--text);outline-offset:1px}
 .cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 [data-l="0"]{--bg:var(--accent-soft)}

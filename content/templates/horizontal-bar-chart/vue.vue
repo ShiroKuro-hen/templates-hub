@@ -25,7 +25,7 @@ const resumen = computed(() => rows.value.map((r, i) => `${i + 1}, ${r.label}, $
     <figcaption><strong>{{ title }}</strong><span>{{ subtitle }}</span></figcaption>
     <svg width="100%" :height="rows.length * ROW - 12" role="img" :aria-label="`Ranking de ventas: ${resumen}`">
       <defs>
-        <linearGradient id="ion-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient>
+        <linearGradient id="ion-h" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient>
       </defs>
       <g v-for="(r, i) in rows" :key="r.label">
         <text class="label" x="0" :y="i * ROW + 14"><tspan class="rank">{{ i + 1 }}&nbsp;&nbsp;</tspan>{{ r.label }}</text>

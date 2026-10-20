@@ -70,7 +70,7 @@ figcaption strong{display:block;font-size:15px;font-weight:600}
 figcaption span{color:var(--muted)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 20px;margin:12px 0 4px;padding:0;list-style:none;color:var(--muted);font-size:13px}
 .legend li{display:flex;align-items:center;gap:8px}
-.legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.legend i{width:10px;height:10px;border-radius:min(var(--radius),3px);background:var(--c)}
 .plot{position:relative}
 svg{display:block;overflow:visible}
 .grid{stroke:var(--border);stroke-dasharray:2 4}
@@ -81,7 +81,7 @@ svg{display:block;overflow:visible}
 .total{fill:var(--text);font-size:12px;font-weight:600;text-anchor:middle;font-variant-numeric:tabular-nums}
 .tick{fill:var(--muted);font-size:12px;text-anchor:middle}
 .tip{position:absolute;z-index:5;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font-size:13px;white-space:nowrap;pointer-events:none;transform:translate(-50%,calc(-100% - 8px));overflow:hidden}
-.tip::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.tip::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .tip b{font-variant-numeric:tabular-nums}
 .tip span{display:block;color:var(--muted);font-size:12px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}

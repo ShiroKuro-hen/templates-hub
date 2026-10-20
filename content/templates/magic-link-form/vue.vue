@@ -49,7 +49,7 @@ onBeforeUnmount(() => clearInterval(timer));
     <section v-else aria-labelledby="t2">
       <div class="ring">
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" stroke-width="3" stroke-linecap="round" aria-hidden="true">
-          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
           <circle class="track" cx="28" cy="28" r="24" />
           <circle class="bar" cx="28" cy="28" r="24" stroke="url(#g)" stroke-dasharray="150.8" :style="{ strokeDashoffset: C * (1 - left / N) }" />
         </svg>
@@ -84,7 +84,7 @@ input[aria-invalid=true]{border-color:var(--err)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.primary:hover{background:var(--accent);filter:brightness(1.08)}
 .link{all:unset;color:var(--accent);text-decoration:underline;cursor:pointer}
-.link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),2px)}
 .ring{position:relative;width:56px;height:56px;margin-bottom:16px}
 .ring svg{display:block;transform:rotate(-90deg)}
 .ring .track{stroke:var(--border)}

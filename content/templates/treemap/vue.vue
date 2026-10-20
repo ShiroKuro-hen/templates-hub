@@ -64,7 +64,7 @@ h2{margin:0;font-size:16px;font-weight:600}
 .head p{margin:2px 0 0;color:var(--muted)}
 .key{display:flex;flex-wrap:wrap;gap:4px 16px;color:var(--muted)}
 .key span{display:inline-flex;align-items:center;gap:8px}
-.key i{width:10px;height:10px;border-radius:3px}
+.key i{width:10px;height:10px;border-radius:min(var(--radius),3px)}
 svg.map{display:block;width:100%;height:340px}
 .t{cursor:pointer;outline:none}
 .bg{stroke:var(--border);stroke-width:1;transition:filter .14s}
@@ -79,7 +79,7 @@ svg.map{display:block;width:100%;height:340px}
 .cat{margin-left:8px;color:var(--muted)}
 .num{font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
 .bar{height:8px;margin:8px 0 4px;border-radius:999px;background:var(--border);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+.bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .16s}
 .detail small{color:var(--muted);font-variant-numeric:tabular-nums}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */

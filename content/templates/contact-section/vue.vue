@@ -75,7 +75,7 @@ function submit(e: Event) {
 .info dd{margin:0;font-weight:500}
 .info a{color:var(--accent)}
 form{position:relative;display:grid;gap:14px;padding:24px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-form::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+form::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 label{display:block;margin-bottom:6px;font-weight:500}
 input,select,textarea{box-sizing:border-box;width:100%;padding:9px 12px;font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
 textarea{min-height:110px;resize:vertical}

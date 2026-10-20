@@ -55,7 +55,7 @@ onBeforeUnmount(() => { document.removeEventListener('keydown', onKey); document
 .stage .status{margin-top:12px;min-height:1.5em;color:var(--text)}
 .fab-wrap{position:absolute;right:20px;bottom:20px;display:flex;flex-direction:column-reverse;align-items:flex-end;gap:12px}
 .fab{display:grid;place-items:center;width:56px;height:56px;padding:0;border:1px solid transparent;border-radius:50%;cursor:pointer;color:var(--accent-ink);
-     background:linear-gradient(var(--accent),var(--accent)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box;box-shadow:var(--shadow);transition:filter .14s}
+     background:linear-gradient(var(--accent),var(--accent)) padding-box,linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) border-box;box-shadow:var(--shadow);transition:filter .14s}
 .fab:hover{filter:brightness(1.08)}
 .fab svg{transition:transform .16s}
 .fab[aria-expanded=true] svg{transform:rotate(45deg)}

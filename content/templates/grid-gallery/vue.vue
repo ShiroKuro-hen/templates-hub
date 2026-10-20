@@ -54,11 +54,11 @@ fieldset{display:flex;margin:0;padding:2px;border:1px solid var(--border);border
 legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 fieldset label{position:relative}
 fieldset input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-fieldset span{display:block;padding:4px 12px;border-radius:6px;color:var(--muted);transition:background .14s,color .14s}
+fieldset span{display:block;padding:4px 12px;border-radius:min(var(--radius),6px);color:var(--muted);transition:background .14s,color .14s}
 input:checked+span{background:var(--accent);color:var(--accent-ink);font-weight:600}
 input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
 .info{margin:0 0 16px;color:var(--muted);font-size:13px}
-.info code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border);color:var(--text)}
+.info code{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;border-radius:min(var(--radius),4px);background:var(--bg);border:1px solid var(--border);color:var(--text)}
 .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));grid-auto-rows:var(--row,170px);grid-auto-flow:dense;gap:12px}
 .card:has([value=sq]:checked) .grid{--row:auto;--ar:1/1}
 .card:has([value=r43]:checked) .grid{--row:auto;--ar:4/3}
@@ -72,9 +72,9 @@ input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
 .art{position:relative;min-height:0;overflow:hidden;background:linear-gradient(135deg,var(--c1),var(--c2))}
 .art::after{content:"";position:absolute;right:12%;bottom:14%;width:34%;aspect-ratio:1;max-height:70%;background:var(--ink);opacity:.5}
 .art[data-s=c]::after{border-radius:50%}
-.art[data-s=s]::after{border-radius:6px;transform:rotate(12deg)}
+.art[data-s=s]::after{border-radius:min(var(--radius),6px);transform:rotate(12deg)}
 .art[data-s=t]::after{clip-path:polygon(50% 0,100% 100%,0 100%)}
-.tag{position:absolute;top:8px;left:8px;padding:0 8px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#0a0f1c;font-size:12px;font-weight:600}
+.tag{position:absolute;top:8px;left:8px;padding:0 8px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));color:#0a0f1c;font-size:12px;font-weight:600}
 figcaption{padding:8px 12px;border-top:1px solid var(--border)}
 figcaption b{display:block;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 figcaption small{color:var(--muted)}

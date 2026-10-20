@@ -51,11 +51,11 @@ fieldset{margin:0;padding:0;border:0;min-width:0}
 legend{padding:0;font-size:16px;font-weight:600}
 .hint{margin:2px 0 14px;color:var(--muted)}
 .seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);padding:3px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius)}
-.thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 3);box-sizing:border-box;border:1px solid transparent;border-radius:6px;box-shadow:var(--shadow);
-       background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box;transition:transform .16s}
+.thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 3);box-sizing:border-box;border:1px solid transparent;border-radius:min(var(--radius),6px);box-shadow:var(--shadow);
+       background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) border-box;transition:transform .16s}
 .seg:has([value=dark]:checked) .thumb{transform:translateX(100%)}
 .seg:has([value=system]:checked) .thumb{transform:translateX(200%)}
-.seg label{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 6px;border-radius:6px;color:var(--muted);font-weight:500;cursor:pointer;transition:color .14s}
+.seg label{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 6px;border-radius:min(var(--radius),6px);color:var(--muted);font-weight:500;cursor:pointer;transition:color .14s}
 .seg label:hover,.seg label:has(:checked){color:var(--text)}
 .seg label:has(:checked) svg{color:var(--accent)}
 .seg label:has(:focus-visible){outline:2px solid var(--accent);outline-offset:2px}

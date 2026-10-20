@@ -19,7 +19,7 @@
   .legend button[aria-pressed=false] i{opacity:.3}
   .legend .tr{color:var(--muted);border-style:dashed}
   i.sw{display:inline-block;width:10px;height:10px;border-radius:50%}
-  .tr i{width:16px;height:3px;border-radius:2px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  .tr i{width:16px;height:3px;border-radius:min(var(--radius),2px);background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .plot{position:relative}
   svg{display:block;width:100%;height:320px;overflow:visible}
@@ -64,7 +64,7 @@
     W = svg.clientWidth || 560;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const x = (v) => L + (W - L - R) * v / 100, y = (v) => T + (H - T - B) * (1 - v / 200), v = vis();
-    let s = '<defs><linearGradient id="tg"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>';
+    let s = '<defs><linearGradient id="tg"><stop offset="0" stop-color="var(--accent-2,#22d3ee)"/><stop offset="1" stop-color="var(--accent,#2f5bff)"/></linearGradient></defs>';
     for (let t = 0; t <= 200; t += 50) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text class="ax" x="${L - 8}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
     for (let t = 0; t <= 100; t += 20) s += `<line class="gl" x1="${x(t)}" x2="${x(t)}" y1="${T}" y2="${H - B}"/><text class="ax" x="${x(t)}" y="${H - B + 18}" text-anchor="middle">${t}</text>`;
     s += `<text class="at" x="${L + (W - L - R) / 2}" y="${H - 6}" text-anchor="middle">Gasto en marketing (miles de USD)</text><text class="at" transform="translate(12 ${T + (H - T - B) / 2}) rotate(-90)" text-anchor="middle">Clientes nuevos</text>`;

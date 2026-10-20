@@ -40,7 +40,7 @@ const total = computed(() => Object.values(data).flat().reduce((s, v, k) => s + 
 </template>
 
 <style scoped>
-figure{--c1:#2f5bff;--c2:#d9730d;--c3:#0e9f6e;--c4:#cc3d8e;--c5:#7a4de0;--c6:#9a7b0a;margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+figure{--c1:var(--accent,#2f5bff);--c2:#d9730d;--c3:#0e9f6e;--c4:#cc3d8e;--c5:#7a4de0;--c6:#9a7b0a;margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 :global(:root[data-theme=dark]) figure{--c1:#6c8cff;--c2:#f59e4b;--c3:#34d399;--c4:#f472b6;--c5:#a78bfa;--c6:#e3b341}
 h2{margin:0;font-size:18px}
 .sub{margin:2px 0 16px;color:var(--muted)}
@@ -48,7 +48,7 @@ h2{margin:0;font-size:18px}
 .legend button{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 8px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font:inherit;cursor:pointer;transition:background .14s,border-color .14s}
 .legend button:hover{border-color:var(--accent)}
 .legend button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.legend button i{width:12px;height:12px;border-radius:3px;background:var(--c)}
+.legend button i{width:12px;height:12px;border-radius:min(var(--radius),3px);background:var(--c)}
 .legend button[aria-pressed=false]{color:var(--muted)}
 .legend button[aria-pressed=false] i{background:transparent;box-shadow:inset 0 0 0 2px var(--c)}
 .row{display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px;margin-top:10px}

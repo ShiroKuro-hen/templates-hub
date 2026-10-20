@@ -20,11 +20,11 @@ h1 { margin-top: 0; font-size: clamp(2rem, 1.4rem + 3vw, 2.9rem); font-weight: 7
 .lead { margin: .5em 0 0; font-size: 1.2rem; color: var(--muted); max-width: 46ch; }
 .doc :deep(h2) { font-size: 1.75rem; font-weight: 700; letter-spacing: -.02em; padding-bottom: .3em; border-bottom: 1px solid var(--border); }
 .doc :deep(h3) { display: flex; align-items: center; gap: .5em; font-size: 1.35rem; font-weight: 650; letter-spacing: -.015em; }
-.doc :deep(h3)::before { content: ""; flex: none; width: .5em; height: .5em; border-radius: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.doc :deep(h3)::before { content: ""; flex: none; width: .5em; height: .5em; border-radius: min(var(--radius),2px); background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .doc :deep(h4) { font-size: 1.1rem; font-weight: 600; }
 .doc :deep(h5) { font-size: 1rem; font-weight: 600; color: var(--muted); }
 .doc :deep(h6) { font-size: .875rem; font-weight: 500; color: var(--muted); }
-.doc :deep(code) { padding: .1em .4em; font: .88em ui-monospace, "Cascadia Code", Menlo, monospace; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; }
+.doc :deep(code) { padding: .1em .4em; font: .88em ui-monospace, "Cascadia Code", Menlo, monospace; background: var(--surface); border: 1px solid var(--border); border-radius: min(var(--radius),6px); }
 .doc :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 /* Tokens: ver pestaña HTML + CSS */
 </style>

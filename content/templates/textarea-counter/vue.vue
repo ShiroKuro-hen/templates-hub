@@ -36,7 +36,7 @@ textarea:focus-visible { border-color: var(--accent); outline: 2px solid var(--a
 .meta { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 12px; font-variant-numeric: tabular-nums; color: var(--text); }
 progress { flex: 1; height: 6px; appearance: none; border: 0; border-radius: 999px; background: var(--border); overflow: hidden; }
 progress::-webkit-progress-bar { background: var(--border); }
-progress::-webkit-progress-value, progress::-moz-progress-bar { background: linear-gradient(90deg, #22d3ee, #2f5bff); border-radius: 999px; }
+progress::-webkit-progress-value, progress::-moz-progress-bar { background: linear-gradient(90deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); border-radius: 999px; }
 .warn progress::-webkit-progress-value, .warn progress::-moz-progress-bar { background: var(--warn); }
 .full progress::-webkit-progress-value, .full progress::-moz-progress-bar { background: var(--err); }
 #left { min-width: 120px; text-align: right; color: var(--muted); }

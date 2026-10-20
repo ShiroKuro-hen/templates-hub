@@ -75,13 +75,13 @@ const resumen = (v: Vista) => [v.q && `“${v.q}”`, v.s].filter(Boolean).join(
 @media (max-width:600px){.sv{grid-template-columns:1fr}}
 h2{margin:0 0 8px;font-size:14px}
 ul{list-style:none;margin:0;padding:0}
-.v{position:relative;display:flex;align-items:center;gap:4px;border-radius:6px}
-.apply{flex:1;min-width:0;text-align:left;padding:6px 8px;font:inherit;color:inherit;background:none;border:0;border-radius:6px;cursor:pointer;transition:background .14s}
+.v{position:relative;display:flex;align-items:center;gap:4px;border-radius:min(var(--radius),6px)}
+.apply{flex:1;min-width:0;text-align:left;padding:6px 8px;font:inherit;color:inherit;background:none;border:0;border-radius:min(var(--radius),6px);cursor:pointer;transition:background .14s}
 .apply:hover,.apply[aria-pressed=true]{background:var(--accent-soft)}
 .apply[aria-pressed=true]{font-weight:600}
-.apply[aria-pressed=true]::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.apply[aria-pressed=true]::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:3px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .apply small{display:block;font-weight:400;color:var(--muted)}
-.del{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;color:var(--muted);background:none;border:0;border-radius:6px;cursor:pointer}
+.del{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;color:var(--muted);background:none;border:0;border-radius:min(var(--radius),6px);cursor:pointer}
 .del:hover{color:var(--err);background:var(--err-soft)}
 .none{color:var(--muted);padding:6px 8px}
 form{margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}

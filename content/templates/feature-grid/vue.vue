@@ -34,7 +34,7 @@ withDefaults(defineProps<{ title?: string; intro?: string; features?: Feature[] 
 <style scoped>
 .features { max-width: 1040px; margin: 0 auto; padding: 24px 0; color: var(--text); font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
 .head { max-width: 36rem; margin: 0 0 36px; }
-.head::before { content: ""; display: block; width: 40px; height: 3px; margin-bottom: 16px; border-radius: 3px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.head::before { content: ""; display: block; width: 40px; height: 3px; margin-bottom: 16px; border-radius: min(var(--radius),3px); background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .head h2 { margin: 0 0 10px; font-size: clamp(1.6rem, 4.5vw, 2.4rem); font-weight: 700; line-height: 1.1; letter-spacing: -.025em; text-wrap: balance; }
 .head p { margin: 0; color: var(--muted); font-size: 1.05rem; }
 .grid { display: grid; grid-template-columns: 1fr; gap: 1px; margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--radius); background: var(--border); box-shadow: var(--shadow); overflow: hidden; }

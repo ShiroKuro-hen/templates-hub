@@ -59,7 +59,7 @@ summary:hover{background:var(--accent-soft)}
 .l1:last-child{border-bottom:0}
 .n{padding:0 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
 .sub{position:relative;margin:0 20px 12px 28px;padding-left:16px}
-.sub::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:1px;background:linear-gradient(180deg,#22d3ee,#2f5bff)}
+.sub::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:1px;background:linear-gradient(180deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .l2{border-bottom:1px solid var(--border)}
 .l2:last-child{border-bottom:0}
 .l2>summary{padding:10px 8px;border-radius:var(--radius)}

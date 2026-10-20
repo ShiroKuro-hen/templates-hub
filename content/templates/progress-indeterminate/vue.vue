@@ -44,7 +44,7 @@ h2{margin:0 0 20px;font-size:16px}
 .head{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;font-weight:600}
 .head span:last-child{color:var(--muted);font-weight:400;font-variant-numeric:tabular-nums}
 .track{position:relative;height:8px;overflow:hidden;border-radius:999px;background:var(--accent-soft)}
-.fill{display:block;height:100%;width:var(--p,0%);border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+.fill{display:block;height:100%;width:var(--p,0%);border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .16s}
 .ind{position:absolute;top:0;left:0;width:40%;animation:slide 1.4s ease-in-out infinite}
 @keyframes slide{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
 .ok .track{background:var(--ok-soft)} .ok .fill{background:var(--ok)}

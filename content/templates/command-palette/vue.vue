@@ -53,7 +53,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onGlobal));
 </template>
 
 <style scoped>
-kbd{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;color:var(--muted);border:1px solid var(--border);border-radius:4px;background:var(--bg)}
+kbd{font:12px ui-monospace,"Cascadia Code",Menlo,monospace;padding:1px 6px;color:var(--muted);border:1px solid var(--border);border-radius:min(var(--radius),4px);background:var(--bg)}
 .trigger{display:flex;align-items:center;gap:10px;width:100%;max-width:360px;padding:8px 12px;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);cursor:pointer}
 .trigger span{flex:1;text-align:left}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -65,9 +65,9 @@ dialog::backdrop{background:color-mix(in srgb,var(--bg) 70%,transparent);backdro
 .list ul{margin:0;padding:0;list-style:none}
 .list:empty{display:none}
 .group-label{padding:8px 10px 4px;font-size:12px;font-weight:600;color:var(--muted)}
-[role=option]{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:6px;cursor:pointer}
+[role=option]{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px;border-radius:min(var(--radius),6px);cursor:pointer}
 [role=option][aria-selected=true]{background:var(--accent-soft)}
-[role=option][aria-selected=true]::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+[role=option][aria-selected=true]::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .empty{padding:24px 16px;text-align:center;color:var(--muted)}
 .foot{display:flex;gap:14px;padding:8px 14px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
 /* Tokens: ver pestaña HTML + CSS */

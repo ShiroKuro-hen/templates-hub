@@ -50,7 +50,7 @@ input:checked+.st::after{content:"Activado"}
 input:disabled+.st::after{content:"No disponible"}
 input[role=switch]{order:2;appearance:none;position:relative;flex:none;width:40px;height:24px;margin:0;border:1px solid var(--border);border-radius:999px;background:var(--bg);cursor:pointer;transition:background .14s,border-color .14s}
 input[role=switch]::before{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:transform .14s,background .14s}
-input[role=switch]:checked{border-color:transparent;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+input[role=switch]:checked{border-color:transparent;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 input[role=switch]:checked::before{transform:translateX(16px);background:var(--accent-ink)}
 input[role=switch]:disabled{opacity:.5;cursor:not-allowed}
 input[role=switch]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}

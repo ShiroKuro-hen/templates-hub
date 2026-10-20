@@ -60,14 +60,14 @@ const tipX = computed(() => Math.min(Math.max(L + ((g.value ?? 0) + 0.5) * gw.va
 .card{margin:0;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-bottom:16px}
 h2{margin:0;font-size:16px;font-weight:600}
-h2::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:2px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+h2::before{content:"";display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:min(var(--radius),2px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .head p{margin:2px 0 0;color:var(--muted)}
 .legend{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px}
 .legend button{display:inline-flex;align-items:center;gap:8px;font:inherit;padding:4px 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);cursor:pointer;transition:background .14s,color .14s}
 .legend button:hover{background:var(--accent-soft)}
 .legend button[aria-pressed=false]{color:var(--muted);background:transparent}
 .legend button[aria-pressed=false] .sw{opacity:.3}
-.sw{display:inline-block;width:10px;height:10px;border-radius:3px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:min(var(--radius),3px)}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .plot{position:relative}
 svg{display:block;width:100%;height:260px;overflow:visible}

@@ -50,14 +50,14 @@ const clear = () => facets.forEach(([k]) => (sel[k] = []));
 @media (max-width:560px){.ff{grid-template-columns:1fr}}
 fieldset{border:0;margin:0 0 14px;padding:0}
 legend{font-weight:600;margin-bottom:6px}
-label{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:6px;cursor:pointer;transition:background .14s}
+label{display:flex;align-items:center;gap:8px;padding:4px 6px;border-radius:min(var(--radius),6px);cursor:pointer;transition:background .14s}
 label:hover{background:var(--accent-soft)}
 label:has(:disabled){color:var(--muted);cursor:default}
 input{accent-color:var(--accent);margin:0}
 label small{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .head{display:flex;align-items:center;gap:8px;margin:0 0 10px;font-weight:600}
-.head::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.head::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .head span{font-variant-numeric:tabular-nums}
 ul{list-style:none;margin:0;padding:0}
 li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--border)}

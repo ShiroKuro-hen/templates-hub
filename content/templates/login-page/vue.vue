@@ -55,7 +55,7 @@ function submit(e: Event) {
 .page{min-height:100vh;display:grid;place-items:center;align-content:center;gap:20px;padding:20px;box-sizing:border-box;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .card{width:100%;max-width:400px;box-sizing:border-box;padding:32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;margin-bottom:24px}
-.logo{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#22d3ee,#2f5bff);display:grid;place-items:center}
+.logo{width:28px;height:28px;border-radius:min(var(--radius),7px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));display:grid;place-items:center}
 h1{font-size:22px;line-height:1.25;margin:0 0 4px}
 .sub{margin:0 0 24px;color:var(--muted)}
 form{display:grid;gap:16px}
@@ -68,7 +68,7 @@ input:user-invalid{border-color:var(--err)}
 label:has(:user-invalid) .hint{display:block}
 .pw{position:relative;display:grid}
 .pw input{padding-right:72px}
-.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);font:inherit;font-size:13px;background:none;border:0;color:var(--accent);padding:4px 8px;border-radius:6px;cursor:pointer}
+.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);font:inherit;font-size:13px;background:none;border:0;color:var(--accent);padding:4px 8px;border-radius:min(var(--radius),6px);cursor:pointer}
 a{color:var(--accent);text-decoration:none;font-weight:500}
 a:hover{text-decoration:underline}
 .check{display:flex;align-items:center;gap:8px;font-weight:400}

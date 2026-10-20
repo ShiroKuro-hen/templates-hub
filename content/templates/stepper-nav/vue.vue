@@ -56,7 +56,7 @@ function next() {
 .card{max-width:760px;margin:0 auto;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 ol{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 li::before{content:"";display:block;height:4px;margin-bottom:10px;border-radius:999px;background:var(--border)}
-li[data-s=done]::before{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+li[data-s=done]::before{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 li[data-s=current]::before{background:var(--accent)}
 li[data-s=error]::before{background:var(--err)}
 .step{display:flex;gap:10px;align-items:flex-start;padding:6px;border-radius:var(--radius);color:var(--muted);text-decoration:none;transition:background .14s}

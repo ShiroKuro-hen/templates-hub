@@ -18,14 +18,14 @@
   .help:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .help svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
   .tip{position:fixed;inset:auto;margin:0;width:280px;padding:16px;border:1px solid var(--border);border-radius:var(--radius);color:var(--text);box-shadow:var(--shadow);font-weight:400;
-       background:linear-gradient(135deg,#22d3ee,#2f5bff) top/100% 2px no-repeat,var(--surface);
+       background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) top/100% 2px no-repeat,var(--surface);
        opacity:0;transition:opacity .14s,display .14s allow-discrete,overlay .14s allow-discrete}
   .tip:popover-open{opacity:1}
   @starting-style{.tip:popover-open{opacity:0}}
   .tip h3{margin:0 0 4px;font-size:14px;font-weight:600}
   .tip p{margin:0 0 12px;color:var(--muted)}
   .acts{display:flex;align-items:center;gap:12px}
-  .acts a{color:var(--accent);font-weight:600;text-decoration:none;border-radius:4px}
+  .acts a{color:var(--accent);font-weight:600;text-decoration:none;border-radius:min(var(--radius),4px)}
   .acts a:hover{text-decoration:underline}
   .acts button{margin-left:auto;padding:4px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}
   .acts button:hover{border-color:var(--accent)}

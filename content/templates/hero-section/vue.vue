@@ -29,8 +29,8 @@ defineProps<{
     <svg class="art" viewBox="0 0 320 260" role="img" aria-label="Tablero de tareas con tres columnas">
       <defs>
         <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#22d3ee" />
-          <stop offset="1" stop-color="#2f5bff" />
+          <stop offset="0" stop-color="var(--accent-2,#22d3ee)" />
+          <stop offset="1" stop-color="var(--accent,#2f5bff)" />
         </linearGradient>
       </defs>
       <rect class="win" x="6" y="6" width="308" height="244" rx="10" />

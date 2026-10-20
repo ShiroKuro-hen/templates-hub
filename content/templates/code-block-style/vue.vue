@@ -27,7 +27,7 @@ async function copy() {
 
 <style scoped>
 .code { position: relative; margin: 0; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); box-shadow: var(--shadow); overflow: hidden; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
-.code::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+.code::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 .bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 10px 8px 16px; border-bottom: 1px solid var(--border); }
 .bar span { font: 600 12px ui-monospace, "Cascadia Code", Menlo, monospace; color: var(--muted); }
 .copy { padding: 4px 12px; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); font: 600 12px system-ui, sans-serif; cursor: pointer; transition: background .14s, border-color .14s, color .14s; }

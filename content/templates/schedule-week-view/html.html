@@ -21,7 +21,7 @@
   .bd{padding-top:8px}
   .hrs span{display:block;height:var(--h);padding-right:8px;text-align:right;color:var(--muted);font-size:12px;transform:translateY(-8px);font-variant-numeric:tabular-nums}
   .day{position:relative;height:calc(10 * var(--h));margin:0;padding:0;list-style:none;border-left:1px solid var(--border);background:repeating-linear-gradient(to bottom,var(--border) 0 1px,transparent 1px var(--h))}
-  .ev{position:absolute;left:3px;right:3px;top:calc(var(--s) * var(--h) + 1px);height:calc(var(--d) * var(--h) - 3px);padding:2px 8px;border:1px solid var(--c);border-radius:6px;background:var(--cs);overflow:hidden;font-size:12px;line-height:1.2}
+  .ev{position:absolute;left:3px;right:3px;top:calc(var(--s) * var(--h) + 1px);height:calc(var(--d) * var(--h) - 3px);padding:2px 8px;border:1px solid var(--c);border-radius:min(var(--radius),6px);background:var(--cs);overflow:hidden;font-size:12px;line-height:1.2}
   .ev b,.ev time{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .ev time{color:var(--muted)}
   .ev.sh time{display:none}
@@ -29,7 +29,7 @@
   .info{--c:var(--info);--cs:var(--info-soft)}
   .ok{--c:var(--ok);--cs:var(--ok-soft)}
   .warn{--c:var(--warn);--cs:var(--warn-soft)}
-  .now{position:absolute;left:0;right:0;top:calc(var(--s) * var(--h));z-index:1;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+  .now{position:absolute;left:0;right:0;top:calc(var(--s) * var(--h));z-index:1;height:1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
   .now::before{content:"";position:absolute;left:-4px;top:-3px;width:7px;height:7px;border-radius:999px;background:var(--accent)}
 </style>
 </head>

@@ -35,7 +35,7 @@ const arrow = { up: 'M12 19V5M5 12l7-7 7 7', down: 'M12 5v14M5 12l7 7 7-7' };
 
 <style scoped>
 .stats{position:relative;max-width:1040px;box-sizing:border-box;padding:28px;overflow:hidden;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.stats::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+.stats::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .stats h2{margin:0;font-size:22px;line-height:1.25}
 .lead{margin:4px 0 24px;color:var(--muted);max-width:60ch}
 dl{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:0;overflow:hidden;background:var(--border);border:1px solid var(--border);border-radius:var(--radius)}

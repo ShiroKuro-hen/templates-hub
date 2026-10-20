@@ -34,7 +34,7 @@ onBeforeUnmount(() => clearTimeout(timer));
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .btn[aria-busy="true"] { cursor: progress; filter: none; box-shadow: none; }
 .btn[aria-busy="true"]::after { content: ""; position: absolute; left: 0; bottom: 0; width: 40%; height: 2px;
-  background: linear-gradient(135deg, #22d3ee, #2f5bff); animation: slide 1.1s ease-in-out infinite; }
+  background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); animation: slide 1.1s ease-in-out infinite; }
 .spin { width: 14px; height: 14px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%;
   animation: spin .7s linear infinite; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

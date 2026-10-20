@@ -68,7 +68,7 @@ function restore() {
 .tip div{flex:1;min-width:0}
 .tip strong{display:block;font-weight:600}
 .tip p{margin:2px 0 0;color:var(--muted)}
-.tip a{display:inline-block;margin-top:6px;color:var(--accent);font-weight:500;text-decoration:none;border-radius:4px}
+.tip a{display:inline-block;margin-top:6px;color:var(--accent);font-weight:500;text-decoration:none;border-radius:min(var(--radius),4px)}
 .tip a:hover{text-decoration:underline}
 .x{display:grid;place-items:center;flex:none;width:28px;height:28px;padding:0;background:none;border:0;border-radius:var(--radius);color:var(--muted);cursor:pointer;transition:background .14s}
 .x:hover{color:var(--text);background:var(--accent-soft)}

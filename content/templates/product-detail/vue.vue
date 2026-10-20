@@ -70,7 +70,7 @@ a{color:inherit}
 .pd{--prod:var(--text);display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:start}
 .pd.c2{--prod:var(--accent)}.pd.c3{--prod:var(--muted)}
 .stage{position:relative;display:grid;place-items:center;aspect-ratio:1;overflow:hidden;color:var(--prod);background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-.stage::before{content:"";position:absolute;inset:12%;border:1px solid transparent;border-radius:50%;background:linear-gradient(var(--accent-soft),var(--accent-soft)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box}
+.stage::before{content:"";position:absolute;inset:12%;border:1px solid transparent;border-radius:50%;background:linear-gradient(var(--accent-soft),var(--accent-soft)) padding-box,linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) border-box}
 .stage svg{position:relative;width:72%;transition:transform .3s}
 .gal.v2 .stage svg{transform:translate(27%,-17%) scale(2.4)}
 .gal.v3 .stage svg{transform:rotate(-12deg) scale(1.25)}

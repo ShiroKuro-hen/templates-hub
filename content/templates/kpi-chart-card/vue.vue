@@ -22,7 +22,7 @@ const pts = (a: number[]) =>
 <template>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
-      <linearGradient id="kg"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient>
+      <linearGradient id="kg"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient>
     </defs>
   </svg>
   <section class="kc" aria-labelledby="kc-t">

@@ -55,7 +55,7 @@ figcaption{margin-top:8px;color:var(--muted);font-variant-numeric:tabular-nums}
 .thumbs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px}
 .thumb{display:grid;place-items:center;aspect-ratio:1;padding:6px;font:inherit;font-weight:600;color:var(--muted);background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(var(--border),var(--border)) border-box;border:1px solid transparent;border-radius:var(--radius);cursor:pointer;transition:background .14s}
 .thumb:hover{background:linear-gradient(var(--accent-soft),var(--accent-soft)) padding-box,linear-gradient(var(--border),var(--border)) border-box}
-.thumb[aria-current=true]{color:var(--accent);background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#22d3ee,#2f5bff) border-box}
+.thumb[aria-current=true]{color:var(--accent);background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) border-box}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */

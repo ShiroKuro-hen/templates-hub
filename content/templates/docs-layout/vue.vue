@@ -57,10 +57,10 @@ ul{list-style:none;margin:0;padding:0}
 .group{margin:16px 0 4px;font-weight:600}
 nav>div:first-child .group{margin-top:0}
 nav a,.toc a{display:block;color:var(--muted);text-decoration:none;transition:color .14s,background .14s}
-nav a{position:relative;padding:5px 10px;border-radius:6px}
+nav a{position:relative;padding:5px 10px;border-radius:min(var(--radius),6px)}
 nav a:hover,.toc a:hover{color:var(--text)}
 nav a[aria-current=page]{color:var(--accent);background:var(--accent-soft);font-weight:600}
-nav a[aria-current=page]::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+nav a[aria-current=page]::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .toc{padding-left:12px;border-left:1px solid var(--border)}
 .toc h2{margin-bottom:6px;font-size:14px}
 .toc a{padding:3px 0}

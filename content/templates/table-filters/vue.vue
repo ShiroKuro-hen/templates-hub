@@ -83,7 +83,7 @@ table{width:100%;min-width:560px;border-collapse:collapse}
 th,td{padding:10px 16px;text-align:left;border-bottom:1px solid var(--border)}
 thead th{color:var(--muted);font-weight:600;border-bottom:0;padding-bottom:6px}
 .f td{padding-top:0;padding-bottom:10px;background-repeat:no-repeat;background-size:100% 1px;background-position:bottom}
-table.on .f td{background-image:linear-gradient(90deg,#22d3ee,#2f5bff);border-bottom-color:transparent}
+table.on .f td{background-image:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));border-bottom-color:transparent}
 tbody th{font-weight:600}
 tbody tr:hover{background:var(--accent-soft)}
 .num{text-align:right;font-variant-numeric:tabular-nums}

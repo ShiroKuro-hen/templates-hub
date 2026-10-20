@@ -58,7 +58,7 @@ const live = computed(() => idx.value < 0 ? '' : `${months[idx.value]}: ${on.val
     <div class="plot">
       <svg ref="svg" :viewBox="`0 0 ${W} ${H}`" tabindex="0" role="img" aria-label="Áreas apiladas de sesiones por dispositivo. Usa las flechas izquierda y derecha para explorar los meses."
            @keydown="onKey" @pointermove="onMove" @pointerleave="idx = -1" @blur="idx = -1">
-        <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
         <g v-for="t in ticks" :key="t"><line class="gl" :x1="L" :x2="W - R" :y1="y(t)" :y2="y(t)" /><text class="ax" :x="L - 6" :y="y(t) + 4" text-anchor="end">{{ t }}</text></g>
         <g v-for="a in areas" :key="a.s">
           <polygon :points="a.all" :style="{ fill: `var(${series[a.s].c})`, fillOpacity: 0.35 }" />
@@ -87,10 +87,10 @@ h2{margin:0;font-size:16px;font-weight:600}
 .legend button:hover{background:var(--accent-soft)}
 .legend button[aria-pressed=false]{color:var(--muted);background:transparent}
 .legend button[aria-pressed=false] .sw{opacity:.3}
-.sw{display:inline-block;width:10px;height:10px;border-radius:3px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:min(var(--radius),3px)}
 button:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .plot{position:relative}
-svg{display:block;width:100%;height:280px;overflow:visible;border-radius:4px}
+svg{display:block;width:100%;height:280px;overflow:visible;border-radius:min(var(--radius),4px)}
 .gl{stroke:var(--border);stroke-width:1}
 .ax{fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
 .tip{position:absolute;top:0;transform:translateX(-50%);min-width:160px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);pointer-events:none;font-size:13px}

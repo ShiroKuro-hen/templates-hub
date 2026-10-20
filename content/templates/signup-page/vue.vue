@@ -62,7 +62,7 @@ function submit(e: Event) {
 .page{min-height:100vh;display:grid;place-items:center;align-content:center;gap:20px;padding:20px;box-sizing:border-box;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .card{width:100%;max-width:460px;box-sizing:border-box;padding:32px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;margin-bottom:24px}
-.logo{width:28px;height:28px;border-radius:7px;background:var(--accent)}
+.logo{width:28px;height:28px;border-radius:min(var(--radius),7px);background:var(--accent)}
 h1{font-size:22px;line-height:1.25;margin:0 0 4px}
 .sub{margin:0 0 20px;color:var(--muted)}
 .steps{list-style:none;margin:0 0 8px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:13px;color:var(--muted)}
@@ -71,7 +71,7 @@ h1{font-size:22px;line-height:1.25;margin:0 0 4px}
 .steps .done b,.steps [aria-current] b{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .steps [aria-current]{color:var(--text);font-weight:600}
 .track{height:4px;border-radius:999px;background:var(--accent-soft);margin-bottom:24px;overflow:hidden}
-.track span{display:block;height:100%;width:calc(var(--p) * 1%);background:linear-gradient(135deg,#22d3ee,#2f5bff);transition:width .16s}
+.track span{display:block;height:100%;width:calc(var(--p) * 1%);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));transition:width .16s}
 fieldset{border:0;margin:0;padding:0;display:grid;gap:16px}
 fieldset[hidden]{display:none}
 legend{font-weight:600;font-size:16px;margin-bottom:16px;padding:0}

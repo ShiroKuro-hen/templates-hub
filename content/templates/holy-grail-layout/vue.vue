@@ -37,7 +37,7 @@ withDefaults(defineProps<{
   grid-template-columns: minmax(0, 1fr); grid-template-areas: "header" "nav" "main" "aside" "footer"; }
 .page > * { margin: 0; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); }
 header { grid-area: header; position: relative; overflow: hidden; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-header::after { content: ""; position: absolute; inset: auto 0 0; height: 2px; background: linear-gradient(135deg, #22d3ee, #2f5bff); }
+header::after { content: ""; position: absolute; inset: auto 0 0; height: 2px; background: linear-gradient(135deg, var(--accent-2,#22d3ee), var(--accent,#2f5bff)); }
 nav { grid-area: nav; } main { grid-area: main; } aside { grid-area: aside; background: var(--accent-soft); } footer { grid-area: footer; color: var(--muted); }
 h1 { margin: 0; font-size: 1.125rem; letter-spacing: -.01em; }
 .tag { padding: 2px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: .75rem; font-weight: 600; }

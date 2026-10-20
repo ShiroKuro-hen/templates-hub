@@ -35,9 +35,9 @@ const isLast = (c: Crumb) => c === props.items[props.items.length - 1];
 .crumbs ol { display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; margin:0; padding:0; list-style:none; }
 .crumbs li { display:flex; align-items:center; gap:8px; }
 .crumbs li + li::before { content:"/"; content:"/" / ""; color:var(--border); }
-.crumbs a { color:var(--muted); text-decoration:none; border-radius:4px; transition:color .14s; }
+.crumbs a { color:var(--muted); text-decoration:none; border-radius:min(var(--radius),4px); transition:color .14s; }
 .crumbs a:hover { color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
-.crumbs [aria-current] { font-weight:600; padding-bottom:1px; background:linear-gradient(135deg,#22d3ee,#2f5bff) 0 100%/100% 2px no-repeat; }
+.crumbs [aria-current] { font-weight:600; padding-bottom:1px; background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)) 0 100%/100% 2px no-repeat; }
 .crumbs button { min-width:32px; padding:0 8px; font:inherit; color:var(--muted); background:var(--bg); border:1px solid var(--border); border-radius:var(--radius); cursor:pointer; transition:color .14s, border-color .14s; }
 .crumbs button:hover { color:var(--accent); border-color:var(--accent); }
 @media (prefers-reduced-motion:reduce) { .crumbs a, .crumbs button { transition:none; } }

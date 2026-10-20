@@ -52,7 +52,7 @@ header p{margin:0 auto;max-width:52ch;color:var(--muted)}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:0;padding:0;list-style:none}
 .steps li{position:relative;display:grid;gap:16px;align-content:start}
 .n{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
-.steps li:not(:last-child)::before{content:"";position:absolute;top:16px;left:40px;right:-16px;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+.steps li:not(:last-child)::before{content:"";position:absolute;top:16px;left:40px;right:-16px;height:1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .card{display:grid;gap:8px;align-content:start;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
 h3{margin:0;font-size:16px}
 .card p{margin:0;color:var(--muted)}
@@ -61,7 +61,7 @@ h3{margin:0;font-size:16px}
 .row span{color:var(--muted)}
 .row .tag{padding:1px 8px;border-radius:999px;background:var(--ok-soft);color:var(--ok);font-size:12px;font-weight:600}
 .bar{height:6px;border-radius:999px;background:var(--border);overflow:hidden}
-.bar i{display:block;height:100%;width:62%;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.bar i{display:block;height:100%;width:62%;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
 .btn{padding:9px 16px;font-weight:600;color:var(--text);text-decoration:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:filter .14s,border-color .14s}
 .btn:hover{border-color:var(--accent);filter:brightness(.97)}
@@ -70,7 +70,7 @@ h3{margin:0;font-size:16px}
 @media (max-width:760px){
   .steps{grid-template-columns:1fr;gap:16px}
   .steps li{grid-template-columns:32px 1fr;gap:16px}
-  .steps li:not(:last-child)::before{top:40px;bottom:-16px;left:15px;right:auto;width:1px;height:auto;background:linear-gradient(#22d3ee,#2f5bff)}
+  .steps li:not(:last-child)::before{top:40px;bottom:-16px;left:15px;right:auto;width:1px;height:auto;background:linear-gradient(var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* Tokens: ver pestaña HTML + CSS */

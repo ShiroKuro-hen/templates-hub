@@ -38,7 +38,7 @@ function commit(n: number, fromButton = false) {
 
 <style scoped>
 .item{position:relative;max-width:480px;margin:0 auto;padding:16px 20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.item::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.item::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .info{flex:1;min-width:160px}
 .info h3{margin:0;font-size:15px}
 .info p{margin:2px 0 0;color:var(--muted);font-variant-numeric:tabular-nums}

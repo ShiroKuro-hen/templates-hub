@@ -83,7 +83,7 @@ function submit() {
 
 <style scoped>
 .comp{max-width:600px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-.comp::before{content:"";display:block;height:1px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+.comp::before{content:"";display:block;height:1px;background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 [role=toolbar]{display:flex;gap:2px;padding:6px 8px;border-bottom:1px solid var(--border)}
 button,.attach{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:32px;box-sizing:border-box;padding:0 10px;font:inherit;color:var(--muted);background:none;border:1px solid transparent;border-radius:var(--radius);cursor:pointer;transition:background .14s,color .14s}
 button:hover,.attach:hover{background:var(--accent-soft);color:var(--accent)}
@@ -103,7 +103,7 @@ textarea:focus-visible{outline-offset:-2px}
 .sent{max-width:600px;margin:16px auto 0;padding:0;list-style:none}
 .sent li{margin-bottom:8px;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .sent :deep(p),.sent :deep(ul){margin:0}
-.sent :deep(code){padding:0 4px;border-radius:4px;background:var(--accent-soft);font:13px ui-monospace,"Cascadia Code",Menlo,monospace}
+.sent :deep(code){padding:0 4px;border-radius:min(var(--radius),4px);background:var(--accent-soft);font:13px ui-monospace,"Cascadia Code",Menlo,monospace}
 .sent small{display:block;margin-top:4px;color:var(--muted)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}

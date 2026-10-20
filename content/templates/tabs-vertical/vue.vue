@@ -49,7 +49,7 @@ function onKey(e: KeyboardEvent) {
 [role=tab]{position:relative;font:inherit;text-align:left;padding:10px 12px 10px 16px;border:0;border-radius:var(--radius);background:none;color:var(--muted);cursor:pointer;transition:background .14s,color .14s}
 [role=tab]:hover{background:var(--accent-soft);color:var(--text)}
 [role=tab][aria-selected=true]{background:var(--accent-soft);color:var(--text);font-weight:600}
-[role=tab][aria-selected=true]::before{content:"";position:absolute;left:4px;top:10px;bottom:10px;width:3px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+[role=tab][aria-selected=true]::before{content:"";position:absolute;left:4px;top:10px;bottom:10px;width:3px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 [role=tab]:focus-visible,[role=tabpanel]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 [role=tabpanel]{padding:20px 24px}
 h2{margin:0 0 4px;font-size:16px}

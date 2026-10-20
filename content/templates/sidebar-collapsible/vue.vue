@@ -64,7 +64,7 @@ ul { display:grid; gap:2px; margin:0; padding:0; list-style:none; }
 a { position:relative; display:flex; align-items:center; gap:10px; height:34px; padding:0 10px; color:var(--muted); font-weight:500; white-space:nowrap; text-decoration:none; border-radius:var(--radius); transition:background .14s, color .14s; }
 a:hover { color:var(--text); background:var(--bg); }
 a[aria-current] { color:var(--accent); background:var(--accent-soft); }
-a[aria-current]::before { content:""; position:absolute; left:0; top:8px; bottom:8px; width:2px; border-radius:2px; background:linear-gradient(135deg,#22d3ee,#2f5bff); }
+a[aria-current]::before { content:""; position:absolute; left:0; top:8px; bottom:8px; width:2px; border-radius:min(var(--radius),2px); background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff)); }
 .ic { flex:none; width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .collapsed a { justify-content:center; padding:0; }
 .collapsed .lbl, .collapsed .sec, .collapsed .brand { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }

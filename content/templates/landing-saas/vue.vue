@@ -32,7 +32,7 @@ const clientes = ['Aurora', 'Vértice', 'Kintsu', 'Brújula', 'Lumen'];
             <div class="main">
               <div class="kpis"><div>Flujos<b>128</b></div><div>Horas<b>342</b></div><div>Errores<b>0,4 %</b></div></div>
               <svg viewBox="0 0 300 80" preserveAspectRatio="none">
-                <defs><linearGradient id="l"><stop stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+                <defs><linearGradient id="l"><stop stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
                 <path d="M0 64 40 52 80 58 120 36 160 42 200 22 240 28 300 8" fill="none" stroke="url(#l)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </div>
@@ -65,10 +65,10 @@ const clientes = ['Aurora', 'Vértice', 'Kintsu', 'Brújula', 'Lumen'];
 <style scoped>
 .page{max-width:1100px;margin:0 auto;color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 a{color:inherit;text-decoration:none}
-a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),4px)}
 .nav{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .brand{display:inline-flex;align-items:center;gap:8px;font-size:18px;font-weight:700}
-.brand i{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.brand i{width:22px;height:22px;border-radius:min(var(--radius),6px);background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 .nav nav{flex:1}
 .links{display:flex;flex-wrap:wrap;gap:4px 20px;margin:0 0 0 8px;padding:0;list-style:none;color:var(--muted)}
 .links a:hover{color:var(--text)}

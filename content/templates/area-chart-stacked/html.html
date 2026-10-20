@@ -16,10 +16,10 @@
   .legend button:hover{background:var(--accent-soft)}
   .legend button[aria-pressed=false]{color:var(--muted);background:transparent}
   .legend button[aria-pressed=false] i{opacity:.3}
-  i.sw{display:inline-block;width:10px;height:10px;border-radius:3px}
+  i.sw{display:inline-block;width:10px;height:10px;border-radius:min(var(--radius),3px)}
   button:focus-visible,svg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .plot{position:relative}
-  svg{display:block;width:100%;height:280px;overflow:visible;border-radius:4px}
+  svg{display:block;width:100%;height:280px;overflow:visible;border-radius:min(var(--radius),4px)}
   .gl{stroke:var(--border);stroke-width:1}
   .ax{fill:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
   .tip{position:absolute;top:0;transform:translateX(-50%);min-width:160px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);pointer-events:none;font-size:13px;transition:left .12s}
@@ -62,7 +62,7 @@
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const v = vis(), tot = months.map((_, i) => v.reduce((a, s) => a + series[s].d[i], 0));
     const max = Math.ceil(Math.max(...tot) / 40) * 40, y = (n) => T + (H - T - B) * (1 - n / max);
-    let s = '<defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#2f5bff"/></linearGradient></defs>', base = months.map(() => 0);
+    let s = '<defs><linearGradient id="cg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--accent-2,#22d3ee)"/><stop offset="1" stop-color="var(--accent,#2f5bff)"/></linearGradient></defs>', base = months.map(() => 0);
     for (let t = 0; t <= max; t += 40) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}"/><text class="ax" x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${t}</text>`;
     v.forEach((si) => {
       const top = base.map((b, i) => b + series[si].d[i]);

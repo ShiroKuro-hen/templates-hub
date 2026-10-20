@@ -53,7 +53,7 @@ const onKey = (e: KeyboardEvent, i: number) => {
     </figcaption>
     <div class="plot">
       <svg ref="svg" :viewBox="`0 0 ${W} ${H}`" role="group" aria-label="Diagrama de dispersión de gasto y clientes nuevos" @pointerleave="tip = -1">
-        <defs><linearGradient id="tg"><stop offset="0" stop-color="#22d3ee" /><stop offset="1" stop-color="#2f5bff" /></linearGradient></defs>
+        <defs><linearGradient id="tg"><stop offset="0" stop-color="var(--accent-2,#22d3ee)" /><stop offset="1" stop-color="var(--accent,#2f5bff)" /></linearGradient></defs>
         <g v-for="t in [0, 50, 100, 150, 200]" :key="'y' + t"><line class="gl" :x1="L" :x2="W - R" :y1="y(t)" :y2="y(t)" /><text class="ax" :x="L - 8" :y="y(t) + 4" text-anchor="end">{{ t }}</text></g>
         <g v-for="t in [0, 20, 40, 60, 80, 100]" :key="'x' + t"><line class="gl" :x1="x(t)" :x2="x(t)" :y1="T" :y2="H - B" /><text class="ax" :x="x(t)" :y="H - B + 18" text-anchor="middle">{{ t }}</text></g>
         <text class="at" :x="L + (W - L - R) / 2" :y="H - 6" text-anchor="middle">Gasto en marketing (miles de USD)</text>
@@ -87,7 +87,7 @@ h2{margin:0;font-size:16px;font-weight:600}
 .legend button[aria-pressed=false] .sw{opacity:.3}
 .legend .tr{color:var(--muted);border-style:dashed}
 .sw{display:inline-block;width:10px;height:10px;border-radius:50%}
-.tr i{width:16px;height:3px;border-radius:2px;background:linear-gradient(90deg,#22d3ee,#2f5bff)}
+.tr i{width:16px;height:3px;border-radius:min(var(--radius),2px);background:linear-gradient(90deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .plot{position:relative}
 svg{display:block;width:100%;height:320px;overflow:visible}

@@ -45,8 +45,8 @@ h2{margin:0;font-size:16px;font-weight:600}
 .head p{margin:2px 0 0;color:var(--muted)}
 .sw{display:flex;align-items:center;gap:8px;color:var(--muted);cursor:pointer}
 .sw input{accent-color:var(--accent);margin:0}
-.sw:has(:focus-visible){outline:2px solid var(--accent);outline-offset:4px;border-radius:4px}
-.bp{margin-left:8px;padding:0 10px;border-radius:999px;background:linear-gradient(135deg,#22d3ee,#2f5bff);color:#0a0f1c;font-weight:600}
+.sw:has(:focus-visible){outline:2px solid var(--accent);outline-offset:4px;border-radius:min(var(--radius),4px)}
+.bp{margin-left:8px;padding:0 10px;border-radius:999px;background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff));color:#0a0f1c;font-weight:600}
 .bp::after{content:"sm"}
 .ex{margin-bottom:16px}
 .lb{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 12px;margin:0 0 6px}

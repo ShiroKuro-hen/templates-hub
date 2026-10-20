@@ -77,7 +77,7 @@ async function save() {
 .card{max-width:420px;margin:0 auto;padding:28px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:0 0 24px;padding:0;list-style:none}
 .steps li{height:4px;border-radius:999px;background:var(--border);transition:background .14s}
-.steps li.on{background:linear-gradient(135deg,#22d3ee,#2f5bff)}
+.steps li.on{background:linear-gradient(135deg,var(--accent-2,#22d3ee),var(--accent,#2f5bff))}
 h1{margin:0 0 4px;font-size:20px;line-height:1.3}
 h1:focus{outline:none}
 .sub{margin:0 0 20px;color:var(--muted)}
@@ -96,7 +96,7 @@ label{display:block;font-weight:600;margin-bottom:6px}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn.primary:hover{background:var(--accent);filter:brightness(1.08)}
 .link{all:unset;color:var(--accent);text-decoration:underline;cursor:pointer}
-.link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.link:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:min(var(--radius),2px)}
 a{color:var(--accent)}
 .help{margin:16px 0 0;font-size:13px;color:var(--muted)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}

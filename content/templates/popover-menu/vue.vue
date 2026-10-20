@@ -40,7 +40,7 @@ function onKeydown(e: KeyboardEvent) {
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 [popover] { position: fixed; inset: auto; margin: 0; min-width: 200px; padding: 4px; font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
 [popover]:popover-open { animation: in 140ms ease-out; }
-[role="menuitem"] { display: block; width: 100%; padding: 7px 10px; font: inherit; text-align: left; color: var(--text); background: none; border: 0; border-radius: 6px; cursor: pointer; }
+[role="menuitem"] { display: block; width: 100%; padding: 7px 10px; font: inherit; text-align: left; color: var(--text); background: none; border: 0; border-radius: min(var(--radius),6px); cursor: pointer; }
 [role="menuitem"]:hover, [role="menuitem"]:focus-visible { background: var(--accent-soft); }
 [role="menuitem"]:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 [role="menuitem"].danger { color: var(--err); }

@@ -37,7 +37,7 @@ const id = useId(); // Vue 3.5+
 strong{display:block;margin-top:6px;font-size:15px;font-weight:600}
 p{margin:2px 0 0;color:var(--muted)}
 .meta{display:flex;align-items:center;gap:16px;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
-.meta a{color:var(--accent);font-size:14px;font-weight:500;text-decoration:none;border-radius:4px}
+.meta a{color:var(--accent);font-size:14px;font-weight:500;text-decoration:none;border-radius:min(var(--radius),4px)}
 .meta a:hover{text-decoration:underline}
 .meta a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.dot::after{animation:none;opacity:0}}
